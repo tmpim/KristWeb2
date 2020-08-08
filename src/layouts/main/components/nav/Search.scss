@@ -1,0 +1,45 @@
+@import "~scss/variables";
+
+/* Center the search box */
+#main-nav-search.form-inline {
+  margin: 0 auto;
+
+  input.form-control[type=text] {
+    border: none;
+
+    width: 30vw;
+    max-width: 400px;
+
+    /* All the tedious recolouring nonsense */
+    background: $navbar-search-bg;
+    color: $navbar-search-color;
+
+    transition: $transition-base;
+
+    &::placeholder {
+      color: $navbar-search-placeholder-color;
+
+      transition: $transition-base;
+
+      font-size: $navbar-search-placeholder-font-size;
+    }
+
+    &:hover {
+      background: $navbar-search-hover-bg;
+      color: $navbar-search-hover-color;
+    
+      &::placeholder {
+        color: $navbar-search-hover-placeholder-color;
+      }
+    }
+
+    &:focus {
+      background: $navbar-search-focus-bg;
+      color: $navbar-search-focus-color;
+    
+      &::placeholder {
+        color: $navbar-search-focus-placeholder-color;
+      }
+    }
+  }
+}

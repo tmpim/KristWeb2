@@ -1,0 +1,41 @@
+/* -------------------------------------------------------------------------- */
+/*                                  BOOTSTRAP                                 */
+/* -------------------------------------------------------------------------- */
+$border-radius: 0;
+$border-radius-lg: 0;
+$border-radius-sm: 0;
+
+$font-family-base: "Lato", sans-serif;
+
+/* Import Bootstrap after redefining */
+@import "~bootstrap/scss/functions", "~bootstrap/scss/variables";
+
+/* -------------------------------------------------------------------------- */
+/*                                   NAVBAR                                   */
+/* -------------------------------------------------------------------------- */
+$navbar-height: 50px;
+
+/* Search bar */
+$navbar-search-bg: $gray-700;
+$navbar-search-color: $gray-500;
+$navbar-search-placeholder-color: $gray-600;
+$navbar-search-placeholder-font-size: $font-size-sm;
+$navbar-search-hover-bg: $gray-600;
+$navbar-search-hover-color: $white;
+$navbar-search-hover-placeholder-color: $gray-500;
+$navbar-search-focus-bg: $white;
+$navbar-search-focus-color: $body-color;
+$navbar-search-focus-placeholder-color: $body-color;
+
+/* -------------------------------------------------------------------------- */
+/*                                MAIN SIDEBAR                                */
+/* -------------------------------------------------------------------------- */
+$main-sidebar-width: 200px !default;
+$main-sidebar-color: $body-color;
+$main-sidebar-bg: $gray-100;
+$main-sidebar-hover-bg: $gray-200;
+
+/* -------------------------------------------------------------------------- */
+/*                                    MISC                                    */
+/* -------------------------------------------------------------------------- */
+$krist-value-alt-color: $text-muted; // TODO: maybe green?

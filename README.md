@@ -1,44 +1,34 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# KristWeb v2
 
-## Available Scripts
+**NOT YET READY FOR PRODUCTION.**
 
-In the project directory, you can run:
+*This project is heavily under development. It is currently in the design 
+stages, meaning there is **no useful functionality yet***.
 
-### `npm start`
+Rewrite of the Krist Web Wallet, in React. This is a fully clientside Krist wallet that only needs to communicate to the Krist node itself. It securely saves wallets encrypted in your browser's Local Storage, so you don't have to type in wallet passwords ever again!
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Building
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+```
+git clone https://github.com/tmpim/KristWeb2
+cd KristWeb2
+npm install
+npm start # Run the development server
+npm build # Build the production files
+```
 
-### `npm test`
+### Providing host attribution
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+To provide hosting credits in the sidebar footer, create the file
+`host.json` in the project root with the following contents:
 
-### `npm run build`
+```json
+{
+  "name": "Lemmmy",
+  "url": "https://github.com/Lemmmy"
+}
+```
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### License
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+This project is licensed under the GPL v3 license. See LICENSE.txt for more.

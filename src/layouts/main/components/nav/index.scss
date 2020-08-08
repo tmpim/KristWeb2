@@ -1,0 +1,29 @@
+@import "~scss/variables";
+
+#main-nav {
+  height: $navbar-height;
+
+  padding: 0;
+  align-items: stretch;
+
+  box-shadow: $box-shadow;
+
+  .navbar-collapse {
+    margin: 0 1rem 0 0;
+  }
+
+  .navbar-nav {
+    .nav-link {
+      border-right: 1px solid $gray-700;
+      padding: 0 1.5rem;
+
+      .nav-icon {
+        margin-right: 0.5em;
+      }
+
+      &:last-child {
+        border-right: none;
+      }
+    }
+  }
+}

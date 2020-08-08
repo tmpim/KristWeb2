@@ -1,0 +1,22 @@
+@import "~scss/variables";
+
+#nav-total-balance {
+  background-color: $gray-200;
+
+  padding: 0.5rem 1rem;
+
+  border-bottom: 1px solid $border-color;
+
+  h5 {
+    margin-bottom: 0;
+
+    font-size: $font-size-sm;
+    font-weight: bolder;
+
+    color: $text-muted;
+  }
+
+  .krist-value {
+    font-size: 120%;
+  }
+}
