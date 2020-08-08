@@ -4,6 +4,7 @@ import "./index.scss";
 
 import Nav from "react-bootstrap/Nav";
 import { TotalBalance } from "./TotalBalance";
+import { SidebarItem } from "./SidebarItem";
 import Footer from "./Footer";
 
 export default function() {
@@ -12,35 +13,18 @@ export default function() {
       <TotalBalance balance={250000} /> 
 
       <div className="sidebar-content">
-        <Nav.Item>
-          <Nav.Link href="/">Dashboard</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link href="/wallets">My Wallets</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link href="/friends">Address Book</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link href="/me/transactions">Transactions</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link href="/me/names">Names</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link href="/mining">Mining</Nav.Link>
-        </Nav.Item>
+        <SidebarItem url="/" icon="gauge" text="Dashboard" />
+        <SidebarItem url="/wallets" icon="book" text="My Wallets" />
+        <SidebarItem url="/friends" icon="users" text="Address Book" />
+        <SidebarItem url="/me/transactions" icon="bank" text="Transactions" />
+        <SidebarItem url="/me/names" icon="tags" text="Names" />
+        <SidebarItem url="/mining" icon="diamond" text="Mining" />
 
         <h6>Network</h6>
-        <Nav.Item>
-          <Nav.Link href="/network/blocks">Blocks</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link href="/network/transactions">Transactions</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link href="/network/names">Names</Nav.Link>
-        </Nav.Item>        
+        <SidebarItem url="/network/blocks" icon="cubes" text="Blocks" />
+        <SidebarItem url="/network/transactions" icon="bank" text="Transactions" />
+        <SidebarItem url="/network/names" icon="tags" text="Names" />
+        <SidebarItem url="/network/statistics" icon="chart-line" text="Statistics" />
       </div>
 
       <Footer />

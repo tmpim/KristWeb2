@@ -8,7 +8,10 @@ $border-radius-sm: 0;
 $font-family-base: "Lato", sans-serif;
 
 /* Import Bootstrap after redefining */
-@import "~bootstrap/scss/functions", "~bootstrap/scss/variables";
+@import 
+  "~bootstrap/scss/functions", 
+  "~bootstrap/scss/variables",
+  "~bootstrap/scss/mixins/breakpoints";
 
 /* -------------------------------------------------------------------------- */
 /*                                   NAVBAR                                   */

@@ -17,7 +17,7 @@ export default function() {
       <Navbar.Toggle aria-controls="main-nav-collapse" />
       <Navbar.Collapse id="main-nav-collapse">
         <Nav>
-          <Nav.Link href="/send"><span className="nav-icon icon-upload"></span>Send</Nav.Link>
+          <Nav.Link href="/send"><span className="nav-icon icon-paper-plane"></span>Send</Nav.Link>
           <Nav.Link href="/request"><span className="nav-icon icon-download"></span>Request</Nav.Link>
         </Nav>
         <Search />

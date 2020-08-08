@@ -1,0 +1,15 @@
+@import "~scss/variables";
+
+#main-sidebar .nav-item {
+  .nav-link {
+    color: $main-sidebar-color;
+  }
+
+  .sidebar-icon {
+    margin-right: 0.5rem;
+  }
+
+  &:hover {
+    background: $main-sidebar-hover-bg;
+  }
+}

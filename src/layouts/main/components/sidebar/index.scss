@@ -1,5 +1,4 @@
 @import "~scss/variables";
-@import "~bootstrap/scss/mixins/breakpoints";
 
 #main-sidebar {
   width: $main-sidebar-width;
@@ -24,16 +23,6 @@
     overflow-y: auto;
 
     flex: 1;
-  }
-
-  .nav-item {
-    .nav-link {
-      color: $main-sidebar-color;
-    }
-
-    &:hover {
-      background: $main-sidebar-hover-bg;
-    }
   }
 
   /* Separator headers */
