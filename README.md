@@ -5,7 +5,10 @@
 *This project is heavily under development. It is currently in the design 
 stages, meaning there is **no useful functionality yet***.
 
-Rewrite of the Krist Web Wallet, in React. This is a fully clientside Krist wallet that only needs to communicate to the Krist node itself. It securely saves wallets encrypted in your browser's Local Storage, so you don't have to type in wallet passwords ever again!
+Rewrite of the Krist Web Wallet, in React. This is a fully clientside Krist 
+wallet that only needs to communicate to the Krist node itself. It securely 
+saves wallets encrypted in your browser's Local Storage, so you don't have to 
+type in wallet passwords ever again!
 
 ### Building
 
@@ -16,6 +19,12 @@ npm install
 npm start # Run the development server
 npm build # Build the production files
 ```
+
+### Contributing
+
+As per tmpim convention, this project uses 
+[Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) as a
+standard for commit messages.
 
 ### Providing host attribution
 
@@ -28,6 +37,12 @@ To provide hosting credits in the sidebar footer, create the file
   "url": "https://github.com/Lemmmy"
 }
 ```
+
+### Donate
+
+If you like my work, and want to help me with this hobby project and many more
+in the future, please consider supporting me on 
+[Patreon](https://patreon.com/lemmmy).
 
 ### License
 
