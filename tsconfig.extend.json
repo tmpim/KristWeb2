@@ -4,6 +4,9 @@
     "paths": {
       "@components/*": ["./src/shared-components/*"],
       "@layouts/*": ["./src/layouts/*"],
+      "@krist/*": ["./src/krist/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@utils": ["./src/utils/index.ts"],
       "@/*": ["./*"]
     }
   }

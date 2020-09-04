@@ -6,4 +6,12 @@
     "scss": "src/scss",
     "fontello": "src/fontello",
   },
+  "cSpell.words": [
+    "Transpiler",
+    "esnext",
+    "firstseen",
+    "keepalive",
+    "motd",
+    "tsdoc"
+  ],
 }

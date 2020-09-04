@@ -5,10 +5,8 @@ import FormControl from "react-bootstrap/FormControl";
 
 import "./Search.scss";
 
-export default function() {
-  return (
-    <Form inline id="main-nav-search">
-      <FormControl type="text" placeholder="Search the Krist network" />
-    </Form>
-  )
-}
+export const Search = (): JSX.Element => (
+  <Form inline id="main-nav-search">
+    <FormControl type="text" placeholder="Search the Krist network" />
+  </Form>
+);

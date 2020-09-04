@@ -18,7 +18,7 @@ const prereleaseTagColours: { [key: string]: string } = {
   "rc": "success"
 };
 
-export default function() {
+export const Brand = (): JSX.Element => {
   const version = packageJson.version;
 
   const major = semverMajor(version);
@@ -30,7 +30,7 @@ export default function() {
   let badge = null;
   if (prerelease && prerelease.length) {
     const variant = prereleaseTagColours[prerelease[0]] || "light";
-    badge = <Badge variant={variant}>{prerelease.join(".")}</Badge>
+    badge = <Badge variant={variant}>{prerelease.join(".")}</Badge>;
   }
 
   return (
@@ -41,5 +41,5 @@ export default function() {
         {badge}
       </a>
     </div>
-  )
-}
+  );
+};

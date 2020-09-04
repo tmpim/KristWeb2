@@ -1,9 +1,10 @@
-import React, { Component } from "react";
+import React, { Component, ReactNode } from "react";
 import PropTypes from "prop-types";
 
 import "./SidebarItem.scss";
 
 import Nav from "react-bootstrap/Nav";
+import { LinkContainer } from "react-router-bootstrap";
 
 type SidebarItemProps = {
   url: string,
@@ -18,14 +19,16 @@ export class SidebarItem extends Component<SidebarItemProps> {
     icon: PropTypes.string.isRequired
   }
 
-  render() {
+  render(): ReactNode {
     const { url, text, icon } = this.props;
 
     return <Nav.Item>
-      <Nav.Link href={url}>
-        <span className={"sidebar-icon icon-" + icon}></span>
-        {text}
-      </Nav.Link>
-    </Nav.Item>
+      <LinkContainer to={url}>
+        <Nav.Link>
+          <span className={"sidebar-icon icon-" + icon}></span>
+          {text}
+        </Nav.Link>
+      </LinkContainer>
+    </Nav.Item>;
   }
 }
