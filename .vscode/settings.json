@@ -11,6 +11,7 @@
     "arraybuffer",
     "esnext",
     "firstseen",
+    "formik",
     "keepalive",
     "motd",
     "tsdoc"
