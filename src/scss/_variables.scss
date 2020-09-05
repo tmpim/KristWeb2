@@ -7,6 +7,16 @@ $border-radius-sm: 0;
 
 $font-family-base: "Lato", sans-serif;
 
+$enable-shadows: true;
+
+$btn-box-shadow: none;
+$input-box-shadow: none;
+
+$modal-content-box-shadow-xs: 0 .5rem 1rem rgba(#000, .15);
+$modal-content-box-shadow-sm-up: 0 .5rem 1rem rgba(#000, .15);
+$modal-content-border-width: 0;
+$modal-header-border-width: 1px;
+
 /* Import Bootstrap after redefining */
 @import 
   "~bootstrap/scss/functions", 

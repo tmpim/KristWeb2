@@ -22,7 +22,9 @@
   "rules": {
     "quotes": ["error", "double", { "allowTemplateLiterals": true }],
     "semi": "error",
-    "indent": ["error", 2],
+    "indent": ["error", 2, {
+      "FunctionDeclaration": { "parameters": "first" }
+    }],
     "eol-last": ["error", "always"],
     "tsdoc/syntax": "warn",
     "react/function-component-definition": ["warn", {

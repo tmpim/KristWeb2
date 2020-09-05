@@ -15,6 +15,7 @@
   "private": true,
   "dependencies": {
     "@craco/craco": "^5.6.4",
+    "base64-arraybuffer": "^0.2.0",
     "bootstrap": "^4.5.2",
     "debug": "^4.1.1",
     "prop-types": "^15.7.2",
@@ -25,6 +26,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.3",
     "semver": "^7.3.2",
+    "spu-md5": "0.0.4",
     "typescript": "^3.9.7",
     "websocket-as-promised": "^1.0.1"
   },
