@@ -39,7 +39,7 @@
     "build-storybook": "build-storybook -s public",
     "font-install": "fontello-cli install --config src/fontello/config.json --css src/fontello/css --font src/fontello/font",
     "font-open": "fontello-cli open --config src/fontello/config.json --css src/fontello/css --font src/fontello/font",
-    "postinstall": "patch-pacakge"
+    "postinstall": "patch-package"
   },
   "eslintConfig": {
     "extends": "react-app"
