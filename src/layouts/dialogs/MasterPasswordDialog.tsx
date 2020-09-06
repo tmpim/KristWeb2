@@ -6,7 +6,9 @@ import Form from "react-bootstrap/Form";
 
 import { Formik, FormikHelpers } from "formik";
 
-import { WalletManager } from "./WalletManager";
+import { HelpWalletStorageLink } from "./HelpWalletStorageDialog";
+
+import { WalletManager } from "../../app/WalletManager";
 
 interface MasterPasswordDialogProps {
   hasMasterPassword: boolean;
@@ -46,8 +48,10 @@ export class MasterPasswordDialog extends Component<MasterPasswordDialogProps> {
       ? <p>Enter your master password to access your wallets, or browse
       KristWeb as a guest.</p>
       : <>
-        <p className="mb-0">Enter a master password to encrypt your wallets, 
-          or browse KristWeb as a guest.</p>
+        <p className="mb-0">
+          Enter a master password to encrypt your wallets, or browse KristWeb 
+          as a guest <HelpWalletStorageLink />. 
+        </p>
         <p><small className="text-muted">
           Never forget this password. If you forget it, you will have to 
           create a new one and add all your wallets again.
@@ -55,9 +59,6 @@ export class MasterPasswordDialog extends Component<MasterPasswordDialogProps> {
       </>;
 
     return (
-      /* TODO: Animation is disabled for now, because react-bootstrap (or more
-        specifically, react-transition-group) has an incompatibility with
-        strict mode. */
       <Modal 
         show={true} centered animation={false}
         onHide={this.browseAsGuest.bind(this)}

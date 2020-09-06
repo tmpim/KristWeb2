@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { MasterPasswordDialog } from "./MasterPasswordDialog";
+import { MasterPasswordDialog } from "../layouts/dialogs/MasterPasswordDialog";
 import { WalletManager } from "./WalletManager";
 
 interface Props {

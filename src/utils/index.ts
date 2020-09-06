@@ -8,3 +8,6 @@ export const toHex = (input: ArrayBufferLike | Uint8Array): string =>
 
 export const fromHex = (input: string): Uint8Array =>
   new Uint8Array((input.match(/.{1,2}/g) || []).map(b => parseInt(b, 16)));
+
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+export const noop = (): void => {};
