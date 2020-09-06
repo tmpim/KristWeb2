@@ -36,6 +36,10 @@ export class MasterPasswordDialog extends Component<MasterPasswordDialogProps> {
     }
   }
 
+  browseAsGuest(): void {
+    this.props.walletManager.browseAsGuest();
+  }
+
   render(): JSX.Element {
     const { hasMasterPassword } = this.props;
     const body = hasMasterPassword
@@ -54,7 +58,10 @@ export class MasterPasswordDialog extends Component<MasterPasswordDialogProps> {
       /* TODO: Animation is disabled for now, because react-bootstrap (or more
         specifically, react-transition-group) has an incompatibility with
         strict mode. */
-      <Modal show={true} centered animation={false}>
+      <Modal 
+        show={true} centered animation={false}
+        onHide={this.browseAsGuest.bind(this)}
+      >
         <Formik initialValues={{ password: "" }} onSubmit={this.onSubmit.bind(this)}>
           {({ handleSubmit, handleChange, values, errors, isSubmitting }) => (
             <Form noValidate onSubmit={handleSubmit}>
@@ -83,8 +90,15 @@ export class MasterPasswordDialog extends Component<MasterPasswordDialogProps> {
                 <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
               </Modal.Body>
               <Modal.Footer>
-                {/* Left side */}
-                <Button variant="secondary" style={{ marginRight: "auto" }} tabIndex={3}>Browse as guest</Button>
+                {/* Left side, "Browse as guest" button */}
+                <Button 
+                  variant="secondary" 
+                  style={{ marginRight: "auto" }} 
+                  onClick={this.browseAsGuest.bind(this)}
+                  tabIndex={3}
+                >
+                  Browse as guest
+                </Button>
 
                 {/* Right side */}
                 {hasMasterPassword

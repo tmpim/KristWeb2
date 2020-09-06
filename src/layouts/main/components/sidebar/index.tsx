@@ -1,15 +1,22 @@
 import React from "react";
 
-import "./index.scss";
-
 import Nav from "react-bootstrap/Nav";
+
+import { WalletManager } from "@app/WalletManager";
+
 import { TotalBalance } from "./TotalBalance";
 import { SidebarItem } from "./SidebarItem";
 import { Footer } from "./Footer";
 
-export const MainSidebar = (): JSX.Element => (
+import "./index.scss";
+
+interface Props {
+  walletManager: WalletManager;
+}
+
+export const MainSidebar: React.FC<Props> = (props: Props): JSX.Element => (
   <Nav id="main-sidebar">
-    <TotalBalance balance={250000} /> 
+    {!props.walletManager.isGuest && <TotalBalance balance={250000} />}
 
     <div className="sidebar-content">
       <SidebarItem url="/" icon="home" text="Dashboard" />

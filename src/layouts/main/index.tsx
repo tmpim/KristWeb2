@@ -6,6 +6,8 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
+import { WalletManager } from "@app/WalletManager";
+
 import { MainNav } from "./components/nav";
 import { MainSidebar } from "./components/sidebar";
 
@@ -13,12 +15,16 @@ import { Credits } from "@layouts/credits";
 
 import "./index.scss";
 
-export const MainLayout = (): JSX.Element => (
+interface Props {
+  walletManager: WalletManager;
+}
+
+export const MainLayout: React.FC<Props> = (props: Props): JSX.Element => (
   <Router>
     <MainNav />
     <Container fluid id="main-container">
       <Row>
-        <MainSidebar />
+        <MainSidebar walletManager={props.walletManager} />
         <Col id="page-container">
           <Switch>
             <Route exact path="/">

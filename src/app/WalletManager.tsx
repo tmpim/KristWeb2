@@ -1,20 +1,16 @@
-import React, { Component } from "react";
-
 import { toHex } from "@utils";
 import { aesGcmEncrypt, aesGcmDecrypt } from "@utils/crypto";
-
-import { MasterPasswordDialog } from "./MasterPasswordDialog";
 
 import Debug from "debug";
 const debug = Debug("kristweb:walletManager");
 
-type WalletManagerData = {
+export class WalletManager {
   /** Whether or not the user has logged in, either as a guest, or with a
    * master password. */
-  isLoggedIn: boolean;
+  isLoggedIn = false;
 
   /** Whether or not the user is browsing KristWeb as a guest. */
-  isGuest: boolean;
+  isGuest = true;
 
   /** The master password used to encrypt and decrypt local storage data. */
   masterPassword?: string;
@@ -28,28 +24,20 @@ type WalletManagerData = {
 
   /** Whether or not the user has configured and saved a master password
    * before (whether or not salt+tester are present in local storage). */
-  hasMasterPassword: boolean;
-}
+  hasMasterPassword = false;
 
-export class WalletManager extends Component<unknown, WalletManagerData> {
-  constructor(props: unknown) {
-    super(props);
+  constructor(private stateChangeListener: (walletManager: WalletManager) => void) {
+    this.isLoggedIn = false;
+    this.isGuest = true;
 
-    // Check current data stored in local storage.
-    const salt = localStorage.getItem("salt") || undefined;
-    const tester = localStorage.getItem("tester") || undefined;
+    // Salt and tester from local storage (or undefined)
+    this.salt = localStorage.getItem("salt") || undefined;
+    this.tester = localStorage.getItem("tester") || undefined;
 
-    this.state = {
-      isLoggedIn: false,
-      isGuest: true,
+    // There is a master password configured if both `salt` and `tester` exist
+    this.hasMasterPassword = !!this.salt && !!this.tester;
 
-      // Salt and tester from local storage (or undefined)
-      salt, tester,
-      // There is a master password configured if both `salt` and `tester` exist
-      hasMasterPassword: !!salt && !!tester
-    };
-
-    debug("hasMasterPassword: %b", this.state.hasMasterPassword);
+    debug("hasMasterPassword: %b", this.hasMasterPassword);
   }
 
   async setMasterPassword(password: string): Promise<void> {
@@ -69,18 +57,19 @@ export class WalletManager extends Component<unknown, WalletManagerData> {
     localStorage.setItem("tester", tester);
 
     // Set the logged in state
-    this.setState({
-      isLoggedIn: true,
-      isGuest: false,
-      masterPassword: password
-    });
+    this.isLoggedIn = true;
+    this.isGuest = false;
+    this.masterPassword = password;
+
+    // Delegate to the App's listener
+    this.stateChangeListener(this);
   }
 
   async testMasterPassword(password: string): Promise<void> {
     if (!password) throw new Error("Password is required.");
 
     // Get the salt and tester from local storage and ensure they exist
-    const { salt, tester } = this.state;
+    const { salt, tester } = this;
     if (!salt || !tester) throw new Error("Master password has not been set up.");
 
     try {
@@ -97,23 +86,20 @@ export class WalletManager extends Component<unknown, WalletManagerData> {
     }
 
     // Set the logged in state and don't return any errors (login successful)
-    this.setState({
-      isLoggedIn: true,
-      isGuest: false,
-      masterPassword: password
-    });
+    this.isLoggedIn = true;
+    this.isGuest = false;
+    this.masterPassword = password;
+
+    // Delegate to the App's listener
+    this.stateChangeListener(this);
   }
 
-  /** Render the master password login/setup dialog */
-  render(): JSX.Element | null {
-    const { isLoggedIn, hasMasterPassword } = this.state;
-    if (isLoggedIn) return null; // Don't show the dialog again
+  browseAsGuest(): void {
+    // Set the logged in state as a guest
+    this.isLoggedIn = true;
+    this.isGuest = true;
 
-    return (
-      <MasterPasswordDialog 
-        hasMasterPassword={hasMasterPassword} // Show the setup dialog if needed
-        walletManager={this} 
-      />
-    );
+    // Delegate to the App's listener
+    this.stateChangeListener(this);
   }
-}
+};
