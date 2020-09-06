@@ -8,13 +8,15 @@
 
   box-shadow: $box-shadow;
 
+  border-bottom: 1px solid $border-color-darker;
+
   .navbar-collapse {
     margin: 0 1rem 0 0;
   }
 
   .navbar-nav {
     .nav-link {
-      border-right: 1px solid $gray-700;
+      border-right: 1px solid $border-color-darker;
       padding: 0 1.5rem;
 
       .nav-icon {

@@ -2,6 +2,7 @@ import React from "react";
 
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
+import { LinkContainer } from "react-router-bootstrap";
 
 import { Brand } from "./Brand";
 import { Search } from "./Search";
@@ -15,9 +16,17 @@ export const MainNav = (): JSX.Element => (
     <Brand />
     <Navbar.Toggle aria-controls="main-nav-collapse" />
     <Navbar.Collapse id="main-nav-collapse">
+      {/* Main nav buttons */}
       <Nav>
-        <Nav.Link href="/send"><span className="nav-icon icon-paper-plane"></span>Send</Nav.Link>
-        <Nav.Link href="/request"><span className="nav-icon icon-download"></span>Request</Nav.Link>
+        {/* Send Krist button */}
+        <LinkContainer to="/send">
+          <Nav.Link><span className="nav-icon icon-paper-plane"></span>Send</Nav.Link>
+        </LinkContainer>
+
+        {/* Receive Krist button */}
+        <LinkContainer to="/request">
+          <Nav.Link><span className="nav-icon icon-download"></span>Request</Nav.Link>
+        </LinkContainer>
       </Nav>
       <Search />
       <ConnectionIndicator />

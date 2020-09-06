@@ -1,11 +1,11 @@
 @import "~scss/variables";
 
 .nav-total-balance {
-  background-color: $gray-200;
+  background-color: $main-sidebar-top-bg;
 
   padding: 0.5rem 1rem;
 
-  border-bottom: 1px solid $border-color;
+  border-bottom: 1px solid $border-color-darker;
 
   h5 {
     margin-bottom: 0;

@@ -13,6 +13,7 @@
     "firstseen",
     "formik",
     "keepalive",
+    "mixins",
     "motd",
     "tsdoc"
   ],

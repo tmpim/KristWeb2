@@ -1,23 +1,6 @@
-/* -------------------------------------------------------------------------- */
-/*                                  BOOTSTRAP                                 */
-/* -------------------------------------------------------------------------- */
-$border-radius: 0;
-$border-radius-lg: 0;
-$border-radius-sm: 0;
+@import "_theme"; /* Re-skin bootstrap */
 
-$font-family-base: "Lato", sans-serif;
-
-$enable-shadows: true;
-
-$btn-box-shadow: none;
-$input-box-shadow: none;
-
-$modal-content-box-shadow-xs: 0 .5rem 1rem rgba(#000, .15);
-$modal-content-box-shadow-sm-up: 0 .5rem 1rem rgba(#000, .15);
-$modal-content-border-width: 0;
-$modal-header-border-width: 1px;
-
-/* Import Bootstrap after redefining */
+/* Import Bootstrap after redefining its variables */
 @import 
   "~bootstrap/scss/functions", 
   "~bootstrap/scss/variables",
@@ -29,24 +12,25 @@ $modal-header-border-width: 1px;
 $navbar-height: 50px;
 
 /* Search bar */
-$navbar-search-bg: $gray-700;
-$navbar-search-color: $gray-500;
-$navbar-search-placeholder-color: $gray-600;
+$navbar-search-bg: $light;
+$navbar-search-color: rgba($body-color, 0.5);
+$navbar-search-placeholder-color: $input-placeholder-color;
 $navbar-search-placeholder-font-size: $font-size-sm;
-$navbar-search-hover-bg: $gray-600;
-$navbar-search-hover-color: $white;
-$navbar-search-hover-placeholder-color: $gray-500;
-$navbar-search-focus-bg: $white;
+$navbar-search-hover-bg: $slighter;
+$navbar-search-hover-color: rgba($body-color, 0.75);
+$navbar-search-hover-placeholder-color: $input-placeholder-color;
+$navbar-search-focus-bg: $lighter;
 $navbar-search-focus-color: $body-color;
-$navbar-search-focus-placeholder-color: $body-color;
+$navbar-search-focus-placeholder-color: $input-placeholder-color;
 
 /* -------------------------------------------------------------------------- */
 /*                                MAIN SIDEBAR                                */
 /* -------------------------------------------------------------------------- */
 $main-sidebar-width: 200px !default;
 $main-sidebar-color: $body-color;
-$main-sidebar-bg: $gray-100;
-$main-sidebar-hover-bg: $gray-200;
+$main-sidebar-bg: $darker;
+$main-sidebar-hover-bg: mix($darker, $darkest, 50%);
+$main-sidebar-top-bg: $darkest;
 
 /* -------------------------------------------------------------------------- */
 /*                                    MISC                                    */
