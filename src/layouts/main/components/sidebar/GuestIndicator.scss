@@ -1,0 +1,13 @@
+@import "~scss/variables";
+
+.nav-guest-indicator {
+  background-color: $gray-200;
+
+  padding: 0.5rem 1rem;
+
+  border-bottom: 1px solid $border-color;
+
+  color: $text-muted;
+  text-align: center;
+  font-size: 85%;
+}

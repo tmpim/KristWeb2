@@ -4,6 +4,7 @@ import Nav from "react-bootstrap/Nav";
 
 import { WalletManager } from "@app/WalletManager";
 
+import { GuestIndicator } from "./GuestIndicator";
 import { TotalBalance } from "./TotalBalance";
 import { SidebarItem } from "./SidebarItem";
 import { Footer } from "./Footer";
@@ -16,12 +17,20 @@ interface Props {
 
 export const MainSidebar: React.FC<Props> = (props: Props): JSX.Element => (
   <Nav id="main-sidebar">
-    {!props.walletManager.isGuest && <TotalBalance balance={250000} />}
+    {/* Show the guest indicator if they are browsing as guest, otherwise 
+        show their total balance. */}
+    {props.walletManager.isGuest
+      ? <GuestIndicator />
+      : <TotalBalance balance={250000} />}
 
     <div className="sidebar-content">
       <SidebarItem url="/" icon="home" text="Dashboard" />
-      <SidebarItem url="/wallets" icon="wallet" text="My Wallets" />
-      <SidebarItem url="/friends" icon="users" text="Address Book" />
+
+      {/* Hide irrelevant entries for guests. */}
+      {!props.walletManager.isGuest && <>
+        <SidebarItem url="/wallets" icon="wallet" text="My Wallets" />
+        <SidebarItem url="/friends" icon="users" text="Address Book" />      
+      </>}
       <SidebarItem url="/me/transactions" icon="bank" text="Transactions" />
       <SidebarItem url="/me/names" icon="tags" text="Names" />
       <SidebarItem url="/mining" icon="diamond" text="Mining" />
