@@ -15,6 +15,8 @@ export const HelpWalletStorageLink: React.FC = () => {
   return (
     <>
       {/* Add a link to show the dialog */}
+      {/* TODO: make this a <button> */}
+      {/* eslint-disable-next-line */}
       (<a href="#" onClick={handleShow}>learn more</a>)
       <HelpWalletStorageDialog
         show={show}

@@ -1,4 +1,4 @@
-import React, { useState, PropsWithChildren, ReactNode } from "react";
+import React, { PropsWithChildren, ReactNode } from "react";
 
 import Modal from "react-bootstrap/Modal";
 import { CloseButton } from "./utils/CloseButton";
