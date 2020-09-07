@@ -40,7 +40,7 @@ export const HelpWalletStorageDialog: React.FC<Props> = ({ show, handleClose }: 
     title="Help: Wallet storage"
   >
     <p>
-      When you add a wallet to KristWeb, the privatekey for the wallet is 
+      When you add a wallet to KristWeb, the private key for the wallet is 
       saved to your browser&apos;s local storage and encrypted with your 
       master password.
     </p>
