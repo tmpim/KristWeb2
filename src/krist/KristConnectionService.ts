@@ -18,7 +18,7 @@ const WSP_OPTIONS: WSPOptions = {
 
 /** Silly typing for an object containing a promise's resolve and reject
  * functions. */
-type PromiseResponseHandler<T> = {
+interface PromiseResponseHandler<T> {
   resolve: (value?: T | PromiseLike<T>) => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   reject: (reason?: any) => void;

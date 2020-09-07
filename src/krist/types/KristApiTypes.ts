@@ -1,5 +1,5 @@
-export type KristApiWsResponse = {
-  ok?: boolean,
-  url?: string,
-  expires?: number
+export interface KristApiWsResponse {
+  ok?: boolean;
+  url?: string;
+  expires?: number;
 };

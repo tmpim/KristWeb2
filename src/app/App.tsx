@@ -13,8 +13,8 @@ import packageJson from "@/package.json";
 kristService().connect(packageJson.defaultSyncNode) // TODO
   .catch(console.error);
 
-type AppState = {
-  walletManager: WalletManager
+interface AppState {
+  walletManager: WalletManager;
 }
 
 export class App extends Component<unknown, AppState> {

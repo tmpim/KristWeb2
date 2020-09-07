@@ -11,13 +11,17 @@ import { SettingsCog } from "./SettingsCog";
 
 import "./index.scss";
 
-export const MainNav = (): JSX.Element => (
+interface Props {
+  isGuest: boolean;
+}
+
+export const MainNav: React.FC<Props> = ({ isGuest }: Props): JSX.Element => (
   <Navbar bg="dark" variant="dark" fixed="top" id="main-nav">
     <Brand />
     <Navbar.Toggle aria-controls="main-nav-collapse" />
     <Navbar.Collapse id="main-nav-collapse">
-      {/* Main nav buttons */}
-      <Nav>
+      {/* Main nav buttons, only show if logged in */}
+      {!isGuest && <Nav>
         {/* Send Krist button */}
         <LinkContainer to="/send">
           <Nav.Link><span className="nav-icon icon-paper-plane"></span>Send</Nav.Link>
@@ -27,7 +31,7 @@ export const MainNav = (): JSX.Element => (
         <LinkContainer to="/request">
           <Nav.Link><span className="nav-icon icon-download"></span>Request</Nav.Link>
         </LinkContainer>
-      </Nav>
+      </Nav>}
       <Search />
       <ConnectionIndicator />
       <SettingsCog />

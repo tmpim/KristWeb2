@@ -5,7 +5,7 @@ import { CloseButton } from "./utils/CloseButton";
 
 import { noop } from "@utils";
 
-type Props = {
+interface Props {
   show: boolean;
 
   title: string;

@@ -2,7 +2,7 @@ import React from "react";
 
 import Button from "react-bootstrap/Button";
 
-type Props = {
+interface Props {
   handleClose: () => void;
   alignRight?: boolean;
 }

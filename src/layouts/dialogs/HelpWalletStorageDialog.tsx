@@ -26,7 +26,7 @@ export const HelpWalletStorageLink: React.FC = () => {
   );
 };
 
-type Props = {
+interface Props {
   show: boolean;
   handleClose: () => void;
 }

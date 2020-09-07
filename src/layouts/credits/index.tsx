@@ -7,19 +7,20 @@ import Button from "react-bootstrap/Button";
 
 import packageJson from "@/package.json";
 
-type Supporter = {
-  name: string,
-  url?: string
+interface Supporter {
+  name: string;
+  url?: string;
 };
 
-type CreditsData = {
-  isLoaded: boolean,
-  supporters: Supporter[] | null
+interface CreditsState {
+  isLoaded: boolean;
+  supporters: Supporter[] | null;
 };
 
-export class Credits extends Component<unknown, CreditsData> {
+export class Credits extends Component<unknown, CreditsState> {
   constructor(props: unknown) {
     super(props);
+    
     this.state = {
       isLoaded: false,
       supporters: null
@@ -82,12 +83,13 @@ export class Credits extends Component<unknown, CreditsData> {
   }
 }
 
-export class Supporters extends Component<{supporters: Supporter[]}> {
-  render(): ReactNode {
-    return this.props.supporters.map(supporter => 
-      (supporter.url
-        ? <a target="_blank" rel="noopener noreferrer" className="d-inline-block m-2 font-weight-bold" href={supporter.url}>{supporter.name}</a>
-        : <span className="d-inline-block m-2 font-weight-bold">{supporter.name}</span>
-      ));
-  }
+interface SupportersProps {
+  supporters: Supporter[];
 }
+
+export const Supporters: React.FC<SupportersProps> = ({ supporters }: SupportersProps) =>
+  (<>{supporters.map(({ url, name }) => (
+    url
+      ? <a key={name} target="_blank" rel="noopener noreferrer" className="d-inline-block m-2 font-weight-bold" href={url}>{name}</a>
+      : <span key={name} className="d-inline-block m-2 font-weight-bold">{name}</span>
+  ))}</>);

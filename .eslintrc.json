@@ -38,6 +38,11 @@
       "allowedNames": [],
       "allowHigherOrderFunctions": true,
       "allowTypedFunctionExpressions": true
+    }],
+    "@typescript-eslint/consistent-type-definitions": ["error", "interface"],
+    "@typescript-eslint/member-delimiter-style": ["error", {
+      "multiline": {"delimiter": "semi", "requireLast": true},
+      "singleline": {"delimiter": "semi", "requireLast": false}
     }]
   },
   "extends": [

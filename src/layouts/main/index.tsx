@@ -21,7 +21,7 @@ interface Props {
 
 export const MainLayout: React.FC<Props> = (props: Props): JSX.Element => (
   <Router>
-    <MainNav />
+    <MainNav isGuest={props.walletManager.isGuest} />
     <Container fluid id="main-container">
       <Row>
         <MainSidebar walletManager={props.walletManager} />

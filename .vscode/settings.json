@@ -16,6 +16,8 @@
     "keepalive",
     "mixins",
     "motd",
+    "multiline",
+    "singleline",
     "tsdoc"
   ],
 }
