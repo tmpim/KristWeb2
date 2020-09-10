@@ -8,6 +8,10 @@
       "@krist/*": ["./src/krist/*"],
       "@utils": ["./src/utils/index.ts"],
       "@utils/*": ["./src/utils/*"],
+      "@actions/*": ["./src/store/actions/*"],
+      "@reducers/*": ["./src/store/reducers/*"],
+      "@store": ["./src/store"],
+      "@store/*": ["./src/store/*"],
       "@/*": ["./*"]
     }
   }

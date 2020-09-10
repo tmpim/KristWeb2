@@ -18,6 +18,7 @@
     "motd",
     "multiline",
     "singleline",
-    "tsdoc"
+    "tsdoc",
+    "typesafe"
   ],
 }

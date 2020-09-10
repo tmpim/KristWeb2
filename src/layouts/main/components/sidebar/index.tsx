@@ -2,24 +2,29 @@ import React from "react";
 
 import Nav from "react-bootstrap/Nav";
 
-import { WalletManager } from "@app/WalletManager";
-
 import { GuestIndicator } from "./GuestIndicator";
 import { TotalBalance } from "./TotalBalance";
 import { SidebarItem } from "./SidebarItem";
 import { Footer } from "./Footer";
 
+import { connect } from "react-redux";
+import { RootState } from "@store";
+
 import "./index.scss";
 
 interface Props {
-  walletManager: WalletManager;
+  isGuest: boolean;
 }
 
-export const MainSidebar: React.FC<Props> = (props: Props): JSX.Element => (
+const mapStateToProps = (state: RootState): Props => ({
+  isGuest: state.walletManager.isGuest
+});
+
+const MainSidebarComponent: React.FC<Props> = ({ isGuest }: Props): JSX.Element => (
   <Nav id="main-sidebar">
     {/* Show the guest indicator if they are browsing as guest, otherwise 
         show their total balance. */}
-    {props.walletManager.isGuest
+    {isGuest
       ? <GuestIndicator />
       : <TotalBalance balance={250000} />}
 
@@ -27,7 +32,7 @@ export const MainSidebar: React.FC<Props> = (props: Props): JSX.Element => (
       <SidebarItem url="/" icon="home" text="Dashboard" />
 
       {/* Hide irrelevant entries for guests. */}
-      {!props.walletManager.isGuest && <>
+      {!isGuest && <>
         <SidebarItem url="/wallets" icon="wallet" text="My Wallets" />
         <SidebarItem url="/friends" icon="users" text="Address Book" />      
       </>}
@@ -45,3 +50,5 @@ export const MainSidebar: React.FC<Props> = (props: Props): JSX.Element => (
     <Footer />
   </Nav>
 );
+
+export const MainSidebar = connect(mapStateToProps)(MainSidebarComponent);

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, ReactNode } from "react";
 
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
@@ -8,29 +8,48 @@ import { Formik, FormikHelpers } from "formik";
 
 import { HelpWalletStorageLink } from "./HelpWalletStorageDialog";
 
-import { WalletManager } from "../../app/WalletManager";
+import { Dispatch } from "redux";
+import { connect, ConnectedProps } from "react-redux";
+import { RootState } from "@store";
+import { browseAsGuest, login, setMasterPassword } from "@app/WalletManager";
 
-interface MasterPasswordDialogProps {
+interface OwnProps {
+  isLoggedIn: boolean;
+  salt?: string;
+  tester?: string;
   hasMasterPassword: boolean;
-  walletManager: WalletManager;
 }
+
+const mapStateToProps = (state: RootState): OwnProps => ({
+  isLoggedIn: state.walletManager.isLoggedIn,
+  salt: state.walletManager.salt,
+  tester: state.walletManager.tester,
+  hasMasterPassword: state.walletManager.hasMasterPassword
+});
+
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return { dispatch };
+};
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+type Props = ConnectedProps<typeof connector> & OwnProps;
 
 interface FormValues {
   password: string;
 }
 
-export class MasterPasswordDialog extends Component<MasterPasswordDialogProps> {
+class MasterPasswordDialogComponent extends Component<Props> {
   async onSubmit({ password }: FormValues, helpers: FormikHelpers<FormValues>): Promise<void> {
     try {
       if (typeof password !== "string" || password.length === 0) 
         throw new Error("Password is required.");
 
-      const { hasMasterPassword, walletManager } = this.props;
+      const { dispatch, salt, tester, hasMasterPassword } = this.props;
 
       if (hasMasterPassword) // Attempt login
-        await walletManager.testMasterPassword(password);
+        await login(dispatch, salt, tester, password);
       else // Setup a new master password
-        await walletManager.setMasterPassword(password);
+        await setMasterPassword(dispatch, password);
     } catch (e) { // Catch any errors (usually 'invalid password') and display
       helpers.setSubmitting(false);
       helpers.setErrors({ password: e.message || "Unknown error." });
@@ -39,10 +58,13 @@ export class MasterPasswordDialog extends Component<MasterPasswordDialogProps> {
   }
 
   browseAsGuest(): void {
-    this.props.walletManager.browseAsGuest();
+    browseAsGuest(this.props.dispatch);
   }
 
-  render(): JSX.Element {
+  render(): ReactNode {
+    // Don't show the dialog if we're already logged in
+    if (this.props.isLoggedIn) return null;
+
     const { hasMasterPassword } = this.props;
     const body = hasMasterPassword
       ? <p>Enter your master password to access your wallets, or browse
@@ -117,3 +139,5 @@ export class MasterPasswordDialog extends Component<MasterPasswordDialogProps> {
     );
   }
 }
+
+export const MasterPasswordDialog = connector(MasterPasswordDialogComponent);

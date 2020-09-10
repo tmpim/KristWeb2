@@ -9,13 +9,20 @@ import { Search } from "./Search";
 import { ConnectionIndicator } from "./ConnectionIndicator";
 import { SettingsCog } from "./SettingsCog";
 
+import { connect } from "react-redux";
+import { RootState } from "@store";
+
 import "./index.scss";
 
 interface Props {
   isGuest: boolean;
 }
 
-export const MainNav: React.FC<Props> = ({ isGuest }: Props): JSX.Element => (
+const mapStateToProps = (state: RootState): Props => ({
+  isGuest: state.walletManager.isGuest
+});
+
+const MainNavComponent: React.FC<Props> = ({ isGuest }: Props): JSX.Element => (
   <Navbar bg="dark" variant="dark" fixed="top" id="main-nav">
     <Brand />
     <Navbar.Toggle aria-controls="main-nav-collapse" />
@@ -38,3 +45,5 @@ export const MainNav: React.FC<Props> = ({ isGuest }: Props): JSX.Element => (
     </Navbar.Collapse>
   </Navbar>
 );
+
+export const MainNav = connect(mapStateToProps)(MainNavComponent);
