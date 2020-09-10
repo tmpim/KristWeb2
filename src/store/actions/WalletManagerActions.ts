@@ -3,6 +3,7 @@ import { createAction } from "typesafe-actions";
 
 import * as constants from "../constants";
 
+export const openLogin = createAction(constants.OPEN_LOGIN)<void>();
 export const browseAsGuest = createAction(constants.BROWSE_AS_GUEST)<void>();
 
 export interface LoginPayload { password: string };

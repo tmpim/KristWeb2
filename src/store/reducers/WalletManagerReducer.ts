@@ -1,4 +1,4 @@
-import { browseAsGuest, login, setMasterPassword } from "@actions/WalletManagerActions";
+import { browseAsGuest, openLogin, login, setMasterPassword } from "@actions/WalletManagerActions";
 import { createReducer, ActionType } from "typesafe-actions";
 
 export interface State {
@@ -46,6 +46,10 @@ export const WalletManagerReducer = createReducer(initialState)
     ...state,
     isLoggedIn: true,
     isGuest: true
+  }))
+  .handleAction(openLogin, (state: State) => ({
+    ...state,
+    isLoggedIn: false
   }))
   .handleAction(login, (state: State, action: ActionType<typeof login>) => ({
     ...state,

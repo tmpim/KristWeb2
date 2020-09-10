@@ -10,4 +10,10 @@
   color: $text-muted;
   text-align: center;
   font-size: 85%;
+
+  cursor: pointer;
+
+  &:hover {
+    background-color: $main-sidebar-top-hover-bg;
+  }
 }
