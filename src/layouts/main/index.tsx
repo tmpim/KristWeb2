@@ -9,6 +9,7 @@ import Col from "react-bootstrap/Col";
 import { MainNav } from "./components/nav";
 import { MainSidebar } from "./components/sidebar";
 
+import { MyWalletsPage } from "@layouts/my-wallets";
 import { Credits } from "@layouts/credits";
 
 import "./index.scss";
@@ -23,6 +24,9 @@ export const MainLayout: React.FC = () => (
           <Switch>
             <Route exact path="/">
               {/* Home */}
+            </Route>
+            <Route exact path="/wallets">
+              <MyWalletsPage />
             </Route>
             <Route path="/credits">
               <Credits />

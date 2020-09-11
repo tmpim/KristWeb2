@@ -1,0 +1,13 @@
+@import "~scss/variables";
+
+.btn .btn-icon {
+  margin-right: $btn-padding-x;
+}
+
+.btn-sm .btn-icon {
+  margin-right: $btn-padding-x-sm;
+}
+
+.btn-lg .btn-icon {
+  margin-right: $btn-padding-x-lg;
+}
