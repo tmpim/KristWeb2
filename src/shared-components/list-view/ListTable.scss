@@ -1,0 +1,7 @@
+@import "~scss/variables";
+
+.list-view table {
+  thead {
+    border-bottom: 1px solid $border-color;
+  }
+}

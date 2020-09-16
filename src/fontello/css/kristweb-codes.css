@@ -15,10 +15,12 @@
 .icon-plus:before { content: '\e80d'; } /* '' */
 .icon-database:before { content: '\e80e'; } /* '' */
 .icon-pencil:before { content: '\e80f'; } /* '' */
+.icon-left-open:before { content: '\e810'; } /* '' */
+.icon-right-open:before { content: '\e811'; } /* '' */
+.icon-up-open:before { content: '\e812'; } /* '' */
+.icon-down-open:before { content: '\e813'; } /* '' */
 .icon-money:before { content: '\f0d6'; } /* '' */
 .icon-gauge:before { content: '\f0e4'; } /* '' */
-.icon-angle-up:before { content: '\f106'; } /* '' */
-.icon-angle-down:before { content: '\f107'; } /* '' */
 .icon-mail-squared:before { content: '\f199'; } /* '' */
 .icon-bank:before { content: '\f19c'; } /* '' */
 .icon-cubes:before { content: '\f1b3'; } /* '' */

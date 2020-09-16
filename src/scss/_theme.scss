@@ -54,6 +54,8 @@ $input-placeholder-color: $text-muted;
 
 $input-btn-focus-color: rgba($info, 0.5);
 
+$input-group-addon-bg: $secondary;
+
 .was-validated .form-control:invalid, .form-control.is-invalid {
   /* Make invalid form controls have a red glow */
   &:not(:focus) {
@@ -85,3 +87,23 @@ $close-text-shadow: none;
   /* Close button isn't vertically aligned in modal header by default. */
   align-items: center;
 }
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: $border-radius;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $secondary;
+  border-radius: $border-radius;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: $slighter;
+}
+

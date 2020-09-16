@@ -11,3 +11,13 @@ export const fromHex = (input: string): Uint8Array =>
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 export const noop = (): void => {};
+
+export function selectContents(element: Element): void {
+  const range = document.createRange();
+  range.selectNodeContents(element);
+
+  const selection = window.getSelection();
+  if (!selection) throw new Error("Couldn't get window selection");
+  selection.removeAllRanges();
+  selection.addRange(range);
+}
