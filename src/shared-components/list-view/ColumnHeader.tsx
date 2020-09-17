@@ -33,13 +33,15 @@ export class ColumnHeader<T> extends Component<Props<T>> {
 
     // Decide which sort button to render
     const sortButton = () => {
+      const sort = () => this.onClickSort();
+
       switch (sortDirection) {
       case SortDirection.ASC:
-        return <i onClick={() => this.onClickSort()} className="column-sort column-sort-asc icon-up-open" />;
+        return <i onClick={sort} className="column-sort column-sort-asc icon-up-open" />;
       case SortDirection.DESC:
-        return <i onClick={() => this.onClickSort()} className="column-sort column-sort-desc icon-down-open" />;
+        return <i onClick={sort} className="column-sort column-sort-desc icon-down-open" />;
       default: // no sort
-        return <i onClick={() => this.onClickSort()} className="column-sort column-sort-none icon-down-open" />;
+        return <i onClick={sort} className="column-sort column-sort-none icon-down-open" />;
       }
     };
 

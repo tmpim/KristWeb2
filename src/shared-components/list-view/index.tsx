@@ -16,6 +16,8 @@ export enum SortDirection {
 export interface HeaderSpec {
   name: string;
   sortable?: boolean;
+
+  skeletonEmWidth?: number;
 }
 
 interface Props<T> {

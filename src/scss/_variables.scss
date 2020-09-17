@@ -37,3 +37,13 @@ $main-sidebar-top-hover-bg: $main-sidebar-hover-bg;
 /*                                    MISC                                    */
 /* -------------------------------------------------------------------------- */
 $krist-value-alt-color: $text-muted; // TODO: maybe green?
+
+$skeleton-color: $lighter;
+$skeleton-height: 0.75em;
+$skeleton-max-width: 10em;
+$skeleton-pulse-opacity: 0.6;
+$skeleton-pulse-duration: 1.5s;
+$skeleton-pulse-delay: 1s;
+
+$table-loading-gradient-height: 10rem;
+$table-loading-gradient-color: $body-bg;
