@@ -36,10 +36,15 @@ fallback.
 
 Language files are named with 
 [IETF language tags](https://en.wikipedia.org/wiki/IETF_language_tag). Short
-tags (e.g. `en` instead of `en-GB`) are preferred. The library will 
-automatically detect the language from your browser to use, but for the sake of
-testing, you can override it by running the following command in the developer
-console (<kbd>Ctrl+Shift+I</kbd>):
+tags (e.g. `en` instead of `en-GB`) are preferred.
+
+**IMPORTANT:** If you are adding a new language, you **must** add it to
+[`src/utils/i18n.ts`](src/utils/i18n.ts) in `supportedLngs`. Be sure to add
+yourself to [`translators.json`](translators.json) too!
+
+The library will automatically detect the language from your browser to use, but
+for the sake of testing, you can override it by running the following command in
+the developer console (<kbd>Ctrl+Shift+I</kbd>):
 
 ```js
 localStorage.i18nextLng = "en";

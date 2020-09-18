@@ -12,6 +12,7 @@
   "defaultSyncNode": "https://krist.ceriat.net",
   "supportURL": "https://donate.lemmmy.pw",
   "supportersURL": "https://donate.lemmmy.pw/supporters.json",
+  "translateURL": "https://github.com/tmpim/KristWeb2/blob/master/README.md#contributing-translations",
   "private": true,
   "dependencies": {
     "@craco/craco": "^5.6.4",

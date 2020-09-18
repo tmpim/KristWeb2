@@ -85,6 +85,9 @@
     "madeBy": "Made by <1>{{authorName}}</1>",
     "supportersTitle": "Supporters",
     "supportersDescription": "This project was made possible by the following amazing supporters:",
-    "supportButton": "Support KristWeb"
+    "supportButton": "Support KristWeb",
+    "translatorsTitle": "Translators",
+    "translatorsDescription": "This project was translated by the following amazing contributors:",
+    "translateButton": "Translate KristWeb"
   }
 }
