@@ -1,18 +1,22 @@
 @import "~scss/variables";
 
-.column-sort {
-  margin-left: 0.25rem;
-  cursor: pointer;
+.list-view table thead {
+  user-select: none;
 
-  &-asc, &-desc {
-    color: $body-color;
-  }
-
-  &-none {
-    color: rgba($text-muted, 0.75);
-
-    &:hover {
-      color: $body-hover-color;
+  .column-sort {
+    margin-left: 0.25rem;
+    cursor: pointer;
+  
+    &-asc, &-desc {
+      color: $body-color;
+    }
+  
+    &-none {
+      color: rgba($text-muted, 0.75);
+  
+      &:hover {
+        color: $body-hover-color;
+      }
     }
   }
 }

@@ -10,5 +10,9 @@
   &.loading {
     // Fade out the skeleton screen when data is loading
     mask-image: linear-gradient(to bottom, black 50%, transparent);
+
+    tbody {
+      pointer-events: none;
+    }
   }
 }
