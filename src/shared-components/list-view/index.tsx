@@ -14,7 +14,8 @@ export enum SortDirection {
 }
 
 export interface HeaderSpec {
-  name: string;
+  /** i18n key for column/header name */
+  nameKey: string;
   sortable?: boolean;
 
   skeletonEmWidth?: number;

@@ -4,9 +4,6 @@ import { aesGcmEncrypt, aesGcmDecrypt } from "@utils/crypto";
 import { AppDispatch } from "./App";
 import * as actions from "@actions/WalletManagerActions";
 
-import Debug from "debug";
-const debug = Debug("kristweb:walletManager");
-
 export function browseAsGuest(dispatch: AppDispatch): void {
   dispatch(actions.browseAsGuest());
 }
@@ -14,8 +11,8 @@ export function browseAsGuest(dispatch: AppDispatch): void {
 /** Verifies that the given password is correct, and dispatches the login
  * action to the Redux store. */
 export async function login(dispatch: AppDispatch, salt: string | undefined, tester: string | undefined, password: string): Promise<void> {
-  if (!password) throw new Error("Password is required.");
-  if (!salt || !tester) throw new Error("Master password has not been set up.");
+  if (!password) throw new Error("masterPassword.errorPasswordRequired");
+  if (!salt || !tester) throw new Error("masterPassword.errorPasswordUnset");
 
   try {
     // Attempt to decrypt the tester with the given password
@@ -45,8 +42,6 @@ export async function setMasterPassword(dispatch: AppDispatch, password: string)
 
   // Generate the encryption tester
   const tester = await aesGcmEncrypt(saltHex, password);
-
-  debug("master password salt: %x    tester: %s", salt, tester);
 
   // Store them in local storage
   localStorage.setItem("salt", saltHex);

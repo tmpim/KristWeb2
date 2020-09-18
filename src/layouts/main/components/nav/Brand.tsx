@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useTranslation } from "react-i18next";
+
 import semverMajor from "semver/functions/major";
 import semverMinor from "semver/functions/minor";
 import semverPatch from "semver/functions/patch";
@@ -19,6 +21,8 @@ const prereleaseTagColours: { [key: string]: string } = {
 };
 
 export const Brand = (): JSX.Element => {
+  const { t } = useTranslation();
+
   const version = packageJson.version;
 
   const major = semverMajor(version);
@@ -36,7 +40,7 @@ export const Brand = (): JSX.Element => {
   return (
     <div className="navbar-brand">
       <a href="/">
-        KristWeb
+        {t("app.name")}
         <span className="navbar-version">v{major}.{minor}.{patch}</span>
         {badge}
       </a>

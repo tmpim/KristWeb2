@@ -10,7 +10,7 @@ import { MainNav } from "./components/nav";
 import { MainSidebar } from "./components/sidebar";
 
 import { MyWalletsPage } from "@layouts/my-wallets";
-import { Credits } from "@layouts/credits";
+import { CreditsPage } from "@layouts/credits";
 
 import "./index.scss";
 
@@ -29,7 +29,7 @@ export const MainLayout: React.FC = () => (
               <MyWalletsPage />
             </Route>
             <Route path="/credits">
-              <Credits />
+              <CreditsPage />
             </Route>
           </Switch>        
         </Col>

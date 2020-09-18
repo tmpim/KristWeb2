@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import "./App.scss";
 
 import { MainLayout } from "../layouts/main";
@@ -20,8 +20,10 @@ kristService().connect(packageJson.defaultSyncNode) // TODO
   .catch(console.error);*/
   
 export const App: React.FC = () => (
-  <Provider store={store}>
-    <MainLayout />
-    <MasterPasswordDialog />
-  </Provider>
+  <Suspense fallback="Loading (TODO)"> {/* TODO */}
+    <Provider store={store}>
+      <MainLayout />
+      <MasterPasswordDialog />
+    </Provider>
+  </Suspense>
 );

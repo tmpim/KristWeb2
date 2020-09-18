@@ -1,5 +1,7 @@
 import React, { Component, ReactNode } from "react";
 
+import { withTranslation, WithTranslation } from "react-i18next";
+
 import { ListView, HeaderSpec } from "@components/list-view";
 
 import { IconButton } from "@components/icon-button";
@@ -20,15 +22,16 @@ interface Wallet {
 }
 
 const WALLET_HEADERS = new Map<Extract<keyof Wallet, string>, HeaderSpec>()
-  .set("label", { name: "Label" })
-  .set("address", { name: "Address" })
-  .set("balance", { name: "Balance" })
-  .set("names", { name: "Names" })
-  .set("category", { name: "Category", sortable: false }) // TODO: temporary
-  .set("firstSeen", { name: "First Seen" });
+  .set("label", { nameKey: "myWallets.columnLabel" })
+  .set("address", { nameKey: "myWallets.columnAddress" })
+  .set("balance", { nameKey: "myWallets.columnBalance" })
+  .set("names", { nameKey: "myWallets.columnNames" })
+  .set("category", { nameKey: "myWallets.columnCategory" })
+  .set("firstSeen", { nameKey: "myWallets.columnFirstSeen" });
 
-export class MyWalletsPage extends Component {
+class MyWalletsPageComponent extends Component<WithTranslation> {
   render(): ReactNode {
+    const { t } = this.props;
 
     return <ListView<Wallet>
       title="23 wallets"
@@ -36,14 +39,14 @@ export class MyWalletsPage extends Component {
       pages={3}
       actions={<>
         <IconButton size="sm" variant="secondary" icon="database">
-          Manage backups
+          {t("myWallets.manageBackups")}
         </IconButton>
         <IconButton size="sm" variant="success" icon="plus">
-          Create wallet
+          {t("myWallets.createWallet")}
         </IconButton>
         <Button size="sm" variant="outline-primary">
           {/* TODO: find an icon for this */}
-          Add existing wallet
+          {t("myWallets.addExistingWallet")}
         </Button>
       </>}
       filters={<>
@@ -53,7 +56,7 @@ export class MyWalletsPage extends Component {
         {/* Category selection box */}
         <FilterSelect 
           options={new Map()
-            .set("_all", "All categories")
+            .set("_all", t("myWallets.categoryDropdownAll"))
             .set("shops", "Shops")
           }
         />
@@ -62,3 +65,5 @@ export class MyWalletsPage extends Component {
     />;
   }
 }
+
+export const MyWalletsPage = withTranslation()(MyWalletsPageComponent);

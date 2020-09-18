@@ -1,5 +1,7 @@
 import React, { ReactNode, Component } from "react";
 
+import { Translation } from "react-i18next";
+
 import { HeaderSpec, SortDirection } from ".";
 
 import "./ColumnHeader.scss";
@@ -46,7 +48,7 @@ export class ColumnHeader<T> extends Component<Props<T>> {
     };
 
     return <th>
-      {headerSpec.name}
+      <Translation>{t => t(headerSpec.nameKey)}</Translation>
       {sortable && sortButton()}
     </th>;
   }

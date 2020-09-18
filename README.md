@@ -26,6 +26,28 @@ As per tmpim convention, this project uses
 [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) as a
 standard for commit messages.
 
+### Contributing translations
+
+Translation files are currently created manually in the 
+[i18next JSON format](https://www.i18next.com/misc/json-format). You can find
+existing translations in [`public/locales`](public/locales). The 
+[English (GB) translation](public/locales/en/translation.json) is used as the
+fallback.
+
+Language files are named with 
+[IETF language tags](https://en.wikipedia.org/wiki/IETF_language_tag). Short
+tags (e.g. `en` instead of `en-GB`) are preferred. The library will 
+automatically detect the language from your browser to use, but for the sake of
+testing, you can override it by running the following command in the developer
+console (<kbd>Ctrl+Shift+I</kbd>):
+
+```js
+localStorage.i18nextLng = "en";
+```
+
+If you need any help with specific i18next features (e.g. handling plurals),
+don't hesitate to contact Lemmmy.
+
 ### Providing host attribution
 
 To provide hosting credits in the sidebar footer, create the file

@@ -1,8 +1,11 @@
 import React, { useState, MouseEvent } from "react";
 
+import { useTranslation } from "react-i18next";
+
 import { ModalDialog } from "./ModalDialog";
 
 export const HelpWalletStorageLink: React.FC = () => {
+  const { t } = useTranslation();
   const [show, setShow] = useState(false);
 
   // Help dialog show/close state is essentially handled by the link
@@ -17,7 +20,7 @@ export const HelpWalletStorageLink: React.FC = () => {
       {/* Add a link to show the dialog */}
       {/* TODO: make this a <button> */}
       {/* eslint-disable-next-line */}
-      (<a href="#" onClick={handleShow}>learn more</a>)
+      (<a href="#" onClick={handleShow}>{t("masterPassword.learnMore")}</a>)
       <HelpWalletStorageDialog
         show={show}
         handleClose={handleClose}
@@ -31,28 +34,24 @@ interface Props {
   handleClose: () => void;
 }
 
-export const HelpWalletStorageDialog: React.FC<Props> = ({ show, handleClose }: Props) => (
-  <ModalDialog 
-    show={show}
-    handleClose={handleClose}
-    hasCloseButton={true}
-    hasFooterCloseButton={true}
-    title="Help: Wallet storage"
-  >
-    <p>
-      When you add a wallet to KristWeb, the private key for the wallet is 
-      saved to your browser&apos;s local storage and encrypted with your 
-      master password.
-    </p>
-    <p>
-      Every wallet you save is encrypted using the same master password, and 
-      you will need to enter it every time you open KristWeb. Your actual 
-      Krist wallet is not modified in any way.
-    </p>
-    <p className="mb-0">
-      When browsing KristWeb as a guest, you do not need to enter a master
-      password, but it also means that you will not be able to add or use any
-      wallets. You will still be able to explore the Krist network.
-    </p>
-  </ModalDialog>
-);
+export const HelpWalletStorageDialog: React.FC<Props> = ({ show, handleClose }: Props) => {
+  const { t } = useTranslation();
+
+  const paragraphs = t("masterPassword.helpWalletStorage").split("\n");
+
+  return (
+    <ModalDialog 
+      show={show}
+      handleClose={handleClose}
+      hasCloseButton={true}
+      hasFooterCloseButton={true}
+      title={t("masterPassword.helpWalletStorageTitle")}
+    >
+      {paragraphs.map((text, i) => 
+        <p key={`paragraph-${i}`} className={i === paragraphs.length - 1 ? "mb-0" : ""}>
+          {text}
+        </p>
+      )}
+    </ModalDialog>
+  );
+};

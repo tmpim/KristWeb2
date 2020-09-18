@@ -1,5 +1,7 @@
 import React, { Component, ReactNode } from "react";
 
+import { withTranslation, WithTranslation, Trans } from "react-i18next";
+
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -32,7 +34,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 };
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
-type Props = ConnectedProps<typeof connector> & OwnProps;
+type Props = ConnectedProps<typeof connector> & WithTranslation & OwnProps;
 
 interface FormValues {
   password: string;
@@ -40,9 +42,11 @@ interface FormValues {
 
 class MasterPasswordDialogComponent extends Component<Props> {
   async onSubmit({ password }: FormValues, helpers: FormikHelpers<FormValues>): Promise<void> {
+    const { t } = this.props;
+
     try {
       if (typeof password !== "string" || password.length === 0) 
-        throw new Error("Password is required.");
+        throw new Error("masterPassword.errorPasswordRequired");
 
       const { dispatch, salt, tester, hasMasterPassword } = this.props;
 
@@ -51,9 +55,13 @@ class MasterPasswordDialogComponent extends Component<Props> {
       else // Setup a new master password
         await setMasterPassword(dispatch, password);
     } catch (e) { // Catch any errors (usually 'invalid password') and display
+      const message = e.message // Translate the error if we can
+        ? e.message.startsWith("masterPassword.") ? t(e.message) : e.message
+        : t("masterPassword.errorUnknown");
+
       helpers.setSubmitting(false);
-      helpers.setErrors({ password: e.message || "Unknown error." });
-      console.error(e);
+      helpers.setErrors({ password: message });
+      console.error(message, e);
     }
   }
 
@@ -62,21 +70,23 @@ class MasterPasswordDialogComponent extends Component<Props> {
   }
 
   render(): ReactNode {
+    const { t } = this.props;
+
     // Don't show the dialog if we're already logged in
     if (this.props.isLoggedIn) return null;
 
     const { hasMasterPassword } = this.props;
     const body = hasMasterPassword
-      ? <p>Enter your master password to access your wallets, or browse
-      KristWeb as a guest.</p>
+      ? <p>{t("masterPassword.loginIntro")}</p>
       : <>
         <p className="mb-0">
-          Enter a master password to encrypt your wallets, or browse KristWeb 
-          as a guest <HelpWalletStorageLink />. 
+          <Trans t={t} i18nKey="masterPassword.intro">
+            Enter a master password to encrypt your wallets, or browse KristWeb 
+            as a guest <HelpWalletStorageLink />. 
+          </Trans>
         </p>
         <p><small className="text-muted">
-          Never forget this password. If you forget it, you will have to 
-          create a new one and add all your wallets again.
+          {t("masterPassword.dontForgetPassword")}
         </small></p>
       </>;
 
@@ -89,7 +99,7 @@ class MasterPasswordDialogComponent extends Component<Props> {
           {({ handleSubmit, handleChange, values, errors, isSubmitting }) => (
             <Form noValidate onSubmit={handleSubmit}>
               <Modal.Header closeButton>
-                <Modal.Title>Master password</Modal.Title>
+                <Modal.Title>{t("masterPassword.dialogTitle")}</Modal.Title>
               </Modal.Header>
               <Modal.Body>
                 {/* Embed the body text, which depends on whether or not this is 
@@ -97,13 +107,18 @@ class MasterPasswordDialogComponent extends Component<Props> {
                 {body}
 
                 {/* Provide a username field for browser autofill */}
-                <Form.Control type="username" value="Master password" readOnly={true} hidden={true} />
+                <Form.Control 
+                  type="username"
+                  value="Master password" /* Do not translate */
+                  readOnly={true} 
+                  hidden={true} 
+                />
 
                 {/* Password input */}
                 <Form.Control 
                   type="password" 
                   name="password"
-                  placeholder="Master password" 
+                  placeholder={t("masterPassword.passwordPlaceholder")}
                   value={values.password}
                   onChange={handleChange}
                   isInvalid={!!errors.password}
@@ -120,16 +135,22 @@ class MasterPasswordDialogComponent extends Component<Props> {
                   onClick={this.browseAsGuest.bind(this)}
                   tabIndex={3}
                 >
-                  Browse as guest
+                  {t("masterPassword.browseAsGuest")}
                 </Button>
 
                 {/* Right side */}
                 {hasMasterPassword
                   ? <> {/* They have a master password, show login */}
-                    <Button variant="danger">Forgot password</Button>
-                    <Button type="submit" variant="primary" disabled={isSubmitting} tabIndex={2}>Login</Button>
+                    <Button variant="danger">{t("masterPassword.forgotPassword")}</Button>
+                    <Button type="submit" variant="primary" disabled={isSubmitting} tabIndex={2}>
+                      {t("masterPassword.logIn")}
+                    </Button>
                   </>
-                  : <Button type="submit" variant="primary" disabled={isSubmitting} tabIndex={2}>Create password</Button>
+                  : (
+                    <Button type="submit" variant="primary" disabled={isSubmitting} tabIndex={2}>
+                      {t("masterPassword.createPassword")}
+                    </Button>
+                  )
                 }
               </Modal.Footer>
             </Form>
@@ -140,4 +161,4 @@ class MasterPasswordDialogComponent extends Component<Props> {
   }
 }
 
-export const MasterPasswordDialog = connector(MasterPasswordDialogComponent);
+export const MasterPasswordDialog = withTranslation()(connector(MasterPasswordDialogComponent));

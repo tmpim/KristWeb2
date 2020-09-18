@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useTranslation } from "react-i18next";
+
 import Nav from "react-bootstrap/Nav";
 
 import { GuestIndicator } from "./GuestIndicator";
@@ -20,35 +22,39 @@ const mapStateToProps = (state: RootState): Props => ({
   isGuest: state.walletManager.isGuest
 });
 
-const MainSidebarComponent: React.FC<Props> = ({ isGuest }: Props): JSX.Element => (
-  <Nav id="main-sidebar">
-    {/* Show the guest indicator if they are browsing as guest, otherwise 
-        show their total balance. */}
-    {isGuest
-      ? <GuestIndicator />
-      : <TotalBalance balance={250000} />}
+const MainSidebarComponent: React.FC<Props> = ({ isGuest }: Props): JSX.Element => {
+  const { t } = useTranslation();
 
-    <div className="sidebar-content">
-      <SidebarItem url="/" icon="home" text="Dashboard" />
+  return (
+    <Nav id="main-sidebar">
+      {/* Show the guest indicator if they are browsing as guest, otherwise 
+          show their total balance. */}
+      {isGuest
+        ? <GuestIndicator />
+        : <TotalBalance balance={250000} />}
 
-      {/* Hide irrelevant entries for guests. */}
-      {!isGuest && <>
-        <SidebarItem url="/wallets" icon="wallet" text="My Wallets" />
-        <SidebarItem url="/friends" icon="users" text="Address Book" />      
-      </>}
-      <SidebarItem url="/me/transactions" icon="bank" text="Transactions" />
-      <SidebarItem url="/me/names" icon="tags" text="Names" />
-      <SidebarItem url="/mining" icon="diamond" text="Mining" />
+      <div className="sidebar-content">
+        <SidebarItem url="/" icon="home" textKey="dashboard" />
 
-      <h6>Network</h6>
-      <SidebarItem url="/network/blocks" icon="cubes" text="Blocks" />
-      <SidebarItem url="/network/transactions" icon="bank" text="Transactions" />
-      <SidebarItem url="/network/names" icon="tags" text="Names" />
-      <SidebarItem url="/network/statistics" icon="chart-line" text="Statistics" />
-    </div>
+        {/* Hide irrelevant entries for guests. */}
+        {!isGuest && <>
+          <SidebarItem url="/wallets" icon="wallet" textKey="myWallets" />
+          <SidebarItem url="/friends" icon="users" textKey="addressBook" />      
+        </>}
+        <SidebarItem url="/me/transactions" icon="bank" textKey="transactions" />
+        <SidebarItem url="/me/names" icon="tags" textKey="names" />
+        <SidebarItem url="/mining" icon="diamond" textKey="mining" />
 
-    <Footer />
-  </Nav>
-);
+        <h6>{t("sidebar.network")}</h6>
+        <SidebarItem url="/network/blocks" icon="cubes" textKey="blocks" />
+        <SidebarItem url="/network/transactions" icon="bank" textKey="transactions" />
+        <SidebarItem url="/network/names" icon="tags" textKey="names" />
+        <SidebarItem url="/network/statistics" icon="chart-line" textKey="statistics" />
+      </div>
+
+      <Footer />
+    </Nav>
+  );
+};
 
 export const MainSidebar = connect(mapStateToProps)(MainSidebarComponent);

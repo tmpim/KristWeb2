@@ -1,5 +1,7 @@
 import React, { Component, ReactNode } from "react";
 
+import { Trans, withTranslation, WithTranslation } from "react-i18next";
+
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -17,8 +19,8 @@ interface CreditsState {
   supporters: Supporter[] | null;
 };
 
-export class Credits extends Component<unknown, CreditsState> {
-  constructor(props: unknown) {
+class CreditsPageComponent extends Component<WithTranslation, CreditsState> {
+  constructor(props: WithTranslation) {
     super(props);
     
     this.state = {
@@ -41,7 +43,9 @@ export class Credits extends Component<unknown, CreditsState> {
   }
 
   render(): ReactNode {
+    const { t } = this.props;
     const { isLoaded, supporters } = this.state;
+
     const authorName = packageJson.author || "Lemmmy";
     const authorURL = `https://github.com/${authorName}`;
     const supportURL = packageJson.supportURL;
@@ -50,7 +54,11 @@ export class Credits extends Component<unknown, CreditsState> {
       <Row>
         <Col className="text-center">
           <h1>KristWeb v2</h1>     
-          <p>Made by <a href={authorURL} target="_blank" rel="noopener noreferrer">{authorName}</a></p>   
+          <p>
+            <Trans t={t} i18nKey="credits.madeBy">
+              Made by <a href={authorURL} target="_blank" rel="noopener noreferrer">{{authorName}}</a>
+            </Trans>
+          </p>   
         </Col>
       </Row>
       <hr className="py-2" />
@@ -58,22 +66,22 @@ export class Credits extends Component<unknown, CreditsState> {
         <>
           <Row>
             <Col className="text-center">
-              <h3>Supporters</h3>     
-              <p>This project was made possible by the following amazing supporters:</p>
+              <h3>{t("credits.supportersTitle")}</h3>     
+              <p>{t("credits.supportersDescription")}</p>
             </Col>
           </Row>
           <Row> {/* Supporter list */}
             <Col className="text-center mw-50">
               {isLoaded && supporters !== null
                 ? <Supporters supporters={supporters} />
-                : <span className="text-muted">Loading...</span>
+                : <span className="text-muted">{t("loading")}</span>
               }              
             </Col>
           </Row>
           <Row> {/* Support button */}
             <Col className="text-center mt-4">
               <Button variant="success" as="a" href={supportURL} target="_blank" rel="noopener noreferrer">
-                Support KristWeb
+                {t("credits.supportButton")}
               </Button>
             </Col>
           </Row>
@@ -82,6 +90,8 @@ export class Credits extends Component<unknown, CreditsState> {
     </Container>;
   }
 }
+
+export const CreditsPage = withTranslation()(CreditsPageComponent);
 
 interface SupportersProps {
   supporters: Supporter[];

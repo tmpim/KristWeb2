@@ -1,22 +1,26 @@
 import React, { ReactNode, Component, createRef, ChangeEvent } from "react";
 
+import { withTranslation, WithTranslation } from "react-i18next";
+
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 import FormControl from "react-bootstrap/FormControl";
 
 import "./ListPagination.scss";
 
-interface Props {
+interface OwnProps {
   defaultPage: number;
   pages: number;
 }
+
+type Props = WithTranslation & OwnProps;
 
 interface State {
   focus: boolean;
   value: string;
 }
 
-export class ListPagination extends Component<Props, State> {
+class ListPaginationComponent extends Component<Props, State> {
   private textInput = createRef<HTMLInputElement>();
   private selected = false;
 
@@ -63,8 +67,12 @@ export class ListPagination extends Component<Props, State> {
   }
 
   private getFriendlyText() {
+    const { t } = this.props;
     const pageNumber = parseInt(this.state.value);
-    return `Page ${pageNumber.toLocaleString()} of ${this.props.pages}`;
+    return t("pagination.pageWithTotal", { 
+      page: pageNumber.toLocaleString(), 
+      total: this.props.pages.toLocaleString() 
+    });
   }
 
   render(): ReactNode {
@@ -104,3 +112,5 @@ export class ListPagination extends Component<Props, State> {
     );
   }
 };
+
+export const ListPagination = withTranslation()(ListPaginationComponent);

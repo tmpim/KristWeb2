@@ -3,6 +3,9 @@ import { toHex } from "./";
 import * as serviceWorker from "./serviceWorker";
 import Debug from "debug";
 
+// Set up i18next
+import "./i18n";
+
 // Set up custom debug formatters
 // Booleans (%b)
 Debug.formatters.b = (v: boolean) => v ? "true" : "false";

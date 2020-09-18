@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useTranslation } from "react-i18next";
+
 import "./GuestIndicator.scss";
 
 import { bindActionCreators, Dispatch } from "redux";
@@ -11,10 +13,15 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
   
 type Props = ReturnType<typeof mapDispatchToProps>;
 
-const GuestIndicatorComponent: React.FC<Props> = (props: Props) => (
+const GuestIndicatorComponent: React.FC<Props> = (props: Props) => {
+  const { t } = useTranslation();
+
   // Allow clicking the guest indicator to open the master password dialog again
-  // eslint-disable-next-line react/prop-types
-  <div className="nav-guest-indicator" onClick={() => { props.openLogin(); }}>Browsing as guest</div>
-);
+  return ( // eslint-disable-next-line react/prop-types
+    <div className="nav-guest-indicator" onClick={() => { props.openLogin(); }}>
+      {t("sidebar.guestIndicator")}
+    </div>
+  );
+};
 
 export const GuestIndicator = connect(null, mapDispatchToProps)(GuestIndicatorComponent);

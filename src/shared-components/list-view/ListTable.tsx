@@ -94,7 +94,7 @@ export class ListTable<T> extends Component<Props<T>, State<T>> {
       {headers && <thead>
         <tr>
           {Array.from(headers, ([headerKey, headerSpec]) => 
-            (<ColumnHeader 
+            (<ColumnHeader
               key={headerKey} 
               headerKey={headerKey} 
               headerSpec={headerSpec}
