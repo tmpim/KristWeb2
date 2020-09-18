@@ -54,7 +54,7 @@ export class TranslatorsComponent extends Component<WithTranslation> {
       <Row> {/* Translate button */}
         <Col className="text-center mt-4">
           <Button variant="success" as="a" href={translateURL} target="_blank" rel="noopener noreferrer">
-            {t("credits.translateButton")}
+            {t("credits.translateButton")} 
           </Button>
         </Col>
       </Row>

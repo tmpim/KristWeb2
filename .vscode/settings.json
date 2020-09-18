@@ -26,6 +26,7 @@
     "singleline",
     "textbox",
     "tsdoc",
-    "typesafe"
+    "typesafe",
+    "unstyled"
   ],
 }

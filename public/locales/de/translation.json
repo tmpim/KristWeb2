@@ -38,7 +38,10 @@
     "madeBy": "Entwickelt von <1>{{authorName}}</1>",
     "supportersTitle": "Unterstützer",
     "supportersDescription": "Dieses Projekt wurde ermöglicht durch die folgenden Personen:",
-    "supportButton": "KristWeb unterstützen"
+    "supportButton": "KristWeb unterstützen",
+    "translatorsTitle": "Übersetzer",
+    "translatorsDescription": "Dieses Projekt wurde übersetzt von:",
+    "translateButton": "KristWeb übersetzen"
   },
 
   "dialog": {
