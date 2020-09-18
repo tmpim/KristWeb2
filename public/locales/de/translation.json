@@ -1,0 +1,90 @@
+{
+  "app": {
+    "name": "KristWeb"
+  },
+
+  "nav": {
+    "connection": {
+      "online": "Online",
+      "offline": "Offline",
+      "connecting": "Verbindung wird hergestellt"
+    },
+
+    "search": "Krist-Netzwerk durchsuchen",
+
+    "send": "Überweisen",
+    "request": "Zahlung anfordern"
+  },
+
+  "sidebar": {
+    "totalBalance": "Gesamtsaldo",
+    "guestIndicator": "Als Gast angemeldet",
+    "dashboard": "Dashboard",
+    "myWallets": "Meine Wallets",
+    "addressBook": "Adressbuch",
+    "transactions": "Transaktionen",
+    "names": "Namen",
+    "mining": "Mining",
+    "network": "Netzwerk",
+    "blocks": "Blöcke",
+    "statistics": "Statistiken",
+    "madeBy": "Entwickelt von <1>{{authorName}}</1>",
+    "hostedBy": "Von <1>{{host}}</1> bereitgestellt",
+    "github": "GitHub",
+    "credits": "Danksagung"
+  },
+
+  "credits": {
+    "madeBy": "Entwickelt von <1>{{authorName}}</1>",
+    "supportersTitle": "Unterstützer",
+    "supportersDescription": "Dieses Projekt wurde ermöglicht durch die folgenden Personen:",
+    "supportButton": "KristWeb unterstützen"
+  },
+
+  "dialog": {
+    "close": "Schließen"
+  },
+
+  "pagination": {
+    "justPage": "Seite {{page}}",
+    "pageWithTotal": "Seite {{page}} von {{total}}"
+  },
+
+  "loading": "Wird geladen...",
+
+  "masterPassword": {
+    "dialogTitle": "Master-Passwort",
+    "passwordPlaceholder": "Master-Passwort",
+    "browseAsGuest": "Als Gast anmelden",
+    "createPassword": "Passwort erstellen",
+    "logIn": "Anmelden",
+    "forgotPassword": "Passwort vergessen?",
+    "intro": "Gebe ein Master-Passwort ein um deine Wallets zu verschlüsseln, oder melde dich als Gast an. <1></1>.",
+    "dontForgetPassword": "Bewahre dieses Passwort gut auf. Die gespeicherten Wallets können unter keinen Umständen wiederhergestellt werden!",
+    "loginIntro": "Gebe dein Master-Passwort ein um auf deine Wallets zuzugreifen, oder melde dich als Gast an.",
+    "learnMore": "mehr erfahren",
+    "errorPasswordRequired": "Fehlendes Passwort!",
+    "errorPasswordUnset": "Es wurde kein Master-Passwort gesetzt.",
+    "errorPasswordIncorrect": "Falsches Passwort.",
+    "errorUnknown": "Unbekannter Fehler.",
+    "helpWalletStorageTitle": "Hilfe: Speicherung von Wallets",
+    "helpWalletStorage": "Wenn du eine neue Wallet zu KristWeb hinzufügst, wird dessen Privatschlüssel mit Hilfe deines Master-Passworts verschlüsselt und in dem lokalen Speicher deines Browsers aufbewahrt.\nAlle Wallets sind mit genau diesem Master-Passwort verschlüsselt. Das bedeutet, dass du das Master-Passwort jedes Mal eingeben musst, wenn du KristWeb öffnest.\n Deine tatsächliche Krist-Wallet wird dabei nicht berührt.\nWenn du dich in KristWeb als Gast anmeldest, kannst du keine Wallets hinzufügen oder benutzen, sondern nur das Krist-Netzwerk durchsuchen."
+  },
+
+  "myWallets": {
+    "title": "{{count}} Wallet",
+    "title_plural": "{{count}} Wallets",
+    "manageBackups": "Sicherungen verwalten",
+    "createWallet": "Wallet erstellen",
+    "addExistingWallet": "Bestehendes Wallet hinzufügen",
+    "searchPlaceholder": "Wallets durchsuchen...",
+    "categoryDropdownAll": "Alle Kategorien",
+    "columnLabel": "Kurzbeschreibung",
+    "columnAddress": "Adresse",
+    "columnBalance": "Saldo",
+    "columnNames": "Namen",
+    "columnCategory": "Kategorie",
+    "columnFirstSeen": "Erstmals erschienen",
+    "titleLoading": "Wallets werden geladen..."
+  }
+}
