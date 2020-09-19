@@ -15,10 +15,10 @@ import { connect } from "react-redux";
 import { RootState } from "@store";
 
 import "./MainNav.scss";
-import { SidebarCollapseButton } from "../sidebar/SidebarCollapseButton";
+import { SidebarToggleButton } from "../sidebar/SidebarToggleButton";
 
 interface OwnProps {
-  onCollapseSidebar: () => void;
+  toggleSidebar: () => void;
 }
 
 interface StateProps {
@@ -31,12 +31,12 @@ const mapStateToProps = (state: RootState): StateProps => ({
 
 type Props = StateProps & OwnProps;
 
-const MainNavComponent: React.FC<Props> = ({ isGuest, onCollapseSidebar }: Props): JSX.Element => {
+const MainNavComponent: React.FC<Props> = ({ isGuest, toggleSidebar }: Props): JSX.Element => {
   const { t } = useTranslation();
 
   return (
     <Navbar bg="dark" variant="dark" sticky="top" id="main-nav">
-      <SidebarCollapseButton onCollapseSidebar={onCollapseSidebar} />
+      <SidebarToggleButton toggleSidebar={toggleSidebar} />
 
       <Brand />
 

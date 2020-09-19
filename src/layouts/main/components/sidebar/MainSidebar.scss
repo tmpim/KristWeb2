@@ -83,6 +83,9 @@
   background: $main-sidebar-backdrop-bg;
   opacity: 0;
 
+  // Ignore clicks when closed
+  pointer-events: none;
+
   // Below the sidebar and Bootstrap modals
   z-index: 900;
 
@@ -92,6 +95,10 @@
     display: block;
 
     &.show {
+      // Make clickable to hide when open
+      pointer-events: all;
+      cursor: pointer;
+
       opacity: $main-sidebar-backdrop-opacity;
     }
   }

@@ -27,21 +27,28 @@ export class MainLayout extends Component<unknown, State> {
     };
   }
 
+  toggleSidebar(): void {
+    this.setState({
+      sidebarCollapsed: !this.state.sidebarCollapsed
+    });
+  }
+
   render(): ReactNode {
     const { sidebarCollapsed } = this.state;
 
     return (
       <Router>
         {/* Top nav bar */}
-        <MainNav onCollapseSidebar={() => this.setState({
-          sidebarCollapsed: !sidebarCollapsed
-        })} />
+        <MainNav toggleSidebar={this.toggleSidebar.bind(this)} />
 
         {/* Main container */}
         <Container fluid id="main-container">
           <Row>
             {/* Left sidebar */}
-            <MainSidebar isCollapsed={sidebarCollapsed} />
+            <MainSidebar 
+              isCollapsed={sidebarCollapsed} 
+              toggleSidebar={this.toggleSidebar.bind(this)}
+            />
 
             {/* Page container */}
             <Col id="page-container">

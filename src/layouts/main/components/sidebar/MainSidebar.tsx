@@ -16,6 +16,7 @@ import "./MainSidebar.scss";
 
 interface OwnProps {
   isCollapsed: boolean;
+  toggleSidebar: () => void;
 }
 
 interface StateProps {
@@ -28,7 +29,7 @@ const mapStateToProps = (state: RootState): StateProps => ({
 
 type Props = StateProps & OwnProps;
 
-const MainSidebarComponent: React.FC<Props> = ({ isGuest, isCollapsed }: Props): JSX.Element => {
+const MainSidebarComponent: React.FC<Props> = ({ isGuest, isCollapsed, toggleSidebar }: Props): JSX.Element => {
   const { t } = useTranslation();
 
   return (
@@ -65,7 +66,11 @@ const MainSidebarComponent: React.FC<Props> = ({ isGuest, isCollapsed }: Props):
       </div>
 
       {/* Fade the rest of the app out on mobile when the sidebar is open */}
-      <div id="main-sidebar-backdrop" className={isCollapsed ? "" : "show"} />
+      <div 
+        id="main-sidebar-backdrop" 
+        className={isCollapsed ? "" : "show"} 
+        onClick={() => toggleSidebar()} // Click the backdrop to close sidebar
+      />
     </>
   );
 };
