@@ -1,10 +1,10 @@
 import React, { Component, ReactNode } from "react";
-import { HeaderSpec, SortDirection } from ".";
+import { HeaderSpec, SortDirection } from "./ListView";
 
 import Table from "react-bootstrap/Table";
 
 import { ColumnHeader } from "./ColumnHeader";
-import { KristValue } from "@components/krist-value";
+import { KristValue } from "@components/krist-value/KristValue";
 
 import "./ListTable.scss";
 import { SkeletonText } from "@components/skeleton/SkeletonText";

@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./index.scss";
+import "./KristValue.scss";
 
 interface Props {
   value: number;

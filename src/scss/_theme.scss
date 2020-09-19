@@ -83,23 +83,23 @@ $modal-header-border-width: 1px;
 $close-color: $text-muted;
 $close-text-shadow: none;
 
-.modal-header {
-  /* Close button isn't vertically aligned in modal header by default. */
-  align-items: center;
-}
-
 /* Custom scrollbar */
+$scrollbar-width: 8px;
+$scrollbar-thumb-color: $secondary;
+$scrollbar-track-color: rgba(0, 0, 0, 0.1);
+
+/* WebKit */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: $scrollbar-width;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1);
+  background: $scrollbar-track-color;
   border-radius: $border-radius;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: $secondary;
+  background: $scrollbar-thumb-color;
   border-radius: $border-radius;
 }
 
@@ -107,3 +107,8 @@ $close-text-shadow: none;
   background: $slighter;
 }
 
+/* Mozilla */
+:root {
+  scrollbar-color: $scrollbar-thumb-color $scrollbar-track-color !important;
+  scrollbar-width: thin !important;
+}

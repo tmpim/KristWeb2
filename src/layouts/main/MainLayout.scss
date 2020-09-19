@@ -1,0 +1,23 @@
+@import "~scss/variables";
+
+// Fix main container height overflow issues
+html, body {
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+}
+
+#main-container {
+  padding-top: $navbar-height;
+
+  overflow: scroll;
+
+  height: calc(100% - #{$navbar-height});
+
+  // Fix some strange wrapping issues on small screens
+  &>.row {
+    flex-wrap: nowrap;
+  }
+}

@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./index.scss";
+import "./Skeleton.scss";
 
 interface Props {
   emWidth?: number;

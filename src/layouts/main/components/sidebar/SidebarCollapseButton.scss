@@ -1,0 +1,29 @@
+@import "~scss/variables";
+
+#main-nav .navbar-toggler {
+  border: none;
+  border-right: 1px solid $border-color;
+  border-radius: 0;
+
+  // Make it full height
+  align-self: stretch;
+
+  &:hover {
+    background: $slighter;
+  }
+
+  &:active {
+    background: $lighter;
+  }
+
+  &:focus { 
+    outline: none;
+    box-shadow: $input-btn-focus-box-shadow;
+  }
+
+  // Hide unless mobile
+  display: none !important;
+  @include media-breakpoint-down(sm) {
+    display: block !important;
+  }
+}

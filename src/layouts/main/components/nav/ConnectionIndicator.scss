@@ -26,4 +26,9 @@
     background-color: $success;
     box-shadow: 0 0 0 3px rgba($success, 0.3);
   }
+
+  // Hide on mobile
+  @include media-breakpoint-down(md) {
+    display: none;
+  }
 }

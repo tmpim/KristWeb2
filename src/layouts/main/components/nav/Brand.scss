@@ -1,7 +1,7 @@
 @import "~scss/variables";
 
 .navbar-brand {
-  /* Make the left half of the nav equal to the sidebar width */
+  // Make the left half of the nav equal to the sidebar width
   width: $main-sidebar-width;
   padding: 0;
   margin: 0;
@@ -10,7 +10,15 @@
   align-items: center;
   justify-content: center;
 
+  // Make it full height
+  align-self: stretch;
+
+  // Force the search bar to shrink instead
+  flex-shrink: 0;
+
   border-right: 1px solid $border-color-darker;
+
+  user-select: none;
 
   a {
     color: $navbar-dark-brand-color;

@@ -32,6 +32,9 @@ $main-sidebar-bg: $darker;
 $main-sidebar-hover-bg: mix($darker, $darkest, 50%);
 $main-sidebar-top-bg: $darkest;
 $main-sidebar-top-hover-bg: $main-sidebar-hover-bg;
+$main-sidebar-collapse-duration: 350ms;
+$main-sidebar-backdrop-bg: $modal-backdrop-bg;
+$main-sidebar-backdrop-opacity: $modal-backdrop-opacity;
 
 /* -------------------------------------------------------------------------- */
 /*                                    MISC                                    */

@@ -8,8 +8,10 @@ export const ConnectionIndicator = (): JSX.Element => {
   const { t } = useTranslation();
 
   return (
-    <div id="connection-indicator" className="connection-connected">
-      {t("nav.connection.online")}
-    </div>
+    <div 
+      id="connection-indicator" 
+      className="connection-connected" 
+      title={t("nav.connection.online")}
+    />
   );
 };

@@ -2,7 +2,7 @@ import React, { PropsWithChildren } from "react";
 
 import Button, { ButtonProps } from "react-bootstrap/Button";
 
-import "./index.scss";
+import "./IconButton.scss";
 
 interface Props extends ButtonProps {
   icon: string;

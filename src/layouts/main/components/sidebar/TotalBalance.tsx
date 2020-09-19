@@ -2,7 +2,7 @@ import React from "react";
 
 import { useTranslation } from "react-i18next";
 
-import { KristValue } from "@components/krist-value";
+import { KristValue } from "@components/krist-value/KristValue";
 
 import "./TotalBalance.scss";
 

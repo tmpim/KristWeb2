@@ -5,9 +5,9 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 import { ListPagination } from "./ListPagination";
-
-import "./index.scss";
 import { ListTable } from "./ListTable";
+
+import "./ListView.scss";
 
 export enum SortDirection {
   ASC, DESC

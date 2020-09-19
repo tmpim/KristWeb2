@@ -3,12 +3,16 @@
 /* Center the search box */
 #main-nav-search.form-inline {
   margin: 0 auto;
+  padding: 0 1rem;
+  width: 100%;
 
   input.form-control[type=text] {
     border: none;
 
-    width: 30vw;
+    width: 100%;
     max-width: 400px;
+
+    margin: 0 auto;
 
     /* All the tedious recolouring nonsense */
     background: $navbar-search-bg;
@@ -41,6 +45,11 @@
       &::placeholder {
         color: $navbar-search-focus-placeholder-color;
       }
+    }
+
+    // Make the search box full width on mobile
+    @include media-breakpoint-down(sm) {
+      max-width: 100%;
     }
   }
 }

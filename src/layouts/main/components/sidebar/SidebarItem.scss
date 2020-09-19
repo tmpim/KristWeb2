@@ -1,6 +1,8 @@
 @import "~scss/variables";
 
 #main-sidebar .nav-item {
+  user-select: none;
+  
   .nav-link {
     color: $main-sidebar-color;
 

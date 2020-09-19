@@ -2,9 +2,9 @@ import React, { Component, ReactNode } from "react";
 
 import { withTranslation, WithTranslation } from "react-i18next";
 
-import { ListView, HeaderSpec } from "@components/list-view";
+import { ListView, HeaderSpec } from "@components/list-view/ListView";
 
-import { IconButton } from "@components/icon-button";
+import { IconButton } from "@components/icon-button/IconButton";
 import Button from "react-bootstrap/Button";
 
 import { SearchTextbox } from "@components/list-view/SearchTextbox";

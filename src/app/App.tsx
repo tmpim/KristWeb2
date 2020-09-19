@@ -1,7 +1,6 @@
 import React, { Suspense } from "react";
-import "./App.scss";
 
-import { MainLayout } from "../layouts/main";
+import { MainLayout } from "../layouts/main/MainLayout";
 
 import { MasterPasswordDialog } from "@layouts/dialogs/MasterPasswordDialog";
 

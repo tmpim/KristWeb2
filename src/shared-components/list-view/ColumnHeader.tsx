@@ -2,7 +2,7 @@ import React, { ReactNode, Component } from "react";
 
 import { Translation } from "react-i18next";
 
-import { HeaderSpec, SortDirection } from ".";
+import { HeaderSpec, SortDirection } from "./ListView";
 
 import "./ColumnHeader.scss";
 
