@@ -10,9 +10,7 @@ html, body {
 }
 
 #main-container {
-  padding-top: $navbar-height;
-
-  overflow: scroll;
+  overflow: auto;
 
   height: calc(100% - #{$navbar-height});
 

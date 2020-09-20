@@ -113,29 +113,29 @@ export class ListTable<T> extends Component<Props<T>, State<T>> {
         {!loading && <>
           <tr>
             <td>Shop Wallet</td>
-            <td>kreichdyes</td>
-            <td><KristValue value={15364} /></td>
-            <td>12</td>
-            <td>Shops</td>
-            <td>2020/09/11 08:08</td>
+            <td className="text-nowrap">kreichdyes</td>
+            <td className="text-nowrap"><KristValue value={15364} /></td>
+            <td className="text-nowrap">12</td>
+            <td className="text-nowrap">Shops</td>
+            <td className="text-nowrap">2020/09/11 08:08</td>
           </tr>
 
           <tr>
             <td>Main Wallet</td>
-            <td>khugepoopy</td>
-            <td><KristValue value={1024} /></td>
-            <td>3</td>
-            <td></td>
-            <td>2016/02/14 00:00</td>
+            <td className="text-nowrap">khugepoopy</td>
+            <td className="text-nowrap"><KristValue value={1024} /></td>
+            <td className="text-nowrap">3</td>
+            <td className="text-nowrap"></td>
+            <td className="text-nowrap">2016/02/14 00:00</td>
           </tr>
 
           <tr>
             <td>Old Wallet</td>
-            <td>kre3w0i79j</td>
-            <td><KristValue value={0} /></td>
-            <td>0</td>
-            <td></td>
-            <td>2015/02/14 00:00</td>
+            <td className="text-nowrap">kre3w0i79j</td>
+            <td className="text-nowrap"><KristValue value={0} /></td>
+            <td className="text-nowrap">0</td>
+            <td className="text-nowrap"></td>
+            <td className="text-nowrap">2015/02/14 00:00</td>
           </tr>
         </>}
       </tbody>

@@ -18,6 +18,9 @@ export interface HeaderSpec {
   nameKey: string;
   sortable?: boolean;
 
+  /* Whether or not a cell's contents should have text wrapping disabled 
+    (default: true) */
+  nowrap?: boolean;
   skeletonEmWidth?: number;
 }
 

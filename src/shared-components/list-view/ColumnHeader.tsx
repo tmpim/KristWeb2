@@ -30,6 +30,9 @@ export class ColumnHeader<T> extends Component<Props<T>> {
   render(): ReactNode {
     const { headerSpec, sortDirection } = this.props;
     
+    // If 'nowrap' is undefined, then assume it is nowrap
+    const nowrap = headerSpec.nowrap === undefined ? true : headerSpec.nowrap;
+    
     // If 'sortable' is undefined, then assume it is sortable
     const sortable = headerSpec.sortable === undefined ? true : headerSpec.sortable;
 
@@ -47,9 +50,13 @@ export class ColumnHeader<T> extends Component<Props<T>> {
       }
     };
 
-    return <th>
-      <Translation>{t => t(headerSpec.nameKey)}</Translation>
-      {sortable && sortButton()}
-    </th>;
+    return <Translation>{t => 
+      <th title={t(headerSpec.nameKey)}> {/* in case the name got truncated */}
+        <div className="header-container">
+          <span className="header-name">{t(headerSpec.nameKey)}</span>
+          {sortable && sortButton()}
+        </div>
+      </th>
+    }</Translation>;
   }
 }
