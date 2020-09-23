@@ -16,6 +16,6 @@ export const FilterSelect: React.FC<Props> = (props: Props) => (
     {Array.from(props.options, ([formValue, text]) =>
       /* formValue is the key of the select provided to the form, text is the
          human-readable name for it. */
-      <option key={`filter-select-${formValue}`} value={formValue}>{text}</option>)}
+      <option key={formValue} value={formValue}>{text}</option>)}
   </Form.Control>
 );

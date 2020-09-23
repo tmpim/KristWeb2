@@ -4,25 +4,11 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
+import { Columns, ColumnKey, SortDirection, DataProvider, QueryStateBase, DataStateBase } from "./DataProvider";
 import { ListPagination } from "./ListPagination";
 import { ListTable } from "./ListTable";
 
 import "./ListView.scss";
-
-export enum SortDirection {
-  ASC, DESC
-}
-
-export interface HeaderSpec {
-  /** i18n key for column/header name */
-  nameKey: string;
-  sortable?: boolean;
-
-  /* Whether or not a cell's contents should have text wrapping disabled 
-    (default: true) */
-  nowrap?: boolean;
-  skeletonEmWidth?: number;
-}
 
 interface Props<T> {
   title?: string;
@@ -32,15 +18,51 @@ interface Props<T> {
   page?: number;
   pages?: number;
 
-  headers?: Map<Extract<keyof T, string>, HeaderSpec>;
+  columns: Columns<T>;
+
+  dataProvider: DataProvider<T>;
 }
 
-export class ListView<T> extends Component<Props<T>> {
+interface State<T> extends QueryStateBase<T>, DataStateBase<T> {}
+
+export class ListView<T> extends Component<Props<T>, State<T>> {
+  constructor(props: Props<T>) {
+    super(props);
+
+    this.state = {
+      loading: true
+    };
+  }
+
+  componentDidMount(): void {
+    this.loadData();
+  }
+
+  // Assign the new sort orderBy key and direction to the state and refresh the
+  // data immediately.
+  setSort(orderBy?: ColumnKey<T>, order?: SortDirection): void {
+    this.setState({
+      orderBy, order,
+      loading: true // Reload the data
+    }, () => this.loadData());
+  }
+
+  /** Refresh the data with the latest query parameters */
+  async loadData(): Promise<void> {
+    const data = await this.props.dataProvider(this.state);
+
+    this.setState({
+      loading: false,
+      total: data.total,
+      data: data.data
+    });
+  }
+
   render(): ReactNode {
     const { 
       title, actions, filters, 
       page, pages, 
-      headers
+      columns
     } = this.props;
 
     return <Container fluid className="py-4 list-view">
@@ -71,7 +93,17 @@ export class ListView<T> extends Component<Props<T>> {
       </Row>
 
       {/* Main table */}
-      <ListTable headers={headers} />
+      <ListTable 
+        columns={columns}
+
+        orderBy={this.state.orderBy}
+        order={this.state.order}
+
+        loading={this.state.loading}
+        data={this.state.data}
+
+        setSort={this.setSort.bind(this)}
+      />
     </Container>;
   }
 }

@@ -2,7 +2,11 @@ import React, { Component, ReactNode } from "react";
 
 import { withTranslation, WithTranslation } from "react-i18next";
 
-import { ListView, HeaderSpec } from "@components/list-view/ListView";
+import { ColumnKey, ColumnSpec, QueryStateBase } from "@components/list-view/DataProvider";
+import { formatKristValue, formatDateTime, formatNumber } from "@components/list-view/Formatters";
+import { ListView } from "@components/list-view/ListView";
+
+import { KristValue } from "@components/krist-value/KristValue";
 
 import { IconButton } from "@components/icon-button/IconButton";
 import Button from "react-bootstrap/Button";
@@ -10,6 +14,8 @@ import Button from "react-bootstrap/Button";
 import { SearchTextbox } from "@components/list-view/SearchTextbox";
 import { FilterSelect } from "@components/list-view/FilterSelect";
 import { DateString } from "@krist/types/KristTypes";
+
+import { sleep } from "@utils";
 
 // TODO: Temporary
 interface Wallet {
@@ -21,13 +27,22 @@ interface Wallet {
   firstSeen?: DateString;
 }
 
-const WALLET_HEADERS = new Map<Extract<keyof Wallet, string>, HeaderSpec>()
+const WALLET_COLUMNS = new Map<ColumnKey<Wallet>, ColumnSpec<Wallet>>()
   .set("label", { nameKey: "myWallets.columnLabel" })
   .set("address", { nameKey: "myWallets.columnAddress" })
-  .set("balance", { nameKey: "myWallets.columnBalance" })
-  .set("names", { nameKey: "myWallets.columnNames" })
+  .set("balance", { 
+    nameKey: "myWallets.columnBalance",
+    formatValue: formatKristValue("balance")
+  })
+  .set("names", { 
+    nameKey: "myWallets.columnNames",
+    formatValue: formatNumber("names")
+  })
   .set("category", { nameKey: "myWallets.columnCategory" })
-  .set("firstSeen", { nameKey: "myWallets.columnFirstSeen" });
+  .set("firstSeen", { 
+    nameKey: "myWallets.columnFirstSeen",
+    formatValue: formatDateTime("firstSeen")
+  });
 
 class MyWalletsPageComponent extends Component<WithTranslation> {
   render(): ReactNode {
@@ -61,7 +76,39 @@ class MyWalletsPageComponent extends Component<WithTranslation> {
           }
         />
       </>}
-      headers={WALLET_HEADERS}
+      columns={WALLET_COLUMNS}
+      dataProvider={async (query: QueryStateBase<Wallet>) => {
+        // Provide the data to the list view
+        // TODO: temporary
+        await sleep((Math.random() * 500) + 250);
+        return {
+          total: 30,
+          data: [
+            {
+              label: "Shop Wallet",
+              address: "kreichdyes",
+              balance: 15364,
+              names: 12,
+              category: "Shops",
+              firstSeen: new Date().toISOString()
+            },
+            {
+              label: "Main Wallet",
+              address: "khugepoopy",
+              balance: 1024,
+              names: 3,
+              firstSeen: new Date().toISOString()
+            },
+            {
+              label: "Old Wallet",
+              address: "kre3w0i79j",
+              balance: 0,
+              names: 0,
+              firstSeen: new Date().toISOString()
+            }
+          ]
+        };
+      }}
     />;
   }
 }

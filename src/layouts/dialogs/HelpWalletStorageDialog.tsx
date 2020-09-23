@@ -48,7 +48,7 @@ export const HelpWalletStorageDialog: React.FC<Props> = ({ show, handleClose }: 
       title={t("masterPassword.helpWalletStorageTitle")}
     >
       {paragraphs.map((text, i) => 
-        <p key={`paragraph-${i}`} className={i === paragraphs.length - 1 ? "mb-0" : ""}>
+        <p key={i} className={i === paragraphs.length - 1 ? "mb-0" : ""}>
           {text}
         </p>
       )}

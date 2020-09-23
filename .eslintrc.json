@@ -26,6 +26,7 @@
       "FunctionDeclaration": { "parameters": "first" }
     }],
     "eol-last": ["error", "always"],
+    "object-shorthand": ["error", "always"],
     "tsdoc/syntax": "warn",
     "react/function-component-definition": ["warn", {
       "namedComponents": "arrow-function",

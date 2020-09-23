@@ -2,39 +2,36 @@ import React, { ReactNode, Component } from "react";
 
 import { Translation } from "react-i18next";
 
-import { HeaderSpec, SortDirection } from "./ListView";
+import { ColumnKey, ColumnSpec, SortDirection } from "./DataProvider";
 
 import "./ColumnHeader.scss";
 
 interface Props<T> {
-  headerKey: Extract<keyof T, string>;
-  headerSpec: HeaderSpec;
+  columnKey: ColumnKey<T>;
+  columnSpec: ColumnSpec<T>;
 
   sortDirection?: SortDirection;
 
-  onSort: (headerKey?: Extract<keyof T, string>, direction?: SortDirection) => void;
+  onSort: (columnKey?: ColumnKey<T>, direction?: SortDirection) => void;
 }
 
 export class ColumnHeader<T> extends Component<Props<T>> {
   onClickSort(): void {
-    const { headerKey, sortDirection: oldDirection, onSort } = this.props;
+    const { columnKey, sortDirection: oldDirection, onSort } = this.props;
     
     if (oldDirection === undefined) // NONE -> ASC
-      onSort(headerKey, SortDirection.ASC);
+      onSort(columnKey, SortDirection.ASC);
     else if (oldDirection === SortDirection.ASC) // ASC -> DESC
-      onSort(headerKey, SortDirection.DESC);
+      onSort(columnKey, SortDirection.DESC);
     else if (oldDirection === SortDirection.DESC) // DESC -> NONE
       onSort(undefined, undefined);
   }
 
   render(): ReactNode {
-    const { headerSpec, sortDirection } = this.props;
-    
-    // If 'nowrap' is undefined, then assume it is nowrap
-    const nowrap = headerSpec.nowrap === undefined ? true : headerSpec.nowrap;
+    const { columnSpec, sortDirection } = this.props;
     
     // If 'sortable' is undefined, then assume it is sortable
-    const sortable = headerSpec.sortable === undefined ? true : headerSpec.sortable;
+    const sortable = columnSpec.sortable === undefined || columnSpec.sortable;
 
     // Decide which sort button to render
     const sortButton = () => {
@@ -51,9 +48,9 @@ export class ColumnHeader<T> extends Component<Props<T>> {
     };
 
     return <Translation>{t => 
-      <th title={t(headerSpec.nameKey)}> {/* in case the name got truncated */}
+      <th title={t(columnSpec.nameKey)}> {/* in case the name got truncated */}
         <div className="header-container">
-          <span className="header-name">{t(headerSpec.nameKey)}</span>
+          <span className="header-name">{t(columnSpec.nameKey)}</span>
           {sortable && sortButton()}
         </div>
       </th>
