@@ -106,6 +106,11 @@ class MyWalletsPageComponent extends Component<WithTranslation> {
               balance: 0,
               names: 0,
               firstSeen: new Date().toISOString()
+            },
+            {
+              address: "kunlabeled",
+              balance: 0,
+              names: 0
             }
           ]
         };

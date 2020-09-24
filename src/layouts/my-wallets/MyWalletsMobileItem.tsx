@@ -23,8 +23,13 @@ export const MyWalletsMobileItem: React.FC<Props> = ({ item }: Props) => {
 
   return <>
     <h4>
-      <KristValue value={item.balance} className="float-right" />
-      {item.label ?? item.address}
+      {/* Show the balance on the right */}
+      <KristValue className="float-right" value={item.balance} />
+
+      {/* Show the label if it exists, otherwise show the address */}
+      <span className="text-nowrap">
+        {item.label ?? item.address}
+      </span>
     </h4>
     <p className="mb-0">
       {/* Show the address if it has a label, otherwise this is unnecessary */}
