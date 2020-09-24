@@ -78,7 +78,10 @@
     "columnBalance": "Balance",
     "columnNames": "Names",
     "columnCategory": "Category",
-    "columnFirstSeen": "First Seen"
+    "columnFirstSeen": "First Seen",
+    "nameCount": "{{count}} name",
+    "nameCount_plural": "{{count}} names",
+    "firstSeen": "First seen {{date}}"
   },
 
   "credits": {

@@ -18,9 +18,14 @@ $danger: #fe4848;
 /* Typography */
 $body-color: #eaf0fe;
 $text-muted: #8991ab;
+$text-quiet: mix($body-color, $text-muted, 50%);
 
-$body-hover-color: mix($body-color, $text-muted, 50%);
-$body-hover-color: mix($body-color, $text-muted, 50%);
+$body-hover-color: $text-quiet;
+$body-hover-color: $text-quiet;
+
+.text-quiet {
+  color: $text-quiet;
+}
 
 $font-family-base: "Lato", sans-serif;
 
@@ -66,6 +71,10 @@ $input-group-addon-bg: $secondary;
     box-shadow: 0 0 0 0.2rem rgba($danger, 0.5);
   }
 }
+
+/* List group */
+$list-group-bg: transparent;
+$list-group-border-color: $border-color;
 
 /* Navbar */
 $navbar-dark-color: $body-color;

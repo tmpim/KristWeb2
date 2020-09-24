@@ -7,8 +7,11 @@ import Col from "react-bootstrap/Col";
 import { Columns, ColumnKey, SortDirection, DataProvider, QueryStateBase, DataStateBase } from "./DataProvider";
 import { ListPagination } from "./ListPagination";
 import { ListTable } from "./ListTable";
+import { ListMobile, MobileItemRenderer } from "./ListMobile";
 
 import "./ListView.scss";
+
+export const MOBILE_BREAKPOINT = 768;
 
 interface Props<T> {
   title?: string;
@@ -21,25 +24,44 @@ interface Props<T> {
   columns: Columns<T>;
 
   dataProvider: DataProvider<T>;
+
+  renderMobileItem: MobileItemRenderer<T>;
 }
 
-interface State<T> extends QueryStateBase<T>, DataStateBase<T> {}
+interface State<T> extends QueryStateBase<T>, DataStateBase<T> {
+  isMobile: boolean;
+}
 
 export class ListView<T> extends Component<Props<T>, State<T>> {
   constructor(props: Props<T>) {
     super(props);
 
     this.state = {
-      loading: true
+      loading: true,
+      isMobile: false
     };
   }
 
+  // Arrow function to implicitly bind 'this'
+  checkDimensions = (): void => {
+    this.setState({
+      isMobile: window.innerWidth < MOBILE_BREAKPOINT
+    });
+  }
+
   componentDidMount(): void {
+    window.addEventListener("resize", this.checkDimensions);
+    this.checkDimensions();
+
     this.loadData();
   }
 
-  // Assign the new sort orderBy key and direction to the state and refresh the
-  // data immediately.
+  componentWillUnmount(): void {
+    window.addEventListener("resize", this.checkDimensions);
+  }
+
+  /** Assign the new sort orderBy key and direction to the state and refresh the
+   * data immediately. */
   setSort(orderBy?: ColumnKey<T>, order?: SortDirection): void {
     this.setState({
       orderBy, order,
@@ -58,11 +80,29 @@ export class ListView<T> extends Component<Props<T>, State<T>> {
     });
   }
 
+  /** Render data based on whether or not this is on mobile */
+  renderData(): ReactNode {
+    const { columns, renderMobileItem } = this.props;
+    const { isMobile } = this.state;
+
+    if (isMobile) { // Mobile, show a list
+      return <ListMobile
+        {...this.state} // Apply the order, loading and data state props
+        renderListItem={renderMobileItem}
+      />;
+    } else { // Not mobile, show a table
+      return <ListTable 
+        columns={columns}
+        {...this.state} // Apply the order, loading and data state props
+        setSort={this.setSort.bind(this)}
+      />;
+    }
+  }
+
   render(): ReactNode {
     const { 
       title, actions, filters, 
-      page, pages, 
-      columns
+      page, pages
     } = this.props;
 
     return <Container fluid className="py-4 list-view">
@@ -92,18 +132,8 @@ export class ListView<T> extends Component<Props<T>, State<T>> {
           </Col>}
       </Row>
 
-      {/* Main table */}
-      <ListTable 
-        columns={columns}
-
-        orderBy={this.state.orderBy}
-        order={this.state.order}
-
-        loading={this.state.loading}
-        data={this.state.data}
-
-        setSort={this.setSort.bind(this)}
-      />
+      {/* Render the data: list on mobile, table on desktop */}
+      {this.renderData()}
     </Container>;
   }
 }

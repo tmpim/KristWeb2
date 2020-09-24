@@ -6,8 +6,6 @@ import { ColumnKey, ColumnSpec, QueryStateBase } from "@components/list-view/Dat
 import { formatKristValue, formatDateTime, formatNumber } from "@components/list-view/Formatters";
 import { ListView } from "@components/list-view/ListView";
 
-import { KristValue } from "@components/krist-value/KristValue";
-
 import { IconButton } from "@components/icon-button/IconButton";
 import Button from "react-bootstrap/Button";
 
@@ -15,10 +13,12 @@ import { SearchTextbox } from "@components/list-view/SearchTextbox";
 import { FilterSelect } from "@components/list-view/FilterSelect";
 import { DateString } from "@krist/types/KristTypes";
 
+import { MyWalletsMobileItem } from "./MyWalletsMobileItem";
+
 import { sleep } from "@utils";
 
 // TODO: Temporary
-interface Wallet {
+export interface Wallet {
   label?: string;
   address: string;
   balance: number;
@@ -77,6 +77,7 @@ class MyWalletsPageComponent extends Component<WithTranslation> {
         />
       </>}
       columns={WALLET_COLUMNS}
+      renderMobileItem={(item: Wallet) => <MyWalletsMobileItem item={item} />}
       dataProvider={async (query: QueryStateBase<Wallet>) => {
         // Provide the data to the list view
         // TODO: temporary

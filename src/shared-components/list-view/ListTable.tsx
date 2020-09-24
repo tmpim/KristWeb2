@@ -37,8 +37,11 @@ export class ListTable<T> extends Component<Props<T>> {
 
       {/* Table rows */}
       <tbody>
-        {/* Render skeleton rows if the table is loading */}
+        {/* Render skeleton rows if the data is loading */}
         {loading && <ListTableSkeletonRows columns={columns} />}
+
+        {/* TODO: handle potential edge case where loading = false, data = truthy */}
+        {/* TODO: handle errors */}
 
         {/* Otherwise, render the data */}
         {!loading && data && data.map((row, i) => <ListTableRow
