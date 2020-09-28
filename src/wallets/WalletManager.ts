@@ -1,8 +1,10 @@
 import { toHex } from "@utils";
 import { aesGcmEncrypt, aesGcmDecrypt } from "@utils/crypto";
 
-import { AppDispatch } from "./App";
+import { AppDispatch } from "@app/App";
 import * as actions from "@actions/WalletManagerActions";
+
+import { loadWallets } from "../wallets/Wallet";
 
 export function browseAsGuest(dispatch: AppDispatch): void {
   dispatch(actions.browseAsGuest());
@@ -20,12 +22,15 @@ export async function login(dispatch: AppDispatch, salt: string | undefined, tes
 
     // Verify that the decrypted tester is equal to the salt, if not, the
     // provided master password is incorrect.
-    if (testerDec !== salt) throw new Error("Incorrect password.");
+    if (testerDec !== salt) throw new Error("masterPassword.errorPasswordIncorrect");
   } catch (e) {
     // OperationError usually means decryption failure
-    if (e.name === "OperationError") throw new Error("Incorrect password.");
+    if (e.name === "OperationError") throw new Error("masterPassword.errorPasswordIncorrect");
     else throw e;
   }
+
+  // Load the wallets, dispatching the wallets to the Redux store
+  loadWallets(dispatch, password);
 
   // Dispatch the login state changes to the Redux store
   dispatch(actions.login(password));

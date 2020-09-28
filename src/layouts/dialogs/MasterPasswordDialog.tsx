@@ -13,7 +13,7 @@ import { HelpWalletStorageLink } from "./HelpWalletStorageDialog";
 import { Dispatch } from "redux";
 import { connect, ConnectedProps } from "react-redux";
 import { RootState } from "@store";
-import { browseAsGuest, login, setMasterPassword } from "@app/WalletManager";
+import { browseAsGuest, login, setMasterPassword } from "@/src/wallets/WalletManager";
 
 interface OwnProps {
   isLoggedIn: boolean;

@@ -8,9 +8,14 @@ import { MasterPasswordDialog } from "@layouts/dialogs/MasterPasswordDialog";
 
 import { createStore } from "redux";
 import { Provider } from "react-redux";
+import { devToolsEnhancer } from 'redux-devtools-extension';
 import rootReducer from "@/src/store/reducers/RootReducer";
 
-export const store = createStore(rootReducer);
+export const store = createStore(
+  rootReducer, 
+  undefined,
+  devToolsEnhancer({})
+);
 export type AppDispatch = typeof store.dispatch;
 
 /*import packageJson from "@/package.json";

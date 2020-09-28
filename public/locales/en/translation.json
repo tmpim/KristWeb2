@@ -59,15 +59,14 @@
     "errorPasswordRequired": "Password is required.",
     "errorPasswordUnset": "Master password has not been set up.",
     "errorPasswordIncorrect": "Incorrect password.",
+    "errorStorageCorrupt": "Wallet storage is corrupted.",
     "errorUnknown": "Unknown error.",
     "helpWalletStorageTitle": "Help: Wallet storage",
     "helpWalletStorage": "When you add a wallet to KristWeb, the private key for the wallet is saved to your browser's local storage and encrypted with your master password.\nEvery wallet you save is encrypted using the same master password, and you will need to enter it every time you open KristWeb. Your actual Krist wallet is not modified in any way.\nWhen browsing KristWeb as a guest, you do not need to enter a master password, but it also means that you will not be able to add or use any wallets. You will still be able to explore the Krist network."
   },
 
   "myWallets": {
-    "title": "{{count}} wallet",
-    "title_plural": "{{count}} wallets",
-    "titleLoading": "Loading wallets...",
+    "title": "Wallets",
     "manageBackups": "Manage backups",
     "createWallet": "Create wallet",
     "addExistingWallet": "Add existing wallet",
@@ -82,6 +81,15 @@
     "nameCount": "{{count}} name",
     "nameCount_plural": "{{count}} names",
     "firstSeen": "First seen {{date}}"
+  },
+
+  "myTransactions": {
+    "title": "Transactions",
+    "searchPlaceholder": "Search transactions...",
+    "columnFrom": "From",
+    "columnTo": "To",
+    "columnValue": "Value",
+    "columnTime": "Time"
   },
 
   "credits": {

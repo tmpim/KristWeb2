@@ -1,11 +1,10 @@
-import React, { ReactNode } from "react";
+import React from "react";
 
 import { useTranslation } from "react-i18next";
 
 import { KristValue } from "@components/krist-value/KristValue";
 
-// TODO: temporary
-import { Wallet } from "./MyWalletsPage";
+import { Wallet } from "@/src/wallets/Wallet";
 
 interface Props {
   item: Wallet

@@ -75,8 +75,7 @@
   },
 
   "myWallets": {
-    "title": "{{count}} Wallet",
-    "title_plural": "{{count}} Wallets",
+    "title": "Wallets",
     "manageBackups": "Sicherungen verwalten",
     "createWallet": "Wallet erstellen",
     "addExistingWallet": "Bestehendes Wallet hinzufügen",
@@ -87,7 +86,6 @@
     "columnBalance": "Saldo",
     "columnNames": "Namen",
     "columnCategory": "Kategorie",
-    "columnFirstSeen": "Erstmals erschienen",
-    "titleLoading": "Wallets werden geladen..."
+    "columnFirstSeen": "Erstmals erschienen"
   }
 }

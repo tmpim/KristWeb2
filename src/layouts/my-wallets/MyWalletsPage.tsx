@@ -15,17 +15,10 @@ import { DateString } from "@krist/types/KristTypes";
 
 import { MyWalletsMobileItem } from "./MyWalletsMobileItem";
 
-import { sleep } from "@utils";
+import { Wallet } from "@/src/wallets/Wallet";
 
-// TODO: Temporary
-export interface Wallet {
-  label?: string;
-  address: string;
-  balance: number;
-  names: number;
-  category?: string;
-  firstSeen?: DateString;
-}
+import { sleep } from "@utils";
+import { KristWalletFormat } from "@/src/wallets/formats/WalletFormat";
 
 const WALLET_COLUMNS = new Map<ColumnKey<Wallet>, ColumnSpec<Wallet>>()
   .set("label", { nameKey: "myWallets.columnLabel" })
@@ -49,7 +42,7 @@ class MyWalletsPageComponent extends Component<WithTranslation> {
     const { t } = this.props;
 
     return <ListView<Wallet>
-      title="23 wallets"
+      title={t("myWallets.title")}
       page={1}
       pages={3}
       actions={<>
@@ -66,7 +59,7 @@ class MyWalletsPageComponent extends Component<WithTranslation> {
       </>}
       filters={<>
         {/* Search filter textbox */}
-        <SearchTextbox placeholder="Search wallets..." />
+        <SearchTextbox placeholder={t("myWallets.searchPlaceholder")} />
 
         {/* Category selection box */}
         <FilterSelect 
@@ -81,11 +74,14 @@ class MyWalletsPageComponent extends Component<WithTranslation> {
       dataProvider={async (query: QueryStateBase<Wallet>) => {
         // Provide the data to the list view
         // TODO: temporary
-        await sleep((Math.random() * 500) + 250);
+        await sleep((Math.random() * 500) + 10000);
         return {
           total: 30,
           data: [
             {
+              id: "9b68f712-8005-4711-8628-3a97d17b5d5d",
+              password: "",
+              format: "kristwallet",
               label: "Shop Wallet",
               address: "kreichdyes",
               balance: 15364,
@@ -94,6 +90,9 @@ class MyWalletsPageComponent extends Component<WithTranslation> {
               firstSeen: new Date().toISOString()
             },
             {
+              id: "d0de949f-3270-4bcc-b29a-2cd9e42cec58",
+              password: "",
+              format: "kristwallet",
               label: "Main Wallet",
               address: "khugepoopy",
               balance: 1024,
@@ -101,6 +100,9 @@ class MyWalletsPageComponent extends Component<WithTranslation> {
               firstSeen: new Date().toISOString()
             },
             {
+              id: "2769c209-c323-4850-a79d-774c284b6417",
+              password: "",
+              format: "kristwallet",
               label: "Old Wallet",
               address: "kre3w0i79j",
               balance: 0,
@@ -108,6 +110,9 @@ class MyWalletsPageComponent extends Component<WithTranslation> {
               firstSeen: new Date().toISOString()
             },
             {
+              id: "0886b802-e871-40f1-b2fc-c39fa295f5c8",
+              password: "",
+              format: "kristwallet",
               address: "kunlabeled",
               balance: 0,
               names: 0
