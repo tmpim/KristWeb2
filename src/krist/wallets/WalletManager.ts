@@ -4,7 +4,7 @@ import { aesGcmEncrypt, aesGcmDecrypt } from "@utils/crypto";
 import { AppDispatch } from "@app/App";
 import * as actions from "@actions/WalletManagerActions";
 
-import { loadWallets } from "../wallets/Wallet";
+import { loadWallets } from "./Wallet";
 
 export function browseAsGuest(dispatch: AppDispatch): void {
   dispatch(actions.browseAsGuest());

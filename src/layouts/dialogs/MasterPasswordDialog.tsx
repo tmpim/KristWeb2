@@ -2,18 +2,18 @@ import React, { Component, ReactNode } from "react";
 
 import { withTranslation, WithTranslation, Trans } from "react-i18next";
 
-import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-import { Formik, FormikHelpers } from "formik";
+import { ModalDialog } from "./ModalDialog";
+import { FormikHelpers } from "formik";
 
 import { HelpWalletStorageLink } from "./HelpWalletStorageDialog";
 
 import { Dispatch } from "redux";
 import { connect, ConnectedProps } from "react-redux";
 import { RootState } from "@store";
-import { browseAsGuest, login, setMasterPassword } from "@/src/wallets/WalletManager";
+import { browseAsGuest, login, setMasterPassword } from "@krist/wallets/WalletManager";
 
 interface OwnProps {
   isLoggedIn: boolean;
@@ -91,72 +91,67 @@ class MasterPasswordDialogComponent extends Component<Props> {
       </>;
 
     return (
-      <Modal 
-        show={true} centered animation={false}
-        onHide={this.browseAsGuest.bind(this)}
+      <ModalDialog
+        show={true}
+        title={t("masterPassword.dialogTitle")}
+        handleClose={this.browseAsGuest.bind(this)}
+        hasFooterCloseButton={false}
+        initialValues={{ password: "" }}
+        onSubmit={this.onSubmit.bind(this)}
+        buttons={({ isSubmitting }) => <>
+          {/* Left side, "Browse as guest" button */}
+          <Button 
+            variant="secondary" 
+            style={{ marginRight: "auto" }} 
+            onClick={this.browseAsGuest.bind(this)}
+            tabIndex={3}
+          >
+            {t("masterPassword.browseAsGuest")}
+          </Button>
+
+          {/* Right side */}
+          {hasMasterPassword
+            ? <> {/* They have a master password, show login */}
+              <Button variant="danger">{t("masterPassword.forgotPassword")}</Button>
+              <Button type="submit" variant="primary" disabled={isSubmitting} tabIndex={2}>
+                {t("masterPassword.logIn")}
+              </Button>
+            </>
+            : (
+              <Button type="submit" variant="primary" disabled={isSubmitting} tabIndex={2}>
+                {t("masterPassword.createPassword")}
+              </Button>
+            )
+          }
+        </>}
       >
-        <Formik initialValues={{ password: "" }} onSubmit={this.onSubmit.bind(this)}>
-          {({ handleSubmit, handleChange, values, errors, isSubmitting }) => (
-            <Form noValidate onSubmit={handleSubmit}>
-              <Modal.Header closeButton>
-                <Modal.Title>{t("masterPassword.dialogTitle")}</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                {/* Embed the body text, which depends on whether or not this is 
-                    the first time setting up a master password. */}
-                {body}
+        {({ handleChange, values, errors }) => <>
+          {/* Embed the body text, which depends on whether or not this is the 
+            first time setting up a master password. */}
+          {body}
 
-                {/* Provide a username field for browser autofill */}
-                <Form.Control 
-                  type="username"
-                  value="Master password" /* Do not translate */
-                  readOnly={true} 
-                  hidden={true} 
-                />
+          {/* Provide a username field for browser autofill */}
+          <Form.Control 
+            type="username"
+            value="Master password" /* Do not translate */
+            readOnly={true} 
+            hidden={true} 
+          />
 
-                {/* Password input */}
-                <Form.Control 
-                  type="password" 
-                  name="password"
-                  placeholder={t("masterPassword.passwordPlaceholder")}
-                  value={values.password}
-                  onChange={handleChange}
-                  isInvalid={!!errors.password}
-                  tabIndex={1} 
-                  autoFocus={true}
-                />
-                <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
-              </Modal.Body>
-              <Modal.Footer>
-                {/* Left side, "Browse as guest" button */}
-                <Button 
-                  variant="secondary" 
-                  style={{ marginRight: "auto" }} 
-                  onClick={this.browseAsGuest.bind(this)}
-                  tabIndex={3}
-                >
-                  {t("masterPassword.browseAsGuest")}
-                </Button>
-
-                {/* Right side */}
-                {hasMasterPassword
-                  ? <> {/* They have a master password, show login */}
-                    <Button variant="danger">{t("masterPassword.forgotPassword")}</Button>
-                    <Button type="submit" variant="primary" disabled={isSubmitting} tabIndex={2}>
-                      {t("masterPassword.logIn")}
-                    </Button>
-                  </>
-                  : (
-                    <Button type="submit" variant="primary" disabled={isSubmitting} tabIndex={2}>
-                      {t("masterPassword.createPassword")}
-                    </Button>
-                  )
-                }
-              </Modal.Footer>
-            </Form>
-          )}
-        </Formik>
-      </Modal>
+          {/* Password input */}
+          <Form.Control 
+            type="password" 
+            name="password"
+            placeholder={t("masterPassword.passwordPlaceholder")}
+            value={values.password}
+            onChange={handleChange}
+            isInvalid={!!errors.password}
+            tabIndex={1} 
+            autoFocus={true}
+          />
+          <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
+        </>}
+      </ModalDialog>
     );
   }
 }

@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import { KristValue } from "@components/krist-value/KristValue";
 
-import { Wallet } from "@/src/wallets/Wallet";
+import { Wallet } from "@krist/wallets/Wallet";
 
 interface Props {
   item: Wallet

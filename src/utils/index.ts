@@ -31,3 +31,7 @@ export const isLocalhost = Boolean(
       /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/
     )
 );
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const isFunction = (obj: any): obj is (...args: any[]) => any =>
+  typeof obj === "function";

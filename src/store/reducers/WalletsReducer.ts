@@ -1,7 +1,7 @@
 import { addWallet, loadWallets, removeWallet, syncWallet, updateWallet } from "@actions/WalletsActions";
 import { createReducer, ActionType } from "typesafe-actions";
 
-import { Wallet } from "../../wallets/Wallet";
+import { Wallet } from "../../krist/wallets/Wallet";
 
 export type WalletMap = { [key: string]: Wallet };
 export interface State {

@@ -15,10 +15,10 @@ import { DateString } from "@krist/types/KristTypes";
 
 import { MyWalletsMobileItem } from "./MyWalletsMobileItem";
 
-import { Wallet } from "@/src/wallets/Wallet";
+import { Wallet } from "@krist/wallets/Wallet";
 
 import { sleep } from "@utils";
-import { KristWalletFormat } from "@/src/wallets/formats/WalletFormat";
+import { KristWalletFormat } from "@krist/wallets/formats/WalletFormat";
 
 const WALLET_COLUMNS = new Map<ColumnKey<Wallet>, ColumnSpec<Wallet>>()
   .set("label", { nameKey: "myWallets.columnLabel" })

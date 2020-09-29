@@ -1,11 +1,13 @@
-import React, { PropsWithChildren, ReactNode } from "react";
+import React, { Component, ReactNode } from "react";
 
 import Modal from "react-bootstrap/Modal";
 import { CloseButton } from "./utils/CloseButton";
 
-import { noop } from "@utils";
+import { Form, Formik, FormikHelpers, FormikProps, FormikValues } from "formik";
 
-interface Props {
+import { isFunction, noop } from "@utils";
+
+interface Props<V extends FormikValues = FormikValues> {
   show: boolean;
 
   title: string;
@@ -14,35 +16,71 @@ interface Props {
   hasCloseButton?: boolean;
   hasFooterCloseButton?: boolean;
 
-  buttons?: ReactNode;
+  buttons?: ((props: FormikProps<V>) => React.ReactNode) | React.ReactNode;
+
+  initialValues?: V;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onSubmit?: (values: V, formikHelpers: FormikHelpers<V>) => void | Promise<any>;
+  children?: ((props: FormikProps<V>) => React.ReactNode) | React.ReactNode;
 }
 
-export const ModalDialog: React.FC<Props> = (props: PropsWithChildren<Props>) => { 
-  if ((props.hasCloseButton || props.hasFooterCloseButton) && !props.handleClose)
-    throw new Error("ModalDialog has close button but no close handler");
+export class ModalDialog<V extends FormikValues = FormikValues> extends Component<Props<V>> {
+  render(): ReactNode {
+    const { 
+      hasCloseButton, hasFooterCloseButton, handleClose, // Close button
+      show, title, // Modal state and title
+      children, buttons, // Actual contents
+      initialValues, onSubmit // Form nonsense
+    } = this.props;
 
-  return (
-    /* TODO: Animation is disabled for now, because react-bootstrap (or more
-      specifically, react-transition-group) has an incompatibility with
-      strict mode. */
-    <Modal 
-      show={props.show} centered animation={false} // TODO
-      onHide={props.handleClose}
-    >
-      <Modal.Header closeButton={props.hasCloseButton}>
-        <Modal.Title>{props.title}</Modal.Title>
+    if ((hasCloseButton || hasFooterCloseButton) && !handleClose)
+      throw new Error("FormDialog has close button but no close handler");
+
+    // The contents of the modal (header, body, footer), which may or may not
+    // be wrapped in a form.
+    const modalContents = (formikBag?: FormikProps<V>) => <>
+      <Modal.Header closeButton={hasCloseButton}>
+        <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {/* Custom modal body */}
-        {props.children}
+        {isFunction(children) && formikBag
+          ? (children as (bag: FormikProps<V>) => React.ReactNode)(formikBag)
+          : children}
       </Modal.Body>
       <Modal.Footer>
         {/* Display the footer close button if we were asked to */}
-        {props.hasFooterCloseButton && <CloseButton handleClose={props.handleClose || noop} />}
+        {hasFooterCloseButton && <CloseButton handleClose={handleClose || noop} />}
 
         {/* Display the custom buttons if provided */}
-        {props.buttons}
+        {isFunction(buttons) && formikBag
+          ? (buttons as (bag: FormikProps<V>) => React.ReactNode)(formikBag)
+          : buttons}
       </Modal.Footer>
-    </Modal>
-  );
+    </>;
+
+    return (
+      /* TODO: Animation is disabled for now, because react-bootstrap (or more
+        specifically, react-transition-group) has an incompatibility with
+        strict mode. */
+      <Modal 
+        show={show} centered animation={false} // TODO
+        onHide={handleClose}
+      >
+        {initialValues && onSubmit 
+          /* If this is a form, wrap the contents in Formik: */
+          ? <Formik 
+            initialValues={initialValues}
+            onSubmit={onSubmit}>
+            {(formikBag) => 
+              <Form noValidate onSubmit={formikBag.handleSubmit}>
+                {modalContents(formikBag)}
+              </Form>
+            }
+          </Formik>
+          /* Otherwise, render the contents directly: */
+          : modalContents()}
+      </Modal>
+    );
+  }
 };
