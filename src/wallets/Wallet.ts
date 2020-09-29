@@ -30,6 +30,14 @@ export interface Wallet {
   firstSeen?: DateString;
 }
 
+/** Properties of Wallet that are allowed to be updated. */
+export type WalletUpdatableKeys = "label" | "category" | "password" | "username" | "format" | "address";
+export type WalletUpdatable = Pick<Wallet, WalletUpdatableKeys>;
+
+/** Properties of Wallet that are allowed to be synced. */
+export type WalletSyncableKeys = "balance" | "names" | "firstSeen";
+export type WalletSyncable = Pick<Wallet, WalletSyncableKeys>;
+
 export async function decryptWallet(id: string, data: AESEncryptedString, masterPassword: string): Promise<Wallet> {
   try {
     // Attempt to decrypt and deserialize the wallet data
@@ -63,13 +71,6 @@ export async function encryptWallet(wallet: Wallet, masterPassword: string): Pro
   return enc;
 }
 
-declare global {
-  interface Window {
-    encryptWallet: typeof encryptWallet
-  }
-}
-window.encryptWallet = encryptWallet;
-
 /** Get the local storage key for a given wallet. */
 export function getWalletKey(wallet: Wallet): string {
   return `wallet2-${wallet.id}`;
@@ -98,3 +99,11 @@ export async function loadWallets(dispatch: AppDispatch, masterPassword: string)
 
   dispatch(actions.loadWallets(walletMap));
 }
+
+// TODO: temporary exposure of methods for testing
+declare global {
+  interface Window {
+    encryptWallet: typeof encryptWallet
+  }
+}
+window.encryptWallet = encryptWallet;

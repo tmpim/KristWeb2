@@ -8,7 +8,7 @@ export const browseAsGuest = createAction(constants.BROWSE_AS_GUEST)<void>();
 
 export interface LoginPayload { password: string };
 export const login = createAction(constants.LOGIN, 
-  (password: string): LoginPayload => ({ password }))<LoginPayload>();
+  (password): LoginPayload => ({ password }))<LoginPayload>();
 
 export interface SetMasterPasswordPayload { 
   salt: string;
@@ -16,5 +16,5 @@ export interface SetMasterPasswordPayload {
   password: string;
 };
 export const setMasterPassword = createAction(constants.SET_MASTER_PASSWORD, 
-  (salt: string, tester: string, password: string): SetMasterPasswordPayload => 
+  (salt, tester, password): SetMasterPasswordPayload => 
     ({ salt, tester, password }))<SetMasterPasswordPayload>();
