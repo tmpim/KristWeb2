@@ -8,17 +8,16 @@ import { ListView } from "@components/list-view/ListView";
 
 import { IconButton } from "@components/icon-button/IconButton";
 import Button from "react-bootstrap/Button";
+import { AddWalletButton, CreateWalletButton } from "@layouts/dialogs/AddWalletDialog";
 
 import { SearchTextbox } from "@components/list-view/SearchTextbox";
 import { FilterSelect } from "@components/list-view/FilterSelect";
-import { DateString } from "@krist/types/KristTypes";
 
 import { MyWalletsMobileItem } from "./MyWalletsMobileItem";
 
 import { Wallet } from "@krist/wallets/Wallet";
 
 import { sleep } from "@utils";
-import { KristWalletFormat } from "@krist/wallets/formats/WalletFormat";
 
 const WALLET_COLUMNS = new Map<ColumnKey<Wallet>, ColumnSpec<Wallet>>()
   .set("label", { nameKey: "myWallets.columnLabel" })
@@ -49,13 +48,13 @@ class MyWalletsPageComponent extends Component<WithTranslation> {
         <IconButton size="sm" variant="secondary" icon="database">
           {t("myWallets.manageBackups")}
         </IconButton>
-        <IconButton size="sm" variant="success" icon="plus">
+        <CreateWalletButton size="sm" variant="success" icon="plus">
           {t("myWallets.createWallet")}
-        </IconButton>
-        <Button size="sm" variant="outline-primary">
+        </CreateWalletButton>
+        <AddWalletButton size="sm" variant="outline-primary">
           {/* TODO: find an icon for this */}
           {t("myWallets.addExistingWallet")}
-        </Button>
+        </AddWalletButton>
       </>}
       filters={<>
         {/* Search filter textbox */}

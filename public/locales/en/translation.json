@@ -92,6 +92,11 @@
     "columnTime": "Time"
   },
 
+  "addWallet": {
+    "dialogTitle": "Add wallet",
+    "dialogTitleCreate": "Create wallet"
+  },
+
   "credits": {
     "madeBy": "Made by <1>{{authorName}}</1>",
     "supportersTitle": "Supporters",

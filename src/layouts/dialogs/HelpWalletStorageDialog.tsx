@@ -1,33 +1,25 @@
-import React, { useState, MouseEvent } from "react";
+import React, { Component, ReactNode } from "react";
 
-import { useTranslation } from "react-i18next";
+import { useTranslation, WithTranslation, withTranslation } from "react-i18next";
 
-import { ModalDialog } from "./ModalDialog";
+import { WithDialogLink, withDialogLink, ModalDialog } from "./ModalDialog";
 
-export const HelpWalletStorageLink: React.FC = () => {
-  const { t } = useTranslation();
-  const [show, setShow] = useState(false);
+class HelpWalletStorageLinkComponent extends Component<WithDialogLink & WithTranslation> {
+  render(): ReactNode {
+    const { t, openDialog } = this.props;
+    return <a href="#" onClick={openDialog}>
+      {t("masterPassword.learnMore")}
+    </a>;
+  }
+}
 
-  // Help dialog show/close state is essentially handled by the link
-  const handleClose = () => setShow(false);
-  const handleShow = (e: MouseEvent) => {
-    e.preventDefault();
-    setShow(true);
-  };
-
-  return (
-    <>
-      {/* Add a link to show the dialog */}
-      {/* TODO: make this a <button> */}
-      {/* eslint-disable-next-line */}
-      (<a href="#" onClick={handleShow}>{t("masterPassword.learnMore")}</a>)
-      <HelpWalletStorageDialog
-        show={show}
-        handleClose={handleClose}
-      />
-    </>
-  );
-};
+export const HelpWalletStorageLink = withTranslation()(withDialogLink(
+  (show, handleClose) => 
+    <HelpWalletStorageDialog
+      show={show}
+      handleClose={handleClose} 
+    />
+)(HelpWalletStorageLinkComponent));
 
 interface Props {
   show: boolean;

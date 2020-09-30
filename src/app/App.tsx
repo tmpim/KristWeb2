@@ -8,7 +8,7 @@ import { MasterPasswordDialog } from "@layouts/dialogs/MasterPasswordDialog";
 
 import { createStore } from "redux";
 import { Provider } from "react-redux";
-import { devToolsEnhancer } from 'redux-devtools-extension';
+import { devToolsEnhancer } from "redux-devtools-extension";
 import rootReducer from "@/src/store/reducers/RootReducer";
 
 export const store = createStore(

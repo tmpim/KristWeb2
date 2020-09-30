@@ -1,4 +1,4 @@
-import React, { Component, ReactNode } from "react";
+import React, { Component, ReactElement, ReactNode } from "react";
 
 import Modal from "react-bootstrap/Modal";
 import { CloseButton } from "./utils/CloseButton";
@@ -84,3 +84,39 @@ export class ModalDialog<V extends FormikValues = FormikValues> extends Componen
     );
   }
 };
+
+export interface WithDialogLink {
+  openDialog?: () => void;
+}
+
+interface DialogLinkState {
+  show: boolean;
+}
+
+export const withDialogLink = (renderDialog: (show: boolean, handleClose: () => void) => ReactElement<ModalDialog>) =>
+  <P extends WithDialogLink>(Component: React.ComponentType<P>): React.ComponentType<P> =>
+    class WrappedDialogLink extends React.Component<P, DialogLinkState> {
+      constructor(props: P) {
+        super(props);
+        
+        this.state = {
+          show: false
+        };
+      }
+
+      openDialog = () => this.setState({ show: true });
+      closeDialog = () => this.setState({ show: false });
+
+      render() {
+        const { show } = this.state;
+
+        return <>
+          <Component 
+            {...this.props as P} 
+            onClick={this.openDialog}
+            openDialog={this.openDialog}
+          />
+          {renderDialog(show, this.closeDialog)}
+        </>;
+      }
+    };
