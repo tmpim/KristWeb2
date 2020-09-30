@@ -113,7 +113,6 @@ export const withDialogLink = (renderDialog: (show: boolean, handleClose: () => 
         return <>
           <Component 
             {...this.props as P} 
-            onClick={this.openDialog}
             openDialog={this.openDialog}
           />
           {renderDialog(show, this.closeDialog)}
