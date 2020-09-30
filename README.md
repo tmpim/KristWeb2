@@ -1,6 +1,21 @@
 # KristWeb v2
 
-**NOT YET READY FOR PRODUCTION.**
+<table align="center">
+  <tr>
+    <td><img src="https://i.imgur.com/qBHn6Pz.png" width="360" /></td>
+    <td><img src="https://i.imgur.com/DW86wns.png" width="360" /></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center">
+      <img src="https://i.imgur.com/PtineSx.png" width="480" />        
+      <p align="center">
+        <i>Dashboard design mockup</i>
+      </p>
+    </td>
+  </tr>
+</table>
+
+<h2 align="center"><a href="https://docs.google.com/spreadsheets/d/1_ehN2SeN4wzBAW9UUCTKn0uMlPeBMAXSjBVijwsPfvo/edit?usp=sharing">TODO LIST</a></h2>
 
 *This project is heavily under development. It is currently in the design 
 stages, meaning there is **no useful functionality yet***.
@@ -12,7 +27,7 @@ type in wallet passwords ever again!
 
 ### Building
 
-```
+```sh
 git clone https://github.com/tmpim/KristWeb2
 cd KristWeb2
 npm install
