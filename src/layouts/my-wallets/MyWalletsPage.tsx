@@ -81,7 +81,7 @@ class MyWalletsPageComponent extends Component<WithTranslation> {
               password: "",
               format: "kristwallet",
               label: "Shop Wallet",
-              address: "kreichdyes",
+              address: "k012345678",
               balance: 15364,
               names: 12,
               category: "Shops",
@@ -92,7 +92,7 @@ class MyWalletsPageComponent extends Component<WithTranslation> {
               password: "",
               format: "kristwallet",
               label: "Main Wallet",
-              address: "khugepoopy",
+              address: "kabcdefghi",
               balance: 1024,
               names: 3,
               firstSeen: new Date().toISOString()
