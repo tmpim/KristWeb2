@@ -5,9 +5,9 @@ import { MD5 } from "spu-md5";
 import base64 from "base64-arraybuffer";
 
 interface EvpKey {
-  key: Uint8Array,
-  iv: Uint8Array,
-  cryptoKey: CryptoKey
+  key: Uint8Array;
+  iv: Uint8Array;
+  cryptoKey: CryptoKey;
 }
 
 /** 

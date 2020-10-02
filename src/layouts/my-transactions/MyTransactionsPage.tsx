@@ -13,13 +13,13 @@ import { MyTransactionsMobileItem } from "./MyTransactionsMobileItem";
 
 // TODO: Temporary
 export interface Transaction {
-  id: number,
-  from?: string,
-  to?: string,
-  value: number,
-  time: DateString,
-  name?: string,
-  metadata?: string
+  id: number;
+  from?: string;
+  to?: string;
+  value: number;
+  time: DateString;
+  name?: string;
+  metadata?: string;
 }
 
 const COLUMNS = new Map<ColumnKey<Transaction>, ColumnSpec<Transaction>>()

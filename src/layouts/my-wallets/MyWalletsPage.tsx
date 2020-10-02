@@ -7,7 +7,6 @@ import { formatKristValue, formatDateTime, formatNumber } from "@components/list
 import { ListView } from "@components/list-view/ListView";
 
 import { IconButton } from "@components/icon-button/IconButton";
-import Button from "react-bootstrap/Button";
 import { AddWalletButton, CreateWalletButton } from "@layouts/dialogs/AddWalletDialog";
 
 import { SearchTextbox } from "@components/list-view/SearchTextbox";

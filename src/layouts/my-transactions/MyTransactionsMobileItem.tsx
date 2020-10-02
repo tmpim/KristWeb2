@@ -4,11 +4,11 @@ import React from "react";
 import { Transaction } from "./MyTransactionsPage";
 
 interface Props {
-  item: Transaction
+  item: Transaction;
 };
 
 export const MyTransactionsMobileItem: React.FC<Props> = ({ item }: Props) => {
   return <>
     {/* TODO */}
-  </>
-}
+  </>;
+};

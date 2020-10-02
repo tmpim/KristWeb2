@@ -7,11 +7,11 @@ import { KristValue } from "@components/krist-value/KristValue";
 import { Wallet } from "@krist/wallets/Wallet";
 
 interface Props {
-  item: Wallet
+  item: Wallet;
 };
 
 export const Separator: React.FC = () => 
-  <span className="text-muted"> &ndash; </span>
+  <span className="text-muted"> &ndash; </span>;
 
 export const MyWalletsMobileItem: React.FC<Props> = ({ item }: Props) => {
   const { t } = useTranslation();
@@ -54,5 +54,5 @@ export const MyWalletsMobileItem: React.FC<Props> = ({ item }: Props) => {
         </span>
       </>}
     </p>
-  </>
-}
+  </>;
+};

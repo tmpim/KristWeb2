@@ -3,7 +3,7 @@ import { sha256, doubleSHA256 } from "@utils/crypto";
 const hexToBase36 = (input: number): string => {
   const byte = 48 + Math.floor(input / 7);
   return String.fromCharCode(byte + 39 > 122 ? 101 : byte > 57 ? byte + 39 : byte);
-}
+};
 
 export const makeV2Address = async (key: string): Promise<string> => {
   const chars = ["", "", "", "", "", "", "", "", ""];
@@ -28,4 +28,4 @@ export const makeV2Address = async (key: string): Promise<string> => {
   }
 
   return chain;
-}
+};

@@ -18,10 +18,10 @@ export interface RemoveWalletPayload { id: string };
 export const removeWallet = createAction(constants.REMOVE_WALLET,
   (id): RemoveWalletPayload => ({ id }))<RemoveWalletPayload>();
 
-export interface UpdateWalletPayload { id: string, wallet: WalletUpdatable };
+export interface UpdateWalletPayload { id: string; wallet: WalletUpdatable };
 export const updateWallet = createAction(constants.UPDATE_WALLET,
   (id, wallet): UpdateWalletPayload => ({ id, wallet }))<UpdateWalletPayload>();
 
-export interface SyncWalletPayload { id: string, wallet: WalletSyncable };
+export interface SyncWalletPayload { id: string; wallet: WalletSyncable };
 export const syncWallet = createAction(constants.SYNC_WALLET,
   (id, wallet): SyncWalletPayload => ({ id, wallet }))<SyncWalletPayload>();

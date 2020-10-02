@@ -7,9 +7,6 @@ import { AppDispatch } from "@app/App";
 import * as actions from "@actions/WalletsActions";
 import { WalletMap } from "@reducers/WalletsReducer";
 
-import Debug from "debug";
-const debug = Debug("kristweb:wallet");
-
 export interface Wallet {
   // UUID for this wallet
   id: string;
@@ -38,7 +35,10 @@ export type WalletUpdatable = Pick<Wallet, WalletUpdatableKeys>;
 export type WalletSyncableKeys = "balance" | "names" | "firstSeen";
 export type WalletSyncable = Pick<Wallet, WalletSyncableKeys>;
 
-export async function decryptWallet(id: string, data: AESEncryptedString, masterPassword: string): Promise<Wallet> {
+export async function decryptWallet(id: string, data: AESEncryptedString | null, masterPassword: string): Promise<Wallet> {
+  if (data === null) // localStorage key was missing
+    throw new Error("masterPassword.walletStorageCorrupt");
+
   try {
     // Attempt to decrypt and deserialize the wallet data
     const dec = await aesGcmDecrypt(data, masterPassword);
@@ -85,14 +85,14 @@ export function extractWalletKey(key: string): [string, string] | undefined {
 
 /** Loads all available wallets from local storage and dispatches them to the
  * Redux store. */
-export async function loadWallets(dispatch: AppDispatch, masterPassword: string) {
+export async function loadWallets(dispatch: AppDispatch, masterPassword: string): Promise<void> {
   // Find all `wallet2` keys from local storage.
   const keysToLoad = Object.keys(localStorage)
     .map(extractWalletKey)
     .filter(k => k !== undefined);
     
   const wallets = await Promise.all(keysToLoad
-    .map(([key, id]) => decryptWallet(id, localStorage.getItem(key)!, masterPassword)));
+    .map(([key, id]) => decryptWallet(id, localStorage.getItem(key), masterPassword)));
 
   // Convert to map with wallet IDs
   const walletMap: WalletMap = wallets.reduce((obj, w) => ({ ...obj, [w.id]: w }), {});
@@ -103,7 +103,7 @@ export async function loadWallets(dispatch: AppDispatch, masterPassword: string)
 // TODO: temporary exposure of methods for testing
 declare global {
   interface Window {
-    encryptWallet: typeof encryptWallet
+    encryptWallet: typeof encryptWallet;
   }
 }
 window.encryptWallet = encryptWallet;

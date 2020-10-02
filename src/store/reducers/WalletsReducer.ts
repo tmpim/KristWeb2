@@ -3,7 +3,7 @@ import { createReducer, ActionType } from "typesafe-actions";
 
 import { Wallet } from "../../krist/wallets/Wallet";
 
-export type WalletMap = { [key: string]: Wallet };
+export interface WalletMap { [key: string]: Wallet }
 export interface State {
   readonly wallets: WalletMap;
 }
@@ -45,6 +45,7 @@ export const WalletsReducer = createReducer(initialState)
   // Remove wallet
   .handleAction(removeWallet, (state: State, { payload }: ActionType<typeof removeWallet>) => {
     // Get the wallets without the one we want to remove
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { [payload.id]: removed, ...wallets } = state.wallets;
     return { ...state, wallets };
   })

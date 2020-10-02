@@ -1,9 +1,8 @@
-import { KristValue } from "@components/krist-value/KristValue";
 import React, { Component, ReactNode } from "react";
 
 import { ListGroup } from "react-bootstrap";
 
-import { Columns, QueryStateBase, DataStateBase } from "./DataProvider";
+import { QueryStateBase, DataStateBase } from "./DataProvider";
 
 import "./ListMobile.scss";
 
@@ -29,6 +28,6 @@ export class ListMobile<T> extends Component<Props<T>> {
         <ListGroup.Item key={i}>
           {renderListItem(item)}  
         </ListGroup.Item>)}
-    </ListGroup>
+    </ListGroup>;
   }
 }
