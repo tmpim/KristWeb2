@@ -1,0 +1,109 @@
+{
+  "app": {
+    "name": "KristWeb"
+  },
+
+  "nav": {
+    "connection": {
+      "online": "Trực tuyến",
+      "offline": "Ngoại tuyến",
+      "connecting": "Đang kết nối"
+    },
+
+    "search": "Tiềm kiếm mạng Krist",
+
+    "send": "Gửi",
+    "request": "Yêu cầu"
+  },
+
+  "sidebar": {
+    "totalBalance": "Tổng số dư",
+    "guestIndicator": "Đang duyệt với tư cách khách",
+    "dashboard": "Tổng quat",
+    "myWallets": "Những ví của bạn",
+    "addressBook": "Sổ địa chỉ",
+    "transactions": "Giao dịch",
+    "names": "Tên miền",
+    "mining": "Khai thác",
+    "network": "Mạng lưới",
+    "blocks": "Khối",
+    "statistics": "Thống kê",
+    "madeBy": "Thực hiện bởi <1>{{authorName}}</1>",
+    "hostedBy": "Được lưu trữ bởi <1>{{host}}</1>",
+    "github": "GitHub",
+    "credits": "Ghi công"
+  },
+
+  "dialog": {
+    "close": "Đóng"
+  },
+
+  "pagination": {
+    "justPage": "Trang {{page}}",
+    "pageWithTotal": "Trang {{page}} trên {{total}}"
+  },
+
+  "loading": "Đang tải...",
+
+  "masterPassword": {
+    "dialogTitle": "Mật khẩu chính",
+    "passwordPlaceholder": "Mật khẩu chính",
+    "browseAsGuest": "Duyệt với tư cách khách",
+    "createPassword": "Tạo mật khẩu",
+    "logIn": "Đăng nhập",
+    "forgotPassword": "Bạn quên mật khẩu?",
+    "intro": "Nhập mật khẩu chính để mã hóa ví của bạn hoặc sử dụng KristWeb với tư cách khách. <1></1>.",
+    "dontForgetPassword": "Không bao giờ quên mật khẩu này. Nếu bạn quên nó, bạn sẽ phải tạo một mật khẩu chánh mới và thêm ví của bạn trên một lần nữa.",
+    "loginIntro": "Nhập mật khẩu chính để truy cập ví của bạn hoặc duyệt KristWeb với tư cách khách.",
+    "learnMore": "Tìm hiểu thêm",
+    "errorPasswordRequired": "Mật khẩu là bắc buộc.",
+    "errorPasswordUnset": "Mậc khẩu chính chưa đuộc thiết lạp.",
+    "errorPasswordIncorrect": "Mật khẩu không đúng.",
+    "errorStorageCorrupt": "Chỗ lưu trữ ví bị hỏng.",
+    "errorUnknown": "Lỗi không xác định.",
+    "helpWalletStorageTitle": "Trợ giúp: Lưu trữ ví",
+    "helpWalletStorage": "Khi bạn thêm ví vào KristWeb, mã khóa bí mật của ví sẽ được lưu vào bộ nhớ cục bộ của trình duyệt và được mã hóa bằng mật khẩu chính của bạn.\nMọi ví của bạn lưu đều được mã hóa bằng cùng một mật khẩu chính và bạn sẽ cần nhập mật khẩu đó mỗi khi mở KristWeb. Ví Krist thực tế của bạn không được sửa đổi theo bất kỳ cách nào.\nKhi duyệt KristWeb với tư cách khách, bạn không cần phải nhập mật khẩu chính, nhưng điều đó cũng có nghĩa là bạn sẽ không thể thêm hoặc sử dụng bất cứ ví nào. Bạn vẫn có thể khám phá mạng Krist."
+  },
+
+  "myWallets": {
+    "title": "Ví",
+    "manageBackups": "Quản lý các bản sao lưu",
+    "createWallet": "Tạo ví",
+    "addExistingWallet": "Thêm ví hiện có",
+    "searchPlaceholder": "Tìm ví...",
+    "categoryDropdownAll": "Tất cả danh mục",
+    "columnLabel": "Nhãn",
+    "columnAddress": "Địa chỉ",
+    "columnBalance": "Só dư",
+    "columnNames": "Tên miền",
+    "columnCategory": "Danh mục",
+    "columnFirstSeen": "Lần đầu tiên nhìn thấy",
+    "nameCount": "{{count}} tên miền",
+    "nameCount_plural": "{{count}} tên miền",
+    "firstSeen": "Lần đầu tiên nhìn thấy {{date}}"
+  },
+
+  "myTransactions": {
+    "title": "Giao dịch",
+    "searchPlaceholder": "Tìm kiếm các giao dịch...",
+    "columnFrom": "Từ",
+    "columnTo": "Đến",
+    "columnValue": "Giá trị",
+    "columnTime": "Giờ"
+  },
+
+  "addWallet": {
+    "dialogTitle": "Thêm ví",
+    "dialogTitleCreate": "Tạo ví"
+  },
+
+  "credits": {
+    "madeBy": "Thực hiện bởi <1>{{authorName}}</1>",
+    "supportersTitle": "Người ủng hộ",
+    "supportersDescription": "Dự án này đã được thực hiện bởi những người ủng hộ tuyệt vời sau đây:",
+    "supportButton": "Ủng hộ KristWeb",
+    "translatorsTitle": "Người dịch",
+    "translatorsDescription": "Dự án này đã được dịch bởi những người đóng góp tuyệt vời sau đây:",
+    "translateButton": "Dịch KristWeb"
+  }
+}
