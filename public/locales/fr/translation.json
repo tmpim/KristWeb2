@@ -1,0 +1,109 @@
+{
+  "app": {
+    "name": "KristWeb"
+  },
+
+  "nav": {
+    "connection": {
+      "online": "En ligne",
+      "offline": "Hors ligne",
+      "connecting": "En Connexion"
+    },
+
+    "search": "Rechercher sur le réseau Krist",
+
+    "send": "Envoyer",
+    "request": "Requêter"
+  },
+
+  "sidebar": {
+    "totalBalance": "Solde Total",
+    "guestIndicator": "Navigation en tant qu'invité",
+    "dashboard": "Tableau de bord",
+    "myWallets": "Mes portefeuilles",
+    "addressBook": "Carnet d'adresses",
+    "transactions": "Transactions",
+    "names": "Noms",
+    "mining": "Minage",
+    "network": "Réseau",
+    "blocks": "Blocs",
+    "statistics": "Statistiques",
+    "madeBy": "Fait par <1>{{authorName}}</1>",
+    "hostedBy": "Hébergé par <1>{{host}}</1>",
+    "github": "GitHub",
+    "credits": "Crédits"
+  },
+
+  "dialog": {
+    "close": "Fermer"
+  },
+
+  "pagination": {
+    "justPage": "Page {{page}}",
+    "pageWithTotal": "Page {{page}} de {{total}}"
+  },
+
+  "loading": "Chargement...",
+
+  "masterPassword": {
+    "dialogTitle": "Mot de passe maître",
+    "passwordPlaceholder": "Mot de passe maître",
+    "browseAsGuest": "Naviguer en tant qu'invité",
+    "createPassword": "Créer un mot de passe",
+    "logIn": "Connexion",
+    "forgotPassword": "Mot de passe oublié?",
+    "intro": "Entrez un mot de passe maître pour crypter vos portefeuilles ou parcourez KristWeb en tant qu'invité <1></1>.",
+    "dontForgetPassword": "N'oubliez jamais ce mot de passe. Si vous l'oubliez, vous devrez créer un nouveau mot de passe et ajouter à nouveau vos portefeuilles.",
+    "loginIntro": "Entrez un mot de passe maître pour accéder à vos portefeuilles ou parcourez KristWeb en tant qu'invité.",
+    "learnMore": "en savoir plus",
+    "errorPasswordRequired": "Mot de passe requis.",
+    "errorPasswordUnset": "Le mot de passe maître n'a pas été configuré.",
+    "errorPasswordIncorrect": "Mot de passe incorrect.",
+    "errorStorageCorrupt": "Le stockage du portefeuille est corrompu.",
+    "errorUnknown": "Erreur inconnue.",
+    "helpWalletStorageTitle": "Aide: stockage de portefeuille",
+    "helpWalletStorage": "Lorsque vous ajoutez un portefeuille à KristWeb, la clé privée du portefeuille est enregistrée dans le stockage local de votre navigateur et chiffrée avec votre mot de passe maître.\nChaque portefeuille que vous enregistrez est chiffré à l'aide du même mot de passe maître et vous devrez le saisir à chaque fois vous ouvrez KristWeb. Votre portefeuille Krist n'est en aucun cas modifié.\nLorsque vous naviguez sur KristWeb en tant qu'invité, vous n'avez pas besoin de saisir votre mot de passe maître, mais cela signifie également que vous ne pourrez pas ajouter ni utiliser vos portefeuilles. Vous pourrez toutefois explorer le réseau Krist."
+  },
+
+  "myWallets": {
+    "title": "Portefeuilles",
+    "manageBackups": "Gérer les sauvegardes",
+    "createWallet": "Créer un portefeuille",
+    "addExistingWallet": "Ajouter un portefeuille existant",
+    "searchPlaceholder": "Chercher un portefeuille...",
+    "categoryDropdownAll": "Toutes catégories",
+    "columnLabel": "Étiquette",
+    "columnAddress": "Addresse",
+    "columnBalance": "Solde",
+    "columnNames": "Noms",
+    "columnCategory": "Catégorie",
+    "columnFirstSeen": "Vu la première fois",
+    "nameCount": "{{count}} nom",
+    "nameCount_plural": "{{count}} noms",
+    "firstSeen": "Vu la première fois le {{date}}"
+  },
+
+  "myTransactions": {
+    "title": "Transactions",
+    "searchPlaceholder": "Chercher une transaction...",
+    "columnFrom": "De",
+    "columnTo": "À",
+    "columnValue": "Montant",
+    "columnTime": "Temps"
+  },
+
+  "addWallet": {
+    "dialogTitle": "Ajouter un portefeuille",
+    "dialogTitleCreate": "Créer un portefeuille"
+  },
+
+  "credits": {
+    "madeBy": "Fait par <1>{{authorName}}</1>",
+    "supportersTitle": "Supporteurs",
+    "supportersDescription": "Ce projet a été rendu possible par les formidables supporters suivants:",
+    "supportButton": "Supporter KristWeb",
+    "translatorsTitle": "Traducteurs",
+    "translatorsDescription": "Ce projet a été traduit par les formidables contributeurs suivants:",
+    "translateButton": "Traduire KristWeb"
+  }
+}
