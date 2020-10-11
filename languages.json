@@ -1,0 +1,46 @@
+{
+  "en": {
+    "name": "English (GB)",
+    "country": "GB",
+    "contributors": []
+  },
+  "de": {
+    "name": "German",
+    "nativeName": "Deutsch",
+    "country": "de",
+    "contributors": [
+      {
+        "name": "Lignum",
+        "url": "https://github.com/Lignum"
+      }
+    ]
+  },
+  "fr": {
+    "name": "French",
+    "nativeName": "Français",
+    "country": "fr",
+    "contributors": [
+      {
+        "name": "Anavrins",
+        "url": "https://github.com/xAnavrins"
+      }      
+    ]
+  },
+  "ja": {
+    "name": "Japanese",
+    "nativeName": "日本語",
+    "country": "jp",
+    "contributors": []
+  },
+  "vi": {
+    "name": "Vietnamese",
+    "nativeName": "Tiếng Việt",
+    "country": "vn",
+    "contributors": [
+      {
+        "name": "Boom",
+        "url": "https://github.com/signalhunter"
+      }      
+    ]
+  }
+}

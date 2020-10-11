@@ -8,13 +8,37 @@ import Button from "react-bootstrap/Button";
 
 import packageJson from "@/package.json";
 
-// Find translators.json
-const req = require.context("@/", false, /\.\/translators.json$/);
+// Find languages.json
+const req = require.context("@/", false, /\.\/languages.json$/);
 
-interface Translator {
+interface Language {
+  name: string;
+  nativeName?: string;
+  country?: string;
+  contributors?: Contributor[];
+};
+
+interface Contributor {
   name: string;
   url?: string;
-};
+}
+
+const ContributorComponent: React.FC<Contributor> = ({ name, url }: Contributor) => (
+  url
+    ? <a target="_blank" rel="noopener noreferrer" className="d-inline-block mx-2 font-weight-bold" href={url}>{name}</a>
+    : <span className="d-inline-block m-2 font-weight-bold">{name}</span>
+);
+
+const LanguageComponent: React.FC<Language> = (lang: Language) => (
+  <li>
+    {/* Language name, and native name if applicable */}
+    <b>{lang.name}{lang.nativeName && <span className="text-quiet"> ({lang.nativeName})</span>}</b>
+    <span className="text-muted ml-2">&ndash;</span>
+    {/* List of contributors */}
+    {lang.contributors && lang.contributors.map(({ url, name }) =>
+      <ContributorComponent key={name} url={url} name={name} />)}
+  </li>
+);
 
 export class TranslatorsComponent extends Component<WithTranslation> {
   render(): ReactNode {
@@ -23,9 +47,9 @@ export class TranslatorsComponent extends Component<WithTranslation> {
     const translateURL = packageJson.translateURL;
     if (!translateURL) return null;
 
-    // Get the translator information from translators.json
-    if (!req.keys().includes("./translators.json")) return null;
-    const translators: { [key: string]: Translator[] } = req("./translators.json");
+    // Get the translator information from languages.json
+    if (!req.keys().includes("./languages.json")) return null;
+    const languages: { [key: string]: Language } = req("./languages.json");
     
     return <>
       <Row>
@@ -34,20 +58,12 @@ export class TranslatorsComponent extends Component<WithTranslation> {
           <p>{t("credits.translatorsDescription")}</p>
         </Col>
       </Row>
-      <Row> {/* Translator list */}
+      <Row> {/* Language list */}
         <Col className="text-center mw-50">
           <ul className="list-unstyled">
-            {Object.entries(translators).map(([language, people]) => 
-              <li key={`translators-${language}`}>
-                <b>{language}</b>
-                <span className="text-muted ml-2">&ndash;</span>
-                {people.map(({ url, name }: Translator) => 
-                  url
-                    ? <a key={name} target="_blank" rel="noopener noreferrer" className="d-inline-block m-2 font-weight-bold" href={url}>{name}</a>
-                    : <span key={name} className="d-inline-block m-2 font-weight-bold">{name}</span>
-                )}
-              </li>  
-            )}            
+            {Object.entries(languages)
+              .filter(([code, lang]) => code !== "en" && lang.contributors && lang.contributors.length > 0)
+              .map(([code, lang]) => <LanguageComponent key={code} {...lang} />)}            
           </ul>
         </Col>
       </Row>
