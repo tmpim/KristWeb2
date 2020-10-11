@@ -86,6 +86,8 @@ class AddWalletDialogComponent extends Component<Props> {
             defaultSelected={[""]}
             /*selected={[values.category]}*/
             placeholder={t("addWallet.walletCategoryDropdownNone")}
+            emptyLabel={t("typeahead.emptyLabel")}
+            paginationText={t("typeahead.paginationText")}
             onChange={selected => setFieldValue("category", selected[0] || "")}
             onInputChange={text => setFieldValue("category", text)}
             isInvalid={!!errors.category}

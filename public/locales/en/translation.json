@@ -45,6 +45,11 @@
 
   "loading": "Loading...",
 
+  "typeahead": {
+    "emptyLabel": "No matches found.",
+    "paginationText": "Display additional results..."
+  },
+
   "masterPassword": {
     "dialogTitle": "Master password",
     "passwordPlaceholder": "Master password",
