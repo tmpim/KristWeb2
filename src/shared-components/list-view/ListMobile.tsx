@@ -1,6 +1,6 @@
 import React, { Component, ReactNode } from "react";
 
-import { ListGroup } from "react-bootstrap";
+import ListGroup from "react-bootstrap/ListGroup";
 
 import { QueryStateBase, DataStateBase } from "./DataProvider";
 

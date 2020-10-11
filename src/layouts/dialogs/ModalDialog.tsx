@@ -34,7 +34,10 @@ export class ModalDialog<V extends FormikValues = FormikValues> extends Componen
     } = this.props;
 
     if ((hasCloseButton || hasFooterCloseButton) && !handleClose)
-      throw new Error("FormDialog has close button but no close handler");
+      throw new Error("ModalDialog has close button but no close handler");
+
+    if (initialValues && !onSubmit)
+      throw new Error("ModalDialog has initialValues but no onSubmit");
 
     // The contents of the modal (header, body, footer), which may or may not
     // be wrapped in a form.

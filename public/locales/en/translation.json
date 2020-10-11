@@ -94,7 +94,11 @@
 
   "addWallet": {
     "dialogTitle": "Add wallet",
-    "dialogTitleCreate": "Create wallet"
+    "dialogTitleCreate": "Create wallet",
+    "walletLabel": "Wallet label",
+    "walletLabelPlaceholder": "Wallet label (optional)",
+    "walletCategory": "Wallet category",
+    "walletCategoryDropdownNone": "No category"
   },
 
   "credits": {
