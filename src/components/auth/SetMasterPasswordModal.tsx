@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import React, { useRef } from "react";
 import { Modal, Form, Input, Button } from "antd";
 import { useTranslation, Trans } from "react-i18next";
 import { useDispatch } from "react-redux";
@@ -13,7 +13,7 @@ interface Props {
   onSubmit: () => void;
 }
 
-export function SetMasterPasswordModal({ visible, onCancel, onSubmit }: Props) {
+export function SetMasterPasswordModal({ visible, onCancel, onSubmit }: Props): JSX.Element {
   const dispatch = useDispatch();
 
   const { t } = useTranslation();
@@ -41,8 +41,8 @@ export function SetMasterPasswordModal({ visible, onCancel, onSubmit }: Props) {
     <p>
       <Trans t={t} i18nKey="masterPassword.intro2">
         Enter a <b>master password</b> to encrypt your wallet privatekeys. They
-        will be saved in your browser's local storage, and you will be asked for
-        the master password to decrypt them once per session.
+        will be saved in your browser&apos;s local storage, and you will be
+        asked for the master password to decrypt them once per session.
       </Trans>
     </p>
 
@@ -63,7 +63,7 @@ export function SetMasterPasswordModal({ visible, onCancel, onSubmit }: Props) {
         ]}
         style={{ marginBottom: 8 }}
       >
-       {getMasterPasswordInput({ inputRef, placeholder: t("masterPassword.passwordPlaceholder"), autoFocus: true })}
+        {getMasterPasswordInput({ inputRef, placeholder: t("masterPassword.passwordPlaceholder"), autoFocus: true })}
       </Form.Item>
 
       {/* Password confirm input */}

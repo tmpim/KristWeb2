@@ -3,19 +3,17 @@ import { Layout, Menu, Grid, AutoComplete, Input } from "antd";
 import { SendOutlined, DownloadOutlined, MenuOutlined, SettingOutlined } from "@ant-design/icons";
 
 import { useTranslation } from "react-i18next";
-import { Switch, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { Brand } from "./Brand";
 import { Sidebar } from "./sidebar/Sidebar";
-
-import { DashboardPage } from "../pages/DashboardPage";
-import { CreditsPage } from "../pages/credits/CreditsPage";
+import { AppRouter } from "./AppRouter";
 
 import "./AppLayout.less";
 
 const { useBreakpoint } = Grid;
 
-export function AppLayout() {
+export function AppLayout(): JSX.Element {
   const { t } = useTranslation();
   const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
   const bps = useBreakpoint();
@@ -36,8 +34,8 @@ export function AppLayout() {
 
       {/* Send and receive buttons */}
       {bps.md && <Menu theme="dark" mode="horizontal" selectable={false} forceSubMenuRender={true} className="site-header-nav">
-        <Menu.Item key="1"><SendOutlined /> {t("nav.send")}</Menu.Item>
-        <Menu.Item key="2"><DownloadOutlined /> {t("nav.request")}</Menu.Item>
+        <Menu.Item key="1" icon={<SendOutlined />}>{t("nav.send")}</Menu.Item>
+        <Menu.Item key="2" icon={<DownloadOutlined />}>{t("nav.request")}</Menu.Item>
       </Menu>}
 
       {/* Spacer to push search box to the right */}
@@ -52,8 +50,8 @@ export function AppLayout() {
 
       {/* Settings button */}
       <Menu theme="dark" mode="horizontal" selectable={false} forceSubMenuRender={true} className="site-header-settings">
-        <Menu.Item key="1" onClick={() => setSidebarCollapsed(!sidebarCollapsed)}>
-          <SettingOutlined />
+        <Menu.Item key="1" icon={<SettingOutlined />} title={t("nav.settings")}>
+          <Link to="/settings"></Link>
         </Menu.Item>
       </Menu>
     </Layout.Header>
@@ -68,12 +66,8 @@ export function AppLayout() {
       />}
 
       <Layout className={"site-layout " + (!bps.md ? "site-layout-mobile" : "")}>
-        <Switch>
-          <Route exact path="/"><DashboardPage /></Route>
-          <Route path="/credits"><CreditsPage /></Route>
-          <Route path="*">Not found</Route>
-        </Switch>
+        <AppRouter />
       </Layout>
     </Layout>
-  </Layout>
+  </Layout>;
 }

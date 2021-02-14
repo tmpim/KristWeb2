@@ -28,11 +28,9 @@
     "eol-last": ["error", "always"],
     "object-shorthand": ["error", "always"],
     "tsdoc/syntax": "warn",
-    "react/function-component-definition": ["warn", {
-      "namedComponents": "arrow-function",
-      "unnamedComponents": "arrow-function"
-    }],
-    "react/display-name": ["error", { "ignoreTranspilerName": false }],
+    "react/display-name": 0,
+    "react/prop-types": 0,
+    "@typescript-eslint/no-explicit-any": 0,
     "@typescript-eslint/explicit-module-boundary-types": ["warn", {
       "allowArgumentsExplicitlyTypedAsAny": true,
       "allowDirectConstAssertionInArrowFunctions": true,

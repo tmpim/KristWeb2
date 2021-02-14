@@ -5,6 +5,7 @@
     "Inequal",
     "Lngs",
     "Sider",
+    "Transpiler",
     "antd",
     "anticon",
     "arraybuffer",
@@ -12,8 +13,11 @@
     "clientside",
     "languagedetector",
     "localisation",
+    "multiline",
     "pnpm",
     "privatekeys",
+    "singleline",
+    "submenu",
     "tsdoc"
   ]
 }

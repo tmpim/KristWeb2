@@ -1,0 +1,44 @@
+.big-menu.ant-menu.ant-menu-inline {
+  width: 100%;
+
+  border: 1px solid @border-color-split;
+}
+
+.ant-btn {
+  color: @btn-default-color;
+  border-color: transparent;
+
+  &:hover, &:focus {
+    color: @btn-default-color;
+    border-color: transparent;
+    background: lighten(@kw-lighter, 5%);
+  }
+
+  &:focus {
+    background: lighten(@kw-lighter, 10%);
+  }
+
+  &.ant-btn-primary {
+    background: @primary-color;
+
+    &:hover, &:focus {
+      background: lighten(@primary-color, 5%);
+    }
+
+    &:focus {
+      background: lighten(@primary-color, 10%);
+    }
+  }
+
+  &.ant-btn-dangerous {
+    background: @error-color;
+
+    &:hover, &:focus {
+      background: lighten(@error-color, 5%);
+    }
+
+    &:focus {
+      background: lighten(@error-color, 10%);
+    }
+  }
+}

@@ -13,7 +13,9 @@
     "search": "Search the Krist network",
 
     "send": "Send",
-    "request": "Request"
+    "request": "Request",
+
+    "settings": "Settings"
   },
 
   "sidebar": {
@@ -43,6 +45,7 @@
     "pageWithTotal": "Page {{page}} of {{total}}"
   },
 
+  "error": "Error",
   "loading": "Loading...",
 
   "typeahead": {
@@ -123,5 +126,40 @@
     "translatorsDescription": "This project was translated by the following amazing contributors:",
     "translateButton": "Translate KristWeb",
     "tmpim": "Created by tmpim"
+  },
+
+  "settings": {
+    "siteTitle": "Settings",
+    "title": "Settings",
+
+    "subMenuDebug": "Debug settings",
+    "menuTranslations": "Translations",
+
+    "subTitleTranslations": "Translations",
+
+    "translations": {
+      "errorMissingLanguages": "The languages.json file seems to be missing. Was KristWeb compiled correctly?",
+      "errorNoKeys": "No translation keys",
+
+      "columnLanguageCode": "Code",
+      "columnLanguage": "Language",
+      "columnKeys": "Keys",
+      "columnMissingKeys": "Missing keys",
+      "columnProgress": "Progress",
+
+      "tableUntranslatedKeys": "Untranslated keys",
+      "columnKey": "Key",
+      "columnEnglishString": "English string",
+
+      "exportCSV": "Export CSV"
+    }
+  },
+
+  "breadcrumb": {
+    "dashboard": "Dashboard",
+
+    "settings": "Settings",
+    "settingsDebug": "Debug",
+    "settingsTranslations": "Translations"
   }
 }

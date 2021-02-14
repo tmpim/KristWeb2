@@ -1,21 +1,59 @@
 import React, { FunctionComponent, useEffect } from "react";
-import { useTranslation } from "react-i18next";
+import { PageHeader } from "antd";
 
-type Props = React.HTMLProps<HTMLDivElement> & {
+import { useTranslation } from "react-i18next";
+import { useHistory } from "react-router-dom";
+
+import "./PageLayout.less";
+
+export type PageLayoutProps = React.HTMLProps<HTMLDivElement> & {
+  siteTitle?: string;
+  siteTitleKey?: string;
   title?: string;
   titleKey?: string;
+  subTitle?: string;
+  subTitleKey?: string;
+
+  extra?: React.ReactNode;
+  noHeader?: boolean;
+
   className?: string;
 }
 
-export const PageLayout: FunctionComponent<Props> = ({ title, titleKey, className, children, ...rest }) => {
+export const PageLayout: FunctionComponent<PageLayoutProps> = ({
+  siteTitle, siteTitleKey,
+  title, titleKey,
+  subTitle, subTitleKey,
+
+  extra, noHeader,
+
+  className,
+
+  children, ...rest
+}) => {
   const { t } = useTranslation();
+  const history = useHistory();
 
   useEffect(() => {
-    if      (title)    document.title = `${title} - KristWeb`;
-    else if (titleKey) document.title = `${t(titleKey)} - KristWeb`;
+    if      (siteTitle)    document.title = `${siteTitle} - KristWeb`;
+    else if (siteTitleKey) document.title = `${t(siteTitleKey)} - KristWeb`;
   });
 
-  // TODO: breadcrumbs and stuff
+  return <div className={"page-layout " + (className || "")} {...rest}>
+    {/* Page header */}
+    {!noHeader && (title || titleKey) && <PageHeader
+      className="page-layout-header"
 
-  return <div className={"page-layout " + (className || "")} {...rest}>{children}</div>
-}
+      title={title || (titleKey ? t(titleKey) : undefined)}
+      subTitle={subTitle || (subTitleKey ? t(subTitleKey) : undefined)}
+      extra={extra}
+
+      onBack={() => history.goBack()}
+    />}
+
+    {/* Page contents */}
+    <div className="page-layout-contents">
+      {children}
+    </div>
+  </div>;
+};

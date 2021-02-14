@@ -41,7 +41,7 @@ function getSidebarItems(t: TFunction<string>, group?: string) {
     ));
 }
 
-export function Sidebar({ collapsed }: { collapsed: boolean }) {
+export function Sidebar({ collapsed }: { collapsed: boolean }): JSX.Element {
   const { t } = useTranslation();
 
   const location = useLocation();
@@ -57,7 +57,7 @@ export function Sidebar({ collapsed }: { collapsed: boolean }) {
     width={240}
     className={"site-sidebar " + (collapsed ? "collapsed" : "")}
   >
-    <SidebarTotalBalance balance={250000} />
+    <SidebarTotalBalance balance={4600} />
 
     <Menu theme="dark" mode="inline" selectedKeys={selectedKey ? [selectedKey] : undefined}>
       {getSidebarItems(t)}
@@ -68,5 +68,5 @@ export function Sidebar({ collapsed }: { collapsed: boolean }) {
     </Menu>
 
     <SidebarFooter />
-  </Sider>
+  </Sider>;
 }

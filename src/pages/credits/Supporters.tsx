@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Space, Spin, Button } from "antd";
 import { DollarOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
@@ -15,7 +15,7 @@ interface SupportersState {
   supporters?: Supporter[];
 }
 
-export function Supporters() {
+export function Supporters(): JSX.Element | null {
   const { supportURL, supportersURL } = packageJson;
 
   const { t } = useTranslation();
@@ -61,5 +61,5 @@ export function Supporters() {
     <Button type="primary" size="large" href={supportURL} target="_blank" rel="noopener noreferrer" style={{ marginTop: 16 }}>
       <DollarOutlined /> {t("credits.supportButton")}
     </Button>
-  </Space>
+  </Space>;
 }

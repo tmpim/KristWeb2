@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const req = require.context("../../", false, /\.\/host.json$/);
 
-export function SidebarFooter() {
+export function SidebarFooter(): JSX.Element {
   const { t } = useTranslation();
 
   const authorName = packageJson.author || "Lemmmy";

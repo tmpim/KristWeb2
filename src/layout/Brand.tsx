@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
+import React from "react";
 
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import semverMajor from "semver/functions/major";
@@ -18,7 +19,7 @@ const prereleaseTagColours: { [key: string]: string } = {
   "rc": "green"
 };
 
-export function Brand() {
+export function Brand(): JSX.Element {
   const { t } = useTranslation();
 
   const version = packageJson.version;
@@ -41,5 +42,5 @@ export function Brand() {
       <span className="site-header-brand-version">v{major}.{minor}.{patch}</span>
       {tag}
     </Link>
-  </div>
+  </div>;
 }

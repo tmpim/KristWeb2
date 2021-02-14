@@ -22,14 +22,14 @@ export const store = createStore(
 );
 export type AppDispatch = typeof store.dispatch;
 
-function App() {
+function App(): JSX.Element {
   return <Suspense fallback="Loading (TODO)"> {/* TODO */}
     <Provider store={store}>
       <Router>
         <AppLayout />
       </Router>
     </Provider>
-  </Suspense>
+  </Suspense>;
 }
 
 export default App;

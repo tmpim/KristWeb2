@@ -11,7 +11,7 @@ interface OwnProps {
 
 type Props = React.HTMLProps<HTMLSpanElement> & OwnProps;
 
-export const KristValue = ({ value, long, ...props }: Props) => (
+export const KristValue = ({ value, long, ...props }: Props): JSX.Element => (
   <span {...props} className={"krist-value " + (props.className || "")}>
     <KristSymbol />
     <span className="krist-value-amount">{(value || 0).toLocaleString()}</span>

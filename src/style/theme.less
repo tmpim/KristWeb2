@@ -37,6 +37,11 @@
 
 @border-radius-base: 6px;
 
+@component-background: @kw-darkest;
+
+@tooltip-bg: @kw-light;
+@tooltip-color: @text-color;
+
 @popover-background: @kw-light;
 .ant-popover-title {
   border-bottom-color: @kw-dark;
@@ -44,6 +49,14 @@
 
 @layout-header-background: @body-background;
 @layout-header-height: 50px;
+
+@menu-item-color: @text-color;
+@menu-highlight-color: @text-color;
+@menu-bg: @kw-light;
+@menu-item-active-bg: @kw-slighter;
+@menu-item-active-border-width: 0;
+@menu-item-vertical-margin: 0;
+@menu-inline-submenu-bg: @kw-darker;
 
 @menu-dark-bg: @kw-darker;
 @menu-dark-color: @text-color;
@@ -56,7 +69,23 @@
 @input-color: @text-color;
 @input-placeholder-color: @text-color-secondary;
 
+@btn-default-color: @text-color;
+@btn-default-bg: @kw-lighter;
+@btn-default-border: transparent;
+
 @btn-font-size-sm: @font-size-sm;
+
+@table-header-bg: @kw-darker;
+@table-header-sort-bg: @kw-darkest;
+@table-header-filter-active-bg: @kw-darkest;
+@table-header-sort-active-bg: @kw-darkest;
+@table-bg: @body-background;
+@table-body-sort-bg: mix(@table-bg, @kw-light, 20%);
+@table-row-hover-bg: @kw-light;
+@table-border-color: @kw-border-color-division;
+.ant-table .ant-table-tbody > tr:last-child > td {
+  border-bottom: 0;
+}
 
 // general theme
 // ---

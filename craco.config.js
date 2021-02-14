@@ -1,6 +1,14 @@
 const CracoLessPlugin = require("craco-less");
 
 module.exports = {
+  style: {
+    css: {
+      loaderOptions: {
+        url: false
+      }
+    }
+  },
+
   plugins: [
     {
       plugin: CracoLessPlugin,

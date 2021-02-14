@@ -2,6 +2,8 @@ dependencies:
   '@ant-design/icons': 4.5.0_react-dom@17.0.1+react@17.0.1
   antd: 4.12.3_react-dom@17.0.1+react@17.0.1
   base64-arraybuffer: 0.2.0
+  csv-stringify: 5.6.1
+  file-saver: 2.0.5
   i18next: 19.8.7
   i18next-browser-languagedetector: 6.0.1
   i18next-http-backend: 1.1.0
@@ -18,6 +20,7 @@ dependencies:
   web-vitals: 1.1.0
 devDependencies:
   '@craco/craco': 6.1.1_react-scripts@4.0.2
+  '@types/file-saver': 2.0.1
   '@types/node': 12.20.0
   '@types/react': 17.0.2
   '@types/react-dom': 17.0.1
@@ -1932,6 +1935,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-laIjwTQaD+5DukBZaygQ79K1Z0jb1bPEMRrkXSLjtCcZm+abyp5YbrqpSLzD42FwWW6gK/aS4NYpJ804nG2brg==
+  /@types/file-saver/2.0.1:
+    dev: true
+    resolution:
+      integrity: sha512-g1QUuhYVVAamfCifK7oB7G3aIl4BbOyzDOqVyUfEr4tfBKrXfeH+M+Tg7HKCXSrbzxYdhyCP7z9WbKo0R2hBCw==
   /@types/glob/7.1.3:
     dependencies:
       '@types/minimatch': 3.0.3
@@ -4246,6 +4253,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-+ZAmfyWMT7TiIlzdqJgjMb7S4f1beorDbWbsocyK4RaiqA5RTX3K14bnBWmmA9QEM0gRdsjyyrEmcyga8Zsxmw==
+  /csv-stringify/5.6.1:
+    dev: false
+    resolution:
+      integrity: sha512-JlQlNZMiuRGSFbLXFNGoBtsORXlkqf4Dfq8Ee0Jo4RVJj3YAUzevagUx24mDrQJLDF7aYz6Ne8kqA8WWBaYt2A==
   /cyclist/1.0.1:
     dev: true
     resolution:
@@ -5447,6 +5458,10 @@ packages:
       webpack: ^4.0.0 || ^5.0.0
     resolution:
       integrity: sha512-Klt8C4BjWSXYQAfhpYYkG4qHNTna4toMHEbWrI5IuVoxbU6uiDKeKAP99R8mmbJi3lvewn/jQBOgU4+NS3tDQw==
+  /file-saver/2.0.5:
+    dev: false
+    resolution:
+      integrity: sha512-P9bmyZ3h/PRG+Nzga+rbdI4OEpNDzAVyy74uVO9ATgzLK6VtAsYybF/+TOCvrc0MO793d6+42lLyZTw7/ArVzA==
   /file-uri-to-path/1.0.0:
     dev: true
     optional: true
@@ -13197,6 +13212,7 @@ packages:
 specifiers:
   '@ant-design/icons': ^4.5.0
   '@craco/craco': ^6.1.1
+  '@types/file-saver': ^2.0.1
   '@types/node': ^12.19.16
   '@types/react': ^17.0.1
   '@types/react-dom': ^17.0.0
@@ -13209,10 +13225,12 @@ specifiers:
   antd: ^4.12.3
   base64-arraybuffer: ^0.2.0
   craco-less: ^1.17.1
+  csv-stringify: ^5.6.1
   eslint: ^7.20.0
   eslint-config-prettier: ^7.2.0
   eslint-plugin-react: ^7.22.0
   eslint-plugin-tsdoc: ^0.2.11
+  file-saver: ^2.0.5
   i18next: ^19.7.0
   i18next-browser-languagedetector: ^6.0.1
   i18next-http-backend: ^1.0.20

@@ -1,4 +1,4 @@
-import { useState, useRef, FunctionComponent } from "react";
+import React, { useState, useRef, FunctionComponent } from "react";
 import { Popover, Button, Input, Form } from "antd";
 import { useTranslation } from "react-i18next";
 
@@ -80,5 +80,5 @@ export const AuthMasterPasswordPopover: FunctionComponent<Props> = ({ onSubmit, 
     </>}
   >
     {children}
-  </Popover>
-}
+  </Popover>;
+};

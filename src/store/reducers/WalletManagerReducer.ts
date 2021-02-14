@@ -21,7 +21,7 @@ export interface State {
   readonly hasMasterPassword?: boolean;
 }
 
-export function getInitialWalletManagerState() {
+export function getInitialWalletManagerState(): State {
   // Salt and tester from local storage (or undefined)
   const salt = localStorage.getItem("salt") || undefined;
   const tester = localStorage.getItem("tester") || undefined;

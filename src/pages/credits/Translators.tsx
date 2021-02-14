@@ -1,37 +1,23 @@
+import React from "react";
 import { Space, Button, List, Typography } from "antd";
 import { GlobalOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 
 import { Flag } from "../../components/Flag";
 
+import { getLanguages } from "../../utils/i18n";
 import packageJson from "../../../package.json";
 
 const { Text } = Typography;
 
-// Find languages.json
-const req = require.context("../../../", false, /\.\/languages.json$/);
-
-interface Language {
-  name: string;
-  nativeName?: string;
-  country?: string;
-  contributors: Contributor[];
-};
-
-interface Contributor {
-  name: string;
-  url?: string;
-}
-
-export function Translators() {
+export function Translators(): JSX.Element | null {
   const { t } = useTranslation();
 
   const { translateURL } = packageJson;
   if (!translateURL) return null;
 
-  // Get the translator information from languages.json
-  if (!req.keys().includes("./languages.json")) return null;
-  const languages: { [key: string]: Language } = req("./languages.json");
+  const languages = getLanguages();
+  if (!languages) return null;
 
   return <Space direction="vertical">
     {/* Description */}
@@ -41,7 +27,7 @@ export function Translators() {
     <List
       size="small"
       dataSource={Object.entries(languages).filter(([code, lang]) => code !== "en" && lang.contributors.length > 0)}
-      renderItem={([code, lang]) => <List.Item>
+      renderItem={([, lang]) => <List.Item>
         <List.Item.Meta
           style={{ textAlign: "left" }}
           avatar={<Flag code={lang.country} name={lang.name} />}
@@ -61,5 +47,5 @@ export function Translators() {
     <Button type="primary" size="large" href={translateURL} target="_blank" rel="noopener noreferrer" style={{ marginTop: 16 }}>
       <GlobalOutlined /> {t("credits.translateButton")}
     </Button>
-  </Space>
+  </Space>;
 }

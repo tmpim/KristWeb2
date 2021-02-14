@@ -7,6 +7,26 @@ import { initReactI18next } from "react-i18next";
 
 import packageJson from "../../package.json";
 
+// Find languages.json
+const req = require.context("../../", false, /\.\/languages.json$/);
+
+export interface Language {
+  name: string;
+  nativeName?: string;
+  country?: string;
+  contributors: Contributor[];
+};
+
+export interface Contributor {
+  name: string;
+  url?: string;
+}
+
+export function getLanguages(): { [key: string]: Language } | null {
+  if (!req.keys().includes("./languages.json")) return null;
+  return req("./languages.json");
+}
+
 i18n
   .use(Backend)
   .use(LanguageDetector)

@@ -1,8 +1,9 @@
+import React from "react";
 import { useTranslation } from "react-i18next";
 
 import { KristValue } from "../../components/KristValue";
 
-export function SidebarTotalBalance({ balance }: { balance: number }) {
+export function SidebarTotalBalance({ balance }: { balance: number }): JSX.Element {
   const { t } = useTranslation();
 
   return (
