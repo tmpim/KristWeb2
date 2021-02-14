@@ -1,10 +1,10 @@
-import { Button } from "antd";
+import { Button, message } from "antd";
 
 import { useSelector, shallowEqual } from "react-redux";
 import { RootState } from "../store";
 
 import { PageLayout } from "../layout/PageLayout";
-import { AuthorisedAction } from "../components/AuthorisedAction";
+import { AuthorisedAction } from "../components/auth/AuthorisedAction";
 
 export function DashboardPage() {
   const { isAuthed, salt, tester, hasMasterPassword }
@@ -14,7 +14,15 @@ export function DashboardPage() {
     <p>Is authed: {isAuthed ? "yes" : "no"}</p>
     <p>Has master password: {hasMasterPassword ? "yes" : "no"}</p>
 
-    <AuthorisedAction>
+    <Button danger onClick={() => {
+      localStorage.removeItem("salt");
+      localStorage.removeItem("tester");
+      location.reload();
+    }}>Clear master password from storage</Button>
+
+    <br /><br />
+
+    <AuthorisedAction onAuthed={() => message.success("Something authed happened!")}>
       <Button type="primary">Perform authorised action</Button>
     </AuthorisedAction>
   </PageLayout>
