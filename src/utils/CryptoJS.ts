@@ -10,29 +10,29 @@ interface EvpKey {
   cryptoKey: CryptoKey;
 }
 
-/** 
+/**
  * Derive an AES key using {@link https://wiki.openssl.org/index.php/EVP_Key_Derivation|EvpKDF}.
  * Uses a single iteration and MD5 for hashing. Designed to be compatible with <code>CryptoJS.AES</code>.
- * 
+ *
  * Links:
  * {@link https://wiki.openssl.org/index.php/EVP_Key_Derivation}
  * {@link https://github.com/brix/crypto-js/blob/develop/src/evpkdf.js}
  * {@link https://github.com/brix/crypto-js/blob/develop/src/cipher-core.js}
  * {@link https://github.com/brix/crypto-js/blob/develop/src/aes.js}
- * 
+ *
  * Implementation mostly sourced from:
  * {@link https://stackoverflow.com/a/27250883/1499974}
  * {@link https://stackoverflow.com/a/52598588/1499974}
  * {@link https://stackoverflow.com/a/29152379/1499974}
- * 
+ *
  * @param password - The bytes of the password used for key derivation.
  * @param keySize - The number of bytes used for the key.
  * @param ivSize - The number of bytes used for the IV.
  * @param salt - The salt used for key derivation.
  * @param iterations - The number of iterations used.
- * @returns The key and IV (Uint8Array) derived from the password. 
+ * @returns The key and IV (Uint8Array) derived from the password.
  */
-async function evpKDF(password: Uint8Array, keySize: number, ivSize: number, 
+async function evpKDF(password: Uint8Array, keySize: number, ivSize: number,
                       salt: Uint8Array, iterations: number): Promise<EvpKey> {
   const targetKeySize = keySize + ivSize;
   const derivedBytes = new Uint8Array(targetKeySize * 4);
@@ -40,7 +40,7 @@ async function evpKDF(password: Uint8Array, keySize: number, ivSize: number,
   let numberOfDerivedWords = 0;
   let block: Uint8Array | null = null;
   let md5 = new MD5();
-  
+
   while (numberOfDerivedWords < targetKeySize) {
     for (let i = 0; i < iterations; i++) {
       if (block != null) md5.update(block);
@@ -54,7 +54,7 @@ async function evpKDF(password: Uint8Array, keySize: number, ivSize: number,
       md5 = new MD5();
     }
 
-    if (block == null) 
+    if (block == null)
       throw new Error("EvpKDF block is null!");
 
     const blockLength = Math.min(block.length, (targetKeySize - numberOfDerivedWords) * 4);
@@ -76,18 +76,18 @@ async function evpKDF(password: Uint8Array, keySize: number, ivSize: number,
 /**
  * Decrypt using AES-CBC and {@link https://wiki.openssl.org/index.php/EVP_Key_Derivation|EvpKDF}.
  * Uses a single iteration and MD5 for hashing. Designed to be compatible with <code>CryptoJS.AES.decrypt</code>.
- * 
+ *
  * Links:
  * {@link https://wiki.openssl.org/index.php/EVP_Key_Derivation}
  * {@link https://github.com/brix/crypto-js/blob/develop/src/evpkdf.js}
  * {@link https://github.com/brix/crypto-js/blob/develop/src/cipher-core.js}
  * {@link https://github.com/brix/crypto-js/blob/develop/src/aes.js}
- * 
+ *
  * Implementation mostly sourced from:
  * {@link https://stackoverflow.com/a/27250883/1499974}
  * {@link https://stackoverflow.com/a/52598588/1499974}
  * {@link https://stackoverflow.com/a/29152379/1499974}
- * 
+ *
  * @param encrypted - The base64-encoded encrypted data.
  * @param password - The password used to decrypt the data.
  * @returns The decrypted data.

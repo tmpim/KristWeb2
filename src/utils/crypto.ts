@@ -6,9 +6,9 @@ import { toHex, fromHex } from "./";
 // SHA256
 // -----------------------------------------------------------------------------
 
-/** 
+/**
  * Utility function to return the hexadecimal SHA-256 digest of an input string.
- * 
+ *
  * @param input - The input string to hash.
  * @returns The hexadecimal SHA-256 digest of <code>input</code>.
  */
@@ -17,10 +17,10 @@ export async function sha256(input: string): Promise<string> {
   return toHex(await crypto.subtle.digest("SHA-256", inputUtf8));
 }
 
-/** 
+/**
  * Utility function to return the double hexadecimal SHA-256 digest of an input string.
  * This is equivalent to <code>sha256(sha256(input))</code>.
- * 
+ *
  * @param input - The input string to hash.
  * @returns The double hexadecimal SHA-256 digest of <code>input</code>.
  */
@@ -35,11 +35,11 @@ export type AESEncryptedString = string;
 
 /**
  * Encrypts the given input string with the AES-GCM cipher, deriving a key from
- * the given password with SHA-256. 
- * 
+ * the given password with SHA-256.
+ *
  * Implementation mostly sourced from:
  * {@link https://gist.github.com/chrisveness/43bcda93af9f646d083fad678071b90a}
- * 
+ *
  * @param input - The plain text input to be encrypted.
  * @param password - The password used to encrypt the input data.
  * @returns The encrypted cipher text (`IV (12 bytes hex) + CT (base64)`)
@@ -63,13 +63,13 @@ export async function aesGcmEncrypt(input: string, password: string): Promise<AE
 }
 
 /**
- * Decrypts the given input cipher text with the AES-GCM cipher, deriving a key 
+ * Decrypts the given input cipher text with the AES-GCM cipher, deriving a key
  * from the given password with SHA-256. The input must be of the form
  * `IV (12 bytes hex) + CT (base64)`.
- * 
+ *
  * Implementation mostly sourced from:
  * {@link https://gist.github.com/chrisveness/43bcda93af9f646d083fad678071b90a}
- * 
+ *
  * @param input - The IV and cipher text to decrypt.
  * @param password - The password used to decrypt the input cipher text.
  * @returns The decrypted plain text data.
@@ -99,6 +99,6 @@ export async function aesGcmDecrypt(input: AESEncryptedString, password: string)
 // CryptoJS
 // -----------------------------------------------------------------------------
 
-/** Polyfill for decrypting CryptoJS AES strings. This is used to migrate 
+/** Polyfill for decrypting CryptoJS AES strings. This is used to migrate
  * local storage from KristWeb v1. */
 export { decryptCryptoJS } from "./CryptoJS";

@@ -1,17 +1,14 @@
-import { browseAsGuest, openLogin, login, setMasterPassword } from "@actions/WalletManagerActions";
 import { createReducer, ActionType } from "typesafe-actions";
+import { authMasterPassword, setMasterPassword } from "../actions/WalletManagerActions";
 
 export interface State {
-  /** Whether or not the user has logged in, either as a guest, or with a
-   * master password. */
-  readonly isLoggedIn: boolean;
-
-  /** Whether or not the user is browsing KristWeb as a guest. */
-  readonly isGuest: boolean;
+  /** Whether or not the user has authenticated with the master password,
+   * decrypting their wallets. */
+  readonly isAuthed?: boolean;
 
   /** The master password used to encrypt and decrypt local storage data. */
   readonly masterPassword?: string;
-  
+
   /** Secure random string that is encrypted with the master password to create
    * the "tester" string. */
   readonly salt?: string;
@@ -21,46 +18,36 @@ export interface State {
 
   /** Whether or not the user has configured and saved a master password
    * before (whether or not salt+tester are present in local storage). */
-  readonly hasMasterPassword: boolean;
+  readonly hasMasterPassword?: boolean;
 }
 
-// Salt and tester from local storage (or undefined)
-const salt = localStorage.getItem("salt") || undefined;
-const tester = localStorage.getItem("tester") || undefined;
+export function getInitialWalletManagerState() {
+  // Salt and tester from local storage (or undefined)
+  const salt = localStorage.getItem("salt") || undefined;
+  const tester = localStorage.getItem("tester") || undefined;
 
-// There is a master password configured if both `salt` and `tester` exist
-const hasMasterPassword = !!salt && !!tester;
+  // There is a master password configured if both `salt` and `tester` exist
+  const hasMasterPassword = !!salt && !!tester;
 
-const initialState: State = {
-  isLoggedIn: false,
-  isGuest: true,
+  return {
+    isAuthed: false,
 
-  salt, 
-  tester,
+    salt,
+    tester,
 
-  hasMasterPassword
-};
+    hasMasterPassword
+  };
+}
 
-export const WalletManagerReducer = createReducer(initialState)
-  .handleAction(browseAsGuest, (state: State) => ({
+export const WalletManagerReducer = createReducer({} as State)
+  .handleAction(authMasterPassword, (state: State, action: ActionType<typeof authMasterPassword>) => ({
     ...state,
-    isLoggedIn: true,
-    isGuest: true
-  }))
-  .handleAction(openLogin, (state: State) => ({
-    ...state,
-    isLoggedIn: false
-  }))
-  .handleAction(login, (state: State, action: ActionType<typeof login>) => ({
-    ...state,
-    isLoggedIn: true,
-    isGuest: false,
+    isAuthed: true,
     masterPassword: action.payload.password
   }))
   .handleAction(setMasterPassword, (state: State, action: ActionType<typeof setMasterPassword>) => ({
     ...state,
-    isLoggedIn: true,
-    isGuest: false,
+    isAuthed: true,
     masterPassword: action.payload.password,
     salt: action.payload.salt,
     tester: action.payload.tester,

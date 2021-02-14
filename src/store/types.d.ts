@@ -6,4 +6,4 @@ declare module "typesafe-actions" {
     RootAction: RootAction;
     RootState: RootState;
   }
-};
+}

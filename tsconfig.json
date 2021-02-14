@@ -12,6 +12,7 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
     "downlevelIteration": true,
     "module": "esnext",
     "moduleResolution": "node",
@@ -19,9 +20,8 @@
     "isolatedModules": true,
     "noEmit": true,
     "noImplicitAny": true,
-    "jsx": "react"
+    "jsx": "react-jsx"
   },
-  "extends": "./tsconfig.extend.json",
   "include": [
     "src"
   ]

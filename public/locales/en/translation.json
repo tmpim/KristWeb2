@@ -67,7 +67,10 @@
     "errorStorageCorrupt": "Wallet storage is corrupted.",
     "errorUnknown": "Unknown error.",
     "helpWalletStorageTitle": "Help: Wallet storage",
-    "helpWalletStorage": "When you add a wallet to KristWeb, the private key for the wallet is saved to your browser's local storage and encrypted with your master password.\nEvery wallet you save is encrypted using the same master password, and you will need to enter it every time you open KristWeb. Your actual Krist wallet is not modified in any way.\nWhen browsing KristWeb as a guest, you do not need to enter a master password, but it also means that you will not be able to add or use any wallets. You will still be able to explore the Krist network."
+    "helpWalletStorage": "When you add a wallet to KristWeb, the private key for the wallet is saved to your browser's local storage and encrypted with your master password.\nEvery wallet you save is encrypted using the same master password, and you will need to enter it every time you open KristWeb. Your actual Krist wallet is not modified in any way.\nWhen browsing KristWeb as a guest, you do not need to enter a master password, but it also means that you will not be able to add or use any wallets. You will still be able to explore the Krist network.",
+    "popoverTitle": "Decrypt wallets",
+    "popoverAuthoriseButton": "Authorise",
+    "popoverDescription": "Enter your master password to decrypt your wallets."
   },
 
   "myWallets": {
@@ -107,12 +110,14 @@
   },
 
   "credits": {
+    "title": "Credits",
     "madeBy": "Made by <1>{{authorName}}</1>",
     "supportersTitle": "Supporters",
     "supportersDescription": "This project was made possible by the following amazing supporters:",
     "supportButton": "Support KristWeb",
     "translatorsTitle": "Translators",
     "translatorsDescription": "This project was translated by the following amazing contributors:",
-    "translateButton": "Translate KristWeb"
+    "translateButton": "Translate KristWeb",
+    "tmpim": "Created by tmpim"
   }
 }

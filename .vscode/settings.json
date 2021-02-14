@@ -1,38 +1,17 @@
 {
-  "favorites.resources": [
-    "node_modules/bootstrap/scss"
-  ],
-  "scss.aliasPaths": {
-    "scss": "src/scss",
-    "fontello": "src/fontello",
-  },
   "cSpell.words": [
-    "KRISTWALLET",
+    "Authed",
+    "Authorise",
     "Lngs",
-    "Syncable",
-    "Transpiler",
-    "Unfocus",
-    "Unmount",
-    "apos",
+    "Sider",
+    "antd",
+    "anticon",
     "arraybuffer",
-    "borderless",
-    "devtools",
-    "dont",
-    "esnext",
-    "firstseen",
-    "focusable",
-    "formik",
-    "keepalive",
+    "authorised",
+    "clientside",
     "languagedetector",
-    "mixins",
-    "motd",
-    "multiline",
-    "scrollbar",
-    "singleline",
-    "textbox",
-    "tsdoc",
-    "typeahead",
-    "typesafe",
-    "unstyled"
-  ],
+    "localisation",
+    "pnpm",
+    "tsdoc"
+  ]
 }

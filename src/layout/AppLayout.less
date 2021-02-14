@@ -1,0 +1,299 @@
+@import (reference) "../App.less";
+
+.site-header + .ant-layout {
+  z-index: 1;
+
+  margin-top: @layout-header-height;
+}
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  display: flex;
+  flex-direction: row;
+
+  border-bottom: 1px solid @kw-border-color-darker;
+  padding: 0;
+
+  z-index: 2;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+
+  .site-header-brand {
+    width: @kw-sidebar-width;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    // Make it full height
+    align-self: stretch;
+    // Force the search bar to shrink instead
+    flex-shrink: 0;
+
+    font-size: 1.25rem;
+    user-select: none;
+
+    border-right: 1px solid @kw-border-color-darker;
+
+    a {
+      color: @text-color;
+      text-align: center;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+    &-version {
+      margin-left: 0.25em;
+
+      color: @text-color-secondary;
+      font-size: 60%;
+    }
+
+    .ant-tag {
+      margin-left: 0.5em;
+    }
+  }
+
+  > .ant-menu {
+    background: transparent;
+    flex-shrink: 0;
+
+    .ant-menu-item {
+      height: @layout-header-height;
+
+      // Fix background overlapping border
+      border-bottom: 1px solid @kw-border-color-darker;
+    }
+  }
+
+  .site-header-sidebar-toggle {
+    border-right: 1px solid @kw-border-color-darker;
+  }
+
+  .site-header-search-container {
+    padding: 0 1rem;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .site-header-search {
+      width: 100%;
+      max-width: 400px;
+
+      margin-left: auto;
+
+      background: @kw-header-search-bg;
+      color: @kw-header-search-color;
+      border-radius: @border-radius-base;
+
+      transition: all @animation-duration-base ease;
+
+      &::placeholder {
+        color: @kw-header-search-placeholder-color;
+
+        transition: all @animation-duration-base ease;
+
+        font-size: @kw-header-search-placeholder-font-size;
+        vertical-align: middle;
+      }
+
+      &:hover {
+        background: @kw-header-search-hover-bg;
+        color: @kw-header-search-hover-color;
+      }
+
+      &.ant-select-focused {
+        background: @kw-header-search-focus-bg;
+        color: @kw-header-search-focus-color;
+
+        .ant-input {
+          // Remove the built in focus indicator
+          box-shadow: none;
+        }
+      }
+
+      .ant-input-group, .ant-input {
+        background: transparent;
+        border: none;
+      }
+
+      .ant-input-group-addon {
+        border: none;
+        background: transparent;
+
+        .ant-input-search-button {
+          border: none;
+        }
+      }
+
+      // Make the search box full width on mobile
+      @media (max-width: @screen-md) {
+        max-width: 100%;
+      }
+    }
+  }
+
+  .site-header-settings {
+    border-left: 1px solid @kw-border-color-darker;
+  }
+}
+
+.site-sidebar {
+  background: @kw-sidebar-bg;
+  border-right: 1px solid @kw-border-color-darker;
+
+  width: @kw-sidebar-width;
+
+  position: fixed;
+  top: @layout-header-height;
+  bottom: 0;
+
+  // Above the mobile collapse backdrop, below the modals
+  z-index: 910;
+
+  transition: left @kw-sidebar-collapse-duration ease;
+  left: 0;
+
+  &.collapsed {
+    left: -@kw-sidebar-width;
+  }
+
+  .site-sidebar-header {
+    padding: 0.5rem 1rem;
+
+    background: @kw-sidebar-header-bg;
+    border-bottom: 1px solid @kw-border-color-darker;
+
+    line-height: 1.25;
+
+    user-select: none;
+
+    &.site-sidebar-total-balance {
+      h5 {
+        margin-bottom: 0;
+
+        font-size: @font-size-sm;
+        font-weight: bolder;
+
+        color: @text-color-secondary;
+      }
+
+      .anticon svg {
+        width: 14px;
+        height: 14px;
+
+        position: relative;
+        bottom: 0.15em;
+
+        color: @text-color-secondary;
+      }
+
+      .krist-value {
+        font-size: 20px;
+      }
+    }
+  }
+
+  .ant-layout-sider-children {
+    display: flex;
+    flex-direction: column;
+
+    & > .ant-menu {
+      overflow-y: auto;
+      height: 100%;
+    }
+  }
+
+  .ant-menu-item-group .ant-menu-item-group-title {
+    font-size: 0.8em;
+    font-weight: bold;
+    text-transform: uppercase;
+
+    color: @kw-text-secondary;
+
+    // margin: 1rem 0 0 0;
+    margin: 0;
+    padding: 1rem 1rem 0.5rem 1rem;
+
+    border-top: 1px solid @kw-border-color-division;
+
+    user-select: none;
+  }
+
+  .ant-menu-item {
+    margin-top: 0;
+    margin-bottom: 0 !important;
+    padding: 0;
+
+    line-height: @kw-sidebar-item-height;
+    height: @kw-sidebar-item-height;
+    vertical-align: middle;
+
+    user-select: none;
+
+    .anticon {
+      line-height: @kw-sidebar-item-height;
+      vertical-align: middle;
+
+      font-size: 18px;
+    }
+  }
+
+  .site-sidebar-footer {
+    user-select: none;
+
+    padding: 0.5rem;
+
+    text-align: center;
+    font-size: 75%;
+
+    color: @text-color-secondary;
+
+    a {
+      color: @text-color;
+    }
+  }
+}
+
+.site-sidebar-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  transition: opacity @kw-sidebar-collapse-duration ease;
+
+  background: @kw-sidebar-backdrop-bg;
+  opacity: 1;
+
+  pointer-events: all;
+  cursor: pointer;
+
+  // Below the sidebar and modals
+  z-index: 900;
+
+  &.collapsed {
+    pointer-events: none;
+    opacity: 0;
+  }
+}
+
+.site-layout {
+  margin-left: @kw-sidebar-width;
+
+  &.site-layout-mobile {
+    margin-left: 0;
+  }
+}
+
+.page-layout {
+  padding: 2rem;
+}

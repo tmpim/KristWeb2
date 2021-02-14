@@ -1,24 +1,23 @@
-const path = require("path");
-const CracoAlias = require("craco-alias");
+const CracoLessPlugin = require("craco-less");
 
 module.exports = {
   plugins: [
     {
-      plugin: CracoAlias,
+      plugin: CracoLessPlugin,
       options: {
-        source: "tsconfig",
-        baseUrl: ".",
-        tsConfigPath: "./tsconfig.extend.json"
+        cssLoaderOptions: {
+          url: false
+        },
+
+        lessLoaderOptions: {
+          lessOptions: {
+            relativeUrls: false,
+            javascriptEnabled: true
+          }
+        }
       }
     }
   ],
-
-  webpack: {
-    alias: {
-      scss: path.resolve(__dirname, "src/scss/"),
-      fontello: path.resolve(__dirname, "src/fontello/")
-    }
-  },
 
   // I use eslint in vscode - to save my CPU I'd rather just rely on using that
   // to lint instead of the react-scripts watcher.

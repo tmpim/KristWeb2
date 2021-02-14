@@ -25,13 +25,24 @@ wallet that only needs to communicate to the Krist node itself. It securely
 saves wallets encrypted in your browser's Local Storage, so you don't have to 
 type in wallet passwords ever again!
 
-### Building
+### Building (for development)
+
+```sh
+git clone https://github.com/tmpim/KristWeb2
+cd KristWeb2
+
+npm i -g pnpm # If you don't have pnpm, please use it for development
+
+pnpm install
+npm start # Run the development server
+```
+
+### Building (for production)
 
 ```sh
 git clone https://github.com/tmpim/KristWeb2
 cd KristWeb2
 npm install
-npm start # Run the development server
 npm run build # Build the production files
 ```
 
@@ -87,8 +98,7 @@ To provide hosting credits in the sidebar footer, create the file
 ### Donate
 
 If you like my work, and want to help me with this hobby project and many more
-in the future, please consider supporting me on 
-[Patreon](https://patreon.com/lemmmy).
+in the future, please consider [donating](https://donate.lemmmy.pw).
 
 ### License
 

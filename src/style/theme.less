@@ -1,0 +1,109 @@
+// Colours
+// ---
+@kw-text: #eaf0fe;
+@kw-text-secondary: #8991ab;
+
+@kw-light: #343a56;
+@kw-lighter: #434a6b;
+@kw-slighter: #3c4261;
+@kw-dark: #2a304a;
+@kw-darker: #242942;
+@kw-darkest: #1b1f31;
+
+@kw-primary: CornFlowerBlue;
+@kw-secondary: @kw-lighter;
+@kw-green: #38bf60;
+@kw-blue: #57a3cb;
+@kw-red: #fe4848;
+
+// antd theme overrides
+// ---
+@primary-color: @kw-primary;
+
+@body-background: @kw-dark;
+@text-color: @kw-text;
+@text-color-secondary: @kw-text-secondary;
+@text-color-secondary-dark: @kw-text-secondary;
+@heading-color: @kw-text;
+
+@font-size-base: 16px;
+@font-size-sm: 13px;
+
+@border-color-base: #535c80;
+@border-color-split: #404962;
+@kw-border-color-division: #3f4661;
+@kw-border-color-darker: @kw-darkest;
+
+@border-radius-base: 6px;
+
+@popover-background: @kw-light;
+.ant-popover-title {
+  border-bottom-color: @kw-dark;
+}
+
+@layout-header-background: @body-background;
+@layout-header-height: 50px;
+
+@menu-dark-bg: @kw-darker;
+@menu-dark-color: @text-color;
+@menu-dark-item-active-bg: mix(@kw-darker, @kw-secondary, 40%);
+@menu-dark-item-hover-bg: mix(@kw-darker, @kw-darkest, 50%);
+
+@input-bg: @kw-lighter;
+@input-border-color: transparent;
+
+@input-color: @text-color;
+@input-placeholder-color: @text-color-secondary;
+
+@btn-font-size-sm: @font-size-sm;
+
+// general theme
+// ---
+@kw-sidebar-bg: @kw-darker;
+@kw-sidebar-header-bg: @kw-darkest;
+@kw-sidebar-item-height: 48px;
+@kw-sidebar-width: 240px;
+@kw-sidebar-collapse-duration: 350ms;
+@kw-sidebar-backdrop-bg: @modal-mask-bg;
+
+// header search
+@kw-header-search-bg: @kw-light;
+@kw-header-search-color: fade(@text-color, 50%);
+@kw-header-search-placeholder-color: @text-color-secondary;
+@kw-header-search-placeholder-font-size: @font-size-sm;
+@kw-header-search-hover-bg: @kw-slighter;
+@kw-header-search-hover-color: fade(@text-color, 75%);
+@kw-header-search-focus-bg: @kw-lighter;
+@kw-header-search-focus-color: @text-color;
+
+// custom scrollbar
+// ---
+@kw-scrollbar-width: 8px;
+@kw-scrollbar-thumb-color: @kw-lighter;
+@kw-scrollbar-thumb-color-hover: @kw-slighter;
+@kw-scrollbar-track-color: rgba(0, 0, 0, 0.1);
+
+// WebKit
+::-webkit-scrollbar {
+  width: @kw-scrollbar-width;
+}
+
+::-webkit-scrollbar-track {
+  background: @kw-scrollbar-track-color;
+  border-radius: @border-radius-base;
+}
+
+::-webkit-scrollbar-thumb {
+  background: @kw-scrollbar-thumb-color;
+  border-radius: @border-radius-base;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: @kw-scrollbar-thumb-color-hover;
+}
+
+// Mozilla
+:root {
+  scrollbar-color: @kw-scrollbar-thumb-color @kw-scrollbar-track-color !important;
+  scrollbar-width: thin !important;
+}
