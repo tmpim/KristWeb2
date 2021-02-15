@@ -3,21 +3,28 @@
     "Authed",
     "Authorise",
     "Inequal",
+    "KRISTWALLET",
     "Lngs",
     "Sider",
+    "Syncable",
     "Transpiler",
     "antd",
     "anticon",
     "arraybuffer",
     "authorised",
     "clientside",
+    "dont",
     "languagedetector",
     "localisation",
     "multiline",
     "pnpm",
     "privatekeys",
+    "readonly",
     "singleline",
     "submenu",
-    "tsdoc"
-  ]
+    "tsdoc",
+    "typeahead"
+  ],
+  "i18next.defaultTranslatedLocale": "en",
+  "i18next.i18nPaths": "public/locales"
 }

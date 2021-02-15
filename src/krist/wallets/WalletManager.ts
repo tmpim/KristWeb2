@@ -1,8 +1,8 @@
-import { toHex } from "../utils";
-import { aesGcmEncrypt, aesGcmDecrypt } from "../utils/crypto";
+import { toHex } from "../../utils";
+import { aesGcmEncrypt, aesGcmDecrypt } from "../../utils/crypto";
 
-import { AppDispatch } from "../App";
-import * as actions from "../store/actions/WalletManagerActions";
+import { AppDispatch } from "../../App";
+import * as actions from "../../store/actions/WalletManagerActions";
 
 /** Verifies that the given master password is correct, and dispatches the
  * auth action to the Redux store. */

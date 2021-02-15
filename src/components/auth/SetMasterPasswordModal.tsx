@@ -3,9 +3,10 @@ import { Modal, Form, Input, Button } from "antd";
 import { useTranslation, Trans } from "react-i18next";
 import { useDispatch } from "react-redux";
 
-import { getMasterPasswordInput, FakeUsernameInput } from "./MasterPasswordInput";
+import { FakeUsernameInput } from "./FakeUsernameInput";
+import { getMasterPasswordInput } from "./MasterPasswordInput";
 
-import { setMasterPassword } from "../../krist/WalletManager";
+import { setMasterPassword } from "../../krist/wallets/WalletManager";
 
 interface Props {
   visible: boolean;
@@ -31,6 +32,8 @@ export function SetMasterPasswordModal({ visible, onCancel, onSubmit }: Props): 
 
   return <Modal
     title={t("masterPassword.dialogTitle")}
+    okText={t("dialog.ok")}
+    cancelText={t("dialog.cancel")}
 
     visible={visible}
     destroyOnClose

@@ -5,19 +5,21 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { RootState } from "../../store";
 
-import { getMasterPasswordInput, FakeUsernameInput } from "./MasterPasswordInput";
+import { FakeUsernameInput } from "./FakeUsernameInput";
+import { getMasterPasswordInput } from "./MasterPasswordInput";
 
-import { authMasterPassword } from "../../krist/WalletManager";
+import { authMasterPassword } from "../../krist/wallets/WalletManager";
 
 interface FormValues {
   masterPassword: string;
 }
 
 interface Props {
+  encrypt?: boolean;
   onSubmit: () => void;
 }
 
-export const AuthMasterPasswordPopover: FunctionComponent<Props> = ({ onSubmit, children }) => {
+export const AuthMasterPasswordPopover: FunctionComponent<Props> = ({ encrypt, onSubmit, children }) => {
   const { salt, tester } = useSelector((s: RootState) => s.walletManager, shallowEqual);
   const dispatch = useDispatch();
 
@@ -42,12 +44,12 @@ export const AuthMasterPasswordPopover: FunctionComponent<Props> = ({ onSubmit, 
   return <Popover
     trigger="click"
     overlayClassName="authorised-action-popover"
-    title={t("masterPassword.popoverTitle")}
+    title={t(encrypt ? "masterPassword.popoverTitleEncrypt" : "masterPassword.popoverTitle")}
     onVisibleChange={visible => {
       if (visible) setTimeout(() => { if (inputRef.current) inputRef.current.focus(); }, 20);
     }}
     content={<>
-      <p>{t("masterPassword.popoverDescription")}</p>
+      <p>{t(encrypt ? "masterPassword.popoverDescriptionEncrypt" : "masterPassword.popoverDescription")}</p>
 
       <Form
         form={form}

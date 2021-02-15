@@ -12,6 +12,7 @@ import "./utils/i18n";
 
 import "./App.less";
 import { AppLayout } from "./layout/AppLayout";
+import { ForcedAuth } from "./components/auth/ForcedAuth";
 
 export const store = createStore(
   rootReducer,
@@ -27,6 +28,7 @@ function App(): JSX.Element {
     <Provider store={store}>
       <Router>
         <AppLayout />
+        <ForcedAuth />
       </Router>
     </Provider>
   </Suspense>;

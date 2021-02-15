@@ -2,6 +2,11 @@
   width: 100%;
 
   border: 1px solid @border-color-split;
+
+  .ant-menu-item {
+    border-bottom: 1px solid @border-color-split;
+    margin-bottom: 0;
+  }
 }
 
 .ant-btn {
@@ -14,33 +19,36 @@
     background: lighten(@kw-lighter, 5%);
   }
 
-  &:focus {
-    background: lighten(@kw-lighter, 10%);
-  }
+  &:focus { background: lighten(@kw-lighter, 10%); }
 
   &.ant-btn-primary {
     background: @primary-color;
 
-    &:hover, &:focus {
-      background: lighten(@primary-color, 5%);
-    }
-
-    &:focus {
-      background: lighten(@primary-color, 10%);
-    }
+    &:hover, &:focus { background: lighten(@primary-color, 5%); }
+    &:focus { background: lighten(@primary-color, 10%); }
   }
 
   &.ant-btn-dangerous {
     background: @error-color;
 
-    &:hover, &:focus {
-      background: lighten(@error-color, 5%);
-    }
-
-    &:focus {
-      background: lighten(@error-color, 10%);
-    }
+    &:hover, &:focus { background: lighten(@error-color, 5%); }
+    &:focus { background: lighten(@error-color, 10%); }
   }
+
+  &.ant-btn-background-ghost {
+    border-color: @kw-lighter;
+
+    &:hover, &:focus { border-color: lighten(@kw-lighter, 10%); }
+    &:focus { border-color: lighten(@kw-lighter, 20%); }
+  }
+}
+
+.ant-input:read-only {
+  background: @kw-input-readonly-bg;
+}
+
+.input-monospace {
+  font-family: monospace;
 }
 
 .ant-empty-description {
@@ -60,4 +68,36 @@
     fill: @kw-darker;
     stroke: @kw-darkest;
   }
+}
+
+.ant-collapse.flush-collapse {
+  & > .ant-collapse-item > .ant-collapse-header {
+    padding: 0;
+    padding-left: 16px;
+
+    .ant-collapse-arrow {
+      padding: 0;
+      top: 7px;
+      left: 0;
+    }
+  }
+
+  & > .ant-collapse-item > .ant-collapse-content > .ant-collapse-content-box {
+    padding: @padding-sm 0;
+  };
+}
+
+.ant-modal-body .ant-input-group.ant-input-group-compact .ant-btn {
+  border-left: 1px solid @modal-content-bg;
+
+  &.ant-btn-icon-only {
+    padding-left: @padding-sm;
+    padding-right: @padding-sm;
+    width: auto;
+  }
+}
+
+
+.text-small {
+  font-size: @font-size-sm;
 }

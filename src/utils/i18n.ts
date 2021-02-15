@@ -33,7 +33,7 @@ i18n
   .use(initReactI18next)
   .init({
     fallbackLng: "en",
-    supportedLngs: ["en", "de", "ja", "vi", "fr"],
+    supportedLngs: Object.keys(getLanguages() || {}),
 
     debug: isLocalhost,
 

@@ -2,6 +2,7 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 
 import { DashboardPage } from "../pages/DashboardPage";
+import { WalletsPage } from "../pages/wallets/WalletsPage";
 
 import { SettingsPage } from "../pages/settings/SettingsPage";
 import { SettingsTranslations } from "../pages/settings/SettingsTranslations";
@@ -15,7 +16,8 @@ interface AppRoute {
 }
 
 export const APP_ROUTES: AppRoute[] = [
-  { path: "/", name: "dashboard", component: <DashboardPage /> },
+  { path: "/",        name: "dashboard", component: <DashboardPage /> },
+  { path: "/wallets", name: "wallets",   component: <WalletsPage /> },
 
   { path: "/settings",                    name: "settings", component: <SettingsPage /> },
   { path: "/settings/debug",              name: "settingsDebug" },

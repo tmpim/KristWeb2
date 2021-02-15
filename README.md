@@ -64,13 +64,9 @@ Language files are named with
 [IETF language tags](https://en.wikipedia.org/wiki/IETF_language_tag). Short
 tags (e.g. `en` instead of `en-GB`) are preferred.
 
-**IMPORTANT:** If you are adding a new language, you **must**:
-
-* Add the language code to [`src/utils/i18n.ts`](src/utils/i18n.ts) in
-  `supportedLngs`
-* Add a listing for the language with the English name, native name, a country
-  code (for the flag) and the contributors list to
-  [`languages.json`](languages.json)
+**IMPORTANT:** If you are adding a new language, you **must** add a listing for 
+the language with the English name, native name, a country code (for the flag) 
+and the contributors list to [`languages.json`](languages.json).
 
 The library will automatically detect the language from your browser to use, but
 for the sake of testing, you can override it by running the following command in
