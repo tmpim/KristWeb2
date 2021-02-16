@@ -123,6 +123,9 @@
 
     "walletLabel": "Wallet label",
     "walletLabelPlaceholder": "Wallet label (optional)",
+    "walletLabelMaxLengthError": "No longer than 32 characters",
+    "walletLabelWhitespaceError": "Must not be only spaces",
+
     "walletCategory": "Wallet category",
     "walletCategoryDropdownNone": "No category",
     "walletCategoryDropdownNew": "New",

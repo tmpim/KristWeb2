@@ -36,6 +36,7 @@ export function AddWalletModal({ create, visible, setVisible }: Props): JSX.Elem
   const [form] = Form.useForm<FormValues>();
   const passwordInput = useRef<Input>(null);
   const [calculatedAddress, setCalculatedAddress] = useState<string | undefined>();
+  const [formatState, setFormatState] = useState<WalletFormatName>("kristwallet");
 
   async function onSubmit() {
     const values = await form.validateFields();
@@ -46,6 +47,8 @@ export function AddWalletModal({ create, visible, setVisible }: Props): JSX.Elem
   }
 
   function onValuesChange(changed: Partial<FormValues>, values: Partial<FormValues>) {
+    if (changed.format) setFormatState(changed.format);
+
     if ((changed.format || changed.password) && values.password)
       updateCalculatedAddress(values.format, values.password);
   }
@@ -100,6 +103,10 @@ export function AddWalletModal({ create, visible, setVisible }: Props): JSX.Elem
           <Form.Item
             name="label"
             label={t("addWallet.walletLabel")}
+            rules={[
+              { max: 32, message: t("addWallet.walletLabelMaxLengthError") },
+              { whitespace: true, message: t("addWallet.walletLabelWhitespaceError") }
+            ]}
           >
             <Input placeholder={t("addWallet.walletLabelPlaceholder")} />
           </Form.Item>
@@ -107,10 +114,7 @@ export function AddWalletModal({ create, visible, setVisible }: Props): JSX.Elem
 
         {/* Wallet category */}
         <Col span={12}>
-          <Form.Item
-            name="category"
-            label={t("addWallet.walletCategory")}
-          >
+          <Form.Item name="category" label={t("addWallet.walletCategory")}>
             {getWalletCategoryDropdown({ onNewCategory: category => form.setFieldsValue({ category })})}
           </Form.Item>
         </Col>
@@ -121,7 +125,12 @@ export function AddWalletModal({ create, visible, setVisible }: Props): JSX.Elem
       <FakeUsernameInput />
 
       {/* Wallet password */}
-      <Form.Item label={t("addWallet.walletPassword")} style={{ marginBottom: 0 }}>
+      <Form.Item
+        label={formatState === "api"
+          ? t("addWallet.walletPrivatekey")
+          : t("addWallet.walletPassword")}
+        style={{ marginBottom: 0 }}
+      >
         <Input.Group compact style={{ display: "flex" }}>
           <Form.Item name="password" style={{ flex: 1, marginBottom: 0 }}>
             <Input
@@ -133,7 +142,9 @@ export function AddWalletModal({ create, visible, setVisible }: Props): JSX.Elem
               className={create ? "input-monospace" : ""}
               style={{ height: 32 }}
 
-              placeholder={t("addWallet.walletPasswordPlaceholder")}
+              placeholder={formatState === "api"
+                ? t("addWallet.walletPrivatekeyPlaceholder")
+                : t("addWallet.walletPasswordPlaceholder")}
             />
           </Form.Item>
 
