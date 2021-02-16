@@ -132,6 +132,8 @@
     "walletCategoryDropdownNewPlaceholder": "Category name",
 
     "walletAddress": "Wallet address",
+    "walletUsername": "Wallet username",
+    "walletUsernamePlaceholder": "Wallet username",
     "walletPassword": "Wallet password",
     "walletPasswordPlaceholder": "Wallet password",
     "walletPasswordWarning": "Make sure to save this somewhere <1>secure</1>!",
@@ -143,6 +145,8 @@
 
     "walletFormat": "Wallet format",
     "walletFormatKristWallet": "KristWallet, KWallet (recommended)",
+    "walletFormatKristWalletUsernameAppendhashes": "KW-Username (appendhashes)",
+    "walletFormatKristWalletUsername": "KW-Username (pre-appendhashes)",
     "walletFormatApi": "Raw/API (advanced users)",
 
     "walletSave": "Save this wallet in KristWeb"

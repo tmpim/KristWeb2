@@ -9,7 +9,7 @@ import { generatePassword } from "../../utils";
 import { FakeUsernameInput } from "../../components/auth/FakeUsernameInput";
 import { CopyInputButton } from "../../components/CopyInputButton";
 import { getWalletCategoryDropdown } from "../../components/wallets/WalletCategoryDropdown";
-import { WalletFormatName, applyWalletFormat } from "../../krist/wallets/formats/WalletFormat";
+import { WalletFormatName, applyWalletFormat, formatNeedsUsername } from "../../krist/wallets/formats/WalletFormat";
 import { makeV2Address } from "../../krist/AddressAlgo";
 
 const { Text } = Typography;
@@ -18,6 +18,7 @@ interface FormValues {
   label?: string;
   category: string;
 
+  walletUsername: string;
   password: string;
   format: WalletFormatName;
 
@@ -49,13 +50,13 @@ export function AddWalletModal({ create, visible, setVisible }: Props): JSX.Elem
   function onValuesChange(changed: Partial<FormValues>, values: Partial<FormValues>) {
     if (changed.format) setFormatState(changed.format);
 
-    if ((changed.format || changed.password) && values.password)
-      updateCalculatedAddress(values.format, values.password);
+    if ((changed.format || changed.password || changed.walletUsername) && values.password)
+      updateCalculatedAddress(values.format, values.password, values.walletUsername);
   }
 
   /** Update the 'Wallet address' field */
-  async function updateCalculatedAddress(format: WalletFormatName | undefined, password: string) {
-    const privatekey = await applyWalletFormat(format || "kristwallet", password);
+  async function updateCalculatedAddress(format: WalletFormatName | undefined, password: string, username?: string) {
+    const privatekey = await applyWalletFormat(format || "kristwallet", password, username);
     const address = await makeV2Address(privatekey);
     setCalculatedAddress(address);
   }
@@ -120,9 +121,15 @@ export function AddWalletModal({ create, visible, setVisible }: Props): JSX.Elem
         </Col>
       </Row>
 
-
       {/* Fake username input to trick browser autofill */}
       <FakeUsernameInput />
+
+      {/* Wallet username, if applicable */}
+      {formatState && formatNeedsUsername(formatState) && (
+        <Form.Item name="walletUsername" label={t("addWallet.walletUsername")}>
+          <Input type="text" autoComplete="off" placeholder={t("addWallet.walletUsernamePlaceholder")}/>
+        </Form.Item>
+      )}
 
       {/* Wallet password */}
       <Form.Item
@@ -174,6 +181,8 @@ export function AddWalletModal({ create, visible, setVisible }: Props): JSX.Elem
           <Form.Item name="format" label={t("addWallet.walletFormat")}>
             <Select>
               <Select.Option value="kristwallet">{t("addWallet.walletFormatKristWallet")}</Select.Option>
+              <Select.Option value="kristwallet_username_appendhashes">{t("addWallet.walletFormatKristWalletUsernameAppendhashes")}</Select.Option>
+              <Select.Option value="kristwallet_username">{t("addWallet.walletFormatKristWalletUsername")}</Select.Option>
               <Select.Option value="api">{t("addWallet.walletFormatApi")}</Select.Option>
             </Select>
           </Form.Item>
