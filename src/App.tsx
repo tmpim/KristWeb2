@@ -5,7 +5,9 @@ import { createStore } from "redux";
 import { Provider } from "react-redux";
 import { devToolsEnhancer } from "redux-devtools-extension";
 import rootReducer from "./store/reducers/RootReducer";
+
 import { getInitialWalletManagerState } from "./store/reducers/WalletManagerReducer";
+import { getInitialSettingsState } from "./store/reducers/SettingsReducer";
 
 // Set up localisation
 import "./utils/i18n";
@@ -17,7 +19,8 @@ import { ForcedAuth } from "./components/auth/ForcedAuth";
 export const store = createStore(
   rootReducer,
   {
-    walletManager: getInitialWalletManagerState()
+    walletManager: getInitialWalletManagerState(),
+    settings: getInitialSettingsState()
   },
   devToolsEnhancer({})
 );

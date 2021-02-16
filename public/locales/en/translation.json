@@ -147,6 +147,7 @@
     "walletFormatKristWallet": "KristWallet, KWallet (recommended)",
     "walletFormatKristWalletUsernameAppendhashes": "KW-Username (appendhashes)",
     "walletFormatKristWalletUsername": "KW-Username (pre-appendhashes)",
+    "walletFormatJwalelset": "jwalelset",
     "walletFormatApi": "Raw/API (advanced users)",
 
     "walletSave": "Save this wallet in KristWeb"
@@ -170,6 +171,7 @@
 
     "menuLanguage": "Language",
     "subMenuDebug": "Debug settings",
+    "advancedWalletFormats": "Advanced wallet formats",
     "menuTranslations": "Translations",
 
     "subTitleTranslations": "Translations",

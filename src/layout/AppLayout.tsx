@@ -5,7 +5,8 @@ import { SendOutlined, DownloadOutlined, MenuOutlined, SettingOutlined } from "@
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import { Brand } from "./Brand";
+import { Brand } from "./nav/Brand";
+import { CymbalIndicator } from "./nav/CymbalIndicator";
 import { Sidebar } from "./sidebar/Sidebar";
 import { AppRouter } from "./AppRouter";
 
@@ -47,6 +48,9 @@ export function AppLayout(): JSX.Element {
           <Input.Search placeholder={t("nav.search")} />
         </AutoComplete>
       </div>
+
+      {/* Cymbal indicator */}
+      <CymbalIndicator />
 
       {/* Settings button */}
       <Menu theme="dark" mode="horizontal" selectable={false} forceSubMenuRender={true} className="site-header-settings">

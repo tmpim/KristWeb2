@@ -10,7 +10,7 @@ import semverPrerelease from "semver/functions/prerelease";
 
 import { Tag } from "antd";
 
-import packageJson from "../../package.json";
+import packageJson from "../../../package.json";
 
 const prereleaseTagColours: { [key: string]: string } = {
   "dev": "red",

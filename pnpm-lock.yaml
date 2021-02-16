@@ -40,6 +40,7 @@ devDependencies:
   react-scripts: 4.0.2_react@17.0.1+typescript@4.1.5
   redux-devtools-extension: 2.13.8_redux@4.0.5
   typescript: 4.1.5
+  utility-types: 3.10.0
 lockfileVersion: 5.2
 packages:
   /@ant-design/colors/6.0.0:
@@ -12561,6 +12562,12 @@ packages:
     dev: true
     resolution:
       integrity: sha1-ihagXURWV6Oupe7MWxKk+lN5dyw=
+  /utility-types/3.10.0:
+    dev: true
+    engines:
+      node: '>= 4'
+    resolution:
+      integrity: sha512-O11mqxmi7wMKCo6HKFt5AhO4BwY3VV68YU07tgxfz8zJTIxr4BpsezN49Ffwy9j3ZpwwJp4fkRwjRzq3uWE6Rg==
   /utils-merge/1.0.1:
     dev: true
     engines:
@@ -13249,4 +13256,5 @@ specifiers:
   spu-md5: 0.0.4
   typesafe-actions: ^5.1.0
   typescript: ^4.1.5
+  utility-types: ^3.10.0
   web-vitals: ^1.1.0

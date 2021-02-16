@@ -9,7 +9,9 @@ import { generatePassword } from "../../utils";
 import { FakeUsernameInput } from "../../components/auth/FakeUsernameInput";
 import { CopyInputButton } from "../../components/CopyInputButton";
 import { getWalletCategoryDropdown } from "../../components/wallets/WalletCategoryDropdown";
+
 import { WalletFormatName, applyWalletFormat, formatNeedsUsername } from "../../krist/wallets/formats/WalletFormat";
+import { getSelectWalletFormat } from "./SelectWalletFormat";
 import { makeV2Address } from "../../krist/AddressAlgo";
 
 const { Text } = Typography;
@@ -33,11 +35,13 @@ interface Props {
 }
 
 export function AddWalletModal({ create, visible, setVisible }: Props): JSX.Element {
+  const initialFormat = "kristwallet"; // TODO: change for edit modal
+
   const { t } = useTranslation();
   const [form] = Form.useForm<FormValues>();
   const passwordInput = useRef<Input>(null);
   const [calculatedAddress, setCalculatedAddress] = useState<string | undefined>();
-  const [formatState, setFormatState] = useState<WalletFormatName>("kristwallet");
+  const [formatState, setFormatState] = useState<WalletFormatName>(initialFormat);
 
   async function onSubmit() {
     const values = await form.validateFields();
@@ -92,7 +96,7 @@ export function AddWalletModal({ create, visible, setVisible }: Props): JSX.Elem
 
       initialValues={{
         category: "",
-        format: "kristwallet",
+        format: initialFormat,
         save: true
       }}
 
@@ -179,12 +183,7 @@ export function AddWalletModal({ create, visible, setVisible }: Props): JSX.Elem
         <Collapse.Panel header={t("addWallet.advancedOptions")} key="1">
           {/* Wallet format */}
           <Form.Item name="format" label={t("addWallet.walletFormat")}>
-            <Select>
-              <Select.Option value="kristwallet">{t("addWallet.walletFormatKristWallet")}</Select.Option>
-              <Select.Option value="kristwallet_username_appendhashes">{t("addWallet.walletFormatKristWalletUsernameAppendhashes")}</Select.Option>
-              <Select.Option value="kristwallet_username">{t("addWallet.walletFormatKristWalletUsername")}</Select.Option>
-              <Select.Option value="api">{t("addWallet.walletFormatApi")}</Select.Option>
-            </Select>
+            {getSelectWalletFormat({ initialFormat })}
           </Form.Item>
 
           {/* Save in KristWeb checkbox */}

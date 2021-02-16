@@ -20,6 +20,9 @@ export const WALLET_FORMATS: Record<WalletFormatName, WalletFormat> = {
 
   "api": async password => password
 };
+export const ADVANCED_FORMATS: WalletFormatName[] = [
+  "kristwallet_username_appendhashes", "kristwallet_username", "jwalelset"
+];
 
 export const applyWalletFormat =
   (format: WalletFormatName, password: string, username?: string): Promise<string> =>

@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { PageLayout, PageLayoutProps } from "../../layout/PageLayout";
+import { SettingBoolean } from "./SettingBoolean";
 
 interface SettingsPageLayoutProps extends PageLayoutProps {
   pageName?: string;
@@ -29,6 +30,10 @@ export function SettingsPage(): JSX.Element {
       <Menu.Item key="language" icon={<GlobalOutlined />}>{t("settings.menuLanguage")}</Menu.Item>
 
       <Menu.SubMenu key="sub1" icon={<BugOutlined />} title={t("settings.subMenuDebug")}>
+        <Menu.Item key="debug/advancedWalletFormats">
+          <SettingBoolean setting="walletFormats" titleKey="settings.advancedWalletFormats" />
+        </Menu.Item>
+
         <Menu.Item key="debug/translations">
           <Link to="/settings/debug/translations">{t("settings.menuTranslations")}</Link>
         </Menu.Item>
