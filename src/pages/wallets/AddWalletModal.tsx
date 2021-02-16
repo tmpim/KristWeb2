@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Modal, Form, Input, Checkbox, Collapse, Select, Button, Tooltip, Typography, Row, Col } from "antd";
+import { Modal, Form, Input, Checkbox, Collapse, Button, Tooltip, Typography, Row, Col, message, notification } from "antd";
 import { ReloadOutlined } from "@ant-design/icons";
 
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import { RootState } from "../../store";
 import { useTranslation, Trans } from "react-i18next";
 
 import { generatePassword } from "../../utils";
@@ -13,6 +15,7 @@ import { getWalletCategoryDropdown } from "../../components/wallets/WalletCatego
 import { WalletFormatName, applyWalletFormat, formatNeedsUsername } from "../../krist/wallets/formats/WalletFormat";
 import { getSelectWalletFormat } from "./SelectWalletFormat";
 import { makeV2Address } from "../../krist/AddressAlgo";
+import { addWallet } from "../../krist/wallets/Wallet";
 
 const { Text } = Typography;
 
@@ -37,18 +40,34 @@ interface Props {
 export function AddWalletModal({ create, visible, setVisible }: Props): JSX.Element {
   const initialFormat = "kristwallet"; // TODO: change for edit modal
 
+  // Required to encrypt new wallets
+  const { masterPassword } = useSelector((s: RootState) => s.walletManager, shallowEqual);
+  const dispatch = useDispatch();
+
   const { t } = useTranslation();
+
   const [form] = Form.useForm<FormValues>();
   const passwordInput = useRef<Input>(null);
   const [calculatedAddress, setCalculatedAddress] = useState<string | undefined>();
   const [formatState, setFormatState] = useState<WalletFormatName>(initialFormat);
 
   async function onSubmit() {
+    if (!masterPassword) throw new Error(t("masterPassword.errorNoPassword"));
     const values = await form.validateFields();
-    console.log(values);
 
-    form.resetFields(); // Make sure to generate another password on re-open
-    setVisible(false);
+    try {
+      await addWallet(dispatch, masterPassword, values, values.password, create || values.save);
+      message.success(create ? t("addWallet.messageSuccessCreate") : t("addWallet.messageSuccessAdd"));
+
+      form.resetFields(); // Make sure to generate another password on re-open
+      setVisible(false);
+    } catch (err) {
+      console.error(err);
+      notification.error({
+        message: t("addWallet.errorUnexpectedTitle"),
+        description: t("addWallet.errorUnexpectedDescription")
+      });
+    }
   }
 
   function onValuesChange(changed: Partial<FormValues>, values: Partial<FormValues>) {

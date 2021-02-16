@@ -1,23 +1,32 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation, Trans } from "react-i18next";
 
 import packageJson from "../../../package.json";
 import { Link } from "react-router-dom";
 
-const req = require.context("../../", false, /\.\/host.json$/);
-
 export function SidebarFooter(): JSX.Element {
   const { t } = useTranslation();
+  const [host, setHost] = useState<{ name: string; url: string } | false | undefined>();
+
+  useEffect(() => {
+    if (host !== undefined) return;
+    setHost(false);
+
+    (async () => {
+      try {
+        // Add the host information if host.json exists
+        const hostFile = "host"; // Trick webpack into dynamic importing
+        const hostData = await import("../../__data__/" + hostFile + ".json");
+        setHost(hostData);
+      } catch (ignored) {
+        // Ignored
+      }
+    })();
+  }, [host]);
 
   const authorName = packageJson.author || "Lemmmy";
   const authorURL = `https://github.com/${authorName}`;
   const gitURL = packageJson.repository.url.replace(/\.git$/, "");
-
-  // Add the host information if host.json exists
-  let host;
-  if (req.keys().includes("./host.json")) {
-    host = req("./host.json");
-  }
 
   return (
     <div className="site-sidebar-footer">

@@ -19,7 +19,7 @@ export function AppLayout(): JSX.Element {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
   const bps = useBreakpoint();
 
-  return <Layout>
+  return <Layout data-testid="site-app-layout">
     <Layout.Header className="site-header">
       {/* Sidebar toggle for mobile */}
       {!bps.md && (

@@ -24,8 +24,10 @@
     "pnpm",
     "privatekeys",
     "readonly",
+    "serialised",
     "singleline",
     "submenu",
+    "testid",
     "tsdoc",
     "typeahead"
   ],

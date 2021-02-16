@@ -34,7 +34,7 @@ export function ForcedAuth(): JSX.Element | null {
     if (attemptedAuth || isAuthed || !hasMasterPassword || !salt || !tester) return;
     setAttemptedAuth(true);
 
-    forceAuth(t, dispatch, salt!, tester!);
+    forceAuth(t, dispatch, salt, tester);
   }, [attemptedAuth]);
 
   return null;

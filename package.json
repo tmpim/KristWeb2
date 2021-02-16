@@ -16,6 +16,9 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.5.0",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
+    "@testing-library/user-event": "^12.7.1",
     "antd": "^4.12.3",
     "base64-arraybuffer": "^0.2.0",
     "csv-stringify": "^5.6.1",
@@ -33,11 +36,13 @@
     "semver": "^7.3.4",
     "spu-md5": "0.0.4",
     "typesafe-actions": "^5.1.0",
+    "uuid": "^8.3.2",
     "web-vitals": "^1.1.0"
   },
   "scripts": {
     "start": "craco start",
-    "build": "craco build"
+    "build": "craco build",
+    "test": "craco test"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -57,12 +62,14 @@
   "devDependencies": {
     "@craco/craco": "^6.1.1",
     "@types/file-saver": "^2.0.1",
+    "@types/jest": "^26.0.20",
     "@types/node": "^12.19.16",
     "@types/react": "^17.0.1",
     "@types/react-dom": "^17.0.0",
     "@types/react-redux": "^7.1.16",
     "@types/react-router-dom": "^5.1.7",
     "@types/semver": "^7.3.4",
+    "@types/uuid": "^8.3.0",
     "@types/webpack-env": "^1.16.0",
     "@typescript-eslint/eslint-plugin": "^4.15.0",
     "@typescript-eslint/parser": "^4.15.0",
@@ -90,5 +97,10 @@
         }
       ]
     }
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "/node_modules/(?!antd|@ant-design|rc-.+?|@babel/runtime).+(js|jsx)$"
+    ]
   }
 }
