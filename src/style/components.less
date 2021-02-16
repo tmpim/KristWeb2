@@ -47,6 +47,10 @@
   background: @kw-input-readonly-bg;
 }
 
+.ant-input.ant-input-sm::placeholder {
+  font-size: @font-size-sm;
+}
+
 .input-monospace {
   font-family: monospace;
 }
@@ -87,7 +91,7 @@
   };
 }
 
-.ant-modal-body .ant-input-group.ant-input-group-compact .ant-btn {
+.ant-input-group.ant-input-group-compact .ant-btn {
   border-left: 1px solid @modal-content-bg;
 
   &.ant-btn-icon-only {

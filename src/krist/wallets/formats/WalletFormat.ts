@@ -15,3 +15,7 @@ export const WalletFormatMap: Record<WalletFormatName, WalletFormat> = {
   "kristwallet": KristWalletFormat,
   "api": APIFormat
 };
+
+export const applyWalletFormat =
+  (format: WalletFormatName, password: string): Promise<string> =>
+    WalletFormatMap[format](password);

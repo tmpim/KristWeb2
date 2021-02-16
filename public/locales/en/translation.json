@@ -125,7 +125,10 @@
     "walletLabelPlaceholder": "Wallet label (optional)",
     "walletCategory": "Wallet category",
     "walletCategoryDropdownNone": "No category",
+    "walletCategoryDropdownNew": "New",
+    "walletCategoryDropdownNewPlaceholder": "Category name",
 
+    "walletAddress": "Wallet address",
     "walletPassword": "Wallet password",
     "walletPasswordPlaceholder": "Wallet password",
     "walletPasswordWarning": "Make sure to save this somewhere <1>secure</1>!",
@@ -137,7 +140,7 @@
 
     "walletFormat": "Wallet format",
     "walletFormatKristWallet": "KristWallet, KWallet (recommended)",
-    "walletFormatRaw": "Raw (advanced users)",
+    "walletFormatApi": "Raw/API (advanced users)",
 
     "walletSave": "Save this wallet in KristWeb"
   },
