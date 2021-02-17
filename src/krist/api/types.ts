@@ -5,7 +5,7 @@ export interface KristAddress {
   totalin?: number;
   totalout?: number;
 
-  first_seen: string;
+  firstseen: string;
 }
 
 export type APIResponse<T extends Record<string, any>> = T & {

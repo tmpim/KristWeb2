@@ -9,6 +9,8 @@ import { AuthorisedAction } from "../../components/auth/AuthorisedAction";
 import { AddWalletModal } from "./AddWalletModal";
 import { WalletsTable } from "./WalletsTable";
 
+import "./WalletsPage.less";
+
 function WalletsPageExtraButtons(): JSX.Element {
   const { t } = useTranslation();
   const [createWalletVisible, setCreateWalletVisible] = useState(false);

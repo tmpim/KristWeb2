@@ -3,9 +3,10 @@ dependencies:
   '@testing-library/jest-dom': 5.11.9
   '@testing-library/react': 11.2.5_react-dom@17.0.1+react@17.0.1
   '@testing-library/user-event': 12.7.1
-  antd: 4.12.3_react-dom@17.0.1+react@17.0.1
+  antd: 4.12.3_89622fd8e4ec221151a62783d49305af
   base64-arraybuffer: 0.2.0
   csv-stringify: 5.6.1
+  dayjs: 1.10.4
   file-saver: 2.0.5
   i18next: 19.8.7
   i18next-browser-languagedetector: 6.0.1
@@ -2653,7 +2654,7 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg==
-  /antd/4.12.3_react-dom@17.0.1+react@17.0.1:
+  /antd/4.12.3_89622fd8e4ec221151a62783d49305af:
     dependencies:
       '@ant-design/colors': 6.0.0
       '@ant-design/icons': 4.5.0_react-dom@17.0.1+react@17.0.1
@@ -2678,7 +2679,7 @@ packages:
       rc-motion: 2.4.1_react-dom@17.0.1+react@17.0.1
       rc-notification: 4.5.4_react-dom@17.0.1+react@17.0.1
       rc-pagination: 3.1.3_react-dom@17.0.1+react@17.0.1
-      rc-picker: 2.5.5_react-dom@17.0.1+react@17.0.1
+      rc-picker: 2.5.5_89622fd8e4ec221151a62783d49305af
       rc-progress: 3.1.3_react-dom@17.0.1+react@17.0.1
       rc-rate: 2.9.1_react-dom@17.0.1+react@17.0.1
       rc-resize-observer: 1.0.0_react-dom@17.0.1+react@17.0.1
@@ -2701,6 +2702,7 @@ packages:
       warning: 4.0.3
     dev: false
     peerDependencies:
+      dayjs: '*'
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
     resolution:
@@ -4382,6 +4384,10 @@ packages:
       node: '>=0.11'
     resolution:
       integrity: sha512-ZEhqxUtEZeGgg9eHNSOAJ8O9xqSgiJdrL0lzSSfMF54x6KXWJiOH/xntSJ9YomJPrYH/p08t6gWjGWq1SDJlSA==
+  /dayjs/1.10.4:
+    dev: false
+    resolution:
+      integrity: sha512-RI/Hh4kqRc1UKLOAf/T5zdMMX5DQIlDxwUe3wSyMMnEbGunnpENCdbUgM+dW7kXidZqCttBrmw7BhN4TMddkCw==
   /debug/2.6.9:
     dependencies:
       ms: 2.0.0
@@ -10218,11 +10224,12 @@ packages:
       react-dom: '>=16.9.0'
     resolution:
       integrity: sha512-Z7CdC4xGkedfAwcUHPtfqNhYwVyDgkmhkvfsmoByCOwAd89p42t5O5T3ORar1wRmVWf3jxk/Bf4k0atenNvlFA==
-  /rc-picker/2.5.5_react-dom@17.0.1+react@17.0.1:
+  /rc-picker/2.5.5_89622fd8e4ec221151a62783d49305af:
     dependencies:
       '@babel/runtime': 7.12.13
       classnames: 2.2.6
       date-fns: 2.17.0
+      dayjs: 1.10.4
       moment: 2.29.1
       rc-trigger: 5.2.1_react-dom@17.0.1+react@17.0.1
       rc-util: 5.8.0_react-dom@17.0.1+react@17.0.1
@@ -13346,6 +13353,7 @@ specifiers:
   base64-arraybuffer: ^0.2.0
   craco-less: ^1.17.1
   csv-stringify: ^5.6.1
+  dayjs: ^1.10.4
   eslint: ^7.20.0
   eslint-config-prettier: ^7.2.0
   eslint-plugin-react: ^7.22.0

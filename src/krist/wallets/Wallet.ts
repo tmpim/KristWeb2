@@ -109,7 +109,7 @@ function syncWalletProperties(wallet: Wallet, address: KristAddressWithNames, sy
     ...wallet,
     balance: address.balance,
     names: address.names,
-    firstSeen: address.first_seen,
+    firstSeen: address.firstseen,
     lastSynced: syncTime.toISOString()
   };
 }
@@ -158,7 +158,8 @@ export async function syncWallets(dispatch: AppDispatch, wallets: WalletMap): Pr
   dispatch(actions.syncWallets(updatedWallets));
 }
 
-/** Adds a new wallet, encrypting its privatekey and password, saving it to
+/**
+ * Adds a new wallet, encrypting its privatekey and password, saving it to
  * local storage, and dispatching the changes to the Redux store.
  *
  * @param dispatch - The AppDispatch instance used to dispatch the new wallet to
@@ -209,4 +210,13 @@ export async function addWallet(
   syncWallet(dispatch, newWallet);
 
   return newWallet;
+}
+
+/** Deletes a wallet, removing it from local storage and dispatching the change
+ * to the Redux store. */
+export function deleteWallet(dispatch: AppDispatch, wallet: Wallet): void {
+  const key = getWalletKey(wallet);
+  localStorage.removeItem(key);
+
+  dispatch(actions.removeWallet(wallet.id));
 }
