@@ -8,11 +8,10 @@ interface LookupAddressesResponse {
   addresses: Record<string, KristAddress | null>;
 }
 
-interface KristAddressWithNames extends KristAddress {
-  names?: number;
-}
+export interface KristAddressWithNames extends KristAddress { names?: number }
+export type LookupResults = Record<string, KristAddressWithNames | null>;
 
-export async function lookupAddresses(addresses: string[], fetchNames?: boolean): Promise<Record<string, KristAddressWithNames | null>> {
+export async function lookupAddresses(addresses: string[], fetchNames?: boolean): Promise<LookupResults> {
   if (!addresses || addresses.length === 0) return {};
 
   const syncNode = packageJson.defaultSyncNode; // TODO: support alt nodes

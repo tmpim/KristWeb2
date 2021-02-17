@@ -5,7 +5,7 @@ import { makeV2Address } from "../AddressAlgo";
 
 import { aesGcmEncrypt } from "../../utils/crypto";
 
-import { lookupAddresses } from "../api/lookup";
+import { KristAddressWithNames, lookupAddresses } from "../api/lookup";
 
 import { AppDispatch } from "../../App";
 import * as actions from "../../store/actions/WalletsActions";
@@ -104,28 +104,57 @@ export function saveWallet(wallet: Wallet): void {
   localStorage.setItem(key, serialised);
 }
 
+function syncWalletProperties(wallet: Wallet, address: KristAddressWithNames, syncTime: Date): Wallet {
+  return {
+    ...wallet,
+    balance: address.balance,
+    names: address.names,
+    firstSeen: address.first_seen,
+    lastSynced: syncTime.toISOString()
+  };
+}
+
+/** Sync the data for a single wallet from the sync node, save it to local
+ * storage, and dispatch the change to the Redux store. */
+export async function syncWallet(dispatch: AppDispatch, wallet: Wallet): Promise<void> {
+  const syncTime = new Date();
+
+  // Fetch the data from the sync node (e.g. balance)
+  const { address } = wallet;
+  const lookupResults = await lookupAddresses([address], true);
+
+  const kristAddress = lookupResults[address];
+  if (!kristAddress) return; // Skip unsyncable wallet
+
+  const updatedWallet = syncWalletProperties(wallet, kristAddress, syncTime);
+
+  // Save the wallet to local storage (unless dontSave is set)
+  saveWallet(updatedWallet);
+
+  // Dispatch the change to the Redux store
+  dispatch(actions.syncWallet(wallet.id, updatedWallet));
+}
+
 /** Sync the data for all the wallets from the sync node, save it to local
  * storage, and dispatch the changes to the Redux store. */
 export async function syncWallets(dispatch: AppDispatch, wallets: WalletMap): Promise<void> {
   const syncTime = new Date();
 
+  // Fetch all the data from the sync node (e.g. balances)
   const addresses = Object.values(wallets).map(w => w.address);
   const lookupResults = await lookupAddresses(addresses, true);
-  const updatedWallets = Object.entries(wallets).map(([_, wallet]) => {
-    const address = lookupResults[wallet.address];
-    if (!address) return wallet; // Skip unsyncable wallets
 
-    return {
-      ...wallet,
-      balance: address.balance,
-      names: address.names,
-      firstSeen: address.first_seen,
-      lastSynced: syncTime
-    };
+  // Create a WalletMap with the updated wallet properties
+  const updatedWallets = Object.entries(wallets).map(([_, wallet]) => {
+    const kristAddress = lookupResults[wallet.address];
+    if (!kristAddress) return wallet; // Skip unsyncable wallets
+    return syncWalletProperties(wallet, kristAddress, syncTime);
   }).reduce((o, wallet) => ({ ...o, [wallet.id]: wallet }), {});
 
+  // Save the wallets to local storage (unless dontSave is set)
   Object.values(updatedWallets).forEach(w => saveWallet(w as Wallet));
 
+  // Dispatch the changes to the Redux store
   dispatch(actions.syncWallets(updatedWallets));
 }
 
@@ -176,6 +205,8 @@ export async function addWallet(
 
   // Dispatch the changes to the redux store
   dispatch(actions.addWallet(newWallet));
+
+  syncWallet(dispatch, newWallet);
 
   return newWallet;
 }
