@@ -30,15 +30,19 @@ function WalletActions({ wallet }: { wallet: Wallet }): JSX.Element {
       className="wallet-actions"
 
       buttonsRender={([leftButton, rightButton]) => [
-        <Tooltip key="leftButton" title={t("myWallets.actionsEditTooltip")}>
-          <AuthorisedAction
-            encrypt
-            onAuthed={() => setEditWalletVisible(true)}
-            popoverPlacement="left"
-          >
-            {React.cloneElement(leftButton as React.ReactElement<any>, { disabled: wallet.dontSave })}
-          </AuthorisedAction>
-        </Tooltip>,
+        <AuthorisedAction
+          key="leftButton"
+          encrypt
+          onAuthed={() => setEditWalletVisible(true)}
+          popoverPlacement="left"
+        >
+          <Tooltip title={t("myWallets.actionsEditTooltip")}>
+            {React.cloneElement(leftButton as React.ReactElement<any>, {
+              className: "ant-btn-left", // force the border-radius
+              disabled: wallet.dontSave
+            })}
+          </Tooltip>
+        </AuthorisedAction>,
         rightButton
       ]}
 
