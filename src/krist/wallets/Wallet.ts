@@ -5,6 +5,8 @@ import { makeV2Address } from "../AddressAlgo";
 
 import { aesGcmEncrypt } from "../../utils/crypto";
 
+import { lookupAddresses } from "../api/lookup";
+
 import { AppDispatch } from "../../App";
 import * as actions from "../../store/actions/WalletsActions";
 import { WalletMap } from "../../store/reducers/WalletsReducer";
@@ -27,12 +29,14 @@ export interface Wallet {
   address: string;
   balance?: number;
   names?: number;
-  firstSeen?: Date;
-  lastSynced?: Date;
+  firstSeen?: string;
+  lastSynced?: string;
+
+  dontSave?: boolean; // Used to avoid saving when syncing
 }
 
 /** Properties of Wallet that are required to create a new wallet. */
-export type WalletNewKeys = "label" | "category" | "username" | "format";
+export type WalletNewKeys = "label" | "category" | "username" | "format" | "dontSave";
 export type WalletNew = Pick<Wallet, WalletNewKeys>;
 
 /** Properties of Wallet that are allowed to be updated. */
@@ -76,9 +80,8 @@ function loadWallet(id: string, data: string | null) {
   }
 }
 
-/** Loads all available wallets from local storage and dispatches them to the
- * Redux store. */
-export async function loadWallets(dispatch: AppDispatch): Promise<void> {
+/** Loads all available wallets from local storage. */
+export function loadWallets(): WalletMap {
   // Find all `wallet2` keys from local storage
   const keysToLoad = Object.keys(localStorage)
     .map(extractWalletKey)
@@ -89,7 +92,41 @@ export async function loadWallets(dispatch: AppDispatch): Promise<void> {
   // Convert to map with wallet IDs
   const walletMap: WalletMap = wallets.reduce((obj, w) => ({ ...obj, [w.id]: w }), {});
 
-  dispatch(actions.loadWallets(walletMap));
+  return walletMap;
+}
+
+/** Saves a wallet to local storage, unless it has `dontSave` set. */
+export function saveWallet(wallet: Wallet): void {
+  if (wallet.dontSave) return;
+
+  const key = getWalletKey(wallet);
+  const serialised = JSON.stringify(wallet);
+  localStorage.setItem(key, serialised);
+}
+
+/** Sync the data for all the wallets from the sync node, save it to local
+ * storage, and dispatch the changes to the Redux store. */
+export async function syncWallets(dispatch: AppDispatch, wallets: WalletMap): Promise<void> {
+  const syncTime = new Date();
+
+  const addresses = Object.values(wallets).map(w => w.address);
+  const lookupResults = await lookupAddresses(addresses, true);
+  const updatedWallets = Object.entries(wallets).map(([_, wallet]) => {
+    const address = lookupResults[wallet.address];
+    if (!address) return wallet; // Skip unsyncable wallets
+
+    return {
+      ...wallet,
+      balance: address.balance,
+      names: address.names,
+      firstSeen: address.first_seen,
+      lastSynced: syncTime
+    };
+  }).reduce((o, wallet) => ({ ...o, [wallet.id]: wallet }), {});
+
+  Object.values(updatedWallets).forEach(w => saveWallet(w as Wallet));
+
+  dispatch(actions.syncWallets(updatedWallets));
 }
 
 /** Adds a new wallet, encrypting its privatekey and password, saving it to
@@ -121,17 +158,21 @@ export async function addWallet(
   const encPrivatekey = await aesGcmEncrypt(privatekey, masterPassword);
 
   const newWallet = {
-    ...wallet,
     id, address,
-    encPassword, encPrivatekey
+
+    label: wallet.label,
+    category: wallet.category,
+
+    username: wallet.username,
+    encPassword,
+    encPrivatekey,
+    format: wallet.format,
+
+    ...(save ? {} : { dontSave: true })
   };
 
   // Save the wallet to local storage if wanted
-  if (save) {
-    const key = getWalletKey(newWallet);
-    const serialised = JSON.stringify(newWallet);
-    localStorage.setItem(key, serialised);
-  }
+  if (save) saveWallet(newWallet);
 
   // Dispatch the changes to the redux store
   dispatch(actions.addWallet(newWallet));

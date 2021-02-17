@@ -157,7 +157,9 @@
     "messageSuccessCreate": "Created wallet successfully!",
 
     "errorUnexpectedTitle": "Unexpected error",
-    "errorUnexpectedDescription": "There was an error while adding the wallet. See console for details."
+    "errorUnexpectedDescription": "There was an error while adding the wallet. See console for details.",
+    "errorDuplicateWalletTitle": "Wallet already exists",
+    "errorDuplicateWalletDescription": "You already have a wallet for that address."
   },
 
   "credits": {

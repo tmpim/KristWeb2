@@ -42,6 +42,8 @@ export function AddWalletModal({ create, visible, setVisible }: Props): JSX.Elem
 
   // Required to encrypt new wallets
   const { masterPassword } = useSelector((s: RootState) => s.walletManager, shallowEqual);
+  // Required to check for existing wallets
+  const { wallets } = useSelector((s: RootState) => s.wallets, shallowEqual);
   const dispatch = useDispatch();
 
   const { t } = useTranslation();
@@ -55,8 +57,16 @@ export function AddWalletModal({ create, visible, setVisible }: Props): JSX.Elem
     if (!masterPassword) throw new Error(t("masterPassword.errorNoPassword"));
     const values = await form.validateFields();
 
+    // Check if the wallet already exists
+    if (Object.values(wallets).find(w => w.address === calculatedAddress)) {
+      return notification.error({
+        message: t("addWallet.errorDuplicateWalletTitle"),
+        description: t("addWallet.errorDuplicateWalletDescription")
+      });
+    }
+
     try {
-      await addWallet(dispatch, masterPassword, values, values.password, create || values.save);
+      await addWallet(dispatch, masterPassword, values, values.password, values.save ?? true);
       message.success(create ? t("addWallet.messageSuccessCreate") : t("addWallet.messageSuccessAdd"));
 
       form.resetFields(); // Make sure to generate another password on re-open

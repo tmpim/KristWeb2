@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { PageLayout } from "../../layout/PageLayout";
 import { AuthorisedAction } from "../../components/auth/AuthorisedAction";
 import { AddWalletModal } from "./AddWalletModal";
+import { WalletsTable } from "./WalletsTable";
 
 function WalletsPageExtraButtons(): JSX.Element {
   const { t } = useTranslation();
@@ -37,6 +38,6 @@ export function WalletsPage(): JSX.Element {
     siteTitleKey="myWallets.title" titleKey="myWallets.title"
     extra={<WalletsPageExtraButtons />}
   >
-    Hello, world
+    <WalletsTable />
   </PageLayout>;
 }

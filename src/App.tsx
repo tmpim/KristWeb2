@@ -7,6 +7,7 @@ import { devToolsEnhancer } from "redux-devtools-extension";
 import rootReducer from "./store/reducers/RootReducer";
 
 import { getInitialWalletManagerState } from "./store/reducers/WalletManagerReducer";
+import { getInitialWalletsState } from "./store/reducers/WalletsReducer";
 import { getInitialSettingsState } from "./store/reducers/SettingsReducer";
 
 // Set up localisation
@@ -14,12 +15,14 @@ import "./utils/i18n";
 
 import "./App.less";
 import { AppLayout } from "./layout/AppLayout";
+import { SyncWallets } from "./krist/wallets/SyncWallets";
 import { ForcedAuth } from "./components/auth/ForcedAuth";
 
 export const store = createStore(
   rootReducer,
   {
     walletManager: getInitialWalletManagerState(),
+    wallets: getInitialWalletsState(),
     settings: getInitialSettingsState()
   },
   devToolsEnhancer({})
@@ -31,6 +34,7 @@ function App(): JSX.Element {
     <Provider store={store}>
       <Router>
         <AppLayout />
+        <SyncWallets />
         <ForcedAuth />
       </Router>
     </Provider>

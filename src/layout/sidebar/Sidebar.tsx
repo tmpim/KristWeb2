@@ -57,7 +57,7 @@ export function Sidebar({ collapsed }: { collapsed: boolean }): JSX.Element {
     width={240}
     className={"site-sidebar " + (collapsed ? "collapsed" : "")}
   >
-    <SidebarTotalBalance balance={4600} />
+    <SidebarTotalBalance />
 
     <Menu theme="dark" mode="inline" selectedKeys={selectedKey ? [selectedKey] : undefined}>
       {getSidebarItems(t)}

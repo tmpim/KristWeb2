@@ -28,8 +28,11 @@
     "singleline",
     "submenu",
     "testid",
+    "totalin",
+    "totalout",
     "tsdoc",
-    "typeahead"
+    "typeahead",
+    "unsyncable"
   ],
   "i18next.defaultTranslatedLocale": "en",
   "i18next.i18nPaths": "public/locales"

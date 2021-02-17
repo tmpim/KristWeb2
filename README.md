@@ -57,8 +57,7 @@ standard for commit messages.
 Translation files are currently created manually in the 
 [i18next JSON format](https://www.i18next.com/misc/json-format). You can find
 existing translations in [`public/locales`](public/locales). The 
-[English (GB) translation](public/locales/en/translation.json) is used as the
-fallback.
+[English (GB) translation](public/locales/en.json) is used as the fallback.
 
 Language files are named with 
 [IETF language tags](https://en.wikipedia.org/wiki/IETF_language_tag). Short
@@ -66,7 +65,8 @@ tags (e.g. `en` instead of `en-GB`) are preferred.
 
 **IMPORTANT:** If you are adding a new language, you **must** add a listing for 
 the language with the English name, native name, a country code (for the flag) 
-and the contributors list to [`languages.json`](languages.json).
+and the contributors list to 
+[`src/__data__/languages.json`](src/__data__/languages.json).
 
 The library will automatically detect the language from your browser to use, but
 for the sake of testing, you can override it by running the following command in
@@ -82,7 +82,7 @@ don't hesitate to contact Lemmmy.
 ### Providing host attribution
 
 To provide hosting credits in the sidebar footer, create the file
-`host.json` in the project root with the following contents:
+`host.json` in `src/__data__` with the following contents:
 
 ```json
 {

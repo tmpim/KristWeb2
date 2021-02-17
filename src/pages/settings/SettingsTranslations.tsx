@@ -26,7 +26,7 @@ interface AnalysedLanguage {
 
 const IGNORE_KEYS = /_(?:plural|interval|male|female|\d+)$/;
 async function getLanguage([code, language]: [string, Language]): Promise<AnalysedLanguage> {
-  const res = await fetch(`/locales/${code}/translation.json`);
+  const res = await fetch(`/locales/${code}.json`);
   if (!res.ok) throw new Error(res.statusText);
 
   const translation = await res.json();

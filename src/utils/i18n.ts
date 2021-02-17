@@ -48,7 +48,8 @@ i18n
     },
 
     backend: {
-      queryStringParams: { v: packageJson.version }
+      queryStringParams: { v: packageJson.version },
+      loadPath: "/locales/{{lng}}.json"
     }
   });
 
