@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { Select, Input, Button, Typography, Divider } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 
+import { useSelector, shallowEqual } from "react-redux";
+import { RootState } from "../../store";
 import { useTranslation } from "react-i18next";
+
+import { localeSort } from "../../utils";
 
 const { Text } = Typography;
 
@@ -10,10 +14,17 @@ interface Props {
   onNewCategory?: (name: string) => void;
 }
 
-export function getWalletCategoryDropdown({ onNewCategory }: Props): JSX.Element {
+export function getSelectWalletCategory({ onNewCategory }: Props): JSX.Element {
+  // Required to fetch existing categories
+  const { wallets } = useSelector((s: RootState) => s.wallets, shallowEqual);
+  const existingCategories = [...new Set(Object.values(wallets)
+    .filter(w => w.category !== undefined && w.category !== "")
+    .map(w => w.category) as string[])];
+  localeSort(existingCategories);
+
   const { t } = useTranslation();
   const [input, setInput] = useState<string | undefined>();
-  const [categories, setCategories] = useState<string[]>(["Test category"]);
+  const [categories, setCategories] = useState<string[]>(existingCategories);
 
   function addCategory() {
     if (!input) return;
@@ -23,7 +34,7 @@ export function getWalletCategoryDropdown({ onNewCategory }: Props): JSX.Element
       || categories.includes(categoryName)) return;
 
     const newCategories = [...categories, categoryName];
-    newCategories.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base", numeric: true }));
+    localeSort(newCategories);
 
     setCategories(newCategories);
     setInput(undefined);

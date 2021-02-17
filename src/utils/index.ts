@@ -37,3 +37,11 @@ export function generatePassword(
     .map(x => charset[x % charset.length])
     .join("");
 }
+
+/** Sort an array in-place in a human-friendly manner. */
+export function localeSort(arr: any[]): void {
+  arr.sort((a, b) => a.localeCompare(b, undefined, {
+    sensitivity: "base",
+    numeric: true
+  }));
+}

@@ -10,10 +10,10 @@ import { generatePassword } from "../../utils";
 
 import { FakeUsernameInput } from "../../components/auth/FakeUsernameInput";
 import { CopyInputButton } from "../../components/CopyInputButton";
-import { getWalletCategoryDropdown } from "../../components/wallets/WalletCategoryDropdown";
+import { getSelectWalletCategory } from "../../components/wallets/SelectWalletCategory";
 
 import { WalletFormatName, applyWalletFormat, formatNeedsUsername } from "../../krist/wallets/formats/WalletFormat";
-import { getSelectWalletFormat } from "./SelectWalletFormat";
+import { getSelectWalletFormat } from "../../components/wallets/SelectWalletFormat";
 import { makeV2Address } from "../../krist/AddressAlgo";
 import { addWallet } from "../../krist/wallets/Wallet";
 
@@ -55,7 +55,9 @@ export function AddWalletModal({ create, visible, setVisible }: Props): JSX.Elem
 
   async function onSubmit() {
     if (!masterPassword) throw new Error(t("masterPassword.errorNoPassword"));
+
     const values = await form.validateFields();
+    if (!values.password) return;
 
     // Check if the wallet already exists
     if (Object.values(wallets).find(w => w.address === calculatedAddress)) {
@@ -149,7 +151,7 @@ export function AddWalletModal({ create, visible, setVisible }: Props): JSX.Elem
         {/* Wallet category */}
         <Col span={12}>
           <Form.Item name="category" label={t("addWallet.walletCategory")}>
-            {getWalletCategoryDropdown({ onNewCategory: category => form.setFieldsValue({ category })})}
+            {getSelectWalletCategory({ onNewCategory: category => form.setFieldsValue({ category })})}
           </Form.Item>
         </Col>
       </Row>
@@ -172,7 +174,18 @@ export function AddWalletModal({ create, visible, setVisible }: Props): JSX.Elem
         style={{ marginBottom: 0 }}
       >
         <Input.Group compact style={{ display: "flex" }}>
-          <Form.Item name="password" style={{ flex: 1, marginBottom: 0 }}>
+          <Form.Item
+            name="password"
+            style={{ flex: 1, marginBottom: 0 }}
+            rules={[
+              {
+                required: true,
+                message: formatState === "api"
+                  ? t("addWallet.errorPrivatekeyRequired")
+                  : t("addWallet.errorPasswordRequired")
+              }
+            ]}
+          >
             <Input
               ref={passwordInput}
               type={create ? "text" : "password"}

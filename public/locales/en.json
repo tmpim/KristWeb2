@@ -156,6 +156,8 @@
     "messageSuccessAdd": "Added wallet successfully!",
     "messageSuccessCreate": "Created wallet successfully!",
 
+    "errorPasswordRequired": "Password is required.",
+    "errorPrivatekeyRequired": "Private key is required.",
     "errorUnexpectedTitle": "Unexpected error",
     "errorUnexpectedDescription": "There was an error while adding the wallet. See console for details.",
     "errorDuplicateWalletTitle": "Wallet already exists",

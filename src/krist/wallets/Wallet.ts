@@ -189,8 +189,8 @@ export async function addWallet(
   const newWallet = {
     id, address,
 
-    label: wallet.label,
-    category: wallet.category,
+    label: wallet.label?.trim() || undefined, // clean up empty strings
+    category: wallet.category?.trim() || undefined,
 
     username: wallet.username,
     encPassword,

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { RootState } from "../../store";
 
-import { syncWallets } from "./Wallet";
+import { syncWallets } from "../../krist/wallets/Wallet";
 
 /** Sync the wallets with the Krist node on startup. */
 export function SyncWallets(): JSX.Element | null {

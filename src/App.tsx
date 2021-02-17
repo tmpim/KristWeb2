@@ -15,7 +15,7 @@ import "./utils/i18n";
 
 import "./App.less";
 import { AppLayout } from "./layout/AppLayout";
-import { SyncWallets } from "./krist/wallets/SyncWallets";
+import { SyncWallets } from "./components/wallets/SyncWallets";
 import { ForcedAuth } from "./components/auth/ForcedAuth";
 
 export const store = createStore(
