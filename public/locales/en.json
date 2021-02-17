@@ -108,9 +108,15 @@
     "nameCount_plural": "{{count}} names",
     "firstSeen": "First seen {{date}}",
 
+    "walletCount": "{{count}} wallet",
+    "walletCount_plural": "{{count}} wallets",
+
     "actionsEditTooltip": "Edit wallet",
     "actionsDelete": "Delete wallet",
-    "actionsDeleteConfirm": "Are you sure you want to delete this wallet?"
+    "actionsDeleteConfirm": "Are you sure you want to delete this wallet?",
+
+    "tagDontSave": "Temp",
+    "tagDontSaveTooltip": "Temporary wallet"
   },
 
   "myTransactions": {
@@ -125,8 +131,10 @@
   "addWallet": {
     "dialogTitle": "Add wallet",
     "dialogTitleCreate": "Create wallet",
+    "dialogTitleEdit": "Edit wallet",
     "dialogOkAdd": "Add",
     "dialogOkCreate": "Create",
+    "dialogOkEdit": "Save",
 
     "walletLabel": "Wallet label",
     "walletLabelPlaceholder": "Wallet label (optional)",
@@ -161,13 +169,19 @@
 
     "messageSuccessAdd": "Added wallet successfully!",
     "messageSuccessCreate": "Created wallet successfully!",
+    "messageSuccessEdit": "Saved wallet successfully!",
 
     "errorPasswordRequired": "Password is required.",
     "errorPrivatekeyRequired": "Private key is required.",
     "errorUnexpectedTitle": "Unexpected error",
     "errorUnexpectedDescription": "There was an error while adding the wallet. See console for details.",
+    "errorUnexpectedEditDescription": "There was an error while editing the wallet. See console for details.",
     "errorDuplicateWalletTitle": "Wallet already exists",
-    "errorDuplicateWalletDescription": "You already have a wallet for that address."
+    "errorDuplicateWalletDescription": "You already have a wallet for that address.",
+    "errorMissingWalletTitle": "Wallet not found",
+    "errorMissingWalletDescription": "The wallet you are trying to edit no longer exists.",
+    "errorDecryptTitle": "Incorrect master password",
+    "errorDecryptDescription": "Failed to decrypt the wallet password. Is the master password correct?"
   },
 
   "credits": {

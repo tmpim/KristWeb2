@@ -1,9 +1,10 @@
 import React, { useState, useRef, FunctionComponent } from "react";
 import { Popover, Button, Input, Form } from "antd";
-import { useTranslation } from "react-i18next";
+import { TooltipPlacement } from "antd/lib/tooltip";
 
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { RootState } from "../../store";
+import { useTranslation } from "react-i18next";
 
 import { FakeUsernameInput } from "./FakeUsernameInput";
 import { getMasterPasswordInput } from "./MasterPasswordInput";
@@ -17,9 +18,10 @@ interface FormValues {
 interface Props {
   encrypt?: boolean;
   onSubmit: () => void;
+  placement?: TooltipPlacement;
 }
 
-export const AuthMasterPasswordPopover: FunctionComponent<Props> = ({ encrypt, onSubmit, children }) => {
+export const AuthMasterPasswordPopover: FunctionComponent<Props> = ({ encrypt, onSubmit, placement, children }) => {
   const { salt, tester } = useSelector((s: RootState) => s.walletManager, shallowEqual);
   const dispatch = useDispatch();
 
@@ -45,6 +47,7 @@ export const AuthMasterPasswordPopover: FunctionComponent<Props> = ({ encrypt, o
     trigger="click"
     overlayClassName="authorised-action-popover"
     title={t(encrypt ? "masterPassword.popoverTitleEncrypt" : "masterPassword.popoverTitle")}
+    placement={placement}
     onVisibleChange={visible => {
       if (visible) setTimeout(() => { if (inputRef.current) inputRef.current.focus(); }, 20);
     }}

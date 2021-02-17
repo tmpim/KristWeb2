@@ -15,7 +15,7 @@ import { getSelectWalletCategory } from "../../components/wallets/SelectWalletCa
 import { WalletFormatName, applyWalletFormat, formatNeedsUsername } from "../../krist/wallets/formats/WalletFormat";
 import { getSelectWalletFormat } from "../../components/wallets/SelectWalletFormat";
 import { makeV2Address } from "../../krist/AddressAlgo";
-import { addWallet } from "../../krist/wallets/Wallet";
+import { addWallet, decryptWallet, editWallet, Wallet } from "../../krist/wallets/Wallet";
 
 const { Text } = Typography;
 
@@ -32,12 +32,16 @@ interface FormValues {
 
 interface Props {
   create?: boolean;
+  editing?: Wallet;
 
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export function AddWalletModal({ create, visible, setVisible }: Props): JSX.Element {
+export function AddWalletModal({ create, editing, visible, setVisible }: Props): JSX.Element {
+  if (editing && create)
+    throw new Error("AddWalletModal: 'editing' and 'create' simultaneously, uh oh!");
+
   const initialFormat = "kristwallet"; // TODO: change for edit modal
 
   // Required to encrypt new wallets
@@ -54,30 +58,49 @@ export function AddWalletModal({ create, visible, setVisible }: Props): JSX.Elem
   const [formatState, setFormatState] = useState<WalletFormatName>(initialFormat);
 
   async function onSubmit() {
-    if (!masterPassword) throw new Error(t("masterPassword.errorNoPassword"));
+    if (!masterPassword) return notification.error({
+      message: t("addWallet.errorUnexpectedTitle"),
+      description: t("masterPassword.errorNoPassword")
+    });
 
     const values = await form.validateFields();
     if (!values.password) return;
 
-    // Check if the wallet already exists
-    if (Object.values(wallets).find(w => w.address === calculatedAddress)) {
-      return notification.error({
-        message: t("addWallet.errorDuplicateWalletTitle"),
-        description: t("addWallet.errorDuplicateWalletDescription")
-      });
-    }
-
     try {
-      await addWallet(dispatch, masterPassword, values, values.password, values.save ?? true);
-      message.success(create ? t("addWallet.messageSuccessCreate") : t("addWallet.messageSuccessAdd"));
+      if (editing) { // Edit wallet
+        // Double check the wallet exists
+        if (!wallets[editing.id]) return notification.error({
+          message: t("addWallet.errorMissingWalletTitle"),
+          description: t("addWallet.errorMissingWalletDescription")
+        });
 
-      form.resetFields(); // Make sure to generate another password on re-open
-      setVisible(false);
+        await editWallet(dispatch, masterPassword, editing, values, values.password);
+        message.success(t("addWallet.messageSuccessEdit"));
+
+        form.resetFields();
+        setVisible(false);
+      } else { // Add/create wallet
+        // Check if the wallet already exists
+        if (Object.values(wallets).find(w => w.address === calculatedAddress)) {
+          return notification.error({
+            message: t("addWallet.errorDuplicateWalletTitle"),
+            description: t("addWallet.errorDuplicateWalletDescription")
+          });
+        }
+
+        await addWallet(dispatch, masterPassword, values, values.password, values.save ?? true);
+        message.success(create ? t("addWallet.messageSuccessCreate") : t("addWallet.messageSuccessAdd"));
+
+        form.resetFields(); // Make sure to generate another password on re-open
+        setVisible(false);
+      }
     } catch (err) {
       console.error(err);
       notification.error({
         message: t("addWallet.errorUnexpectedTitle"),
-        description: t("addWallet.errorUnexpectedDescription")
+        description: editing
+          ? t("addWallet.errorUnexpectedEditDescription")
+          : t("addWallet.errorUnexpectedDescription")
       });
     }
   }
@@ -103,31 +126,59 @@ export function AddWalletModal({ create, visible, setVisible }: Props): JSX.Elem
     updateCalculatedAddress("kristwallet", password);
   }
 
-  // Generate a password when the modal is opened
   useEffect(() => {
-    if (create && visible && form && !form.getFieldValue("password")) {
-      generateNewPassword();
+    if (visible && form && !form.getFieldValue("password")) {
+      // Generate a password when the 'Create wallet' modal is opened
+      if (create) generateNewPassword();
+
+      // Populate the password when the 'Edit wallet' modal is opened
+      if (editing && masterPassword) {
+        (async () => {
+          const dec = await decryptWallet(masterPassword, editing);
+          if (!dec) return notification.error({
+            message: t("addWallet.errorDecryptTitle"),
+            description: t("addWallet.errorDecryptDescription")
+          });
+
+          const password = dec.password;
+          form.setFieldsValue({ password });
+          updateCalculatedAddress(form.getFieldValue("format"), password);
+        })();
+      }
     }
-  }, [create, visible, form]);
+  }, [visible, form, create, editing]);
 
   return <Modal
     visible={visible}
 
-    title={t(create ? "addWallet.dialogTitleCreate" : "addWallet.dialogTitle")}
-    okText={t(create ? "addWallet.dialogOkCreate" : "addWallet.dialogOkAdd")}
+    title={t(editing
+      ? "addWallet.dialogTitleEdit"
+      : (create ? "addWallet.dialogTitleCreate" : "addWallet.dialogTitle"))}
+    okText={t(editing
+      ? "addWallet.dialogOkEdit"
+      : (create ? "addWallet.dialogOkCreate" : "addWallet.dialogOkAdd"))}
     cancelText={t("dialog.cancel")}
 
     onCancel={() => { form.resetFields(); setVisible(false); }}
     onOk={onSubmit}
+
+    destroyOnClose
   >
     <Form
       form={form}
       layout="vertical"
-      name={create ? "createWalletForm" : "addWalletForm"}
+
+      name={editing
+        ? "editWalletForm"
+        : (create ? "createWalletForm" : "addWalletForm")}
 
       initialValues={{
-        category: "",
-        format: initialFormat,
+        label: editing?.label ?? undefined,
+        category: editing?.category ?? "",
+
+        username: editing?.username ?? undefined,
+
+        format: editing?.format ?? initialFormat,
         save: true
       }}
 
@@ -229,9 +280,9 @@ export function AddWalletModal({ create, visible, setVisible }: Props): JSX.Elem
           </Form.Item>
 
           {/* Save in KristWeb checkbox */}
-          <Form.Item name="save" valuePropName="checked" style={{ marginBottom: 0 }}>
+          {!editing && <Form.Item name="save" valuePropName="checked" style={{ marginBottom: 0 }}>
             <Checkbox>{t("addWallet.walletSave")}</Checkbox>
-          </Form.Item>
+          </Form.Item>}
         </Collapse.Panel>
       </Collapse>}
     </Form>

@@ -1,7 +1,7 @@
 import * as actions from "../actions/WalletsActions";
 import { createReducer, ActionType } from "typesafe-actions";
 
-import { Wallet, loadWallets } from "../../krist/wallets/Wallet";
+import { Wallet, loadWallets, WALLET_UPDATABLE_KEYS, WALLET_SYNCABLE_KEYS } from "../../krist/wallets/Wallet";
 
 export interface WalletMap { [key: string]: Wallet }
 export interface State {
@@ -13,15 +13,20 @@ export function getInitialWalletsState(): State {
   return { wallets };
 }
 
-function assignNewWalletProperties(state: State, id: string, partialWallet: Partial<Wallet>) {
+function assignNewWalletProperties(state: State, id: string, partialWallet: Partial<Wallet>, allowedKeys?: (keyof Wallet)[]) {
   // Fetch the old wallet and assign the new properties
   const { [id]: wallet } = state.wallets;
-  const newWallet = { ...wallet, ...partialWallet };
+  const newWallet = allowedKeys
+    ? allowedKeys.reduce((o, key) => partialWallet[key] !== undefined
+      ? { ...o, [key]: partialWallet[key] }
+      : o, {})
+    : partialWallet;
+
   return {
     ...state,
     wallets: {
       ...state.wallets,
-      [id]: newWallet
+      [id]: { ...wallet, ...newWallet }
     }
   };
 }
@@ -51,10 +56,10 @@ export const WalletsReducer = createReducer({ wallets: {} } as State)
   })
   // Update wallet
   .handleAction(actions.updateWallet, (state: State, { payload }: ActionType<typeof actions.updateWallet>) =>
-    assignNewWalletProperties(state, payload.id, payload.wallet))
+    assignNewWalletProperties(state, payload.id, payload.wallet, WALLET_UPDATABLE_KEYS))
   // Sync wallet
   .handleAction(actions.syncWallet, (state: State, { payload }: ActionType<typeof actions.syncWallet>) =>
-    assignNewWalletProperties(state, payload.id, payload.wallet))
+    assignNewWalletProperties(state, payload.id, payload.wallet, WALLET_SYNCABLE_KEYS))
   // Sync wallets
   .handleAction(actions.syncWallets, (state: State, { payload }: ActionType<typeof actions.syncWallets>) => {
     const updatedWallets = Object.entries(payload.wallets)

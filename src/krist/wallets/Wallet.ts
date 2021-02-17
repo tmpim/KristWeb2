@@ -3,7 +3,7 @@ import { v4 as uuid } from "uuid";
 import { applyWalletFormat, WalletFormatName } from "./formats/WalletFormat";
 import { makeV2Address } from "../AddressAlgo";
 
-import { aesGcmEncrypt } from "../../utils/crypto";
+import { aesGcmDecrypt, aesGcmEncrypt } from "../../utils/crypto";
 
 import { KristAddressWithNames, lookupAddresses } from "../api/lookup";
 
@@ -40,12 +40,20 @@ export type WalletNewKeys = "label" | "category" | "username" | "format" | "dont
 export type WalletNew = Pick<Wallet, WalletNewKeys>;
 
 /** Properties of Wallet that are allowed to be updated. */
-export type WalletUpdatableKeys = "label" | "category" | "encPassword" | "encPrivatekey" | "username" | "format" | "address";
+export type WalletUpdatableKeys
+  = "label" | "category" | "encPassword" | "encPrivatekey" | "username" | "format" | "address";
+export const WALLET_UPDATABLE_KEYS: WalletUpdatableKeys[]
+  = ["label", "category", "encPassword", "encPrivatekey", "username", "format", "address"];
 export type WalletUpdatable = Pick<Wallet, WalletUpdatableKeys>;
 
 /** Properties of Wallet that are allowed to be synced. */
-export type WalletSyncableKeys = "balance" | "names" | "firstSeen" | "lastSynced";
+export type WalletSyncableKeys
+  = "balance" | "names" | "firstSeen" | "lastSynced";
+export const WALLET_SYNCABLE_KEYS: WalletSyncableKeys[]
+  = ["balance", "names", "firstSeen", "lastSynced"];
 export type WalletSyncable = Pick<Wallet, WalletSyncableKeys>;
+
+export interface DecryptedWallet { password: string; privatekey: string }
 
 /** Get the local storage key for a given wallet. */
 export function getWalletKey(wallet: Wallet): string {
@@ -176,7 +184,7 @@ export async function addWallet(
   wallet: WalletNew,
   password: string,
   save: boolean
-): Promise<Wallet> {
+): Promise<void> {
   // Calculate the privatekey for the given wallet format
   const privatekey = await applyWalletFormat(wallet.format || "kristwallet", password, wallet.username);
   const address = await makeV2Address(privatekey);
@@ -208,8 +216,55 @@ export async function addWallet(
   dispatch(actions.addWallet(newWallet));
 
   syncWallet(dispatch, newWallet);
+}
 
-  return newWallet;
+/**
+ * Edits a new wallet, encrypting its privatekey and password, saving it to
+ * local storage, and dispatching the changes to the Redux store.
+ *
+ * @param dispatch - The AppDispatch instance used to dispatch the new wallet to
+ *   the Redux store.
+ * @param masterPassword - The master password used to encrypt the wallet
+ *   password and privatekey.
+ * @param wallet - The old wallet information.
+ * @param updated - The new wallet information.
+ * @param password - The password of the updated wallet.
+ */
+export async function editWallet(
+  dispatch: AppDispatch,
+  masterPassword: string,
+  wallet: Wallet,
+  updated: WalletNew,
+  password: string
+): Promise<void> {
+  // Calculate the privatekey for the given wallet format
+  const privatekey = await applyWalletFormat(updated.format || "kristwallet", password, updated.username);
+  const address = await makeV2Address(privatekey);
+
+  // Encrypt the password and privatekey. These will be decrypted on-demand.
+  const encPassword = await aesGcmEncrypt(password, masterPassword);
+  const encPrivatekey = await aesGcmEncrypt(privatekey, masterPassword);
+
+  const finalWallet = {
+    ...wallet,
+
+    label: updated.label?.trim() || undefined, // clean up empty strings
+    category: updated.category?.trim() || undefined,
+
+    address,
+    username: updated.username,
+    encPassword,
+    encPrivatekey,
+    format: updated.format
+  };
+
+  // Save the updated wallet to local storage
+  saveWallet(finalWallet);
+
+  // Dispatch the changes to the redux store
+  dispatch(actions.updateWallet(wallet.id, finalWallet));
+
+  syncWallet(dispatch, finalWallet);
 }
 
 /** Deletes a wallet, removing it from local storage and dispatching the change
@@ -219,4 +274,20 @@ export function deleteWallet(dispatch: AppDispatch, wallet: Wallet): void {
   localStorage.removeItem(key);
 
   dispatch(actions.removeWallet(wallet.id));
+}
+
+/** Decrypts a wallet's password and privatekey. */
+export async function decryptWallet(masterPassword: string, wallet: Wallet): Promise<DecryptedWallet | null> {
+  try {
+    const decPassword = await aesGcmDecrypt(wallet.encPassword, masterPassword);
+    const decPrivatekey = await aesGcmDecrypt(wallet.encPrivatekey, masterPassword);
+
+    return { password: decPassword, privatekey: decPrivatekey };
+  } catch (e) {
+    // OperationError usually means decryption failure
+    if (e.name === "OperationError") return null;
+
+    console.error(e);
+    return null;
+  }
 }

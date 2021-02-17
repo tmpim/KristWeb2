@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useState } from "react";
+import { TooltipPlacement } from "antd/lib/tooltip";
 
 import { useSelector, shallowEqual } from "react-redux";
 import { RootState } from "../../store";
@@ -11,9 +12,10 @@ import "./AuthorisedAction.less";
 interface Props {
   encrypt?: boolean;
   onAuthed?: () => void;
+  popoverPlacement?: TooltipPlacement;
 }
 
-export const AuthorisedAction: FunctionComponent<Props> = ({ encrypt, onAuthed, children }) => {
+export const AuthorisedAction: FunctionComponent<Props> = ({ encrypt, onAuthed, popoverPlacement, children }) => {
   const { isAuthed, hasMasterPassword }
     = useSelector((s: RootState) => s.walletManager, shallowEqual);
 
@@ -53,6 +55,7 @@ export const AuthorisedAction: FunctionComponent<Props> = ({ encrypt, onAuthed, 
     return <AuthMasterPasswordPopover
       encrypt={encrypt}
       onSubmit={() => { if (onAuthed) onAuthed(); }}
+      placement={popoverPlacement}
     >
       {children}
     </AuthMasterPasswordPopover>;

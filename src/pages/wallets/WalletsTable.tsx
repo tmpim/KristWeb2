@@ -1,5 +1,5 @@
-import React from "react";
-import { Table, Tooltip, Dropdown, Menu, Popconfirm } from "antd";
+import React, { useState } from "react";
+import { Table, Tooltip, Dropdown, Tag, Menu, Popconfirm } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
@@ -8,37 +8,63 @@ import { useTranslation } from "react-i18next";
 
 import { KristValue } from "../../components/KristValue";
 import { DateTime } from "../../components/DateTime";
+import { AuthorisedAction } from "../../components/auth/AuthorisedAction";
+import { AddWalletModal } from "./AddWalletModal";
 
 import { Wallet, deleteWallet } from "../../krist/wallets/Wallet";
 
 import { keyedNullSort, localeSort } from "../../utils";
 
 function WalletActions({ wallet }: { wallet: Wallet }): JSX.Element {
-  const { t } = useTranslation();
   const dispatch = useDispatch();
+
+  const { t } = useTranslation();
+  const [editWalletVisible, setEditWalletVisible] = useState(false);
 
   function onDeleteWallet() {
     deleteWallet(dispatch, wallet);
   }
 
-  return <Dropdown.Button className="wallet-actions" overlay={<Menu>
-    {/* Delete button */}
-    <Menu.Item key="1" danger>
-      <Popconfirm
-        title={t("myWallets.actionsDeleteConfirm")}
-        onConfirm={onDeleteWallet}
-        okText={t("dialog.yes")}
-        cancelText={t("dialog.no")}
-      >
-        <DeleteOutlined /> {t("myWallets.actionsDelete")}
-      </Popconfirm>
-    </Menu.Item>
-  </Menu>}>
-    {/* Edit button */}
-    <Tooltip title={t("myWallets.actionsEditTooltip")}>
+  return <>
+    <Dropdown.Button
+      className="wallet-actions"
+
+      buttonsRender={([leftButton, rightButton]) => [
+        <Tooltip key="leftButton" title={t("myWallets.actionsEditTooltip")}>
+          <AuthorisedAction
+            encrypt
+            onAuthed={() => setEditWalletVisible(true)}
+            popoverPlacement="left"
+          >
+            {React.cloneElement(leftButton as React.ReactElement<any>, { disabled: wallet.dontSave })}
+          </AuthorisedAction>
+        </Tooltip>,
+        rightButton
+      ]}
+
+      overlay={(
+        <Menu>
+          {/* Delete button */}
+          <Menu.Item key="1" danger>
+            <Popconfirm
+              title={t("myWallets.actionsDeleteConfirm")}
+              placement="left"
+              onConfirm={onDeleteWallet}
+              okText={t("dialog.yes")}
+              cancelText={t("dialog.no")}
+            >
+              <DeleteOutlined /> {t("myWallets.actionsDelete")}
+            </Popconfirm>
+          </Menu.Item>
+        </Menu>
+      )}>
+
+      {/* Edit button */}
       <EditOutlined />
-    </Tooltip>
-  </Dropdown.Button>;
+    </Dropdown.Button>
+
+    <AddWalletModal editing={wallet} visible={editWalletVisible} setVisible={setEditWalletVisible} />
+  </>;
 }
 
 export function WalletsTable(): JSX.Element {
@@ -53,14 +79,27 @@ export function WalletsTable(): JSX.Element {
   localeSort(categories);
 
   return <Table
+    size="small"
+
     dataSource={Object.values(wallets)}
     rowKey="id"
+
+    pagination={{
+      size: "default"
+    }}
 
     columns={[
       // Label
       {
         title: t("myWallets.columnLabel"),
         dataIndex: "label", key: "label",
+
+        render: (label, record) => <>
+          {label}
+          {record.dontSave && <Tooltip title={t("myWallets.tagDontSaveTooltip")}>
+            <Tag style={{ marginLeft: 8, textTransform: "uppercase" }}>{t("myWallets.tagDontSave")}</Tag>
+          </Tooltip>}
+        </>,
         sorter: keyedNullSort("label", true)
       },
 

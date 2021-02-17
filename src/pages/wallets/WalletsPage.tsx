@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Button } from "antd";
 import { DatabaseOutlined, PlusOutlined } from "@ant-design/icons";
 
+import { useSelector, shallowEqual } from "react-redux";
+import { RootState } from "../../store";
 import { useTranslation } from "react-i18next";
 
 import { PageLayout } from "../../layout/PageLayout";
@@ -10,6 +12,15 @@ import { AddWalletModal } from "./AddWalletModal";
 import { WalletsTable } from "./WalletsTable";
 
 import "./WalletsPage.less";
+
+/** Extract the subtitle into its own component to avoid re-rendering the
+ * entire page when a wallet is added. */
+function WalletsPageSubtitle(): JSX.Element {
+  const { t } = useTranslation();
+  const { wallets } = useSelector((s: RootState) => s.wallets, shallowEqual);
+
+  return <>{t("myWallets.walletCount", { count: Object.keys(wallets).length })}</>;
+}
 
 function WalletsPageExtraButtons(): JSX.Element {
   const { t } = useTranslation();
@@ -34,10 +45,9 @@ function WalletsPageExtraButtons(): JSX.Element {
 }
 
 export function WalletsPage(): JSX.Element {
-  const { t } = useTranslation();
-
   return <PageLayout
     siteTitleKey="myWallets.title" titleKey="myWallets.title"
+    subTitle={<WalletsPageSubtitle />}
     extra={<WalletsPageExtraButtons />}
   >
     <WalletsTable />

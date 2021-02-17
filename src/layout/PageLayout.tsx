@@ -9,9 +9,9 @@ import "./PageLayout.less";
 export type PageLayoutProps = React.HTMLProps<HTMLDivElement> & {
   siteTitle?: string;
   siteTitleKey?: string;
-  title?: string;
+  title?: React.ReactNode | string;
   titleKey?: string;
-  subTitle?: string;
+  subTitle?: React.ReactNode | string;
   subTitleKey?: string;
 
   extra?: React.ReactNode;
