@@ -15,7 +15,7 @@ import { getSelectWalletCategory } from "../../components/wallets/SelectWalletCa
 import { WalletFormatName, applyWalletFormat, formatNeedsUsername } from "../../krist/wallets/formats/WalletFormat";
 import { getSelectWalletFormat } from "../../components/wallets/SelectWalletFormat";
 import { makeV2Address } from "../../krist/AddressAlgo";
-import { addWallet, decryptWallet, editWallet, Wallet } from "../../krist/wallets/Wallet";
+import { addWallet, decryptWallet, editWallet, Wallet, ADDRESS_LIST_LIMIT } from "../../krist/wallets/Wallet";
 
 const { Text } = Typography;
 
@@ -55,7 +55,7 @@ export function AddWalletModal({ create, editing, visible, setVisible }: Props):
   const [form] = Form.useForm<FormValues>();
   const passwordInput = useRef<Input>(null);
   const [calculatedAddress, setCalculatedAddress] = useState<string | undefined>();
-  const [formatState, setFormatState] = useState<WalletFormatName>(initialFormat);
+  const [formatState, setFormatState] = useState<WalletFormatName>(editing?.format || initialFormat);
 
   async function onSubmit() {
     if (!masterPassword) return notification.error({
@@ -80,6 +80,14 @@ export function AddWalletModal({ create, editing, visible, setVisible }: Props):
         form.resetFields();
         setVisible(false);
       } else { // Add/create wallet
+        // Check if we reached the wallet limit
+        if (Object.keys(wallets).length >= ADDRESS_LIST_LIMIT) {
+          return notification.error({
+            message: t("addWallet.errorWalletLimitTitle"),
+            description: t("addWallet.errorWalletLimitDescription")
+          });
+        }
+
         // Check if the wallet already exists
         if (Object.values(wallets).find(w => w.address === calculatedAddress)) {
           return notification.error({

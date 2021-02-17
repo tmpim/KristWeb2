@@ -55,6 +55,12 @@ export type WalletSyncable = Pick<Wallet, WalletSyncableKeys>;
 
 export interface DecryptedWallet { password: string; privatekey: string }
 
+/** The limit provided by the Krist server for a single address lookup. In the
+ * future I may implement batching for these, but for now, this seems like a
+ * reasonable compromise to limit wallet storage. It should also give us a fair
+ * upper bound for potential performance issues. */
+export const ADDRESS_LIST_LIMIT = 128;
+
 /** Get the local storage key for a given wallet. */
 export function getWalletKey(wallet: Wallet): string {
   return `wallet2-${wallet.id}`;

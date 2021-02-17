@@ -181,7 +181,9 @@
     "errorMissingWalletTitle": "Wallet not found",
     "errorMissingWalletDescription": "The wallet you are trying to edit no longer exists.",
     "errorDecryptTitle": "Incorrect master password",
-    "errorDecryptDescription": "Failed to decrypt the wallet password. Is the master password correct?"
+    "errorDecryptDescription": "Failed to decrypt the wallet password. Is the master password correct?",
+    "errorWalletLimitTitle": "Wallet limit reached",
+    "errorWalletLimitDescription": "You currently cannot add any more wallets."
   },
 
   "credits": {
