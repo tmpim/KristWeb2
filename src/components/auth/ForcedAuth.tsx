@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { message } from "antd";
 import { useTranslation, TFunction } from "react-i18next";
 
@@ -7,6 +6,8 @@ import { RootState } from "../../store";
 import { AppDispatch } from "../../App";
 
 import { authMasterPassword } from "../../krist/wallets/WalletManager";
+
+import { useMountEffect } from "../../utils";
 
 async function forceAuth(t: TFunction, dispatch: AppDispatch, salt: string, tester: string): Promise<void> {
   try {
@@ -28,14 +29,11 @@ export function ForcedAuth(): JSX.Element | null {
   const dispatch = useDispatch();
 
   const { t } = useTranslation();
-  const [attemptedAuth, setAttemptedAuth] = useState(false);
 
-  useEffect(() => {
-    if (attemptedAuth || isAuthed || !hasMasterPassword || !salt || !tester) return;
-    setAttemptedAuth(true);
-
+  useMountEffect(() => {
+    if (isAuthed || !hasMasterPassword || !salt || !tester) return;
     forceAuth(t, dispatch, salt, tester);
-  }, [attemptedAuth]);
+  });
 
   return null;
 }

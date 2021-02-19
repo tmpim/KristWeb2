@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Table, Progress, Result, Typography, Tooltip, Button } from "antd";
 import { ExclamationCircleOutlined, FileExcelOutlined } from "@ant-design/icons";
 
 import { useTranslation } from "react-i18next";
 import { getLanguages, Language } from "../../utils/i18n";
+import { useMountEffect } from "../../utils";
 
 import csvStringify from "csv-stringify";
 import { saveAs } from "file-saver";
@@ -96,7 +97,6 @@ async function generateLanguageCSV(languages: AnalysedLanguage[]): Promise<strin
 export function SettingsTranslations(): JSX.Element {
   const { t } = useTranslation();
 
-  const [fetched, setFetched] = useState(false);
   const [loading, setLoading] = useState(true);
   const [analysed, setAnalysed] = useState<{
     enKeyCount: number;
@@ -148,11 +148,7 @@ export function SettingsTranslations(): JSX.Element {
     saveAs(blob, "kristweb-translations.csv");
   }
 
-  useEffect(() => {
-    if (fetched) return;
-    setFetched(true);
-    loadLanguages();
-  }, [fetched]);
+  useMountEffect(() => { loadLanguages().catch(console.error); });
 
   return <SettingsPageLayout pageName="Translations" extra={
     <Button icon={<FileExcelOutlined />} onClick={exportCSV}>

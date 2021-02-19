@@ -121,9 +121,9 @@ export function saveWallet(wallet: Wallet): void {
 function syncWalletProperties(wallet: Wallet, address: KristAddressWithNames, syncTime: Date): Wallet {
   return {
     ...wallet,
-    balance: address.balance,
-    names: address.names,
-    firstSeen: address.firstseen,
+    ...(address.balance   !== undefined ? { balance: address.balance } : {}),
+    ...(address.names     !== undefined ? { names: address.names } : {}),
+    ...(address.firstseen !== undefined ? { firstSeen: address.firstseen } : {}),
     lastSynced: syncTime.toISOString()
   };
 }
@@ -131,8 +131,6 @@ function syncWalletProperties(wallet: Wallet, address: KristAddressWithNames, sy
 /** Sync the data for a single wallet from the sync node, save it to local
  * storage, and dispatch the change to the Redux store. */
 export async function syncWallet(dispatch: AppDispatch, wallet: Wallet): Promise<void> {
-  const syncTime = new Date();
-
   // Fetch the data from the sync node (e.g. balance)
   const { address } = wallet;
   const lookupResults = await lookupAddresses([address], true);
@@ -140,7 +138,14 @@ export async function syncWallet(dispatch: AppDispatch, wallet: Wallet): Promise
   const kristAddress = lookupResults[address];
   if (!kristAddress) return; // Skip unsyncable wallet
 
-  const updatedWallet = syncWalletProperties(wallet, kristAddress, syncTime);
+  syncWalletUpdate(dispatch, wallet, kristAddress);
+}
+
+/** Given an already synced wallet, save it to local storage, and dispatch the
+ * change to the Redux store. */
+export function syncWalletUpdate(dispatch: AppDispatch, wallet: Wallet, address: KristAddressWithNames): void {
+  const syncTime = new Date();
+  const updatedWallet = syncWalletProperties(wallet, address, syncTime);
 
   // Save the wallet to local storage (unless dontSave is set)
   saveWallet(updatedWallet);
@@ -296,4 +301,15 @@ export async function decryptWallet(masterPassword: string, wallet: Wallet): Pro
     console.error(e);
     return null;
   }
+}
+
+/** Finds a wallet in the wallet map by the given Krist address. */
+export function findWalletByAddress(wallets: WalletMap, address?: string): Wallet | null {
+  if (!address) return null;
+
+  for (const id in wallets)
+    if (wallets[id].address === address)
+      return wallets[id];
+
+  return null;
 }

@@ -37,7 +37,7 @@ export const PageLayout: FunctionComponent<PageLayoutProps> = ({
   useEffect(() => {
     if      (siteTitle)    document.title = `${siteTitle} - KristWeb`;
     else if (siteTitleKey) document.title = `${t(siteTitleKey)} - KristWeb`;
-  });
+  }, []);
 
   return <div className={"page-layout " + (className || "")} {...rest}>
     {/* Page header */}

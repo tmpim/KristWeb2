@@ -234,5 +234,10 @@
     "settings": "Settings",
     "settingsDebug": "Debug",
     "settingsTranslations": "Translations"
+  },
+
+  "ws": {
+    "errorToken": "There was an error connecting to the Krist websocket server.",
+    "errorWS": "There was an error connecting to the Krist websocket server (code <1>{{code}}</1>)."
   }
 }

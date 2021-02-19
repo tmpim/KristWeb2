@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useTranslation, Trans } from "react-i18next";
 
 import packageJson from "../../../package.json";
 import { Link } from "react-router-dom";
 
+import { useMountEffect } from "../../utils";
+
 export function SidebarFooter(): JSX.Element {
   const { t } = useTranslation();
-  const [host, setHost] = useState<{ name: string; url: string } | false | undefined>();
+  const [host, setHost] = useState<{ name: string; url: string } | undefined>();
 
-  useEffect(() => {
-    if (host !== undefined) return;
-    setHost(false);
-
+  useMountEffect(() => {
     (async () => {
       try {
         // Add the host information if host.json exists
@@ -22,7 +21,7 @@ export function SidebarFooter(): JSX.Element {
         // Ignored
       }
     })();
-  }, [host]);
+  });
 
   const authorName = packageJson.author || "Lemmmy";
   const authorURL = `https://github.com/${authorName}`;

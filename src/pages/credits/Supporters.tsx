@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Space, Spin, Button } from "antd";
 import { DollarOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 
 import packageJson from "../../../package.json";
+
+import { useMountEffect } from "../../utils";
 
 interface Supporter {
   name: string;
@@ -19,16 +21,12 @@ export function Supporters(): JSX.Element | null {
   const { supportURL, supportersURL } = packageJson;
 
   const { t } = useTranslation();
-  const [fetched, setFetched] = useState(false);
   const [supportersState, setSupportersState] = useState<SupportersState>({
     loaded: false,
     supporters: undefined
   });
 
-  useEffect(() => {
-    if (fetched) return;
-    setFetched(true);
-
+  useMountEffect(() => {
     (async () => {
       // GPU required for this function:
       const res = await fetch(supportersURL);
@@ -39,7 +37,7 @@ export function Supporters(): JSX.Element | null {
         supporters: data.supporters
       });
     })();
-  }, [fetched, supportersURL]);
+  });
 
   if (!supportURL) return null;
   return <Space direction="vertical">

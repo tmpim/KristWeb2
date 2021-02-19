@@ -15,3 +15,7 @@ export const SYNC_WALLETS = "SYNC_WALLETS";
 // Settings
 // ---
 export const SET_BOOLEAN_SETTING = "SET_BOOLEAN_SETTING";
+
+// Websockets
+// ---
+export const CONNECTION_STATE = "CONNECTION_STATE";

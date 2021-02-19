@@ -1,0 +1,28 @@
+@import (reference) "../../App.less";
+
+.connection-indicator {
+  vertical-align: middle;
+  line-height: @layout-header-height;
+
+  &::after {
+    content: " ";
+    display: inline-block;
+
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+
+    background-color: @kw-green;
+    box-shadow: 0 0 0 3px rgba(@kw-green, 0.3);
+  }
+
+  &.connection-connecting::after {
+    background-color: @kw-secondary;
+    box-shadow: 0 0 0 3px rgba(@kw-secondary, 0.3);
+  }
+
+  &.connection-disconnected::after {
+    background-color: @kw-red;
+    box-shadow: 0 0 0 3px rgba(@kw-red, 0.3);
+  }
+}

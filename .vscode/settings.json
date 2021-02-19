@@ -22,6 +22,7 @@
     "jwalelset",
     "languagedetector",
     "localisation",
+    "motd",
     "multiline",
     "pnpm",
     "privatekeys",

@@ -1,6 +1,6 @@
 import { createReducer, ActionType } from "typesafe-actions";
 import { loadSettings, SettingsState } from "../../utils/settings";
-import { setBooleanSetting } from "../actions/Settings";
+import { setBooleanSetting } from "../actions/SettingsActions";
 
 export type State = SettingsState;
 

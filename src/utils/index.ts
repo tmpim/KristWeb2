@@ -1,3 +1,5 @@
+import { EffectCallback, useEffect } from "react";
+
 export const toHex = (input: ArrayBufferLike | Uint8Array): string =>
   [...(input instanceof Uint8Array ? input : new Uint8Array(input))]
     .map(b => b.toString(16).padStart(2, "0"))
@@ -79,3 +81,5 @@ export const keyedNullSort = <T>(key: keyof T, human?: boolean) => (a: T, b: T, 
       : (va as any) - (vb as any);
   }
 };
+
+export const useMountEffect = (fn: EffectCallback): void => useEffect(fn, []);

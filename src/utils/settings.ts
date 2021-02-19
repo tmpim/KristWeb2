@@ -1,7 +1,7 @@
 import { PickByValue } from "utility-types";
 
 import { AppDispatch } from "../App";
-import * as actions from "../store/actions/Settings";
+import * as actions from "../store/actions/SettingsActions";
 
 export interface SettingsState {
   /** Whether or not advanced wallet formats are enabled. */

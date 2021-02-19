@@ -68,11 +68,21 @@ export function AddWalletModal({ create, editing, visible, setVisible }: Props):
 
     try {
       if (editing) { // Edit wallet
-        // Double check the wallet exists
+        // Double check the destination wallet exists
         if (!wallets[editing.id]) return notification.error({
           message: t("addWallet.errorMissingWalletTitle"),
           description: t("addWallet.errorMissingWalletDescription")
         });
+
+        // If the address changed, check that a wallet doesn't already exist
+        // with this address
+        if (editing.address !== calculatedAddress
+          && Object.values(wallets).find(w => w.address === calculatedAddress)) {
+          return notification.error({
+            message: t("addWallet.errorDuplicateWalletTitle"),
+            description: t("addWallet.errorDuplicateWalletDescription")
+          });
+        }
 
         await editWallet(dispatch, masterPassword, editing, values, values.password);
         message.success(t("addWallet.messageSuccessEdit"));
