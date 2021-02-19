@@ -135,6 +135,7 @@
     "dialogOkAdd": "Add",
     "dialogOkCreate": "Create",
     "dialogOkEdit": "Save",
+    "dialogAddExisting": "Add existing wallet",
 
     "walletLabel": "Wallet label",
     "walletLabelPlaceholder": "Wallet label (optional)",

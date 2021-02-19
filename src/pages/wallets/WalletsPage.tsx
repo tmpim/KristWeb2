@@ -35,7 +35,7 @@ function WalletsPageExtraButtons(): JSX.Element {
         {t("myWallets.createWallet")}
       </Button>
     </AuthorisedAction>
-    <AddWalletModal create visible={createWalletVisible} setVisible={setCreateWalletVisible} />
+    <AddWalletModal create visible={createWalletVisible} setVisible={setCreateWalletVisible} setAddExistingVisible={setAddWalletVisible} />
 
     <AuthorisedAction encrypt onAuthed={() => setAddWalletVisible(true)}>
       <Button ghost>{t("myWallets.addExistingWallet")}</Button>

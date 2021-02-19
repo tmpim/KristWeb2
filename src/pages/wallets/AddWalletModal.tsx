@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Modal, Form, Input, Checkbox, Collapse, Button, Tooltip, Typography, Row, Col, message, notification } from "antd";
+import { Modal, Form, Input, Checkbox, Collapse, Button, Tooltip, Typography, Row, Col, message, notification, Grid } from "antd";
 import { ReloadOutlined } from "@ant-design/icons";
 
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
@@ -18,6 +18,7 @@ import { makeV2Address } from "../../krist/AddressAlgo";
 import { addWallet, decryptWallet, editWallet, Wallet, ADDRESS_LIST_LIMIT } from "../../krist/wallets/Wallet";
 
 const { Text } = Typography;
+const { useBreakpoint } = Grid;
 
 interface FormValues {
   label?: string;
@@ -36,9 +37,10 @@ interface Props {
 
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setAddExistingVisible?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export function AddWalletModal({ create, editing, visible, setVisible }: Props): JSX.Element {
+export function AddWalletModal({ create, editing, visible, setVisible, setAddExistingVisible }: Props): JSX.Element {
   if (editing && create)
     throw new Error("AddWalletModal: 'editing' and 'create' simultaneously, uh oh!");
 
@@ -51,6 +53,7 @@ export function AddWalletModal({ create, editing, visible, setVisible }: Props):
   const dispatch = useDispatch();
 
   const { t } = useTranslation();
+  const bps = useBreakpoint();
 
   const [form] = Form.useForm<FormValues>();
   const passwordInput = useRef<Input>(null);
@@ -61,6 +64,12 @@ export function AddWalletModal({ create, editing, visible, setVisible }: Props):
     form.resetFields(); // Make sure to generate another password on re-open
     setCalculatedAddress(undefined);
     setVisible(false);
+  }
+
+  function addExistingWallet() {
+    if (!setAddExistingVisible) return;
+    setAddExistingVisible(true);
+    closeModal();
   }
 
   async function onSubmit() {
@@ -176,14 +185,29 @@ export function AddWalletModal({ create, editing, visible, setVisible }: Props):
     title={t(editing
       ? "addWallet.dialogTitleEdit"
       : (create ? "addWallet.dialogTitleCreate" : "addWallet.dialogTitle"))}
-    okText={t(editing
-      ? "addWallet.dialogOkEdit"
-      : (create ? "addWallet.dialogOkCreate" : "addWallet.dialogOkAdd"))}
-    cancelText={t("dialog.cancel")}
 
-    onCancel={() => closeModal()}
-    onOk={onSubmit}
+    footer={[
+      /* Add existing wallet button */
+      create && bps.sm && (
+        <Button key="addExisting" onClick={addExistingWallet} style={{ float: "left" }}>
+          {t("addWallet.dialogAddExisting")}
+        </Button>
+      ),
 
+      /* Cancel button */
+      <Button key="cancel" onClick={closeModal}>
+        {t("dialog.cancel")}
+      </Button>,
+
+      /* OK button */
+      <Button key="ok" type="primary" onClick={onSubmit}>
+        {t(editing
+          ? "addWallet.dialogOkEdit"
+          : (create ? "addWallet.dialogOkCreate" : "addWallet.dialogOkAdd"))}
+      </Button>,
+    ]}
+
+    onCancel={closeModal}
     destroyOnClose
   >
     <Form
