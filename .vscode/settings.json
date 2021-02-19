@@ -35,6 +35,7 @@
     "totalout",
     "tsdoc",
     "typeahead",
+    "unmount",
     "unsyncable"
   ],
   "i18next.defaultTranslatedLocale": "en",

@@ -13,6 +13,7 @@ import { findWalletByAddress, syncWalletUpdate } from "../../krist/wallets/Walle
 import WebSocketAsPromised from "websocket-as-promised";
 
 import Debug from "debug";
+import { useMountEffect } from "../../utils";
 const debug = Debug("kristweb:ws");
 
 const DEFAULT_CONNECT_DEBOUNCE = 1000;
@@ -24,6 +25,8 @@ class WebsocketConnection {
 
   private messageID = 1;
   private connectDebounce = DEFAULT_CONNECT_DEBOUNCE;
+
+  private forceClosing = false;
 
   constructor(private dispatch: AppDispatch) {
     debug("WS component init");
@@ -70,7 +73,7 @@ class WebsocketConnection {
     }
   }
 
-  private handleDisconnect(err?: Error | number) {
+  private handleDisconnect(err?: Error) {
     if (this.reconnectionTimer) window.clearTimeout(this.reconnectionTimer);
 
     // TODO: show errors to the user?
@@ -83,8 +86,22 @@ class WebsocketConnection {
     }, this.connectDebounce);
   }
 
-  handleClose(event: { reason: number }) {
-    this.handleDisconnect(event.reason);
+  handleClose(event: { code: number; reason: string }) {
+    debug("ws closed with code %d reason %s", event.code, event.reason);
+    this.handleDisconnect();
+  }
+
+  /** Forcibly disconnect this instance from the websocket server (e.g. on
+   * component unmount) */
+  forceClose(): void {
+    debug("received force close request");
+
+    if (this.forceClosing) return;
+    this.forceClosing = true;
+
+    if (!this.ws || !this.ws.isOpened || this.ws.isClosed) return;
+    debug("force closing ws");
+    this.ws.close();
   }
 
   private setConnectionState(state: WSConnectionState) {
@@ -125,7 +142,7 @@ class WebsocketConnection {
         // If we receive a transaction relevant to any of our wallets, refresh
         // the balances.
         const transaction = data.transaction as KristTransaction;
-        debug("transaction from %s to %s", transaction.from || "null", transaction.to || "null");
+        debug("transaction [%s] from %s to %s", transaction.type, transaction.from || "null", transaction.to || "null");
 
         const fromWallet = findWalletByAddress(this.wallets, transaction.from);
         if (fromWallet) this.refreshBalance(fromWallet.address);
@@ -169,6 +186,11 @@ export function WebsocketService(): JSX.Element | null {
   const dispatch = useDispatch();
 
   const connection = useMemo(() => new WebsocketConnection(dispatch), []);
+
+  useMountEffect(() => {
+    // On unmount, force close the existing connection
+    return () => connection.forceClose();
+  });
 
   useEffect(() => {
     connection.setWallets(wallets);
