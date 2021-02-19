@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 
-import { DashboardPage } from "../pages/DashboardPage";
+import { DashboardPage } from "../pages/dashboard/DashboardPage";
 import { WalletsPage } from "../pages/wallets/WalletsPage";
 
 import { SettingsPage } from "../pages/settings/SettingsPage";

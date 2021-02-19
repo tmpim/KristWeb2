@@ -187,6 +187,24 @@
     "errorWalletLimitDescription": "You currently cannot add any more wallets."
   },
 
+  "dashboard": {
+    "siteTitle": "Dashboard",
+
+    "walletOverviewCardTitle": "Wallets",
+    "walletOverviewTotalBalance": "Total balance",
+    "walletOverviewNames": "Names",
+    "walletOverviewNamesCount": "{{count}} name",
+    "walletOverviewNamesCount_plural": "{{count}} names",
+    "walletOverviewSeeMore": "See all {{count}}...",
+    "walletOverviewAddWallets": "Add wallets...",
+
+    "transactionsCardTitle": "Transactions",
+
+    "blockValueCardTitle": "Block Value",
+
+    "blockDifficultyCardTitle": "Block Difficulty"
+  },
+
   "credits": {
     "title": "Credits",
     "madeBy": "Made by <1>{{authorName}}</1>",

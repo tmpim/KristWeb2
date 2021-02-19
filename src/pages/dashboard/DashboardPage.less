@@ -1,0 +1,119 @@
+@import (reference) "../../App.less";
+
+.dashboard-page {
+  .dashboard-main-row {
+    margin-bottom: @margin-md;
+    align-items: stretch;
+
+    & > .ant-col > .ant-card {
+      height: 100%;
+
+      border: none;
+      border-radius: @kw-big-card-border-radius;
+
+      .ant-card-head {
+        border-bottom: 0;
+        margin-bottom: 0;
+
+        border-radius: @kw-big-card-border-radius @kw-big-card-border-radius 0 0;
+
+        .ant-card-head-title {
+          padding-bottom: 0;
+        }
+      }
+
+      .ant-card-body {
+        padding-top: @padding-sm;
+      }
+    }
+  }
+
+  .dashboard-statistic {
+    &-title {
+      color: @kw-text-secondary;
+      display: block;
+    }
+
+    &-value {
+      font-size: @heading-3-size;
+    }
+  }
+
+  .dashboard-card-wallets {
+    .dashboard-wallets-top-row {
+      margin-bottom: @margin-sm;
+    }
+
+    .dashboard-wallets-balance {
+      .krist-value {
+        color: @kw-green;
+
+        .anticon svg, .krist-currency-long {
+          color: fade(@kw-green, 75%);
+        }
+
+        &.empty {
+          color: @text-color;
+
+          .anticon svg, .krist-currency-long {
+            color: fade(@text-color, 75%);
+          }
+        }
+      }
+    }
+
+    .dashboard-wallet-preview {
+      padding: @padding-sm @padding-md;
+      margin-bottom: @margin-xs;
+
+      background: @kw-dark;
+      border-radius: @kw-big-card-border-radius;
+
+      height: 60px;
+      justify-content: center;
+
+      line-height: 1.5;
+
+      .wallet-left {
+        flex: 1;
+        height: 100%;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        .wallet-label {
+          font-weight: bold;
+        }
+      }
+
+      .wallet-right {
+        flex: 0;
+        font-size: @font-size-lg;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .dashboard-more a {
+    display: block;
+    width: 100%;
+
+    margin-bottom: -@padding-sm;
+
+    color: @text-color-secondary;
+    font-size: 90%;
+    text-align: center;
+
+    &:hover {
+      color: lighten(@text-color-secondary, 10%);
+    }
+  }
+}
