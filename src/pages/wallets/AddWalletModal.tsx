@@ -57,6 +57,12 @@ export function AddWalletModal({ create, editing, visible, setVisible }: Props):
   const [calculatedAddress, setCalculatedAddress] = useState<string | undefined>();
   const [formatState, setFormatState] = useState<WalletFormatName>(editing?.format || initialFormat);
 
+  function closeModal() {
+    form.resetFields(); // Make sure to generate another password on re-open
+    setCalculatedAddress(undefined);
+    setVisible(false);
+  }
+
   async function onSubmit() {
     if (!masterPassword) return notification.error({
       message: t("addWallet.errorUnexpectedTitle"),
@@ -87,8 +93,7 @@ export function AddWalletModal({ create, editing, visible, setVisible }: Props):
         await editWallet(dispatch, masterPassword, editing, values, values.password);
         message.success(t("addWallet.messageSuccessEdit"));
 
-        form.resetFields();
-        setVisible(false);
+        closeModal();
       } else { // Add/create wallet
         // Check if we reached the wallet limit
         if (Object.keys(wallets).length >= ADDRESS_LIST_LIMIT) {
@@ -109,8 +114,7 @@ export function AddWalletModal({ create, editing, visible, setVisible }: Props):
         await addWallet(dispatch, masterPassword, values, values.password, values.save ?? true);
         message.success(create ? t("addWallet.messageSuccessCreate") : t("addWallet.messageSuccessAdd"));
 
-        form.resetFields(); // Make sure to generate another password on re-open
-        setVisible(false);
+        closeModal();
       }
     } catch (err) {
       console.error(err);
@@ -177,7 +181,7 @@ export function AddWalletModal({ create, editing, visible, setVisible }: Props):
       : (create ? "addWallet.dialogOkCreate" : "addWallet.dialogOkAdd"))}
     cancelText={t("dialog.cancel")}
 
-    onCancel={() => { form.resetFields(); setVisible(false); }}
+    onCancel={() => closeModal()}
     onOk={onSubmit}
 
     destroyOnClose
