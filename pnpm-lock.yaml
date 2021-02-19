@@ -12,6 +12,7 @@ dependencies:
   i18next: 19.8.7
   i18next-browser-languagedetector: 6.0.1
   i18next-http-backend: 1.1.0
+  lodash.throttle: 4.1.1
   react: 17.0.1
   react-dom: 17.0.1_react@17.0.1
   react-i18next: 11.8.6_i18next@19.8.7+react@17.0.1
@@ -30,6 +31,7 @@ devDependencies:
   '@types/debug': 4.1.5
   '@types/file-saver': 2.0.1
   '@types/jest': 26.0.20
+  '@types/lodash.throttle': 4.1.6
   '@types/node': 12.20.0
   '@types/react': 17.0.2
   '@types/react-dom': 17.0.1
@@ -2065,6 +2067,16 @@ packages:
     dev: true
     resolution:
       integrity: sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
+  /@types/lodash.throttle/4.1.6:
+    dependencies:
+      '@types/lodash': 4.14.168
+    dev: true
+    resolution:
+      integrity: sha512-/UIH96i/sIRYGC60NoY72jGkCJtFN5KVPhEMMMTjol65effe1gPn0tycJqV5tlSwMTzX8FqzB5yAj0rfGHTPNg==
+  /@types/lodash/4.14.168:
+    dev: true
+    resolution:
+      integrity: sha512-oVfRvqHV/V6D1yifJbVRU3TMp8OT6o6BG+U9MkwuJ3U8/CsDHvalRpsxBqivn71ztOFZBTfJMvETbqHiaNSj7Q==
   /@types/minimatch/3.0.3:
     dev: true
     resolution:
@@ -7838,6 +7850,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-stgLz+i3Aa9mZgnjr/O+v9ruKZsPsndy7qPZOchbqk2cnTU1ZaldKK+v7m54WoKIyxiuMZTKT2H81F8BeAc3ZQ==
+  /lodash.throttle/4.1.1:
+    dev: false
+    resolution:
+      integrity: sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
   /lodash.uniq/4.5.0:
     dev: true
     resolution:
@@ -13365,6 +13381,7 @@ specifiers:
   '@types/debug': ^4.1.5
   '@types/file-saver': ^2.0.1
   '@types/jest': ^26.0.20
+  '@types/lodash.throttle': ^4.1.6
   '@types/node': ^12.19.16
   '@types/react': ^17.0.1
   '@types/react-dom': ^17.0.0
@@ -13389,6 +13406,7 @@ specifiers:
   i18next: ^19.7.0
   i18next-browser-languagedetector: ^6.0.1
   i18next-http-backend: ^1.0.20
+  lodash.throttle: ^4.1.1
   prettier: ^2.2.1
   react: ^17.0.1
   react-dom: ^17.0.1

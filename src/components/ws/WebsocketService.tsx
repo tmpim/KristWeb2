@@ -12,21 +12,28 @@ import { APIResponse, KristAddress, KristTransaction, WSConnectionState, WSIncom
 import { findWalletByAddress, syncWalletUpdate } from "../../krist/wallets/Wallet";
 import WebSocketAsPromised from "websocket-as-promised";
 
+import throttle from "lodash.throttle";
+
 import Debug from "debug";
 import { useMountEffect } from "../../utils";
 const debug = Debug("kristweb:ws");
 
-const DEFAULT_CONNECT_DEBOUNCE = 1000;
-const MAX_DEBOUNCE = 360000;
+const REFRESH_THROTTLE_MS = 500;
+const DEFAULT_CONNECT_DEBOUNCE_MS = 1000;
+const MAX_CONNECT_DEBOUNCE_MS = 360000;
+
 class WebsocketConnection {
   private wallets?: WalletMap;
   private ws?: WebSocketAsPromised;
   private reconnectionTimer?: number;
 
   private messageID = 1;
-  private connectDebounce = DEFAULT_CONNECT_DEBOUNCE;
+  private connectDebounce = DEFAULT_CONNECT_DEBOUNCE_MS;
 
   private forceClosing = false;
+
+  // TODO: automatically clean this up?
+  private refreshThrottles: Record<string, (address: string) => void> = {};
 
   constructor(private dispatch: AppDispatch) {
     debug("WS component init");
@@ -62,7 +69,7 @@ class WebsocketConnection {
 
     this.messageID = 1;
     await this.ws.open();
-    this.connectDebounce = DEFAULT_CONNECT_DEBOUNCE;
+    this.connectDebounce = DEFAULT_CONNECT_DEBOUNCE_MS;
   }
 
   async attemptConnect() {
@@ -81,7 +88,7 @@ class WebsocketConnection {
     debug("failed to connect to server, reconnecting in %d ms", this.connectDebounce, err);
 
     this.reconnectionTimer = window.setTimeout(() => {
-      this.connectDebounce = Math.min(this.connectDebounce * 2, MAX_DEBOUNCE);
+      this.connectDebounce = Math.min(this.connectDebounce * 2, MAX_CONNECT_DEBOUNCE_MS);
       this.attemptConnect();
     }, this.connectDebounce);
   }
@@ -157,8 +164,26 @@ class WebsocketConnection {
   }
 
   /** Queues a command to re-fetch an address's balance. The response will be
-   * handled in {@link handleMessage}. */
+   * handled in {@link handleMessage}. This is automatically throttled to
+   * execute on the leading edge of 500ms (REFRESH_THROTTLE_MS). */
   refreshBalance(address: string) {
+    if (this.refreshThrottles[address]) {
+      // Use the existing throttled function if it exists
+      this.refreshThrottles[address](address);
+    } else {
+      // Create and cache a new throttle function for this address
+      const throttled = throttle(
+        this._refreshBalance.bind(this),
+        REFRESH_THROTTLE_MS,
+        { leading: true, trailing: false }
+      );
+
+      this.refreshThrottles[address] = throttled;
+      throttled(address);
+    }
+  }
+
+  private _refreshBalance(address: string) {
     debug("refreshing balance of %s", address);
     this.ws?.sendPacked({ type: "address", id: this.messageID++, address });
   }
