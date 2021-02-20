@@ -201,6 +201,13 @@
     "transactionsCardTitle": "Transactions",
 
     "blockValueCardTitle": "Block Value",
+    "blockValueBaseValue": "Base value (<1></1>)",
+    "blockValueBaseValueNames": "{{count}} name",
+    "blockValueBaseValueNames_plural": "{{count}} names",
+    "blockValueNextDecrease": "Decreases by <1></1> in <3>{{count}} block</3>",
+    "blockValueNextDecrease_plural": "Decreases by <1></1> in <3>{{count}} blocks</3>",
+    "blockValueReset": "Resets in <1>{{count}} block</1>",
+    "blockValueReset_plural": "Resets in <1>{{count}} blocks</1>",
 
     "blockDifficultyCardTitle": "Block Difficulty"
   },

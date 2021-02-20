@@ -44,24 +44,6 @@
       margin-bottom: @margin-sm;
     }
 
-    .dashboard-wallets-balance {
-      .krist-value {
-        color: @kw-green;
-
-        .anticon svg, .krist-currency-long {
-          color: fade(@kw-green, 75%);
-        }
-
-        &.empty {
-          color: @text-color;
-
-          .anticon svg, .krist-currency-long {
-            color: fade(@text-color, 75%);
-          }
-        }
-      }
-    }
-
     .dashboard-wallet-preview {
       padding: @padding-sm @padding-md;
       margin-bottom: @margin-xs;
@@ -98,6 +80,25 @@
 
       &:last-child {
         margin-bottom: 0;
+      }
+    }
+  }
+
+  .dashboard-card-block-value {
+    .dashboard-block-value-main.krist-value {
+      font-size: @heading-4-size;
+    }
+
+    .dashboard-block-value-next-decrease {
+      margin: @margin-sm 0;
+    }
+
+    .dashboard-block-value-progress-text {
+      color: @text-color-secondary;
+      font-size: @font-size-sm;
+
+      .dashboard-block-value-progress-middot {
+        margin: 0 @margin-xs;
       }
     }
   }

@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Row, Col, Typography } from "antd";
+import { Card, Row, Col } from "antd";
 
 import { useSelector, shallowEqual } from "react-redux";
 import { RootState } from "../../store";
@@ -48,7 +48,7 @@ export function WalletOverviewCard(): JSX.Element {
       <Col span={12} className="dashboard-wallets-balance">
         <Statistic
           titleKey="dashboard.walletOverviewTotalBalance"
-          value={<KristValue value={balance} long className={balance > 0 ? "" : "empty"} />}
+          value={<KristValue value={balance} long green={balance > 0} />}
         />
       </Col>
 

@@ -19,3 +19,7 @@ export const SET_BOOLEAN_SETTING = "SET_BOOLEAN_SETTING";
 // Websockets
 // ---
 export const CONNECTION_STATE = "CONNECTION_STATE";
+
+// Node state
+export const LAST_BLOCK_ID = "LAST_BLOCK_ID";
+export const DETAILED_WORK = "DETAILED_WORK";

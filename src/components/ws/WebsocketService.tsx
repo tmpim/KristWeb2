@@ -1,14 +1,15 @@
-import React, { useMemo, useEffect } from "react";
+import { useMemo, useEffect } from "react";
 
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
 import { AppDispatch } from "../../App";
 import { RootState } from "../../store";
 import { WalletMap } from "../../store/reducers/WalletsReducer";
 import * as wsActions from "../../store/actions/WebsocketActions";
+import * as nodeActions from "../../store/actions/NodeActions";
 
 import packageJson from "../../../package.json";
 
-import { APIResponse, KristAddress, KristTransaction, WSConnectionState, WSIncomingMessage, WSSubscriptionLevel } from "../../krist/api/types";
+import { APIResponse, KristAddress, KristBlock, KristTransaction, WSConnectionState, WSIncomingMessage, WSSubscriptionLevel } from "../../krist/api/types";
 import { findWalletByAddress, syncWalletUpdate } from "../../krist/wallets/Wallet";
 import WebSocketAsPromised from "websocket-as-promised";
 
@@ -156,6 +157,16 @@ class WebsocketConnection {
 
         const toWallet = findWalletByAddress(this.wallets, transaction.to);
         if (toWallet) this.refreshBalance(toWallet.address);
+
+        break;
+      }
+      case "block": {
+        // Update the last block ID, which will trigger a re-fetch for
+        // work-related and block value-related components.
+        const block = data.block as KristBlock;
+        debug("block id now %d", block.height);
+
+        this.dispatch(nodeActions.setLastBlockID(block.height));
 
         break;
       }

@@ -4,10 +4,12 @@ import { WalletManagerReducer } from "./WalletManagerReducer";
 import { WalletsReducer } from "./WalletsReducer";
 import { SettingsReducer } from "./SettingsReducer";
 import { WebsocketReducer } from "./WebsocketReducer";
+import { NodeReducer } from "./NodeReducer";
 
 export default combineReducers({
   walletManager: WalletManagerReducer,
   wallets: WalletsReducer,
   settings: SettingsReducer,
-  websocket: WebsocketReducer
+  websocket: WebsocketReducer,
+  node: NodeReducer
 });

@@ -20,6 +20,30 @@ export interface KristTransaction {
   type: KristTransactionType;
 }
 
+export interface KristBlock {
+  height: number;
+  address: string;
+  hash: string;
+  short_hash: string;
+  value: number;
+  difficulty: number;
+  time: string;
+}
+
+export interface KristWorkDetailed {
+  work: number;
+  unpaid: number;
+
+  base_value: number;
+  block_value: number;
+
+  decrease: {
+    value: number;
+    blocks: number;
+    reset: number;
+  };
+}
+
 export type APIResponse<T extends Record<string, any>> = T & {
   ok: boolean;
   error?: string;
