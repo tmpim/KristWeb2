@@ -50,6 +50,7 @@ export function AddWalletModal({ create, editing, visible, setVisible, setAddExi
   const { masterPassword } = useSelector((s: RootState) => s.walletManager, shallowEqual);
   // Required to check for existing wallets
   const { wallets } = useSelector((s: RootState) => s.wallets, shallowEqual);
+  const syncNode = useSelector((s: RootState) => s.node.syncNode);
   const dispatch = useDispatch();
 
   const { t } = useTranslation();
@@ -99,7 +100,7 @@ export function AddWalletModal({ create, editing, visible, setVisible, setAddExi
           });
         }
 
-        await editWallet(dispatch, masterPassword, editing, values, values.password);
+        await editWallet(dispatch, syncNode, masterPassword, editing, values, values.password);
         message.success(t("addWallet.messageSuccessEdit"));
 
         closeModal();
@@ -120,7 +121,7 @@ export function AddWalletModal({ create, editing, visible, setVisible, setAddExi
           });
         }
 
-        await addWallet(dispatch, masterPassword, values, values.password, values.save ?? true);
+        await addWallet(dispatch, syncNode, masterPassword, values, values.password, values.save ?? true);
         message.success(create ? t("addWallet.messageSuccessCreate") : t("addWallet.messageSuccessAdd"));
 
         closeModal();

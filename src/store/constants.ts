@@ -21,5 +21,6 @@ export const SET_BOOLEAN_SETTING = "SET_BOOLEAN_SETTING";
 export const CONNECTION_STATE = "CONNECTION_STATE";
 
 // Node state
+export const SYNC_NODE = "SYNC_NODE";
 export const LAST_BLOCK_ID = "LAST_BLOCK_ID";
 export const DETAILED_WORK = "DETAILED_WORK";

@@ -1,4 +1,4 @@
-import { useMemo, useEffect } from "react";
+import { useState,  useEffect } from "react";
 
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
 import { AppDispatch } from "../../App";
@@ -7,8 +7,6 @@ import { WalletMap } from "../../store/reducers/WalletsReducer";
 import * as wsActions from "../../store/actions/WebsocketActions";
 import * as nodeActions from "../../store/actions/NodeActions";
 
-import packageJson from "../../../package.json";
-
 import { APIResponse, KristAddress, KristBlock, KristTransaction, WSConnectionState, WSIncomingMessage, WSSubscriptionLevel } from "../../krist/api/types";
 import { findWalletByAddress, syncWalletUpdate } from "../../krist/wallets/Wallet";
 import WebSocketAsPromised from "websocket-as-promised";
@@ -16,7 +14,6 @@ import WebSocketAsPromised from "websocket-as-promised";
 import throttle from "lodash.throttle";
 
 import Debug from "debug";
-import { useMountEffect } from "../../utils";
 const debug = Debug("kristweb:ws");
 
 const REFRESH_THROTTLE_MS = 500;
@@ -36,7 +33,7 @@ class WebsocketConnection {
   // TODO: automatically clean this up?
   private refreshThrottles: Record<string, (address: string) => void> = {};
 
-  constructor(private dispatch: AppDispatch) {
+  constructor(private dispatch: AppDispatch, private syncNode: string) {
     debug("WS component init");
     this.attemptConnect();
   }
@@ -49,10 +46,8 @@ class WebsocketConnection {
     debug("attempting connection to server...");
     this.setConnectionState("disconnected");
 
-    const syncNode = packageJson.defaultSyncNode; // TODO: support alt nodes
-
     // Get a websocket token
-    const res = await fetch(syncNode + "/ws/start", { method: "POST" });
+    const res = await fetch(this.syncNode + "/ws/start", { method: "POST" });
     if (!res.ok || res.status !== 200) throw new Error("ws.errorToken");
     const data: APIResponse<{ url: string }> = await res.json();
     if (!data.ok || data.error) throw new Error("ws.errorToken");
@@ -219,17 +214,25 @@ class WebsocketConnection {
 
 export function WebsocketService(): JSX.Element | null {
   const { wallets } = useSelector((s: RootState) => s.wallets, shallowEqual);
+  const syncNode = useSelector((s: RootState) => s.node.syncNode);
   const dispatch = useDispatch();
 
-  const connection = useMemo(() => new WebsocketConnection(dispatch), []);
-
-  useMountEffect(() => {
-    // On unmount, force close the existing connection
-    return () => connection.forceClose();
-  });
+  const [connection, setConnection] = useState<WebsocketConnection | undefined>();
 
   useEffect(() => {
-    connection.setWallets(wallets);
+    debug("!!!!!! useMountEffect");
+    if (connection) connection.forceClose();
+    setConnection(new WebsocketConnection(dispatch, syncNode));
+
+    // On unmount, force close the existing connection
+    return () => {
+      debug("!!!!!! useMountEffect ended");
+      if (connection) connection.forceClose();
+    };
+  }, [syncNode]);
+
+  useEffect(() => {
+    if (connection) connection.setWallets(wallets);
   }, [wallets]);
 
   return null;

@@ -130,10 +130,10 @@ function syncWalletProperties(wallet: Wallet, address: KristAddressWithNames, sy
 
 /** Sync the data for a single wallet from the sync node, save it to local
  * storage, and dispatch the change to the Redux store. */
-export async function syncWallet(dispatch: AppDispatch, wallet: Wallet): Promise<void> {
+export async function syncWallet(dispatch: AppDispatch, syncNode: string, wallet: Wallet): Promise<void> {
   // Fetch the data from the sync node (e.g. balance)
   const { address } = wallet;
-  const lookupResults = await lookupAddresses([address], true);
+  const lookupResults = await lookupAddresses(syncNode, [address], true);
 
   const kristAddress = lookupResults[address];
   if (!kristAddress) return; // Skip unsyncable wallet
@@ -156,12 +156,12 @@ export function syncWalletUpdate(dispatch: AppDispatch, wallet: Wallet, address:
 
 /** Sync the data for all the wallets from the sync node, save it to local
  * storage, and dispatch the changes to the Redux store. */
-export async function syncWallets(dispatch: AppDispatch, wallets: WalletMap): Promise<void> {
+export async function syncWallets(dispatch: AppDispatch, syncNode: string, wallets: WalletMap): Promise<void> {
   const syncTime = new Date();
 
   // Fetch all the data from the sync node (e.g. balances)
   const addresses = Object.values(wallets).map(w => w.address);
-  const lookupResults = await lookupAddresses(addresses, true);
+  const lookupResults = await lookupAddresses(syncNode, addresses, true);
 
   // Create a WalletMap with the updated wallet properties
   const updatedWallets = Object.entries(wallets).map(([_, wallet]) => {
@@ -183,6 +183,7 @@ export async function syncWallets(dispatch: AppDispatch, wallets: WalletMap): Pr
  *
  * @param dispatch - The AppDispatch instance used to dispatch the new wallet to
  *   the Redux store.
+ * @param syncNode - The Krist sync node to fetch the wallet data from.
  * @param masterPassword - The master password used to encrypt the wallet
  *   password and privatekey.
  * @param wallet - The information for the new wallet.
@@ -191,6 +192,7 @@ export async function syncWallets(dispatch: AppDispatch, wallets: WalletMap): Pr
  */
 export async function addWallet(
   dispatch: AppDispatch,
+  syncNode: string,
   masterPassword: string,
   wallet: WalletNew,
   password: string,
@@ -226,7 +228,7 @@ export async function addWallet(
   // Dispatch the changes to the redux store
   dispatch(actions.addWallet(newWallet));
 
-  syncWallet(dispatch, newWallet);
+  syncWallet(dispatch, syncNode, newWallet);
 }
 
 /**
@@ -235,6 +237,7 @@ export async function addWallet(
  *
  * @param dispatch - The AppDispatch instance used to dispatch the new wallet to
  *   the Redux store.
+ * @param syncNode - The Krist sync node to fetch the wallet data from.
  * @param masterPassword - The master password used to encrypt the wallet
  *   password and privatekey.
  * @param wallet - The old wallet information.
@@ -243,6 +246,7 @@ export async function addWallet(
  */
 export async function editWallet(
   dispatch: AppDispatch,
+  syncNode: string,
   masterPassword: string,
   wallet: Wallet,
   updated: WalletNew,
@@ -275,7 +279,7 @@ export async function editWallet(
   // Dispatch the changes to the redux store
   dispatch(actions.updateWallet(wallet.id, finalWallet));
 
-  syncWallet(dispatch, finalWallet);
+  syncWallet(dispatch, syncNode, finalWallet);
 }
 
 /** Deletes a wallet, removing it from local storage and dispatching the change

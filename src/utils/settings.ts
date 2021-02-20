@@ -44,3 +44,14 @@ export function setBooleanSetting(dispatch: AppDispatch, settingName: SettingNam
   localStorage.setItem(getSettingKey(settingName), value ? "true" : "false");
   dispatch(actions.setBooleanSetting(settingName, value));
 }
+
+export function isValidSyncNode(syncNode?: string): boolean {
+  if (!syncNode) return false;
+
+  try {
+    const url = new URL(syncNode);
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch (_) {
+    return false;
+  }
+}

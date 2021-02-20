@@ -1,7 +1,5 @@
 import { APIResponse, KristAddress } from "./types";
 
-import packageJson from "../../../package.json";
-
 interface LookupAddressesResponse {
   found: number;
   notFound: number;
@@ -11,10 +9,8 @@ interface LookupAddressesResponse {
 export interface KristAddressWithNames extends KristAddress { names?: number }
 export type LookupResults = Record<string, KristAddressWithNames | null>;
 
-export async function lookupAddresses(addresses: string[], fetchNames?: boolean): Promise<LookupResults> {
+export async function lookupAddresses(syncNode: string, addresses: string[], fetchNames?: boolean): Promise<LookupResults> {
   if (!addresses || addresses.length === 0) return {};
-
-  const syncNode = packageJson.defaultSyncNode; // TODO: support alt nodes
 
   try {
     const res = await fetch(

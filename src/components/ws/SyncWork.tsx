@@ -7,14 +7,10 @@ import * as nodeActions from "../../store/actions/NodeActions";
 import { AppDispatch } from "../../App";
 import { APIResponse, KristWorkDetailed } from "../../krist/api/types";
 
-import packageJson from "../../../package.json";
-
 import Debug from "debug";
 const debug = Debug("kristweb:sync-work");
 
-export async function updateDetailedWork(dispatch: AppDispatch): Promise<void> {
-  const syncNode = packageJson.defaultSyncNode; // TODO: support alt nodes
-
+export async function updateDetailedWork(dispatch: AppDispatch, syncNode: string): Promise<void> {
   debug("updating detailed work");
 
   const res = await fetch(syncNode + "/work/detailed");
@@ -30,13 +26,13 @@ export async function updateDetailedWork(dispatch: AppDispatch): Promise<void> {
 
 /** Sync the work with the Krist node on startup. */
 export function SyncWork(): JSX.Element | null {
-  const lastBlockID = useSelector((s: RootState) => s.node.lastBlockID);
+  const { lastBlockID, syncNode } = useSelector((s: RootState) => s.node);
   const dispatch = useDispatch();
 
   useEffect(() => {
     // TODO: show errors to the user?
-    updateDetailedWork(dispatch).catch(console.error);
-  }, [lastBlockID]);
+    updateDetailedWork(dispatch, syncNode).catch(console.error);
+  }, [lastBlockID, syncNode]);
 
   return null;
 }

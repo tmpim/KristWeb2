@@ -9,6 +9,7 @@ import rootReducer from "./store/reducers/RootReducer";
 import { getInitialWalletManagerState } from "./store/reducers/WalletManagerReducer";
 import { getInitialWalletsState } from "./store/reducers/WalletsReducer";
 import { getInitialSettingsState } from "./store/reducers/SettingsReducer";
+import { getInitialNodeState } from "./store/reducers/NodeReducer";
 
 // Set up localisation
 import "./utils/i18n";
@@ -25,7 +26,8 @@ export const store = createStore(
   {
     walletManager: getInitialWalletManagerState(),
     wallets: getInitialWalletsState(),
-    settings: getInitialSettingsState()
+    settings: getInitialSettingsState(),
+    node: getInitialNodeState()
   },
   devToolsEnhancer({})
 );
