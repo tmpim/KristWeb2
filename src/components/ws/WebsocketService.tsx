@@ -8,7 +8,7 @@ import * as wsActions from "../../store/actions/WebsocketActions";
 import * as nodeActions from "../../store/actions/NodeActions";
 
 import { APIResponse, KristAddress, KristBlock, KristTransaction, WSConnectionState, WSIncomingMessage, WSSubscriptionLevel } from "../../krist/api/types";
-import { findWalletByAddress, syncWalletUpdate } from "../../krist/wallets/Wallet";
+import { findWalletByAddress, syncWallet, syncWalletUpdate } from "../../krist/wallets/Wallet";
 import WebSocketAsPromised from "websocket-as-promised";
 
 import throttle from "lodash.throttle";
@@ -148,10 +148,22 @@ class WebsocketConnection {
         debug("transaction [%s] from %s to %s", transaction.type, transaction.from || "null", transaction.to || "null");
 
         const fromWallet = findWalletByAddress(this.wallets, transaction.from);
-        if (fromWallet) this.refreshBalance(fromWallet.address);
-
         const toWallet = findWalletByAddress(this.wallets, transaction.to);
-        if (toWallet) this.refreshBalance(toWallet.address);
+
+        switch (transaction.type) {
+        // Update the name counts using the address lookup
+        case "name_purchase":
+        case "name_transfer":
+          if (fromWallet) syncWallet(this.dispatch, this.syncNode, fromWallet);
+          if (toWallet) syncWallet(this.dispatch, this.syncNode, toWallet);
+          break;
+
+        // Any other transaction; refresh the balances via the websocket
+        default:
+          if (fromWallet) this.refreshBalance(fromWallet.address);
+          if (toWallet) this.refreshBalance(toWallet.address);
+          break;
+        }
 
         break;
       }
@@ -220,13 +232,11 @@ export function WebsocketService(): JSX.Element | null {
   const [connection, setConnection] = useState<WebsocketConnection | undefined>();
 
   useEffect(() => {
-    debug("!!!!!! useMountEffect");
     if (connection) connection.forceClose();
     setConnection(new WebsocketConnection(dispatch, syncNode));
 
     // On unmount, force close the existing connection
     return () => {
-      debug("!!!!!! useMountEffect ended");
       if (connection) connection.forceClose();
     };
   }, [syncNode]);
