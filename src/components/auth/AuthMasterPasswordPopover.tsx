@@ -1,3 +1,6 @@
+// Copyright (c) 2020-2021 Drew Lemmy
+// This file is part of KristWeb 2 under GPL-3.0.
+// Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React, { useState, useRef, FunctionComponent } from "react";
 import { Popover, Button, Input, Form } from "antd";
 import { TooltipPlacement } from "antd/lib/tooltip";

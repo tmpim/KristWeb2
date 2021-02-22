@@ -15,7 +15,7 @@
   </tr>
 </table>
 
-<h2 align="center"><a href="https://docs.google.com/spreadsheets/d/1_ehN2SeN4wzBAW9UUCTKn0uMlPeBMAXSjBVijwsPfvo/edit?usp=sharing">TODO LIST</a></h2>
+<h2 align="center">STILL IN DEVELOPMENT</h2>
 
 *This project is heavily under development. It is currently in the design 
 stages, meaning there is **no useful functionality yet***.
@@ -79,23 +79,13 @@ localStorage.i18nextLng = "en";
 If you need any help with specific i18next features (e.g. handling plurals),
 don't hesitate to contact Lemmmy.
 
-### Providing host attribution
-
-To provide hosting credits in the sidebar footer, create the file
-`host.json` in `src/__data__` with the following contents:
-
-```json
-{
-  "name": "Lemmmy",
-  "url": "https://github.com/Lemmmy"
-}
-```
-
 ### Donate
 
 If you like my work, and want to help me with this hobby project and many more
 in the future, please consider [donating](https://donate.lemmmy.pw).
 
 ### License
+
+**Copyright (c) 2020-2021 Drew Lemmy**
 
 This project is licensed under the GPL v3 license. See LICENSE.txt for more.
