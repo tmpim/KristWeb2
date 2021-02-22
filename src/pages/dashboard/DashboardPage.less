@@ -2,8 +2,11 @@
 
 .dashboard-page {
   .dashboard-main-row {
-    margin-bottom: @margin-md;
     align-items: stretch;
+
+    & > .ant-col {
+      margin-bottom: @margin-md;
+    }
 
     & > .ant-col > .ant-card {
       height: 100%;
@@ -44,21 +47,9 @@
       margin-bottom: @margin-sm;
     }
 
-    .dashboard-wallet-preview {
-      padding: @padding-sm @padding-md;
-      margin-bottom: @margin-xs;
-
-      background: @kw-dark;
-      border-radius: @kw-big-card-border-radius;
-
-      height: 60px;
-      justify-content: center;
-
-      line-height: 1.5;
-
+    .dashboard-wallet-item {
       .wallet-left {
         flex: 1;
-        height: 100%;
 
         display: flex;
         flex-direction: column;
@@ -77,9 +68,82 @@
         justify-content: center;
         align-items: center;
       }
+    }
+  }
 
-      &:last-child {
-        margin-bottom: 0;
+  .dashboard-card-transactions {
+    .dashboard-transaction-item {
+      .transaction-left {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        .transaction-type {
+          a {
+            font-weight: bold;
+            color: @text-color-secondary;
+          }
+
+          &-transferred a, &-name_transferred a { color: @kw-primary; }
+          &-sent a, &-name_sent a, &-name_purchased a { color: @kw-orange; }
+          &-received a, &-mined a, &-name_received a { color: @kw-green; }
+          &-name_a_record a { color: @kw-purple; }
+
+          @media (max-width: @screen-xl) {
+            font-size: 90%;
+          }
+        }
+
+        .transaction-time {
+          color: @text-color-secondary;
+          font-size: 90%;
+
+          @media (max-width: @screen-xl) {
+            font-size: 85%;
+          }
+        }
+      }
+
+      .transaction-middle {
+        flex: 1;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        .transaction-field {
+          font-weight: bold;
+          white-space: nowrap;
+          color: @text-color-secondary;
+        }
+
+        .transaction-a-record-value {
+          font-family: monospace;
+          font-size: 90%;
+          color: @text-color-secondary;
+        }
+
+        .transaction-a-record-removed {
+          font-style: italic;
+          font-size: 90%;
+          color: @text-color-secondary;
+
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+      }
+
+      .transaction-right {
+        flex: 0;
+        font-size: @font-size-lg;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .transaction-name {
+          font-weight: bold;
+        }
       }
     }
   }
@@ -100,6 +164,24 @@
       .dashboard-block-value-progress-middot {
         margin: 0 @margin-xs;
       }
+    }
+  }
+
+  .dashboard-list-item {
+    padding: (@padding-sm / 2) @padding-md;
+    margin-bottom: @margin-xs;
+
+    background: @kw-dark;
+    border-radius: @kw-big-card-border-radius;
+
+    box-sizing: border-box;
+    min-height: 60px;
+    justify-content: center;
+
+    line-height: 1.5;
+
+    &:last-child {
+      margin-bottom: 0;
     }
   }
 

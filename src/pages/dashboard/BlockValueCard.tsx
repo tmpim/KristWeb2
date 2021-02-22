@@ -51,7 +51,7 @@ export function BlockValueCard(): JSX.Element {
                 Decreases by
                 <KristValue value={work.decrease.value} />
                 in
-                <b>{{ count: work.decrease.blocks }}</b>
+                <b style={{ whiteSpace: "nowrap" }}>{{ count: work.decrease.blocks }}</b>
               </Trans>
 
               <span className="dashboard-block-value-progress-middot">&middot;</span>
@@ -60,7 +60,7 @@ export function BlockValueCard(): JSX.Element {
             {/* Reset */}
             <Trans t={t} i18nKey="dashboard.blockValueReset" count={work.decrease.reset}>
               Resets in
-              <b>{{ count: work.decrease.reset }}</b>
+              <b style={{ whiteSpace: "nowrap" }}>{{ count: work.decrease.reset }}</b>
             </Trans>
           </div>
         </>}

@@ -11,12 +11,12 @@ export interface KristAddress {
 export type KristTransactionType = "unknown" | "mined" | "name_purchase" | "name_a_record" | "name_transfer" | "transfer";
 export interface KristTransaction {
   id: number;
-  from: string;
+  from: string | null;
   to: string;
   value: number;
   time: string;
-  name: string;
-  metadata: string;
+  name?: string;
+  metadata?: string;
   type: KristTransactionType;
 }
 

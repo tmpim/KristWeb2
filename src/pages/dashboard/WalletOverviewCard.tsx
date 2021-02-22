@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Row, Col } from "antd";
+import { Card, Row, Col, Button } from "antd";
 
 import { useSelector, shallowEqual } from "react-redux";
 import { RootState } from "../../store";
@@ -10,21 +10,9 @@ import { Wallet } from "../../krist/wallets/Wallet";
 
 import { KristValue } from "../../components/KristValue";
 import { Statistic } from "./Statistic";
+import { WalletItem } from "./WalletItem";
 
 import { keyedNullSort } from "../../utils";
-
-export function WalletPreview({ wallet }: { wallet: Wallet }): JSX.Element {
-  return <Row className="dashboard-wallet-preview">
-    <Col className="wallet-left">
-      {wallet.label && <span className="wallet-label">{wallet.label}</span>}
-      <span className="wallet-address">{wallet.address}</span>
-    </Col>
-
-    <Col className="wallet-right">
-      <KristValue value={wallet.balance} />
-    </Col>
-  </Row>;
-}
 
 export function WalletOverviewCard(): JSX.Element {
   const { wallets } = useSelector((s: RootState) => s.wallets, shallowEqual);
@@ -45,14 +33,14 @@ export function WalletOverviewCard(): JSX.Element {
 
   return <Card title={t("dashboard.walletOverviewCardTitle")} className="dashboard-card dashboard-card-wallets">
     <Row gutter={16} className="dashboard-wallets-top-row">
-      <Col span={12} className="dashboard-wallets-balance">
+      <Col span={24} xl={12} className="dashboard-wallets-balance">
         <Statistic
           titleKey="dashboard.walletOverviewTotalBalance"
           value={<KristValue value={balance} long green={balance > 0} />}
         />
       </Col>
 
-      <Col span={12} className="dashboard-wallets-names">
+      <Col span={24} xl={12} className="dashboard-wallets-names">
         <Statistic
           titleKey="dashboard.walletOverviewNames"
           value={t("dashboard.walletOverviewNamesCount", { count: names })}
@@ -60,13 +48,13 @@ export function WalletOverviewCard(): JSX.Element {
       </Col>
     </Row>
 
-    {top4Wallets.map(w => <WalletPreview key={w.id} wallet={w} />)}
+    {top4Wallets.map(w => <WalletItem key={w.id} wallet={w} />)}
 
     <Row className="dashboard-wallets-more dashboard-more">
       <Link to="/wallets">
         {clonedWallets.length > 0
           ? t("dashboard.walletOverviewSeeMore", { count: clonedWallets.length })
-          : t("dashboard.walletOverviewAddWallets")}
+          : <Button>{t("dashboard.walletOverviewAddWallets")}</Button>}
       </Link>
     </Row>
   </Card>;

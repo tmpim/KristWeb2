@@ -13,13 +13,13 @@ import "./DashboardPage.less";
 export function DashboardPage(): JSX.Element {
   return <PageLayout siteTitleKey="dashboard.siteTitle" className="dashboard-page">
     <Row gutter={16} className="dashboard-main-row">
-      <Col span={12}><WalletOverviewCard /></Col>
-      <Col span={12}><TransactionsCard /></Col>
+      <Col span={24} lg={10} xxl={12}><WalletOverviewCard /></Col>
+      <Col span={24} lg={14} xxl={12}><TransactionsCard /></Col>
     </Row>
 
     <Row gutter={16} className="dashboard-main-row">
-      <Col span={6}><BlockValueCard /></Col>
-      <Col span={18}><BlockDifficultyCard /></Col>
+      <Col span={24} xl={6}><BlockValueCard /></Col>
+      <Col span={24} xl={18}><BlockDifficultyCard /></Col>
     </Row>
   </PageLayout>;
 }

@@ -9,6 +9,8 @@ import { SettingsTranslations } from "../pages/settings/SettingsTranslations";
 
 import { CreditsPage } from "../pages/credits/CreditsPage";
 
+import { NotFoundPage } from "../pages/NotFoundPage";
+
 interface AppRoute {
   path: string;
   name: string;
@@ -32,6 +34,6 @@ export function AppRouter(): JSX.Element {
       component && <Route exact path={path} key={key}>{component}</Route>
     ))}
 
-    <Route path="*">Not found</Route>
+    <Route path="*"><NotFoundPage /></Route>
   </Switch>;
 }

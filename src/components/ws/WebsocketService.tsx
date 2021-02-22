@@ -147,7 +147,7 @@ class WebsocketConnection {
         const transaction = data.transaction as KristTransaction;
         debug("transaction [%s] from %s to %s", transaction.type, transaction.from || "null", transaction.to || "null");
 
-        const fromWallet = findWalletByAddress(this.wallets, transaction.from);
+        const fromWallet = findWalletByAddress(this.wallets, transaction.from || undefined);
         const toWallet = findWalletByAddress(this.wallets, transaction.to);
 
         switch (transaction.type) {

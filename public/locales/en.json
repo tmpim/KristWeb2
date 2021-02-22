@@ -55,6 +55,13 @@
   "copy": "Copy to clipboard",
   "copied": "Copied!",
 
+  "pageNotFound": {
+    "resultTitle": "Page not found",
+    "buttonGoBack": "Go back"
+  },
+
+  "contextualAddressUnknown": "Unknown",
+
   "typeahead": {
     "emptyLabel": "No matches found.",
     "paginationText": "Display additional results..."
@@ -199,6 +206,24 @@
     "walletOverviewAddWallets": "Add wallets...",
 
     "transactionsCardTitle": "Transactions",
+    "transactionItemID": "Transaction ID: {{id}}",
+    "transactionItemFrom": "<0>From:</0> <1 />",
+    "transactionItemTo": "<0>To:</0> <1 />",
+    "transactionItemName": "<0>Name:</0> <1 />",
+    "transactionItemARecord": "<0>A record:</0> <1 />",
+    "transactionItemARecordRemoved": "(removed)",
+    "transactionTypes": {
+      "transferred": "Transferred",
+      "sent": "Sent",
+      "received": "Received",
+      "mined": "Mined",
+      "name_a_record": "Updated name",
+      "name_transferred": "Moved name",
+      "name_sent": "Sent name",
+      "name_received": "Received name",
+      "name_purchased": "Purchased name",
+      "unknown": "Unknown"
+    },
 
     "blockValueCardTitle": "Block Value",
     "blockValueBaseValue": "Base value (<1></1>)",

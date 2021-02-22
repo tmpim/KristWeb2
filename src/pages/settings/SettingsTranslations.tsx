@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Table, Progress, Result, Typography, Tooltip, Button } from "antd";
+import { Table, Progress, Typography, Tooltip, Button } from "antd";
 import { ExclamationCircleOutlined, FileExcelOutlined } from "@ant-design/icons";
 
 import { useTranslation } from "react-i18next";
@@ -10,6 +10,7 @@ import csvStringify from "csv-stringify";
 import { saveAs } from "file-saver";
 
 import { Flag } from "../../components/Flag";
+import { SmallResult } from "../../components/SmallResult";
 import { SettingsPageLayout } from "./SettingsPage";
 
 const { Text } = Typography;
@@ -104,7 +105,7 @@ export function SettingsTranslations(): JSX.Element {
   } | undefined>();
 
   const languages = getLanguages();
-  if (!languages) return <Result
+  if (!languages) return <SmallResult
     status="error"
     title={t("error")}
     subTitle={t("settings.translations.errorMissingLanguages")}
