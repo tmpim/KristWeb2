@@ -43,7 +43,7 @@ npm start # Run the development server
 git clone https://github.com/tmpim/KristWeb2
 cd KristWeb2
 npm install
-npm run build # Build the production files
+npm run full-build # Build the production files
 ```
 
 ### Contributing

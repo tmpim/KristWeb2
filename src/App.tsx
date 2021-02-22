@@ -15,12 +15,12 @@ import { getInitialNodeState } from "./store/reducers/NodeReducer";
 import "./utils/i18n";
 
 import "./App.less";
-import { AppLayout } from "./layout/AppLayout";
 import { SyncWallets } from "./components/wallets/SyncWallets";
 import { ForcedAuth } from "./components/auth/ForcedAuth";
 import { WebsocketService } from "./components/ws/WebsocketService";
 import { SyncWork } from "./components/ws/SyncWork";
 import { SyncMOTD } from "./components/ws/SyncMOTD";
+import { CheckStatus } from "./pages/CheckStatus";
 
 export const store = createStore(
   rootReducer,
@@ -38,7 +38,7 @@ function App(): JSX.Element {
   return <Suspense fallback="Loading (TODO)"> {/* TODO */}
     <Provider store={store}>
       <Router>
-        <AppLayout />
+        <CheckStatus />
 
         {/* Services, etc. */}
         <SyncWallets />

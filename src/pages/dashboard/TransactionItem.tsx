@@ -38,7 +38,7 @@ function getTxType(tx: KristTransaction, from: Wallet | undefined, to: Wallet | 
     if (from && to) return "name_transferred";
     if (from) return "name_sent";
     if (to) return "name_received";
-    return "name_purchased";
+    return "name_transferred";
 
   case "name_a_record": return "name_a_record";
   case "name_purchase": return "name_purchased";
