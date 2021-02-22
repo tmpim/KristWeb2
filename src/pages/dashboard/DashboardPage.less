@@ -12,6 +12,9 @@
     }
 
     & > .ant-col > .ant-card {
+      display: flex;
+      flex-direction: column;
+
       height: 100%;
 
       border: none;
@@ -76,6 +79,8 @@
 
   .dashboard-card-transactions {
     .dashboard-transaction-item {
+      flex-flow: nowrap;
+
       .transaction-left {
         display: flex;
         flex-direction: column;
@@ -114,6 +119,8 @@
         flex-direction: column;
         justify-content: center;
 
+        overflow: hidden;
+
         .transaction-field {
           font-weight: bold;
           white-space: nowrap;
@@ -146,6 +153,34 @@
 
         .transaction-name {
           font-weight: bold;
+        }
+      }
+    }
+
+    &.empty .ant-card-body {
+      height: 100%;
+      padding-top: 0 !important;
+      padding: 0;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &::before, &::after {
+        content: none;
+      }
+
+      .ant-empty-normal {
+        margin: 0;
+      }
+
+      .ant-result {
+        padding: @padding-sm;
+
+        .ant-result-icon {
+          margin-bottom: @margin-xs;
+
+          .anticon { font-size: 48px; }
         }
       }
     }

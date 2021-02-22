@@ -47,7 +47,15 @@ i18n
     keySeparator: ".",
 
     interpolation: {
-      escapeValue: false // React already safes from XSS
+      escapeValue: false, // React already safes from XSS
+
+      format(value, format) {
+        // Format numbers with commas
+        if (format === "number" && typeof value === "number")
+          return value.toLocaleString();
+
+        return value;
+      }
     },
 
     backend: {

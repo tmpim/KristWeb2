@@ -21,7 +21,7 @@ export function BlockValueCard(): JSX.Element {
   const hasNames = (work?.unpaid || 0) > 0;
 
   return <Card title={t("dashboard.blockValueCardTitle")} className="dashboard-card dashboard-card-block-value">
-    <Skeleton paragraph={{ rows: 2 }} title={false} loading={!work}>
+    <Skeleton paragraph={{ rows: 2 }} title={false} active loading={!work}>
       {work && <>
         {/* Main block value */}
         <KristValue

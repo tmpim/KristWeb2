@@ -51,6 +51,7 @@
     "build": "craco build",
     "optimise": "gzip -kr build/static",
     "full-build": "npm run clean; GENERATE_SOURCEMAP=false npm run build; npm run optimise",
+    "analyze-build": "npm run clean; FORCE_ANALYZE=true npm run build",
     "test": "craco test"
   },
   "eslintConfig": {

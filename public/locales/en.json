@@ -111,12 +111,12 @@
     "columnNames": "Names",
     "columnCategory": "Category",
     "columnFirstSeen": "First Seen",
-    "nameCount": "{{count}} name",
-    "nameCount_plural": "{{count}} names",
+    "nameCount": "{{count, number}} name",
+    "nameCount_plural": "{{count, number}} names",
     "firstSeen": "First seen {{date}}",
 
-    "walletCount": "{{count}} wallet",
-    "walletCount_plural": "{{count}} wallets",
+    "walletCount": "{{count, number}} wallet",
+    "walletCount_plural": "{{count, number}} wallets",
 
     "actionsEditTooltip": "Edit wallet",
     "actionsDelete": "Delete wallet",
@@ -204,9 +204,9 @@
     "walletOverviewCardTitle": "Wallets",
     "walletOverviewTotalBalance": "Total balance",
     "walletOverviewNames": "Names",
-    "walletOverviewNamesCount": "{{count}} name",
-    "walletOverviewNamesCount_plural": "{{count}} names",
-    "walletOverviewSeeMore": "See all {{count}}...",
+    "walletOverviewNamesCount": "{{count, number}} name",
+    "walletOverviewNamesCount_plural": "{{count, number}} names",
+    "walletOverviewSeeMore": "See all {{count, number}}...",
     "walletOverviewAddWallets": "Add wallets...",
 
     "transactionsCardTitle": "Transactions",
@@ -228,15 +228,17 @@
       "name_purchased": "Purchased name",
       "unknown": "Unknown"
     },
+    "transactionsError": "There was an error fetching your transactions. See the console for details.",
+    "transactionsSeeMore": "See all {{count, number}}...",
 
     "blockValueCardTitle": "Block Value",
     "blockValueBaseValue": "Base value (<1></1>)",
-    "blockValueBaseValueNames": "{{count}} name",
-    "blockValueBaseValueNames_plural": "{{count}} names",
-    "blockValueNextDecrease": "Decreases by <1></1> in <3>{{count}} block</3>",
-    "blockValueNextDecrease_plural": "Decreases by <1></1> in <3>{{count}} blocks</3>",
-    "blockValueReset": "Resets in <1>{{count}} block</1>",
-    "blockValueReset_plural": "Resets in <1>{{count}} blocks</1>",
+    "blockValueBaseValueNames": "{{count, number}} name",
+    "blockValueBaseValueNames_plural": "{{count, number}} names",
+    "blockValueNextDecrease": "Decreases by <1></1> in <3>{{count, number}} block</3>",
+    "blockValueNextDecrease_plural": "Decreases by <1></1> in <3>{{count, number}} blocks</3>",
+    "blockValueReset": "Resets in <1>{{count, number}} block</1>",
+    "blockValueReset_plural": "Resets in <1>{{count, number}} blocks</1>",
 
     "blockDifficultyCardTitle": "Block Difficulty"
   },
