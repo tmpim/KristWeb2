@@ -18,27 +18,29 @@ type SidebarItemProps = MenuItemProps & {
   icon: React.ReactNode;
   name: string;
 
+  nyi?: boolean;
+
   group?: "network";
 }
 const sidebarItems: SidebarItemProps[] = [
   { icon: <HomeOutlined />, name: "dashboard", to: "/" },
   { icon: <WalletOutlined />, name: "myWallets", to: "/wallets" },
-  { icon: <TeamOutlined />, name: "addressBook", to: "/friends" },
-  { icon: <BankOutlined />, name: "transactions", to: "/me/transactions" },
-  { icon: <TagsOutlined />, name: "names", to: "/me/names" },
-  { icon: <SketchOutlined />, name: "mining", to: "/mining" },
+  { icon: <TeamOutlined />, name: "addressBook", to: "/friends", nyi: true },
+  { icon: <BankOutlined />, name: "transactions", to: "/me/transactions", nyi: true },
+  { icon: <TagsOutlined />, name: "names", to: "/me/names", nyi: true },
+  { icon: <SketchOutlined />, name: "mining", to: "/mining", nyi: true },
 
-  { group: "network", icon: <BuildOutlined />, name: "blocks", to: "/network/blocks" },
-  { group: "network", icon: <BankOutlined />, name: "transactions", to: "/network/transactions" },
-  { group: "network", icon: <TagsOutlined />, name: "names", to: "/network/names" },
-  { group: "network", icon: <StockOutlined />, name: "statistics", to: "/network/statistics" },
+  { group: "network", icon: <BuildOutlined />, name: "blocks", to: "/network/blocks", nyi: true },
+  { group: "network", icon: <BankOutlined />, name: "transactions", to: "/network/transactions", nyi: true },
+  { group: "network", icon: <TagsOutlined />, name: "names", to: "/network/names", nyi: true },
+  { group: "network", icon: <StockOutlined />, name: "statistics", to: "/network/statistics", nyi: true },
 ];
 
 function getSidebarItems(t: TFunction<string>, group?: string) {
   return sidebarItems
     .filter(i => i.group === group)
     .map(i => (
-      <Menu.Item key={i.to} icon={i.icon}>
+      <Menu.Item key={i.to} icon={i.icon} className={i.nyi ? "nyi" : ""}>
         <Link to={i.to}>{t("sidebar." + i.name)}</Link>
       </Menu.Item>
     ));

@@ -38,8 +38,8 @@ export function AppHeader({ sidebarCollapsed, setSidebarCollapsed }: Props): JSX
 
     {/* Send and receive buttons */}
     {bps.md && <Menu theme="dark" mode="horizontal" selectable={false} forceSubMenuRender={true} className="site-header-nav">
-      <Menu.Item key="1" icon={<SendOutlined />}>{t("nav.send")}</Menu.Item>
-      <Menu.Item key="2" icon={<DownloadOutlined />}>{t("nav.request")}</Menu.Item>
+      <Menu.Item key="1" className="nyi" icon={<SendOutlined />}>{t("nav.send")}</Menu.Item>
+      <Menu.Item key="2" className="nyi" icon={<DownloadOutlined />}>{t("nav.request")}</Menu.Item>
     </Menu>}
 
     {/* Spacer to push search box to the right */}

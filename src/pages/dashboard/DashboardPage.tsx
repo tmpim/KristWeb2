@@ -6,6 +6,8 @@ import { Row, Col } from "antd";
 
 import { PageLayout } from "../../layout/PageLayout";
 
+import { InDevBanner } from "./InDevBanner";
+
 import { WalletOverviewCard } from "./WalletOverviewCard";
 import { TransactionsCard } from "./TransactionsCard";
 import { BlockValueCard } from "./BlockValueCard";
@@ -15,6 +17,8 @@ import "./DashboardPage.less";
 
 export function DashboardPage(): JSX.Element {
   return <PageLayout siteTitleKey="dashboard.siteTitle" className="dashboard-page">
+    <InDevBanner />
+
     <Row gutter={16} className="dashboard-main-row">
       <Col span={24} lg={10} xxl={12}><WalletOverviewCard /></Col>
       <Col span={24} lg={14} xxl={12}><TransactionsCard /></Col>

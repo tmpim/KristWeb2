@@ -4,10 +4,10 @@
 import React, { useState } from "react";
 import { useTranslation, Trans } from "react-i18next";
 
-import packageJson from "../../../package.json";
 import { Link } from "react-router-dom";
 
 import { useMountEffect } from "../../utils";
+import { getAuthorInfo } from "../../utils/credits";
 
 export function SidebarFooter(): JSX.Element {
   const { t } = useTranslation();
@@ -26,9 +26,7 @@ export function SidebarFooter(): JSX.Element {
     })();
   });
 
-  const authorName = packageJson.author || "Lemmmy";
-  const authorURL = `https://github.com/${authorName}`;
-  const gitURL = packageJson.repository.url.replace(/\.git$/, "");
+  const { authorName, authorURL, gitURL } = getAuthorInfo();
 
   return (
     <div className="site-sidebar-footer">

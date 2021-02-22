@@ -135,7 +135,7 @@
     "columnTime": "Time"
   },
 
-  "status": "KristWeb 2 is still in development. If you are not a donator, then you should not be here. Do not host this website.",
+  "status": "KristWeb 2 is still in development. If you are not a donor, then you should not be here. Do not host this website.",
 
   "addWallet": {
     "dialogTitle": "Add wallet",
@@ -198,6 +198,8 @@
 
   "dashboard": {
     "siteTitle": "Dashboard",
+
+    "inDevBanner": "Welcome to the KristWeb v2 private beta! This site is still in development, so most features are currently missing. Please report all bugs on <1>GitHub</1>. Thanks!",
 
     "walletOverviewCardTitle": "Wallets",
     "walletOverviewTotalBalance": "Total balance",

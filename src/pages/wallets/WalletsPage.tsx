@@ -31,7 +31,9 @@ function WalletsPageExtraButtons(): JSX.Element {
   const [addWalletVisible, setAddWalletVisible] = useState(false);
 
   return <>
-    <Button icon={<DatabaseOutlined />}>{t("myWallets.manageBackups")}</Button>
+    <Button icon={<DatabaseOutlined />} className="nyi">
+      {t("myWallets.manageBackups")}
+    </Button>
 
     <AuthorisedAction encrypt onAuthed={() => setCreateWalletVisible(true)}>
       <Button type="primary" icon={<PlusOutlined />}>
