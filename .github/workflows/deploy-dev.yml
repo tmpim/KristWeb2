@@ -1,0 +1,29 @@
+name: Deploy dev build
+
+on: push
+
+jobs:
+  deploy-dev:
+    runs-on: ubuntu-latest
+    container: node:15
+
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build
+      run: npm run full-build
+        
+    - name: Deploy to dev server
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.DEV_DEPLOY_HOST }}
+        username: ${{ secrets.DEV_DEPLOY_USER }}
+        key: ${{ secrets.DEV_DEPLOY_KEY }}
+        port: ${{ secrets.DEV_DEPLOY_PORT }}
+        source: "build"
+        target: ${{ secrets.DEV_DEPLOY_ROOT }}
+        rm: true
