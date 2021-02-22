@@ -1,12 +1,15 @@
 import React from "react";
 import { Tooltip } from "antd";
 
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { KristAddress } from "../krist/api/types";
 import { Wallet } from "../krist/wallets/Wallet";
 import { parseCommonMeta, CommonMeta } from "../utils/commonmeta";
+import { stripNameSuffix } from "../utils/currency";
 
 import { KristName } from "./KristName";
 
@@ -21,19 +24,18 @@ interface Props {
 }
 
 interface AddressMetanameProps {
+  nameSuffix: string;
   address: string;
   commonMeta: CommonMeta;
   source: boolean;
   hideNameAddress: boolean;
 }
 
-export function AddressMetaname({ address, commonMeta, source, hideNameAddress }: AddressMetanameProps): JSX.Element {
+export function AddressMetaname({ nameSuffix, address, commonMeta, source, hideNameAddress }: AddressMetanameProps): JSX.Element {
   const rawMetaname = (source ? commonMeta?.return : commonMeta?.recipient) || undefined;
   const metaname = (source ? commonMeta?.returnMetaname : commonMeta?.metaname) || undefined;
   const name = (source ? commonMeta?.returnName : commonMeta?.name) || undefined;
-
-  // TODO: support custom suffixes
-  const nameWithoutSuffix = name ? name.replace(/\.kst$/, "") : undefined;
+  const nameWithoutSuffix = name ? stripNameSuffix(nameSuffix, name) : undefined;
 
   return name
     ? <>
@@ -60,13 +62,14 @@ export function AddressMetaname({ address, commonMeta, source, hideNameAddress }
 
 export function ContextualAddress({ address: origAddress, wallet, metadata, source, hideNameAddress }: Props): JSX.Element {
   const { t } = useTranslation();
+  const nameSuffix = useSelector((s: RootState) => s.node.currency.name_suffix);
 
   if (!origAddress) return (
     <span className="contextual-address address-unknown">{t("contextualAddressUnknown")}</span>
   );
 
   const address = typeof origAddress === "object" ? origAddress.address : origAddress;
-  const commonMeta = parseCommonMeta(metadata);
+  const commonMeta = parseCommonMeta(nameSuffix, metadata);
   const hasMetaname = source ? !!commonMeta?.returnRecipient : !!commonMeta?.recipient;
 
   return <span className="contextual-address"><Tooltip title={address}>
@@ -74,6 +77,7 @@ export function ContextualAddress({ address: origAddress, wallet, metadata, sour
       ? (
         // Display the metaname and link to the name if possible
         <AddressMetaname
+          nameSuffix={nameSuffix}
           address={address}
           commonMeta={commonMeta}
           source={!!source}

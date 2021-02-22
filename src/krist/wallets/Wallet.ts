@@ -11,6 +11,11 @@ import { AppDispatch } from "../../App";
 import * as actions from "../../store/actions/WalletsActions";
 import { WalletMap } from "../../store/reducers/WalletsReducer";
 
+import { Mutex } from "async-mutex";
+
+import Debug from "debug";
+const debug = Debug("kristweb:wallet");
+
 export interface Wallet {
   // UUID for this wallet
   id: string;
@@ -184,6 +189,7 @@ export async function syncWallets(dispatch: AppDispatch, syncNode: string, walle
  * @param dispatch - The AppDispatch instance used to dispatch the new wallet to
  *   the Redux store.
  * @param syncNode - The Krist sync node to fetch the wallet data from.
+ * @param addressPrefix - The prefixes of addresses on this node.
  * @param masterPassword - The master password used to encrypt the wallet
  *   password and privatekey.
  * @param wallet - The information for the new wallet.
@@ -193,6 +199,7 @@ export async function syncWallets(dispatch: AppDispatch, syncNode: string, walle
 export async function addWallet(
   dispatch: AppDispatch,
   syncNode: string,
+  addressPrefix: string,
   masterPassword: string,
   wallet: WalletNew,
   password: string,
@@ -200,7 +207,7 @@ export async function addWallet(
 ): Promise<void> {
   // Calculate the privatekey for the given wallet format
   const privatekey = await applyWalletFormat(wallet.format || "kristwallet", password, wallet.username);
-  const address = await makeV2Address(privatekey);
+  const address = await makeV2Address(addressPrefix, privatekey);
 
   const id = uuid();
 
@@ -238,6 +245,7 @@ export async function addWallet(
  * @param dispatch - The AppDispatch instance used to dispatch the new wallet to
  *   the Redux store.
  * @param syncNode - The Krist sync node to fetch the wallet data from.
+ * @param addressPrefix - The prefixes of addresses on this node.
  * @param masterPassword - The master password used to encrypt the wallet
  *   password and privatekey.
  * @param wallet - The old wallet information.
@@ -247,6 +255,7 @@ export async function addWallet(
 export async function editWallet(
   dispatch: AppDispatch,
   syncNode: string,
+  addressPrefix: string,
   masterPassword: string,
   wallet: Wallet,
   updated: WalletNew,
@@ -254,7 +263,7 @@ export async function editWallet(
 ): Promise<void> {
   // Calculate the privatekey for the given wallet format
   const privatekey = await applyWalletFormat(updated.format || "kristwallet", password, updated.username);
-  const address = await makeV2Address(privatekey);
+  const address = await makeV2Address(addressPrefix, privatekey);
 
   // Encrypt the password and privatekey. These will be decrypted on-demand.
   const encPassword = await aesGcmEncrypt(password, masterPassword);
@@ -316,4 +325,61 @@ export function findWalletByAddress(wallets: WalletMap, address?: string): Walle
       return wallets[id];
 
   return null;
+}
+
+const recalculationMutex = new Mutex();
+/** If the address prefix changes (e.g. swapping sync node), and we are
+ * decrypted, recalculate all the addresses with the new prefix. If the prefix
+ * is unchanged, this does nothing. The changes will be dispatched to the
+ * Redux store. */
+export async function recalculateWallets(dispatch: AppDispatch, masterPassword: string, wallets: WalletMap, addressPrefix: string): Promise<void> {
+  const lastPrefix = localStorage.getItem("lastAddressPrefix") || "k";
+  if (addressPrefix === lastPrefix) return;
+  debug("address prefix changed from %s to %s, waiting for mutex...", lastPrefix, addressPrefix);
+
+  // Don't allow more than one recalculation at a time
+  await recalculationMutex.runExclusive(async () => {
+    const lastPrefix = localStorage.getItem("lastAddressPrefix") || "k";
+    if (addressPrefix === lastPrefix) {
+      debug("prefix was already reset while we were calculating");
+      return;
+    }
+
+    debug("recalculating all wallets", lastPrefix, addressPrefix);
+
+    // Map of wallet IDs -> new addresses
+    const updatedWallets: Record<string, string> = {};
+
+    // Recalculate all the wallets
+    for (const id in wallets) {
+      // Prepare the wallet for recalculation
+      const wallet = wallets[id];
+      const decrypted = await decryptWallet(masterPassword, wallet);
+      if (!decrypted)
+        throw new Error(`couldn't decrypt wallet ${wallet.id}!`);
+
+      // Calculate the new address
+      const privatekey = await applyWalletFormat(wallet.format || "kristwallet", decrypted.password, wallet.username);
+      const address = await makeV2Address(addressPrefix, privatekey);
+
+      if (wallet.address === address) continue;
+
+      // Prepare the change to be applied
+      debug("old address: %s - new address: %s", wallet.address, address);
+      updatedWallets[wallet.id] = address;
+    }
+
+    // Now that we know everything converted successfully, save the updated
+    // wallets to local storage
+    for (const id in wallets) {
+      const wallet = wallets[id];
+      saveWallet({ ...wallet, address: updatedWallets[wallet.id] });
+    }
+
+    // Apply all the changes to the Redux store
+    dispatch(actions.recalculateWallets(updatedWallets));
+
+    debug("recalculation done, saving prefix");
+    localStorage.setItem("lastAddressPrefix", addressPrefix);
+  });
 }

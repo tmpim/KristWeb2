@@ -4,6 +4,7 @@ dependencies:
   '@testing-library/react': 11.2.5_react-dom@17.0.1+react@17.0.1
   '@testing-library/user-event': 12.7.1
   antd: 4.12.3_89622fd8e4ec221151a62783d49305af
+  async-mutex: 0.3.0
   base64-arraybuffer: 0.2.0
   csv-stringify: 5.6.1
   dayjs: 1.10.4
@@ -12,7 +13,7 @@ dependencies:
   i18next: 19.8.7
   i18next-browser-languagedetector: 6.0.1
   i18next-http-backend: 1.1.0
-  lodash.throttle: 4.1.1
+  lodash-es: 4.17.21
   react: 17.0.1
   react-dom: 17.0.1_react@17.0.1
   react-i18next: 11.8.6_i18next@19.8.7+react@17.0.1
@@ -32,7 +33,7 @@ devDependencies:
   '@types/debug': 4.1.5
   '@types/file-saver': 2.0.1
   '@types/jest': 26.0.20
-  '@types/lodash.throttle': 4.1.6
+  '@types/lodash-es': 4.17.4
   '@types/node': 12.20.0
   '@types/react': 17.0.2
   '@types/react-dom': 17.0.1
@@ -2083,12 +2084,12 @@ packages:
     dev: true
     resolution:
       integrity: sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
-  /@types/lodash.throttle/4.1.6:
+  /@types/lodash-es/4.17.4:
     dependencies:
       '@types/lodash': 4.14.168
     dev: true
     resolution:
-      integrity: sha512-/UIH96i/sIRYGC60NoY72jGkCJtFN5KVPhEMMMTjol65effe1gPn0tycJqV5tlSwMTzX8FqzB5yAj0rfGHTPNg==
+      integrity: sha512-BBz79DCJbD2CVYZH67MBeHZRX++HF+5p8Mo5MzjZi64Wac39S3diedJYHZtScbRVf4DjZyN6LzA0SB0zy+HSSQ==
   /@types/lodash/4.14.168:
     dev: true
     resolution:
@@ -2950,6 +2951,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-csOlWGAcRFJaI6m+F2WKdnMKr4HhdhFVBk0H/QbJFMCr+uO2kwohwXQPxw/9OCxp05r5ghVBFSyioixx3gfkNQ==
+  /async-mutex/0.3.0:
+    dependencies:
+      tslib: 2.1.0
+    dev: false
+    resolution:
+      integrity: sha512-6VIpUM7s37EMXvnO3TvujgaS6gx4yJby13BhxovMYSap7nrbS0gJ1UzGcjD+HElNSdTz/+IlAIqj7H48N0ZlyQ==
   /async-validator/3.5.1:
     dev: false
     resolution:
@@ -7890,6 +7897,10 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-t7hw9pI+WvuwNJXwk5zVHpyhIqzg2qTlklJOf0mVxGSbe3Fp2VieZcduNYjaLDoy6p9uGpQEGWG87WpMKlNq8g==
+  /lodash-es/4.17.21:
+    dev: false
+    resolution:
+      integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==
   /lodash._reinterpolate/3.0.0:
     dev: true
     resolution:
@@ -7915,10 +7926,6 @@ packages:
     dev: true
     resolution:
       integrity: sha512-stgLz+i3Aa9mZgnjr/O+v9ruKZsPsndy7qPZOchbqk2cnTU1ZaldKK+v7m54WoKIyxiuMZTKT2H81F8BeAc3ZQ==
-  /lodash.throttle/4.1.1:
-    dev: false
-    resolution:
-      integrity: sha1-wj6RtxAkKscMN/HhzaknTMOb8vQ=
   /lodash.uniq/4.5.0:
     dev: true
     resolution:
@@ -12524,7 +12531,6 @@ packages:
     resolution:
       integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
   /tslib/2.1.0:
-    dev: true
     resolution:
       integrity: sha512-hcVC3wYEziELGGmEEXue7D75zbwIIVUMWAVbHItGPx0ziyXxrOMQx4rQEVEV45Ut/1IotuEvwqPopzIOkDMf0A==
   /tsutils/3.20.0_typescript@4.1.5:
@@ -13542,7 +13548,7 @@ specifiers:
   '@types/debug': ^4.1.5
   '@types/file-saver': ^2.0.1
   '@types/jest': ^26.0.20
-  '@types/lodash.throttle': ^4.1.6
+  '@types/lodash-es': ^4.17.4
   '@types/node': ^12.19.16
   '@types/react': ^17.0.1
   '@types/react-dom': ^17.0.0
@@ -13555,6 +13561,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^4.15.0
   '@typescript-eslint/parser': ^4.15.0
   antd: ^4.12.3
+  async-mutex: ^0.3.0
   base64-arraybuffer: ^0.2.0
   craco-less: ^1.17.1
   csv-stringify: ^5.6.1
@@ -13568,7 +13575,7 @@ specifiers:
   i18next: ^19.7.0
   i18next-browser-languagedetector: ^6.0.1
   i18next-http-backend: ^1.0.20
-  lodash.throttle: ^4.1.1
+  lodash-es: ^4.17.21
   prettier: ^2.2.1
   react: ^17.0.1
   react-dom: ^17.0.1

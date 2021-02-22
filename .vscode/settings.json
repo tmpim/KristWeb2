@@ -8,6 +8,7 @@
     "KRISTWALLET",
     "KRISTWALLETEXTENSION",
     "Lngs",
+    "Mutex",
     "Popconfirm",
     "Sider",
     "Syncable",

@@ -5,9 +5,9 @@ const hexToBase36 = (input: number): string => {
   return String.fromCharCode(byte + 39 > 122 ? 101 : byte > 57 ? byte + 39 : byte);
 };
 
-export const makeV2Address = async (key: string): Promise<string> => {
+export const makeV2Address = async (addressPrefix: string, key: string): Promise<string> => {
   const chars = ["", "", "", "", "", "", "", "", ""];
-  let chain = "k"; // TODO: custom prefixes
+  let chain = addressPrefix;
   let hash = await doubleSHA256(key);
 
   for (let i = 0; i <= 8; i++) {

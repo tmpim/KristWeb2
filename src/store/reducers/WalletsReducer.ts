@@ -75,4 +75,16 @@ export const WalletsReducer = createReducer({ wallets: {} } as State)
       .reduce((o, wallet) => ({ ...o, [wallet.id]: wallet }), {});
 
     return { ...state, wallets: { ...state.wallets, ...updatedWallets }};
+  })
+  // Recalculate wallets
+  .handleAction(actions.recalculateWallets, (state: State, { payload }: ActionType<typeof actions.recalculateWallets>) => {
+    const updatedWallets = Object.entries(payload.wallets)
+      .map(([id, newData]) => ({ // merge in the new data
+        ...(state.wallets[id]), // old data
+        address: newData // recalculated address
+      })) // convert back to a WalletMap
+      .reduce((o, wallet) => ({ ...o, [wallet.id]: wallet }), {});
+
+    return { ...state, wallets: { ...state.wallets, ...updatedWallets }};
   });
+

@@ -44,6 +44,38 @@ export interface KristWorkDetailed {
   };
 }
 
+export interface KristCurrency {
+  address_prefix: string;
+  name_suffix: string;
+  currency_name: string;
+  currency_symbol: string;
+}
+export const DEFAULT_CURRENCY: KristCurrency = {
+  address_prefix: "k", name_suffix: "kst",
+  currency_name: "Krist", currency_symbol: "KST"
+};
+
+export interface KristMOTD {
+  motd: string;
+  set: string;
+
+  public_url: string;
+  mining_enabled: boolean;
+  debug_enabled: boolean;
+
+  constants: {
+    wallet_version: number;
+    nonce_max_size: number;
+    name_cost: number;
+    min_work: number;
+    max_work: number;
+    work_factor: number;
+    seconds_per_block: number;
+  };
+
+  currency: KristCurrency;
+}
+
 export type APIResponse<T extends Record<string, any>> = T & {
   ok: boolean;
   error?: string;

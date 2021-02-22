@@ -1,3 +1,5 @@
+import { getNameRegex } from "./currency";
+
 export interface CommonMeta {
   metaname?: string;
   name?: string;
@@ -10,7 +12,7 @@ export interface CommonMeta {
   [key: string]: string | undefined;
 }
 
-export function parseCommonMeta(metadata: string | undefined | null): CommonMeta | null {
+export function parseCommonMeta(nameSuffix: string, metadata: string | undefined | null): CommonMeta | null {
   if (!metadata) return null;
 
   const parts: CommonMeta = {};
@@ -18,7 +20,7 @@ export function parseCommonMeta(metadata: string | undefined | null): CommonMeta
   const metaParts = metadata.split(";");
   if (metaParts.length <= 0) return null;
 
-  const nameMatches = /^(?:([a-z0-9-_]{1,32})@)?([a-z0-9]{1,64}\.kst)$/.exec(metaParts[0]);
+  const nameMatches = getNameRegex(nameSuffix).exec(metaParts[0]);
   if (nameMatches) {
     if (nameMatches[1]) parts.metaname = nameMatches[1];
     if (nameMatches[2]) parts.name = nameMatches[2];
@@ -40,7 +42,7 @@ export function parseCommonMeta(metadata: string | undefined | null): CommonMeta
   }
 
   if (parts.return) {
-    const returnMatches = /^(?:([a-z0-9-_]{1,32})@)?([a-z0-9]{1,64}\.kst)$/.exec(parts.return);
+    const returnMatches = getNameRegex(nameSuffix).exec(parts.return);
     if (returnMatches) {
       if (returnMatches[1]) parts.returnMetaname = returnMatches[1];
       if (returnMatches[2]) parts.returnName = returnMatches[2];

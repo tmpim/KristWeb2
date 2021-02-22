@@ -28,3 +28,7 @@ export const syncWallet = createAction(constants.SYNC_WALLET,
 export interface SyncWalletsPayload { wallets: Record<string, WalletSyncable> };
 export const syncWallets = createAction(constants.SYNC_WALLETS,
   (wallets): SyncWalletsPayload => ({ wallets }))<SyncWalletsPayload>();
+
+export interface RecalculateWalletsPayload { wallets: Record<string, string> };
+export const recalculateWallets = createAction(constants.RECALCULATE_WALLETS,
+  (wallets): RecalculateWalletsPayload => ({ wallets }))<RecalculateWalletsPayload>();

@@ -51,6 +51,7 @@ export function AddWalletModal({ create, editing, visible, setVisible, setAddExi
   // Required to check for existing wallets
   const { wallets } = useSelector((s: RootState) => s.wallets, shallowEqual);
   const syncNode = useSelector((s: RootState) => s.node.syncNode);
+  const addressPrefix = useSelector((s: RootState) => s.node.currency.address_prefix);
   const dispatch = useDispatch();
 
   const { t } = useTranslation();
@@ -100,7 +101,7 @@ export function AddWalletModal({ create, editing, visible, setVisible, setAddExi
           });
         }
 
-        await editWallet(dispatch, syncNode, masterPassword, editing, values, values.password);
+        await editWallet(dispatch, syncNode, addressPrefix, masterPassword, editing, values, values.password);
         message.success(t("addWallet.messageSuccessEdit"));
 
         closeModal();
@@ -121,7 +122,7 @@ export function AddWalletModal({ create, editing, visible, setVisible, setAddExi
           });
         }
 
-        await addWallet(dispatch, syncNode, masterPassword, values, values.password, values.save ?? true);
+        await addWallet(dispatch, syncNode, addressPrefix, masterPassword, values, values.password, values.save ?? true);
         message.success(create ? t("addWallet.messageSuccessCreate") : t("addWallet.messageSuccessAdd"));
 
         closeModal();
@@ -147,7 +148,7 @@ export function AddWalletModal({ create, editing, visible, setVisible, setAddExi
   /** Update the 'Wallet address' field */
   async function updateCalculatedAddress(format: WalletFormatName | undefined, password: string, username?: string) {
     const privatekey = await applyWalletFormat(format || "kristwallet", password, username);
-    const address = await makeV2Address(privatekey);
+    const address = await makeV2Address(addressPrefix, privatekey);
     setCalculatedAddress(address);
   }
 

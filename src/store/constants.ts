@@ -11,6 +11,7 @@ export const REMOVE_WALLET = "REMOVE_WALLET";
 export const UPDATE_WALLET = "UPDATE_WALLET";
 export const SYNC_WALLET = "SYNC_WALLET";
 export const SYNC_WALLETS = "SYNC_WALLETS";
+export const RECALCULATE_WALLETS = "RECALCULATE_WALLETS";
 
 // Settings
 // ---
@@ -24,3 +25,4 @@ export const CONNECTION_STATE = "CONNECTION_STATE";
 export const SYNC_NODE = "SYNC_NODE";
 export const LAST_BLOCK_ID = "LAST_BLOCK_ID";
 export const DETAILED_WORK = "DETAILED_WORK";
+export const CURRENCY = "CURRENCY";

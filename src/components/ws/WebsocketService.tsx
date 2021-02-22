@@ -11,7 +11,7 @@ import { APIResponse, KristAddress, KristBlock, KristTransaction, WSConnectionSt
 import { findWalletByAddress, syncWallet, syncWalletUpdate } from "../../krist/wallets/Wallet";
 import WebSocketAsPromised from "websocket-as-promised";
 
-import throttle from "lodash.throttle";
+import { throttle } from "lodash-es";
 
 import Debug from "debug";
 const debug = Debug("kristweb:ws");

@@ -20,6 +20,7 @@ import { SyncWallets } from "./components/wallets/SyncWallets";
 import { ForcedAuth } from "./components/auth/ForcedAuth";
 import { WebsocketService } from "./components/ws/WebsocketService";
 import { SyncWork } from "./components/ws/SyncWork";
+import { SyncMOTD } from "./components/ws/SyncMOTD";
 
 export const store = createStore(
   rootReducer,
@@ -42,6 +43,7 @@ function App(): JSX.Element {
         {/* Services, etc. */}
         <SyncWallets />
         <SyncWork />
+        <SyncMOTD />
         <ForcedAuth />
         <WebsocketService />
       </Router>
