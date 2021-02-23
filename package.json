@@ -22,6 +22,7 @@
     "antd": "^4.12.3",
     "async-mutex": "^0.3.0",
     "base64-arraybuffer": "^0.2.0",
+    "chart.js": "^2.9.4",
     "csv-stringify": "^5.6.1",
     "dayjs": "^1.10.4",
     "debug": "^4.3.1",
@@ -31,6 +32,7 @@
     "i18next-http-backend": "^1.0.20",
     "lodash-es": "^4.17.21",
     "react": "^17.0.1",
+    "react-chartjs-2": "^2.11.1",
     "react-dom": "^17.0.1",
     "react-i18next": "^11.8.6",
     "react-redux": "^7.2.2",
@@ -51,7 +53,7 @@
     "build": "craco build",
     "optimise": "gzip -kr build/static",
     "full-build": "npm run clean; GENERATE_SOURCEMAP=false npm run build; npm run optimise",
-    "analyze-build": "npm run clean; FORCE_ANALYZE=true npm run build",
+    "analyze-build": "FORCE_ANALYZE=true npm run build",
     "test": "craco test"
   },
   "eslintConfig": {
@@ -86,6 +88,8 @@
     "@types/webpack-env": "^1.16.0",
     "@typescript-eslint/eslint-plugin": "^4.15.0",
     "@typescript-eslint/parser": "^4.15.0",
+    "antd-dayjs-webpack-plugin": "^1.0.6",
+    "babel-plugin-lodash": "^3.3.4",
     "craco-less": "^1.17.1",
     "eslint": "^7.20.0",
     "eslint-config-prettier": "^7.2.0",

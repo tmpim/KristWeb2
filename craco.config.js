@@ -2,6 +2,7 @@
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 const CracoLessPlugin = require("craco-less");
+const AntdDayjsWebpackPlugin = require("antd-dayjs-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const WebpackBar = require("webpackbar");
 
@@ -12,6 +13,10 @@ module.exports = {
         url: false
       }
     }
+  },
+
+  babel: {
+    plugins: ["lodash"],
   },
 
   plugins: [
@@ -45,6 +50,11 @@ module.exports = {
       ...(process.env.NODE_ENV === "development" || process.env.FORCE_ANALYZE
         ? [new BundleAnalyzerPlugin({ openAnalyzer: false })]
         : []),
+      new AntdDayjsWebpackPlugin()
     ],
+
+    optimization: {
+      sideEffects: true
+    }
   },
 };

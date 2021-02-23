@@ -34,6 +34,34 @@
       .ant-card-body {
         padding-top: @padding-sm;
       }
+
+      &.empty .ant-card-body {
+        height: 100%;
+        padding-top: 0 !important;
+        padding: 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &::before, &::after {
+          content: none;
+        }
+
+        .ant-empty-normal {
+          margin: 0;
+        }
+
+        .ant-result {
+          padding: @padding-sm;
+
+          .ant-result-icon {
+            margin-bottom: @margin-xs;
+
+            .anticon { font-size: 48px; }
+          }
+        }
+      }
     }
   }
 
@@ -156,34 +184,6 @@
         }
       }
     }
-
-    &.empty .ant-card-body {
-      height: 100%;
-      padding-top: 0 !important;
-      padding: 0;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      &::before, &::after {
-        content: none;
-      }
-
-      .ant-empty-normal {
-        margin: 0;
-      }
-
-      .ant-result {
-        padding: @padding-sm;
-
-        .ant-result-icon {
-          margin-bottom: @margin-xs;
-
-          .anticon { font-size: 48px; }
-        }
-      }
-    }
   }
 
   .dashboard-card-block-value {
@@ -202,6 +202,12 @@
       .dashboard-block-value-progress-middot {
         margin: 0 @margin-xs;
       }
+    }
+  }
+
+  .dashboard-card-block-difficulty {
+    .ant-card-body {
+      height: 100%;
     }
   }
 

@@ -240,7 +240,8 @@
     "blockValueReset": "Resets in <1>{{count, number}} block</1>",
     "blockValueReset_plural": "Resets in <1>{{count, number}} blocks</1>",
 
-    "blockDifficultyCardTitle": "Block Difficulty"
+    "blockDifficultyCardTitle": "Block Difficulty",
+    "blockDifficultyError": "There was an error fetching the block difficulty. See the console for details."
   },
 
   "credits": {
