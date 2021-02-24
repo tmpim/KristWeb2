@@ -118,6 +118,36 @@
   }
 }
 
+.ant-pagination {
+  .ant-pagination-item, .ant-pagination-prev, .ant-pagination-next {
+    background: @kw-lighter;
+    border: none;
+
+    button {
+      border: none;
+    }
+
+    &.ant-pagination-disabled {
+      background: @kw-light;
+    }
+
+    &:not(.ant-pagination-disabled):hover {
+      background: lighten(@kw-lighter, 5%);
+      a, button { color: @text-color; }
+    }
+  }
+
+  .ant-pagination-item.ant-pagination-item-active {
+    background: @kw-primary;
+
+    a, button { color: @text-color; }
+
+    &:not(.ant-pagination-disabled):hover {
+      background: @kw-primary;
+    }
+  }
+}
+
 .text-small {
   font-size: @font-size-sm;
 }
