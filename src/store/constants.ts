@@ -30,3 +30,4 @@ export const SYNC_NODE = "SYNC_NODE";
 export const LAST_BLOCK_ID = "LAST_BLOCK_ID";
 export const DETAILED_WORK = "DETAILED_WORK";
 export const CURRENCY = "CURRENCY";
+export const CONSTANTS = "CONSTANTS";

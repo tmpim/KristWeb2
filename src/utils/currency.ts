@@ -1,3 +1,4 @@
+/* eslint-disable eol-last */
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
@@ -24,3 +25,23 @@ export const stripNameSuffixRegExp = memoize(_stripNameSuffixRegExp);
 
 export const stripNameSuffix = (nameSuffix: string | undefined | null, inp: string): string =>
   inp.replace(stripNameSuffixRegExp(nameSuffix), "");
+
+/**
+ * Estimates the network mining hash-rate, returning it as a formatted string.
+ *
+ * TODO: Some people claimed they had a more accurate function for this. PRs
+ *   welcome!
+ *
+ * @param work - The current block difficulty.
+ * @param secondsPerBlock - The number of seconds per block, as per the sync
+ *   node's configuration.
+*/
+export function estimateHashRate(work: number, secondsPerBlock: number): string {
+  // Identical to the function from KristWeb 1
+  const rate = 1 / (work / (Math.pow(256, 6)) * secondsPerBlock);
+  if (rate === 0) return "0 H/s";
+
+  const sizes = ["H", "KH", "MH", "GH", "TH"];
+  const i = Math.min(Math.floor(Math.log(rate) / Math.log(1000)), sizes.length);
+  return parseFloat((rate / Math.pow(1000, i)).toFixed(2)) + " " + sizes[i] + "/s";
+}

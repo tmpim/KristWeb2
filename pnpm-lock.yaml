@@ -7,6 +7,7 @@ dependencies:
   async-mutex: 0.3.0
   base64-arraybuffer: 0.2.0
   chart.js: 2.9.4
+  classnames: 2.2.6
   csv-stringify: 5.6.1
   dayjs: 1.10.4
   debug: 4.3.1
@@ -32,6 +33,7 @@ dependencies:
   websocket-as-promised: 2.0.1
 devDependencies:
   '@craco/craco': 6.1.1_react-scripts@4.0.2
+  '@types/classnames': 2.2.11
   '@types/debug': 4.1.5
   '@types/file-saver': 2.0.1
   '@types/jest': 26.0.20
@@ -2018,6 +2020,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-kSjgDMZONiIfSH1Nxcr5JIRMwUetDki63FSQfpTCz8ogF3Ulqm8+mr5f78dUYs6vMiB6gBusQqfQmBvHZj/lwg==
+  /@types/classnames/2.2.11:
+    dev: true
+    resolution:
+      integrity: sha512-2koNhpWm3DgWRp5tpkiJ8JGc1xTn2q0l+jUNUE7oMKXUf5NpI9AIdC4kbjGNFBdHtcxBD18LAksoudAVhFKCjw==
   /@types/debug/4.1.5:
     dev: true
     resolution:
@@ -13620,6 +13626,7 @@ specifiers:
   '@testing-library/jest-dom': ^5.11.9
   '@testing-library/react': ^11.2.5
   '@testing-library/user-event': ^12.7.1
+  '@types/classnames': ^2.2.11
   '@types/debug': ^4.1.5
   '@types/file-saver': ^2.0.1
   '@types/jest': ^26.0.20
@@ -13641,6 +13648,7 @@ specifiers:
   babel-plugin-lodash: ^3.3.4
   base64-arraybuffer: ^0.2.0
   chart.js: ^2.9.4
+  classnames: ^2.2.6
   craco-less: ^1.17.1
   csv-stringify: ^5.6.1
   dayjs: ^1.10.4

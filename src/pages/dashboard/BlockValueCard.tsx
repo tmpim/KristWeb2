@@ -67,6 +67,15 @@ export function BlockValueCard(): JSX.Element {
             </Trans>
           </div>
         </>}
+
+        {/* Filler explanation when there are no unpaid names */}
+        {!hasNames && (
+          <div className="dashboard-block-value-empty-description">
+            <Trans t={t} i18nKey="dashboard.blockValueEmptyDescription">
+              The block value increases when <Link to="/network/names">names</Link> are purchased.
+            </Trans>
+          </div>
+        )}
       </>}
     </Skeleton>
   </Card>;

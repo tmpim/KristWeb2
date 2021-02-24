@@ -47,6 +47,25 @@ export interface KristWorkDetailed {
   };
 }
 
+export interface KristConstants {
+  wallet_version: number;
+  nonce_max_size: number;
+  name_cost: number;
+  min_work: number;
+  max_work: number;
+  work_factor: number;
+  seconds_per_block: number;
+}
+export const DEFAULT_CONSTANTS: KristConstants = {
+  wallet_version: 16,
+  nonce_max_size: 24,
+  name_cost: 500,
+  min_work: 100,
+  max_work: 100000,
+  work_factor: 0.025,
+  seconds_per_block: 60
+};
+
 export interface KristCurrency {
   address_prefix: string;
   name_suffix: string;
@@ -66,16 +85,7 @@ export interface KristMOTD {
   mining_enabled: boolean;
   debug_enabled: boolean;
 
-  constants: {
-    wallet_version: number;
-    nonce_max_size: number;
-    name_cost: number;
-    min_work: number;
-    max_work: number;
-    work_factor: number;
-    seconds_per_block: number;
-  };
-
+  constants: KristConstants;
   currency: KristCurrency;
 }
 

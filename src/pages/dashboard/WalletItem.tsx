@@ -16,7 +16,7 @@ export function WalletItem({ wallet }: { wallet: Wallet }): JSX.Element {
     </Col>
 
     <Col className="wallet-right">
-      <KristValue value={wallet.balance} />
+      <KristValue value={wallet.balance} highlightZero />
     </Col>
   </Row>;
 }

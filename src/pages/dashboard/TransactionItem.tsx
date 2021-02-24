@@ -152,10 +152,10 @@ export function TransactionItem({ transaction: tx, wallets }: Props): JSX.Elemen
       {TYPES_SHOW_VALUE.includes(type)
         ? (
           // Transaction value
-          <KristValue value={tx.value} />
+          <KristValue value={tx.value} highlightZero />
         )
         : tx.type === "name_transfer" && (
-          // TODO: Transaction name
+          // Transaction name
           <KristName name={tx.name || ""} className="transaction-name" />
         )}
     </Col>

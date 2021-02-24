@@ -23,6 +23,7 @@
     "async-mutex": "^0.3.0",
     "base64-arraybuffer": "^0.2.0",
     "chart.js": "^2.9.4",
+    "classnames": "^2.2.6",
     "csv-stringify": "^5.6.1",
     "dayjs": "^1.10.4",
     "debug": "^4.3.1",
@@ -73,6 +74,7 @@
   },
   "devDependencies": {
     "@craco/craco": "^6.1.1",
+    "@types/classnames": "^2.2.11",
     "@types/debug": "^4.1.5",
     "@types/file-saver": "^2.0.1",
     "@types/jest": "^26.0.20",

@@ -31,10 +31,6 @@ export async function authMasterPassword(
     else throw e;
   }
 
-  // Load the private keys from the wallets, dispatching the updates to the
-  // Redux store
-  // TODO
-
   // Dispatch the auth state changes to the Redux store
   dispatch(actions.authMasterPassword(password));
 }

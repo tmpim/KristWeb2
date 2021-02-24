@@ -239,9 +239,15 @@
     "blockValueNextDecrease_plural": "Decreases by <1></1> in <3>{{count, number}} blocks</3>",
     "blockValueReset": "Resets in <1>{{count, number}} block</1>",
     "blockValueReset_plural": "Resets in <1>{{count, number}} blocks</1>",
+    "blockValueEmptyDescription": "The block value increases when <1>names</1> are purchased.",
 
     "blockDifficultyCardTitle": "Block Difficulty",
-    "blockDifficultyError": "There was an error fetching the block difficulty. See the console for details."
+    "blockDifficultyError": "There was an error fetching the block difficulty. See the console for details.",
+    "blockDifficultyHashRate": "Approx. <1 />",
+    "blockDifficultyHashRateTooltip": "Estimated combined network mining hash rate, based on the current work.",
+    "blockDifficultyChartWork": "Block Difficulty",
+    "blockDifficultyChartLinear": "Linear",
+    "blockDifficultyChartLog": "Logarithmic"
   },
 
   "credits": {

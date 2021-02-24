@@ -27,6 +27,7 @@ export async function updateMOTD(dispatch: AppDispatch, syncNode: string): Promi
 
   debug("motd: %s", data.motd);
   dispatch(nodeActions.setCurrency(data.currency));
+  dispatch(nodeActions.setConstants(data.constants));
 }
 
 /** Sync the MOTD with the Krist node on startup. */

@@ -47,7 +47,7 @@ export function AddWalletModal({ create, editing, visible, setVisible, setAddExi
   if (editing && create)
     throw new Error("AddWalletModal: 'editing' and 'create' simultaneously, uh oh!");
 
-  const initialFormat = "kristwallet"; // TODO: change for edit modal
+  const initialFormat = editing?.format || "kristwallet";
 
   // Required to encrypt new wallets
   const { masterPassword } = useSelector((s: RootState) => s.walletManager, shallowEqual);
@@ -63,7 +63,7 @@ export function AddWalletModal({ create, editing, visible, setVisible, setAddExi
   const [form] = Form.useForm<FormValues>();
   const passwordInput = useRef<Input>(null);
   const [calculatedAddress, setCalculatedAddress] = useState<string | undefined>();
-  const [formatState, setFormatState] = useState<WalletFormatName>(editing?.format || initialFormat);
+  const [formatState, setFormatState] = useState<WalletFormatName>(initialFormat);
 
   function closeModal() {
     form.resetFields(); // Make sure to generate another password on re-open
