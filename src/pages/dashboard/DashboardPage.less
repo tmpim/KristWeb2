@@ -37,7 +37,7 @@
 
       &.empty .ant-card-body {
         height: 100%;
-        padding-top: 0 !important;
+        padding-top: 0;
         padding: 0;
 
         display: flex;
@@ -60,6 +60,10 @@
 
             .anticon { font-size: 48px; }
           }
+        }
+
+        @media (max-width: @screen-lg) {
+          padding: @margin-md 0;
         }
       }
     }
@@ -244,6 +248,10 @@
 
         width: 100%;
         margin-top: @margin-sm;
+
+        @media (max-width: @screen-md) {
+          margin-bottom: @margin-sm;
+        }
       }
     }
   }

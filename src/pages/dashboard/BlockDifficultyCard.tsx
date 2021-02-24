@@ -202,7 +202,7 @@ export function BlockDifficultyCard(): JSX.Element {
     if (!work || !workOverTime) return null;
 
     return <Row>
-      <Col span={4} className="left-col">
+      <Col span={24} md={4} className="left-col">
         {/* Current work */}
         <Statistic value={work.toLocaleString()} />
 
@@ -230,7 +230,7 @@ export function BlockDifficultyCard(): JSX.Element {
       </Col>
 
       {/* Work over time chart */}
-      <Col span={20}>{chart()}</Col>
+      <Col span={24} md={20}>{chart()}</Col>
     </Row>;
   }
 
