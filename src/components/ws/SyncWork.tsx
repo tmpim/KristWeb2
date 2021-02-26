@@ -8,20 +8,16 @@ import { RootState } from "../../store";
 import * as nodeActions from "../../store/actions/NodeActions";
 
 import { AppDispatch } from "../../App";
-import { APIResponse, KristWorkDetailed } from "../../krist/api/types";
+
+import * as api from "../../krist/api/api";
+import { KristWorkDetailed } from "../../krist/api/types";
 
 import Debug from "debug";
 const debug = Debug("kristweb:sync-work");
 
 export async function updateDetailedWork(dispatch: AppDispatch, syncNode: string): Promise<void> {
   debug("updating detailed work");
-
-  const res = await fetch(syncNode + "/work/detailed");
-  if (!res.ok || res.status !== 200) // TODO: handle API errors
-    throw new Error("error fetching detailed work");
-
-  const data: APIResponse<KristWorkDetailed> = await res.json();
-  if (!data?.ok) throw new Error("error fetching detailed work");
+  const data = await api.get<KristWorkDetailed>(syncNode, "work/detailed");
 
   debug("work: %d", data.work);
   dispatch(nodeActions.setDetailedWork(data));

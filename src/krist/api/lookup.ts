@@ -1,7 +1,8 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { APIResponse, KristAddress, KristTransaction } from "./types";
+import { KristAddress, KristTransaction } from "./types";
+import * as api from "./api";
 
 interface LookupAddressesResponse {
   found: number;
@@ -16,16 +17,12 @@ export async function lookupAddresses(syncNode: string, addresses: string[], fet
   if (!addresses || addresses.length === 0) return {};
 
   try {
-    const res = await fetch(
-      syncNode
-      + "/lookup/addresses/"
+    const data = await api.get<LookupAddressesResponse>(
+      syncNode,
+      "lookup/addresses/"
       + encodeURIComponent(addresses.join(","))
       + (fetchNames ? "?fetchNames" : "")
     );
-    if (!res.ok || res.status !== 200) throw new Error(res.statusText);
-
-    const data: APIResponse<LookupAddressesResponse> = await res.json();
-    if (!data.ok || data.error) throw new Error(data.error);
 
     return data.addresses;
   } catch (err) {
@@ -60,16 +57,10 @@ export async function lookupTransactions(syncNode: string, addresses: string[], 
   if (opts.orderBy) qs.append("orderBy", opts.orderBy);
   if (opts.order) qs.append("order", opts.order);
 
-  const res = await fetch(
-    syncNode
-    + "/lookup/transactions/"
+  return await api.get<LookupTransactionsResponse>(
+    syncNode,
+    "lookup/transactions/"
     + encodeURIComponent(addresses.join(","))
     + "?" + qs
   );
-  if (!res.ok || res.status !== 200) throw new Error(res.statusText);
-
-  const data: APIResponse<LookupTransactionsResponse> = await res.json();
-  if (!data.ok || data.error) throw new Error(data.error);
-
-  return data;
 }

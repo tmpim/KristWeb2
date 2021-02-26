@@ -92,6 +92,7 @@ export interface KristMOTD {
 export type APIResponse<T extends Record<string, any>> = T & {
   ok: boolean;
   error?: string;
+  parameter?: string;
 }
 
 export type WSConnectionState = "connected" | "disconnected" | "connecting";

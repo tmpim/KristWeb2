@@ -10,7 +10,7 @@ import { useTranslation, Trans } from "react-i18next";
 
 import { Line } from "react-chartjs-2";
 
-import { APIResponse } from "../../krist/api/types";
+import * as api from "../../krist/api/api";
 import { throttle } from "lodash-es";
 import { estimateHashRate } from "../../utils/currency";
 
@@ -124,12 +124,7 @@ export function BlockDifficultyCard(): JSX.Element {
   async function _fetchWorkOverTime(): Promise<void> {
     try {
       debug("fetching work over time");
-
-      const res = await fetch(syncNode + "/work/day");
-      if (!res.ok || res.status !== 200) throw new Error(res.statusText);
-
-      const data: APIResponse<{ work: number[] }> = await res.json();
-      if (!data.ok || data.error) throw new Error(data.error);
+      const data = await api.get<{ work: number[] }>(syncNode, "work/day");
 
       // Convert the array indices to Dates, based on the fact that the array
       // should contain one block per secondsPerBlock (typically 1440 elements,

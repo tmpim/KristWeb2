@@ -10,6 +10,7 @@ import { WalletMap } from "../../store/reducers/WalletsReducer";
 import * as wsActions from "../../store/actions/WebsocketActions";
 import * as nodeActions from "../../store/actions/NodeActions";
 
+import * as api from "../../krist/api/api";
 import { APIResponse, KristAddress, KristBlock, KristTransaction, WSConnectionState, WSIncomingMessage, WSSubscriptionLevel } from "../../krist/api/types";
 import { findWalletByAddress, syncWallet, syncWalletUpdate } from "../../krist/wallets/Wallet";
 import WebSocketAsPromised from "websocket-as-promised";
@@ -50,15 +51,12 @@ class WebsocketConnection {
     this.setConnectionState("disconnected");
 
     // Get a websocket token
-    const res = await fetch(this.syncNode + "/ws/start", { method: "POST" });
-    if (!res.ok || res.status !== 200) throw new Error("ws.errorToken");
-    const data: APIResponse<{ url: string }> = await res.json();
-    if (!data.ok || data.error) throw new Error("ws.errorToken");
+    const { url } = await api.post<{ url: string }>(this.syncNode, "ws/start");
 
     this.setConnectionState("connecting");
 
     // Connect to the websocket server
-    this.ws = new WebSocketAsPromised(data.url, {
+    this.ws = new WebSocketAsPromised(url, {
       packMessage: data => JSON.stringify(data),
       unpackMessage: data => JSON.parse(data.toString())
     });

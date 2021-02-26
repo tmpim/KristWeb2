@@ -8,7 +8,9 @@ import { RootState } from "../../store";
 import * as nodeActions from "../../store/actions/NodeActions";
 
 import { AppDispatch } from "../../App";
-import { APIResponse, KristMOTD } from "../../krist/api/types";
+
+import * as api from "../../krist/api/api";
+import { KristMOTD } from "../../krist/api/types";
 
 import { recalculateWallets } from "../../krist/wallets/Wallet";
 
@@ -17,13 +19,7 @@ const debug = Debug("kristweb:sync-motd");
 
 export async function updateMOTD(dispatch: AppDispatch, syncNode: string): Promise<void> {
   debug("updating motd");
-
-  const res = await fetch(syncNode + "/motd");
-  if (!res.ok || res.status !== 200) // TODO: handle API errors
-    throw new Error("error fetching motd");
-
-  const data: APIResponse<KristMOTD> = await res.json();
-  if (!data?.ok) throw new Error("error fetching motd");
+  const data = await api.get<KristMOTD>(syncNode, "motd");
 
   debug("motd: %s", data.motd);
   dispatch(nodeActions.setCurrency(data.currency));
