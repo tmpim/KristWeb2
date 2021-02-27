@@ -85,4 +85,5 @@ export const keyedNullSort = <T>(key: keyof T, human?: boolean) => (a: T, b: T, 
   }
 };
 
+// eslint-disable-next-line react-hooks/exhaustive-deps
 export const useMountEffect = (fn: EffectCallback): void => useEffect(fn, []);

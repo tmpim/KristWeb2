@@ -10,14 +10,26 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { TransactionItem } from "./TransactionItem";
+import { WalletMap } from "../../store/reducers/WalletsReducer";
 import { lookupTransactions, LookupTransactionsResponse } from "../../krist/api/lookup";
 
 import { SmallResult } from "../../components/SmallResult";
 
-import { throttle } from "lodash-es";
+import { trailingThrottleState } from "../../utils/promiseThrottle";
 
 import Debug from "debug";
 const debug = Debug("kristweb:transactions-card");
+
+const TRANSACTION_THROTTLE = 300;
+async function _fetchTransactions(syncNode: string, wallets: WalletMap): Promise<LookupTransactionsResponse> {
+  debug("fetching transactions");
+
+  return lookupTransactions(
+    syncNode,
+    Object.values(wallets).map(w => w.address),
+    { includeMined: true, limit: 5, orderBy: "id", order: "DESC" }
+  );
+};
 
 export function TransactionsCard(): JSX.Element {
   const syncNode = useSelector((s: RootState) => s.node.syncNode);
@@ -25,33 +37,15 @@ export function TransactionsCard(): JSX.Element {
   const { t } = useTranslation();
 
   const [res, setRes] = useState<LookupTransactionsResponse | undefined>();
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | undefined>();
+  const [loading, setLoading] = useState(true);
 
-  async function _fetchTransactions(): Promise<void> {
-    try {
-      debug("fetching transactions");
-
-      setRes(await lookupTransactions(
-        syncNode,
-        Object.values(wallets).map(w => w.address),
-        { includeMined: true, limit: 5, orderBy: "id", order: "DESC" }
-      ));
-    } catch (err) {
-      console.error(err);
-      setError(err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchTransactions = useMemo(() =>
-    throttle(_fetchTransactions, 300, { leading: false, trailing: true }), []);
+  const fetchTxs = useMemo(() => trailingThrottleState(_fetchTransactions, TRANSACTION_THROTTLE, true, setRes, setError, setLoading), []);
 
   useEffect(() => {
     if (!syncNode || !wallets) return;
-    fetchTransactions();
-  }, [syncNode, wallets]);
+    fetchTxs(syncNode, wallets);
+  }, [syncNode, wallets, fetchTxs]);
 
   const walletAddressMap = Object.values(wallets)
     .reduce((o, wallet) => ({ ...o, [wallet.address]: wallet }), {});

@@ -2,13 +2,14 @@
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React from "react";
-import { Layout, Menu, AutoComplete, Input, Grid } from "antd";
+import { Layout, Menu, Grid } from "antd";
 import { SendOutlined, DownloadOutlined, MenuOutlined, SettingOutlined } from "@ant-design/icons";
 
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { Brand } from "./Brand";
+import { Search } from "./Search";
 import { ConnectionIndicator } from "./ConnectionIndicator";
 import { CymbalIndicator } from "./CymbalIndicator";
 
@@ -46,11 +47,7 @@ export function AppHeader({ sidebarCollapsed, setSidebarCollapsed }: Props): JSX
     {bps.md && <div className="site-header-spacer" />}
 
     {/* Search box */}
-    <div className="site-header-search-container">
-      <AutoComplete className="site-header-search">
-        <Input.Search placeholder={t("nav.search")} />
-      </AutoComplete>
-    </div>
+    <Search />
 
     {/* Connection indicator */}
     <ConnectionIndicator />

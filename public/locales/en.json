@@ -303,5 +303,8 @@
   "ws": {
     "errorToken": "There was an error connecting to the Krist websocket server.",
     "errorWS": "There was an error connecting to the Krist websocket server (code <1>{{code}}</1>)."
-  }
+  },
+
+  "rateLimitTitle": "Rate limit hit",
+  "rateLimitDescription": "Too many requests were sent to the Krist server in a short period of time. This is probably caused by a bug!"
 }

@@ -1,7 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Modal, Form, Input, Checkbox, Collapse, Button, Tooltip, Typography, Row, Col, message, notification, Grid } from "antd";
 import { ReloadOutlined } from "@ant-design/icons";
 
@@ -13,10 +13,10 @@ import { generatePassword } from "../../utils";
 
 import { FakeUsernameInput } from "../../components/auth/FakeUsernameInput";
 import { CopyInputButton } from "../../components/CopyInputButton";
-import { getSelectWalletCategory } from "../../components/wallets/SelectWalletCategory";
+import { SelectWalletCategory } from "../../components/wallets/SelectWalletCategory";
 
 import { WalletFormatName, applyWalletFormat, formatNeedsUsername } from "../../krist/wallets/formats/WalletFormat";
-import { getSelectWalletFormat } from "../../components/wallets/SelectWalletFormat";
+import { SelectWalletFormat } from "../../components/wallets/SelectWalletFormat";
 import { makeV2Address } from "../../krist/AddressAlgo";
 import { addWallet, decryptWallet, editWallet, Wallet, ADDRESS_LIST_LIMIT } from "../../krist/wallets/Wallet";
 
@@ -149,18 +149,18 @@ export function AddWalletModal({ create, editing, visible, setVisible, setAddExi
   }
 
   /** Update the 'Wallet address' field */
-  async function updateCalculatedAddress(format: WalletFormatName | undefined, password: string, username?: string) {
+  const updateCalculatedAddress = useCallback(async function(format: WalletFormatName | undefined, password: string, username?: string) {
     const privatekey = await applyWalletFormat(format || "kristwallet", password, username);
     const address = await makeV2Address(addressPrefix, privatekey);
     setCalculatedAddress(address);
-  }
+  }, [addressPrefix]);
 
-  function generateNewPassword() {
+  const generateNewPassword = useCallback(function() {
     if (!create || !form) return;
     const password = generatePassword();
     form.setFieldsValue({ password });
     updateCalculatedAddress("kristwallet", password);
-  }
+  }, [create, form, updateCalculatedAddress]);
 
   useEffect(() => {
     if (visible && form && !form.getFieldValue("password")) {
@@ -182,7 +182,7 @@ export function AddWalletModal({ create, editing, visible, setVisible, setAddExi
         })();
       }
     }
-  }, [visible, form, create, editing]);
+  }, [t, generateNewPassword, updateCalculatedAddress, masterPassword, visible, form, create, editing]);
 
   return <Modal
     visible={visible}
@@ -253,7 +253,7 @@ export function AddWalletModal({ create, editing, visible, setVisible, setAddExi
         {/* Wallet category */}
         <Col span={12}>
           <Form.Item name="category" label={t("addWallet.walletCategory")}>
-            {getSelectWalletCategory({ onNewCategory: category => form.setFieldsValue({ category })})}
+            {SelectWalletCategory({ onNewCategory: category => form.setFieldsValue({ category })})}
           </Form.Item>
         </Col>
       </Row>
@@ -327,7 +327,7 @@ export function AddWalletModal({ create, editing, visible, setVisible, setAddExi
         <Collapse.Panel header={t("addWallet.advancedOptions")} key="1">
           {/* Wallet format */}
           <Form.Item name="format" label={t("addWallet.walletFormat")}>
-            {getSelectWalletFormat({ initialFormat })}
+            {SelectWalletFormat({ initialFormat })}
           </Form.Item>
 
           {/* Save in KristWeb checkbox */}

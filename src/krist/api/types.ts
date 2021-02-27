@@ -20,6 +20,8 @@ export interface KristTransaction {
   time: string;
   name?: string;
   metadata?: string;
+  sent_name?: string;
+  sent_metaname?: string;
   type: KristTransactionType;
 }
 
@@ -31,6 +33,14 @@ export interface KristBlock {
   value: number;
   difficulty: number;
   time: string;
+}
+
+export interface KristName {
+  name: string;
+  owner: string;
+  registered: string;
+  updated?: string | null;
+  a?: string | null;
 }
 
 export interface KristWorkDetailed {

@@ -15,7 +15,7 @@ interface Props {
   initialFormat: WalletFormatName;
 }
 
-export function getSelectWalletFormat({ initialFormat }: Props): JSX.Element {
+export function SelectWalletFormat({ initialFormat }: Props): JSX.Element {
   const advancedWalletFormats = useSelector((s: RootState) => s.settings.walletFormats);
   const { t } = useTranslation();
 

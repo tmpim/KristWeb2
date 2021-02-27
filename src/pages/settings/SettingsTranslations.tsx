@@ -108,11 +108,6 @@ export function SettingsTranslations(): JSX.Element {
   } | undefined>();
 
   const languages = getLanguages();
-  if (!languages) return <SmallResult
-    status="error"
-    title={t("error")}
-    subTitle={t("settings.translations.errorMissingLanguages")}
-  />;
 
   async function loadLanguages() {
     if (!languages) return;
@@ -153,6 +148,12 @@ export function SettingsTranslations(): JSX.Element {
   }
 
   useMountEffect(() => { loadLanguages().catch(console.error); });
+
+  if (!languages) return <SmallResult
+    status="error"
+    title={t("error")}
+    subTitle={t("settings.translations.errorMissingLanguages")}
+  />;
 
   return <SettingsPageLayout pageName="Translations" extra={
     <Button icon={<FileExcelOutlined />} onClick={exportCSV}>

@@ -40,23 +40,16 @@ export function SyncMOTD(): JSX.Element | null {
 
   // Update the MOTD when the sync node changes, and on startup
   useEffect(() => {
-    // TODO: show errors to the user?
-    updateMOTD(dispatch, syncNode).catch(console.error);
-  }, [syncNode]);
-
-  // Update the MOTD when the sync node reconnects, in case it changes in
-  // realtime (basically only used for development)
-  useEffect(() => {
     if (connectionState !== "connected") return;
     updateMOTD(dispatch, syncNode).catch(console.error);
-  }, [connectionState]);
+  }, [dispatch, syncNode, connectionState]);
 
   // When the currency's address prefix changes, or our master password appears,
   // recalculate the addresses if necessary
   useEffect(() => {
     if (!addressPrefix || !masterPassword) return;
     recalculateWallets(dispatch, masterPassword, wallets, addressPrefix).catch(console.error);
-  }, [addressPrefix, masterPassword, wallets]);
+  }, [dispatch, addressPrefix, masterPassword, wallets]);
 
   return null;
 }

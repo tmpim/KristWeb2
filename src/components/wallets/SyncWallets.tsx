@@ -19,7 +19,8 @@ export function SyncWallets(): JSX.Element | null {
   useEffect(() => {
     // TODO: show errors to the user?
     syncWallets(dispatch, syncNode, wallets).catch(console.error);
-  }, [syncNode]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, syncNode]);
 
   return null;
 }

@@ -17,7 +17,7 @@ interface Props {
   onNewCategory?: (name: string) => void;
 }
 
-export function getSelectWalletCategory({ onNewCategory }: Props): JSX.Element {
+export function SelectWalletCategory({ onNewCategory }: Props): JSX.Element {
   // Required to fetch existing categories
   const { wallets } = useSelector((s: RootState) => s.wallets, shallowEqual);
   const existingCategories = [...new Set(Object.values(wallets)

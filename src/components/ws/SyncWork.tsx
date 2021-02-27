@@ -31,7 +31,7 @@ export function SyncWork(): JSX.Element | null {
   useEffect(() => {
     // TODO: show errors to the user?
     updateDetailedWork(dispatch, syncNode).catch(console.error);
-  }, [lastBlockID, syncNode]);
+  }, [dispatch, lastBlockID, syncNode]);
 
   return null;
 }

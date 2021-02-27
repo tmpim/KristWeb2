@@ -11,16 +11,15 @@ import { useTranslation, Trans } from "react-i18next";
 import { Line } from "react-chartjs-2";
 
 import * as api from "../../krist/api/api";
-import { throttle } from "lodash-es";
 import { estimateHashRate } from "../../utils/currency";
+import { KristConstants } from "../../krist/api/types";
+import { trailingThrottleState } from "../../utils/promiseThrottle";
 
 import { SmallResult } from "../../components/SmallResult";
 import { Statistic } from "./Statistic";
 
 import Debug from "debug";
 const debug = Debug("kristweb:block-difficulty-card");
-
-const DATA_FETCH_THROTTLE = 300;
 
 // =============================================================================
 // Chart.JS theming options
@@ -107,6 +106,20 @@ const CHART_OPTIONS_Y_AXIS = {
   }
 };
 
+const WORK_THROTTLE = 500;
+async function _fetchWorkOverTime(syncNode: string, constants: KristConstants): Promise<{ x: Date; y: number }[]> {
+  debug("fetching work over time");
+  const data = await api.get<{ work: number[] }>(syncNode, "work/day");
+
+  // Convert the array indices to Dates, based on the fact that the array
+  // should contain one block per secondsPerBlock (typically 1440 elements,
+  // one per minute). This can be passed directly into Chart.JS.
+  return data.work.map((work, i, arr) => ({
+    x: new Date(Date.now() - ((arr.length - i) * (constants.seconds_per_block * 1000))),
+    y: work
+  }));
+}
+
 export function BlockDifficultyCard(): JSX.Element {
   const { t } = useTranslation();
 
@@ -116,43 +129,21 @@ export function BlockDifficultyCard(): JSX.Element {
   const constants = useSelector((s: RootState) => s.node.constants, shallowEqual);
 
   const [workOverTime, setWorkOverTime] = useState<{ x: Date; y: number }[] | undefined>();
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | undefined>();
+  const [loading, setLoading] = useState(true);
 
   const [chartMode, setChartMode] = useState<"linear" | "logarithmic">("linear");
 
-  async function _fetchWorkOverTime(): Promise<void> {
-    try {
-      debug("fetching work over time");
-      const data = await api.get<{ work: number[] }>(syncNode, "work/day");
-
-      // Convert the array indices to Dates, based on the fact that the array
-      // should contain one block per secondsPerBlock (typically 1440 elements,
-      // one per minute). This can be passed directly into Chart.JS.
-      const processedWork = data.work.map((work, i, arr) => ({
-        x: new Date(Date.now() - ((arr.length - i) * (constants.seconds_per_block * 1000))),
-        y: work
-      }));
-
-      setWorkOverTime(processedWork);
-    } catch (err) {
-      console.error(err);
-      setError(err);
-    } finally {
-      setLoading(false);
-    }
-  }
-
   const fetchWorkOverTime = useMemo(() =>
-    throttle(_fetchWorkOverTime, DATA_FETCH_THROTTLE, { leading: false, trailing: true }), []);
+    trailingThrottleState(_fetchWorkOverTime, WORK_THROTTLE, false, setWorkOverTime, setError, setLoading), []);
 
   // Fetch the new work data whenever the sync node, block ID, or node constants
   // change. This is usually only going to be triggered by the block ID
   // changing, which is handled by WebsocketService.
   useEffect(() => {
     if (!syncNode) return;
-    fetchWorkOverTime();
-  }, [syncNode, lastBlockID, constants, constants.seconds_per_block]);
+    fetchWorkOverTime(syncNode, constants);
+  }, [syncNode, lastBlockID, constants, constants.seconds_per_block, fetchWorkOverTime]);
 
   function chart(): JSX.Element {
     return <Line

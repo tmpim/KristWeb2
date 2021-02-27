@@ -11,7 +11,7 @@ import * as wsActions from "../../store/actions/WebsocketActions";
 import * as nodeActions from "../../store/actions/NodeActions";
 
 import * as api from "../../krist/api/api";
-import { APIResponse, KristAddress, KristBlock, KristTransaction, WSConnectionState, WSIncomingMessage, WSSubscriptionLevel } from "../../krist/api/types";
+import { KristAddress, KristBlock, KristTransaction, WSConnectionState, WSIncomingMessage, WSSubscriptionLevel } from "../../krist/api/types";
 import { findWalletByAddress, syncWallet, syncWalletUpdate } from "../../krist/wallets/Wallet";
 import WebSocketAsPromised from "websocket-as-promised";
 
@@ -37,7 +37,7 @@ class WebsocketConnection {
   // TODO: automatically clean this up?
   private refreshThrottles: Record<string, (address: string) => void> = {};
 
-  constructor(private dispatch: AppDispatch, private syncNode: string) {
+  constructor(private dispatch: AppDispatch, public syncNode: string) {
     debug("WS component init");
     this.attemptConnect();
   }
@@ -232,19 +232,30 @@ export function WebsocketService(): JSX.Element | null {
 
   const [connection, setConnection] = useState<WebsocketConnection | undefined>();
 
+  // On first render, or if the sync node changes, create the websocket
+  // connection
   useEffect(() => {
+    // Don't reconnect if we already have a connection and the sync node hasn't
+    // changed (prevents infinite loops)
+    if (connection && connection.syncNode === syncNode) return;
+
+    // Close any existing connections
     if (connection) connection.forceClose();
+
+    // Connect to the Krist websocket server
     setConnection(new WebsocketConnection(dispatch, syncNode));
 
     // On unmount, force close the existing connection
     return () => {
       if (connection) connection.forceClose();
     };
-  }, [syncNode]);
+  }, [dispatch, syncNode, connection]);
 
+  // If the wallets change, let the websocket service know so that it can keep
+  // track of events related to any new wallets
   useEffect(() => {
     if (connection) connection.setWallets(wallets);
-  }, [wallets]);
+  }, [wallets, connection]);
 
   return null;
 }
