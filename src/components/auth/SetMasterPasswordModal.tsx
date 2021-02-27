@@ -4,7 +4,6 @@
 import React, { useRef } from "react";
 import { Modal, Form, Input, Button } from "antd";
 import { useTranslation, Trans } from "react-i18next";
-import { useDispatch } from "react-redux";
 
 import { FakeUsernameInput } from "./FakeUsernameInput";
 import { getMasterPasswordInput } from "./MasterPasswordInput";
@@ -18,8 +17,6 @@ interface Props {
 }
 
 export function SetMasterPasswordModal({ visible, onCancel, onSubmit }: Props): JSX.Element {
-  const dispatch = useDispatch();
-
   const { t } = useTranslation();
   const [form] = Form.useForm();
   const inputRef = useRef<Input>(null);
@@ -28,7 +25,7 @@ export function SetMasterPasswordModal({ visible, onCancel, onSubmit }: Props): 
     const values = await form.validateFields();
     form.resetFields();
 
-    await setMasterPassword(dispatch, values.masterPassword);
+    await setMasterPassword(values.masterPassword);
 
     onSubmit();
   }

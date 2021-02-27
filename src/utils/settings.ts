@@ -3,7 +3,7 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { PickByValue } from "utility-types";
 
-import { AppDispatch } from "../App";
+import { store } from "../App";
 import * as actions from "../store/actions/SettingsActions";
 
 export interface SettingsState {
@@ -43,9 +43,9 @@ export function loadSettings(): SettingsState {
   return settings;
 }
 
-export function setBooleanSetting(dispatch: AppDispatch, settingName: SettingName<boolean>, value: boolean): void {
+export function setBooleanSetting(settingName: SettingName<boolean>, value: boolean): void {
   localStorage.setItem(getSettingKey(settingName), value ? "true" : "false");
-  dispatch(actions.setBooleanSetting(settingName, value));
+  store.dispatch(actions.setBooleanSetting(settingName, value));
 }
 
 export function isValidSyncNode(syncNode?: string): boolean {

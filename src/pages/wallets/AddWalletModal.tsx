@@ -5,7 +5,7 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Modal, Form, Input, Checkbox, Collapse, Button, Tooltip, Typography, Row, Col, message, notification, Grid } from "antd";
 import { ReloadOutlined } from "@ant-design/icons";
 
-import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import { useSelector, shallowEqual } from "react-redux";
 import { RootState } from "../../store";
 import { useTranslation, Trans } from "react-i18next";
 
@@ -53,9 +53,7 @@ export function AddWalletModal({ create, editing, visible, setVisible, setAddExi
   const { masterPassword } = useSelector((s: RootState) => s.walletManager, shallowEqual);
   // Required to check for existing wallets
   const { wallets } = useSelector((s: RootState) => s.wallets, shallowEqual);
-  const syncNode = useSelector((s: RootState) => s.node.syncNode);
   const addressPrefix = useSelector((s: RootState) => s.node.currency.address_prefix);
-  const dispatch = useDispatch();
 
   const { t } = useTranslation();
   const bps = useBreakpoint();
@@ -104,7 +102,7 @@ export function AddWalletModal({ create, editing, visible, setVisible, setAddExi
           });
         }
 
-        await editWallet(dispatch, syncNode, addressPrefix, masterPassword, editing, values, values.password);
+        await editWallet(addressPrefix, masterPassword, editing, values, values.password);
         message.success(t("addWallet.messageSuccessEdit"));
 
         closeModal();
@@ -125,7 +123,7 @@ export function AddWalletModal({ create, editing, visible, setVisible, setAddExi
           });
         }
 
-        await addWallet(dispatch, syncNode, addressPrefix, masterPassword, values, values.password, values.save ?? true);
+        await addWallet(addressPrefix, masterPassword, values, values.password, values.save ?? true);
         message.success(create ? t("addWallet.messageSuccessCreate") : t("addWallet.messageSuccessAdd"));
 
         closeModal();

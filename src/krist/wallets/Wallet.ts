@@ -10,7 +10,7 @@ import { aesGcmDecrypt, aesGcmEncrypt } from "../../utils/crypto";
 
 import { KristAddressWithNames, lookupAddresses } from "../api/lookup";
 
-import { AppDispatch } from "../../App";
+import { store } from "../../App";
 import * as actions from "../../store/actions/WalletsActions";
 import { WalletMap } from "../../store/reducers/WalletsReducer";
 
@@ -138,20 +138,20 @@ function syncWalletProperties(wallet: Wallet, address: KristAddressWithNames, sy
 
 /** Sync the data for a single wallet from the sync node, save it to local
  * storage, and dispatch the change to the Redux store. */
-export async function syncWallet(dispatch: AppDispatch, syncNode: string, wallet: Wallet): Promise<void> {
+export async function syncWallet(wallet: Wallet): Promise<void> {
   // Fetch the data from the sync node (e.g. balance)
   const { address } = wallet;
-  const lookupResults = await lookupAddresses(syncNode, [address], true);
+  const lookupResults = await lookupAddresses([address], true);
 
   const kristAddress = lookupResults[address];
   if (!kristAddress) return; // Skip unsyncable wallet
 
-  syncWalletUpdate(dispatch, wallet, kristAddress);
+  syncWalletUpdate(wallet, kristAddress);
 }
 
 /** Given an already synced wallet, save it to local storage, and dispatch the
  * change to the Redux store. */
-export function syncWalletUpdate(dispatch: AppDispatch, wallet: Wallet, address: KristAddressWithNames): void {
+export function syncWalletUpdate(wallet: Wallet, address: KristAddressWithNames): void {
   const syncTime = new Date();
   const updatedWallet = syncWalletProperties(wallet, address, syncTime);
 
@@ -159,17 +159,17 @@ export function syncWalletUpdate(dispatch: AppDispatch, wallet: Wallet, address:
   saveWallet(updatedWallet);
 
   // Dispatch the change to the Redux store
-  dispatch(actions.syncWallet(wallet.id, updatedWallet));
+  store.dispatch(actions.syncWallet(wallet.id, updatedWallet));
 }
 
 /** Sync the data for all the wallets from the sync node, save it to local
  * storage, and dispatch the changes to the Redux store. */
-export async function syncWallets(dispatch: AppDispatch, syncNode: string, wallets: WalletMap): Promise<void> {
+export async function syncWallets(wallets: WalletMap): Promise<void> {
   const syncTime = new Date();
 
   // Fetch all the data from the sync node (e.g. balances)
   const addresses = Object.values(wallets).map(w => w.address);
-  const lookupResults = await lookupAddresses(syncNode, addresses, true);
+  const lookupResults = await lookupAddresses(addresses, true);
 
   // Create a WalletMap with the updated wallet properties
   const updatedWallets = Object.entries(wallets).map(([_, wallet]) => {
@@ -182,16 +182,13 @@ export async function syncWallets(dispatch: AppDispatch, syncNode: string, walle
   Object.values(updatedWallets).forEach(w => saveWallet(w as Wallet));
 
   // Dispatch the changes to the Redux store
-  dispatch(actions.syncWallets(updatedWallets));
+  store.dispatch(actions.syncWallets(updatedWallets));
 }
 
 /**
  * Adds a new wallet, encrypting its privatekey and password, saving it to
  * local storage, and dispatching the changes to the Redux store.
  *
- * @param dispatch - The AppDispatch instance used to dispatch the new wallet to
- *   the Redux store.
- * @param syncNode - The Krist sync node to fetch the wallet data from.
  * @param addressPrefix - The prefixes of addresses on this node.
  * @param masterPassword - The master password used to encrypt the wallet
  *   password and privatekey.
@@ -200,8 +197,6 @@ export async function syncWallets(dispatch: AppDispatch, syncNode: string, walle
  * @param save - Whether or not to save this wallet to local storage.
  */
 export async function addWallet(
-  dispatch: AppDispatch,
-  syncNode: string,
   addressPrefix: string,
   masterPassword: string,
   wallet: WalletNew,
@@ -236,18 +231,15 @@ export async function addWallet(
   if (save) saveWallet(newWallet);
 
   // Dispatch the changes to the redux store
-  dispatch(actions.addWallet(newWallet));
+  store.dispatch(actions.addWallet(newWallet));
 
-  syncWallet(dispatch, syncNode, newWallet);
+  syncWallet(newWallet);
 }
 
 /**
  * Edits a new wallet, encrypting its privatekey and password, saving it to
  * local storage, and dispatching the changes to the Redux store.
  *
- * @param dispatch - The AppDispatch instance used to dispatch the new wallet to
- *   the Redux store.
- * @param syncNode - The Krist sync node to fetch the wallet data from.
  * @param addressPrefix - The prefixes of addresses on this node.
  * @param masterPassword - The master password used to encrypt the wallet
  *   password and privatekey.
@@ -256,8 +248,6 @@ export async function addWallet(
  * @param password - The password of the updated wallet.
  */
 export async function editWallet(
-  dispatch: AppDispatch,
-  syncNode: string,
   addressPrefix: string,
   masterPassword: string,
   wallet: Wallet,
@@ -289,18 +279,18 @@ export async function editWallet(
   saveWallet(finalWallet);
 
   // Dispatch the changes to the redux store
-  dispatch(actions.updateWallet(wallet.id, finalWallet));
+  store.dispatch(actions.updateWallet(wallet.id, finalWallet));
 
-  syncWallet(dispatch, syncNode, finalWallet);
+  syncWallet(finalWallet);
 }
 
 /** Deletes a wallet, removing it from local storage and dispatching the change
  * to the Redux store. */
-export function deleteWallet(dispatch: AppDispatch, wallet: Wallet): void {
+export function deleteWallet(wallet: Wallet): void {
   const key = getWalletKey(wallet);
   localStorage.removeItem(key);
 
-  dispatch(actions.removeWallet(wallet.id));
+  store.dispatch(actions.removeWallet(wallet.id));
 }
 
 /** Decrypts a wallet's password and privatekey. */
@@ -335,7 +325,7 @@ const recalculationMutex = new Mutex();
  * decrypted, recalculate all the addresses with the new prefix. If the prefix
  * is unchanged, this does nothing. The changes will be dispatched to the
  * Redux store. */
-export async function recalculateWallets(dispatch: AppDispatch, masterPassword: string, wallets: WalletMap, addressPrefix: string): Promise<void> {
+export async function recalculateWallets(masterPassword: string, wallets: WalletMap, addressPrefix: string): Promise<void> {
   const lastPrefix = localStorage.getItem("lastAddressPrefix") || "k";
   if (addressPrefix === lastPrefix) return;
   debug("address prefix changed from %s to %s, waiting for mutex...", lastPrefix, addressPrefix);
@@ -380,7 +370,7 @@ export async function recalculateWallets(dispatch: AppDispatch, masterPassword: 
     }
 
     // Apply all the changes to the Redux store
-    dispatch(actions.recalculateWallets(updatedWallets));
+    store.dispatch(actions.recalculateWallets(updatedWallets));
 
     debug("recalculation done, saving prefix");
     localStorage.setItem("lastAddressPrefix", addressPrefix);

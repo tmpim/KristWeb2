@@ -5,7 +5,7 @@ import React from "react";
 import { Switch } from "antd";
 
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 
 import { SettingName, setBooleanSetting } from "../../utils/settings";
@@ -18,12 +18,11 @@ interface Props {
 
 export function SettingBoolean({ setting, title, titleKey }: Props): JSX.Element {
   const settingValue = useSelector((s: RootState) => s.settings[setting]);
-  const dispatch = useDispatch();
 
   const { t } = useTranslation();
 
   function onChange(value: boolean) {
-    setBooleanSetting(dispatch, setting, value);
+    setBooleanSetting(setting, value);
   }
 
   return <div

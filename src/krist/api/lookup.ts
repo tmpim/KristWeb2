@@ -13,12 +13,11 @@ interface LookupAddressesResponse {
 export interface KristAddressWithNames extends KristAddress { names?: number }
 export type AddressLookupResults = Record<string, KristAddressWithNames | null>;
 
-export async function lookupAddresses(syncNode: string, addresses: string[], fetchNames?: boolean): Promise<AddressLookupResults> {
+export async function lookupAddresses(addresses: string[], fetchNames?: boolean): Promise<AddressLookupResults> {
   if (!addresses || addresses.length === 0) return {};
 
   try {
     const data = await api.get<LookupAddressesResponse>(
-      syncNode,
       "lookup/addresses/"
       + encodeURIComponent(addresses.join(","))
       + (fetchNames ? "?fetchNames" : "")
@@ -47,7 +46,7 @@ export interface LookupTransactionsResponse {
   transactions: KristTransaction[];
 }
 
-export async function lookupTransactions(syncNode: string, addresses: string[], opts: LookupTransactionsOptions): Promise<LookupTransactionsResponse> {
+export async function lookupTransactions(addresses: string[], opts: LookupTransactionsOptions): Promise<LookupTransactionsResponse> {
   if (!addresses || addresses.length === 0) return { count: 0, total: 0, transactions: [] };
 
   const qs = new URLSearchParams();
@@ -58,7 +57,6 @@ export async function lookupTransactions(syncNode: string, addresses: string[], 
   if (opts.order) qs.append("order", opts.order);
 
   return await api.get<LookupTransactionsResponse>(
-    syncNode,
     "lookup/transactions/"
     + encodeURIComponent(addresses.join(","))
     + "?" + qs

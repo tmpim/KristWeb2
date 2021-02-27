@@ -3,8 +3,8 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { useState,  useEffect } from "react";
 
-import { useSelector, shallowEqual, useDispatch } from "react-redux";
-import { AppDispatch } from "../../App";
+import { useSelector, shallowEqual } from "react-redux";
+import { store } from "../../App";
 import { RootState } from "../../store";
 import { WalletMap } from "../../store/reducers/WalletsReducer";
 import * as wsActions from "../../store/actions/WebsocketActions";
@@ -37,7 +37,7 @@ class WebsocketConnection {
   // TODO: automatically clean this up?
   private refreshThrottles: Record<string, (address: string) => void> = {};
 
-  constructor(private dispatch: AppDispatch, public syncNode: string) {
+  constructor(public syncNode: string) {
     debug("WS component init");
     this.attemptConnect();
   }
@@ -51,7 +51,7 @@ class WebsocketConnection {
     this.setConnectionState("disconnected");
 
     // Get a websocket token
-    const { url } = await api.post<{ url: string }>(this.syncNode, "ws/start");
+    const { url } = await api.post<{ url: string }>("ws/start");
 
     this.setConnectionState("connecting");
 
@@ -109,7 +109,7 @@ class WebsocketConnection {
   }
 
   private setConnectionState(state: WSConnectionState) {
-    this.dispatch(wsActions.setConnectionState(state));
+    store.dispatch(wsActions.setConnectionState(state));
   }
 
   handleMessage(data: WSIncomingMessage) {
@@ -138,7 +138,7 @@ class WebsocketConnection {
       if (!wallet) return;
 
       debug("syncing %s to %s (balance: %d)", address.address, wallet.id, address.balance);
-      syncWalletUpdate(this.dispatch, wallet, address);
+      syncWalletUpdate(wallet, address);
     } else if (data.type === "event" && data.event && this.wallets) {
       // Handle events
       switch (data.event) {
@@ -155,8 +155,8 @@ class WebsocketConnection {
         // Update the name counts using the address lookup
         case "name_purchase":
         case "name_transfer":
-          if (fromWallet) syncWallet(this.dispatch, this.syncNode, fromWallet);
-          if (toWallet) syncWallet(this.dispatch, this.syncNode, toWallet);
+          if (fromWallet) syncWallet(fromWallet);
+          if (toWallet) syncWallet(toWallet);
           break;
 
         // Any other transaction; refresh the balances via the websocket
@@ -174,7 +174,7 @@ class WebsocketConnection {
         const block = data.block as KristBlock;
         debug("block id now %d", block.height);
 
-        this.dispatch(nodeActions.setLastBlockID(block.height));
+        store.dispatch(nodeActions.setLastBlockID(block.height));
 
         break;
       }
@@ -228,7 +228,6 @@ class WebsocketConnection {
 export function WebsocketService(): JSX.Element | null {
   const { wallets } = useSelector((s: RootState) => s.wallets, shallowEqual);
   const syncNode = useSelector((s: RootState) => s.node.syncNode);
-  const dispatch = useDispatch();
 
   const [connection, setConnection] = useState<WebsocketConnection | undefined>();
 
@@ -243,13 +242,13 @@ export function WebsocketService(): JSX.Element | null {
     if (connection) connection.forceClose();
 
     // Connect to the Krist websocket server
-    setConnection(new WebsocketConnection(dispatch, syncNode));
+    setConnection(new WebsocketConnection(syncNode));
 
     // On unmount, force close the existing connection
     return () => {
       if (connection) connection.forceClose();
     };
-  }, [dispatch, syncNode, connection]);
+  }, [syncNode, connection]);
 
   // If the wallets change, let the websocket service know so that it can keep
   // track of events related to any new wallets

@@ -21,11 +21,10 @@ import Debug from "debug";
 const debug = Debug("kristweb:transactions-card");
 
 const TRANSACTION_THROTTLE = 300;
-async function _fetchTransactions(syncNode: string, wallets: WalletMap): Promise<LookupTransactionsResponse> {
+async function _fetchTransactions(wallets: WalletMap): Promise<LookupTransactionsResponse> {
   debug("fetching transactions");
 
   return lookupTransactions(
-    syncNode,
     Object.values(wallets).map(w => w.address),
     { includeMined: true, limit: 5, orderBy: "id", order: "DESC" }
   );
@@ -44,7 +43,7 @@ export function TransactionsCard(): JSX.Element {
 
   useEffect(() => {
     if (!syncNode || !wallets) return;
-    fetchTxs(syncNode, wallets);
+    fetchTxs(wallets);
   }, [syncNode, wallets, fetchTxs]);
 
   const walletAddressMap = Object.values(wallets)

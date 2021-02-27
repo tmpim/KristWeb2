@@ -4,13 +4,12 @@
 import { toHex } from "../../utils";
 import { aesGcmEncrypt, aesGcmDecrypt } from "../../utils/crypto";
 
-import { AppDispatch } from "../../App";
+import { store } from "../../App";
 import * as actions from "../../store/actions/WalletManagerActions";
 
 /** Verifies that the given master password is correct, and dispatches the
  * auth action to the Redux store. */
 export async function authMasterPassword(
-  dispatch: AppDispatch,
   salt: string | undefined,
   tester: string | undefined,
   password: string
@@ -32,12 +31,12 @@ export async function authMasterPassword(
   }
 
   // Dispatch the auth state changes to the Redux store
-  dispatch(actions.authMasterPassword(password));
+  store.dispatch(actions.authMasterPassword(password));
 }
 
 /** Generates a salt and tester, sets the master password, and dispatches the
  * action to the Redux store. */
-export async function setMasterPassword(dispatch: AppDispatch, password: string): Promise<void> {
+export async function setMasterPassword(password: string): Promise<void> {
   if (!password) throw new Error("masterPassword.errorPasswordRequired");
 
   // Generate the salt (to be encrypted with the master password)
@@ -52,5 +51,5 @@ export async function setMasterPassword(dispatch: AppDispatch, password: string)
   localStorage.setItem("tester", tester);
 
   // Dispatch the auth state changes to the Redux store
-  dispatch(actions.setMasterPassword(saltHex, tester, password));
+  store.dispatch(actions.setMasterPassword(saltHex, tester, password));
 }

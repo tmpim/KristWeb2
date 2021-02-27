@@ -5,7 +5,7 @@ import React, { useState, useRef, FunctionComponent } from "react";
 import { Popover, Button, Input, Form } from "antd";
 import { TooltipPlacement } from "antd/lib/tooltip";
 
-import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import { useSelector, shallowEqual } from "react-redux";
 import { RootState } from "../../store";
 import { useTranslation } from "react-i18next";
 
@@ -26,7 +26,6 @@ interface Props {
 
 export const AuthMasterPasswordPopover: FunctionComponent<Props> = ({ encrypt, onSubmit, placement, children }) => {
   const { salt, tester } = useSelector((s: RootState) => s.walletManager, shallowEqual);
-  const dispatch = useDispatch();
 
   const { t } = useTranslation();
   const [form] = Form.useForm();
@@ -35,7 +34,7 @@ export const AuthMasterPasswordPopover: FunctionComponent<Props> = ({ encrypt, o
 
   async function onFinish(values: FormValues) {
     try {
-      await authMasterPassword(dispatch, salt, tester, values.masterPassword);
+      await authMasterPassword(salt, tester, values.masterPassword);
       onSubmit();
     } catch (e) {
       const message = e.message // Translate the error if we can

@@ -107,9 +107,9 @@ const CHART_OPTIONS_Y_AXIS = {
 };
 
 const WORK_THROTTLE = 500;
-async function _fetchWorkOverTime(syncNode: string, constants: KristConstants): Promise<{ x: Date; y: number }[]> {
+async function _fetchWorkOverTime(constants: KristConstants): Promise<{ x: Date; y: number }[]> {
   debug("fetching work over time");
-  const data = await api.get<{ work: number[] }>(syncNode, "work/day");
+  const data = await api.get<{ work: number[] }>("work/day");
 
   // Convert the array indices to Dates, based on the fact that the array
   // should contain one block per secondsPerBlock (typically 1440 elements,
@@ -142,7 +142,7 @@ export function BlockDifficultyCard(): JSX.Element {
   // changing, which is handled by WebsocketService.
   useEffect(() => {
     if (!syncNode) return;
-    fetchWorkOverTime(syncNode, constants);
+    fetchWorkOverTime(constants);
   }, [syncNode, lastBlockID, constants, constants.seconds_per_block, fetchWorkOverTime]);
 
   function chart(): JSX.Element {

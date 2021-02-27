@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { Table, Tooltip, Dropdown, Tag, Menu, Popconfirm } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
-import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import { useSelector, shallowEqual } from "react-redux";
 import { RootState } from "../../store";
 import { useTranslation } from "react-i18next";
 
@@ -19,13 +19,11 @@ import { Wallet, deleteWallet } from "../../krist/wallets/Wallet";
 import { keyedNullSort, localeSort } from "../../utils";
 
 function WalletActions({ wallet }: { wallet: Wallet }): JSX.Element {
-  const dispatch = useDispatch();
-
   const { t } = useTranslation();
   const [editWalletVisible, setEditWalletVisible] = useState(false);
 
   function onDeleteWallet() {
-    deleteWallet(dispatch, wallet);
+    deleteWallet(wallet);
   }
 
   return <>

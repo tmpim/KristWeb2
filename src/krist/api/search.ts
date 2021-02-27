@@ -35,12 +35,12 @@ interface SearchExtendedResult {
   };
 }
 
-export async function search(syncNode: string, query?: string): Promise<SearchResult | undefined> {
+export async function search(query?: string): Promise<SearchResult | undefined> {
   if (!query) return;
-  return api.get<SearchResult>(syncNode, "search?q=" + encodeURIComponent(query));
+  return api.get<SearchResult>("search?q=" + encodeURIComponent(query));
 }
 
-export async function searchExtended(syncNode: string, query?: string): Promise<SearchExtendedResult | undefined> {
+export async function searchExtended(query?: string): Promise<SearchExtendedResult | undefined> {
   if (!query || query.length < 3) return;
-  return api.get<SearchExtendedResult>(syncNode, "search/extended?q=" + encodeURIComponent(query));
+  return api.get<SearchExtendedResult>("search/extended?q=" + encodeURIComponent(query));
 }
