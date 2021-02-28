@@ -47,7 +47,7 @@ async function evpKDF(password: Uint8Array, keySize: number, ivSize: number,
 
   while (numberOfDerivedWords < targetKeySize) {
     for (let i = 0; i < iterations; i++) {
-      if (block != null) md5.update(block);
+      if (block !== null) md5.update(block);
 
       if (i === 0) { // hash the password and salt on the first iteration only
         md5.update(password);
@@ -58,7 +58,7 @@ async function evpKDF(password: Uint8Array, keySize: number, ivSize: number,
       md5 = new MD5();
     }
 
-    if (block == null)
+    if (block === null)
       throw new Error("EvpKDF block is null!");
 
     const blockLength = Math.min(block.length, (targetKeySize - numberOfDerivedWords) * 4);

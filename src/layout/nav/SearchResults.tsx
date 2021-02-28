@@ -1,5 +1,6 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, FC } from "react";
 import { Typography, Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
 import { Trans, useTranslation } from "react-i18next";
 
@@ -111,5 +112,76 @@ export function ExactTransactionMatch({ transaction }: { transaction: KristTrans
       <KristValue value={transaction.value} />
       <DateTime date={transaction.time} />
     </>}
+  />;
+}
+
+interface ExtendedMatchProps {
+  loading?: boolean;
+  count?: number;
+  query?: ReactNode;
+
+  loadingKey: string;
+  resultKey: string;
+}
+type ExtendedMatchBaseProps = Omit<ExtendedMatchProps, "loadingKey" | "resultKey" | "query"> & { query: string };
+export function ExtendedMatchBase({ loading, count, query, loadingKey, resultKey }: ExtendedMatchProps): JSX.Element {
+  const { t } = useTranslation();
+
+  function Query(): JSX.Element {
+    return <>{query}</>;
+  }
+
+  return <div className="search-result search-result-extended">
+    {/* Result type (e.g. 'Address', 'Transaction') */}
+    <span className="search-result-type">
+      {t("nav.search.resultTransactions")}
+    </span>
+
+    <span className="search-result-extended-info">
+      {loading || typeof count !== "number"
+        ? <>
+          <LoadingOutlined spin />
+          <Trans t={t} i18nKey={loadingKey}>
+            Placeholder <Query />
+          </Trans>
+        </>
+        : <Trans t={t} i18nKey={resultKey} count={count}>
+          <b>{{ count }}</b> placeholder <Query />
+        </Trans>}
+
+    </span>
+  </div>;
+}
+
+export function ExtendedAddressMatch(props: ExtendedMatchBaseProps): JSX.Element {
+  return <ExtendedMatchBase
+    {...props}
+
+    query={<b>{props.query}</b>}
+
+    loadingKey="nav.search.resultTransactionsAddress"
+    resultKey="nav.search.resultTransactionsAddressResult"
+  />;
+}
+
+export function ExtendedNameMatch(props: ExtendedMatchBaseProps): JSX.Element {
+  return <ExtendedMatchBase
+    {...props}
+
+    query={<KristNameLink name={props.query} noLink />}
+
+    loadingKey="nav.search.resultTransactionsName"
+    resultKey="nav.search.resultTransactionsNameResult"
+  />;
+}
+
+export function ExtendedMetadataMatch(props: ExtendedMatchBaseProps): JSX.Element {
+  return <ExtendedMatchBase
+    {...props}
+
+    query={<>&apos;<b>{props.query}</b>&apos;</>}
+
+    loadingKey="nav.search.resultTransactionsMetadata"
+    resultKey="nav.search.resultTransactionsMetadataResult"
   />;
 }

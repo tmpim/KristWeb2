@@ -1,7 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import React, { FunctionComponent } from "react";
+import React, { FC } from "react";
 import { Menu } from "antd";
 import { BugOutlined, GlobalOutlined } from "@ant-design/icons";
 
@@ -14,7 +14,7 @@ import { SettingBoolean } from "./SettingBoolean";
 interface SettingsPageLayoutProps extends PageLayoutProps {
   pageName?: string;
 }
-export const SettingsPageLayout: FunctionComponent<SettingsPageLayoutProps> = ({ pageName, children, ...rest }) => {
+export const SettingsPageLayout: FC<SettingsPageLayoutProps> = ({ pageName, children, ...rest }) => {
   return <PageLayout
     siteTitleKey="settings.siteTitle"
     titleKey="settings.title"

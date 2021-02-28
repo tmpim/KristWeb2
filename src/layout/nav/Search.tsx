@@ -149,40 +149,92 @@ export function Search(): JSX.Element {
   const staticResult = (value: string, label: ReactNode) => [{ value, label }];
 
   function renderResults(): { value: string; label: ReactNode }[] {
-    debug("current state: %b %b %b %b", rateLimitHit, !value.trim(), loading, results);
+    const cleanQuery = value.trim();
+    debug("current state: %b %b %b %b", rateLimitHit, !cleanQuery, loading, results);
 
     // Show a warning instead of the results if the rate limit was hit
     if (rateLimitHit) return staticResult("rateLimitHit", <SearchResults.RateLimitHit />);
     // Don't return anything if there's no query at all
-    if (!value.trim()) return [];
-    // Loading spinner, only if we don't already have some results
-    if (loading && !results) return staticResult("loading", <SearchResults.Loading />);
-    // No results placeholder
-    if (!loading && !results) return staticResult("noResults", <SearchResults.NoResults />);
+    if (!cleanQuery) return [];
 
+    if (!results) {
+      // Loading spinner, only if we don't already have some results
+      if (loading) return staticResult("loading", <SearchResults.Loading />);
+      else return staticResult("noResults", <SearchResults.NoResults />);
+    }
+
+    const resultsMatches = results.matches;
+
+    // The list of results to return for the AutoComplete component
     const options = [];
 
-    if (results) {
-      const { exactAddress, exactName, exactBlock, exactTransaction } = results.matches;
+    // The 'exact match' results; these are pretty immediate and return
+    // definitive data
+    const { exactAddress, exactName, exactBlock, exactTransaction } = resultsMatches;
 
-      if (exactAddress) options.push({
-        value: "address-" + exactAddress.address,
-        label: <SearchResults.ExactAddressMatch address={exactAddress} />
+    if (exactAddress) options.push({
+      value: "address-" + exactAddress.address,
+      label: <SearchResults.ExactAddressMatch address={exactAddress} />
+    });
+    if (exactName) options.push({
+      value: "name-" + exactName.name,
+      label: <SearchResults.ExactNameMatch name={exactName} />
+    });
+    if (exactBlock) options.push({
+      value: "block-" + exactBlock.height,
+      label: <SearchResults.ExactBlockMatch block={exactBlock} />
+    });
+    if (exactTransaction) options.push({
+      value: "transaction-" + exactTransaction.id,
+      label: <SearchResults.ExactTransactionMatch transaction={exactTransaction} />
+    });
+
+    // The 'extended' results; these are counts of transactions and may take a
+    // bit longer to load. They're only shown if the query is longer than 3
+    // characters.
+    if (cleanQuery.length > 3) {
+      // Whether or not to show the loading spinner on the extended items.
+      // This is a pretty poor way to track if the extended results are still
+      // loading some new value.
+      const extendedLoading = loading && (!extendedResults || extendedResults.query.originalQuery !== cleanQuery);
+      const extendedMatches = extendedResults?.matches?.transactions;
+
+      // Do our own checks to preemptively know what kind of transaction results
+      // will be shown. Note that metadata will always be searched.
+      const addressInvolved = extendedMatches?.addressInvolved;
+      const showAddress = (addressInvolved !== false && addressInvolved !== undefined)
+        && exactAddress; // We definitely know the address exists
+
+      const nameInvolved = extendedMatches?.nameInvolved;
+      const showName = (nameInvolved !== false && nameInvolved !== undefined)
+        && exactName; // We definitely know the name exists
+
+      if (showAddress) options.push({
+        value: "transactions-address-" + value,
+        label: <SearchResults.ExtendedAddressMatch
+          loading={extendedLoading}
+          count={typeof addressInvolved === "number" ? addressInvolved : undefined}
+          query={value}
+        />
       });
 
-      if (exactName) options.push({
-        value: "name-" + exactName.name,
-        label: <SearchResults.ExactNameMatch name={exactName} />
+      if (showName) options.push({
+        value: "transactions-name-" + value,
+        label: <SearchResults.ExtendedNameMatch
+          loading={extendedLoading}
+          count={typeof nameInvolved === "number" ? nameInvolved : undefined}
+          query={value}
+        />
       });
 
-      if (exactBlock) options.push({
-        value: "block-" + exactBlock.height,
-        label: <SearchResults.ExactBlockMatch block={exactBlock} />
-      });
-
-      if (exactTransaction) options.push({
-        value: "transaction-" + exactTransaction.id,
-        label: <SearchResults.ExactTransactionMatch transaction={exactTransaction} />
+      // Metadata is always searched
+      options.push({
+        value: "transactions-metadata-" + value,
+        label: <SearchResults.ExtendedMetadataMatch
+          loading={extendedLoading}
+          count={typeof extendedMatches?.metadata === "number" ? extendedMatches.metadata : undefined}
+          query={value}
+        />
       });
     }
 
@@ -193,6 +245,7 @@ export function Search(): JSX.Element {
     <AutoComplete
       // Required to make the dropdown show on an Input.Search:
       dropdownMatchSelectWidth={true}
+      dropdownClassName="site-header-search-menu"
       className="site-header-search"
       value={value}
 

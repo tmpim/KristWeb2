@@ -1,7 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import React, { useState, useRef, FunctionComponent } from "react";
+import React, { useState, useRef, FC } from "react";
 import { Popover, Button, Input, Form } from "antd";
 import { TooltipPlacement } from "antd/lib/tooltip";
 
@@ -24,7 +24,7 @@ interface Props {
   placement?: TooltipPlacement;
 }
 
-export const AuthMasterPasswordPopover: FunctionComponent<Props> = ({ encrypt, onSubmit, placement, children }) => {
+export const AuthMasterPasswordPopover: FC<Props> = ({ encrypt, onSubmit, placement, children }) => {
   const { salt, tester } = useSelector((s: RootState) => s.walletManager, shallowEqual);
 
   const { t } = useTranslation();

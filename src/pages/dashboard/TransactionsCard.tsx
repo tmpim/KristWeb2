@@ -67,7 +67,7 @@ export function TransactionsCard(): JSX.Element {
     </>;
   }
 
-  const isEmpty = !loading && (error || !res || res.count == 0);
+  const isEmpty = !loading && (error || !res || res.count === 0);
 
   return <Card title={t("dashboard.transactionsCardTitle")} className={"dashboard-card dashboard-card-transactions " + (isEmpty ? "empty" : "")}>
     <Skeleton paragraph={{ rows: 4 }} title={false} active loading={loading}>

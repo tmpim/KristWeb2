@@ -7,7 +7,14 @@
 }
 
 .search-result {
-  display: flex;
+  &.search-result-exact {
+    display: flex;
+  }
+
+  &.search-result-extended {
+    background: @kw-dark;
+    transition: background 0.3s ease;
+  }
 
   .search-result-type {
     display: block;
@@ -48,6 +55,33 @@
     .date-time {
       color: @text-color-secondary;
       font-size: 90%;
+    }
+  }
+
+  .search-result-extended-info {
+    font-size: @font-size-sm;
+
+    .anticon {
+      color: @primary-color;
+      margin-right: @padding-xs;
+    }
+  }
+}
+
+.site-header-search-menu {
+  // Remove the padding from the menu, so it can be re-added to the
+  // .search-result-* items, allowing them to change the background
+  padding: 0;
+
+  .ant-select-item {
+    padding: 0;
+
+    .search-result {
+      padding: @select-dropdown-vertical-padding @control-padding-horizontal;
+    }
+
+    &:hover .search-result-extended, &-option-active:not(&-disabled) .search-result-extended {
+      background: @select-item-active-bg;
     }
   }
 }

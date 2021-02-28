@@ -28,9 +28,18 @@
     "eol-last": ["error", "always"],
     "object-shorthand": ["error", "always"],
     "no-unused-vars": 0,
-    "tsdoc/syntax": "warn",
+    "no-lonely-if": "warn",
+    "no-trailing-spaces": "warn",
+    "no-whitespace-before-property": "warn",
+    "space-before-blocks": "warn",
+    "space-in-parens": ["warn", "never"],
+    "space-infix-ops": "warn",
+    "eqeqeq": "warn",
+
     "react/display-name": 0,
     "react/prop-types": 0,
+
+    "tsdoc/syntax": "warn",
     "@typescript-eslint/no-explicit-any": 0,
     "@typescript-eslint/explicit-module-boundary-types": ["warn", {
       "allowArgumentsExplicitlyTypedAsAny": true,
@@ -48,7 +57,12 @@
       "ignoreRestSiblings": true,
       "argsIgnorePattern": "^_"
     }],
-    "@typescript-eslint/no-non-null-assertion": 0
+    "@typescript-eslint/no-non-null-assertion": 0,
+    "@typescript-eslint/space-before-function-paren": ["warn", {
+      "anonymous": "never",
+      "named": "never",
+      "asyncArrow": "always"
+    }]
   },
   "extends": [
     "eslint:recommended",

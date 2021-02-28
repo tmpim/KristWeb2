@@ -1,7 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import React, { FunctionComponent, useState } from "react";
+import React, { FC, useState } from "react";
 import { TooltipPlacement } from "antd/lib/tooltip";
 
 import { useSelector, shallowEqual } from "react-redux";
@@ -18,7 +18,7 @@ interface Props {
   popoverPlacement?: TooltipPlacement;
 }
 
-export const AuthorisedAction: FunctionComponent<Props> = ({ encrypt, onAuthed, popoverPlacement, children }) => {
+export const AuthorisedAction: FC<Props> = ({ encrypt, onAuthed, popoverPlacement, children }) => {
   const { isAuthed, hasMasterPassword }
     = useSelector((s: RootState) => s.walletManager, shallowEqual);
 
