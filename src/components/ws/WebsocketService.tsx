@@ -10,7 +10,7 @@ import { WalletMap } from "../../store/reducers/WalletsReducer";
 import * as wsActions from "../../store/actions/WebsocketActions";
 import * as nodeActions from "../../store/actions/NodeActions";
 
-import * as api from "../../krist/api/api";
+import * as api from "../../krist/api";
 import { KristAddress, KristBlock, KristTransaction, WSConnectionState, WSIncomingMessage, WSSubscriptionLevel } from "../../krist/api/types";
 import { findWalletByAddress, syncWallet, syncWalletUpdate } from "../../krist/wallets/Wallet";
 import WebSocketAsPromised from "websocket-as-promised";

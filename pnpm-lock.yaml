@@ -16,6 +16,7 @@ dependencies:
   i18next-browser-languagedetector: 6.0.1
   i18next-http-backend: 1.1.0
   lodash-es: 4.17.21
+  lru-cache: 6.0.0
   react: 17.0.1
   react-chartjs-2: 2.11.1_6c446a34f83b2a92e3214f8b711c141a
   react-dom: 17.0.1_react@17.0.1
@@ -38,6 +39,7 @@ devDependencies:
   '@types/file-saver': 2.0.1
   '@types/jest': 26.0.20
   '@types/lodash-es': 4.17.4
+  '@types/lru-cache': 5.1.0
   '@types/node': 12.20.0
   '@types/react': 17.0.2
   '@types/react-dom': 17.0.1
@@ -2113,6 +2115,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-oVfRvqHV/V6D1yifJbVRU3TMp8OT6o6BG+U9MkwuJ3U8/CsDHvalRpsxBqivn71ztOFZBTfJMvETbqHiaNSj7Q==
+  /@types/lru-cache/5.1.0:
+    dev: true
+    resolution:
+      integrity: sha512-RaE0B+14ToE4l6UqdarKPnXwVDuigfFv+5j9Dze/Nqr23yyuqdNvzcZi3xB+3Agvi5R4EOgAksfv3lXX4vBt9w==
   /@types/minimatch/3.0.3:
     dev: true
     resolution:
@@ -13632,6 +13638,7 @@ specifiers:
   '@types/file-saver': ^2.0.1
   '@types/jest': ^26.0.20
   '@types/lodash-es': ^4.17.4
+  '@types/lru-cache': ^5.1.0
   '@types/node': ^12.19.16
   '@types/react': ^17.0.1
   '@types/react-dom': ^17.0.0
@@ -13664,6 +13671,7 @@ specifiers:
   i18next-browser-languagedetector: ^6.0.1
   i18next-http-backend: ^1.0.20
   lodash-es: ^4.17.21
+  lru-cache: ^6.0.0
   prettier: ^2.2.1
   react: ^17.0.1
   react-chartjs-2: ^2.11.1

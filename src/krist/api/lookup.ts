@@ -2,7 +2,7 @@
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { KristAddress, KristTransaction } from "./types";
-import * as api from "./api";
+import * as api from ".";
 
 interface LookupAddressesResponse {
   found: number;

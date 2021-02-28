@@ -9,7 +9,7 @@ import * as nodeActions from "../../store/actions/NodeActions";
 
 import { store } from "../../App";
 
-import * as api from "../../krist/api/api";
+import * as api from "../../krist/api";
 import { KristWorkDetailed } from "../../krist/api/types";
 
 import Debug from "debug";

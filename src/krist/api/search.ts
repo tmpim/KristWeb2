@@ -2,9 +2,10 @@
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { KristAddress, KristBlock, KristName, KristTransaction } from "./types";
-import * as api from "./api";
+import * as api from ".";
 
-interface SearchQueryMatch {
+export interface SearchQueryMatch {
+  originalQuery: string;
   matchedAddress: boolean;
   matchedName: boolean;
   matchedBlock: boolean;
@@ -12,7 +13,7 @@ interface SearchQueryMatch {
   strippedName: string;
 }
 
-interface SearchResult {
+export interface SearchResult {
   query: SearchQueryMatch;
 
   matches: {
@@ -23,7 +24,7 @@ interface SearchResult {
   };
 }
 
-interface SearchExtendedResult {
+export interface SearchExtendedResult {
   query: SearchQueryMatch;
 
   matches: {
@@ -37,10 +38,24 @@ interface SearchExtendedResult {
 
 export async function search(query?: string): Promise<SearchResult | undefined> {
   if (!query) return;
-  return api.get<SearchResult>("search?q=" + encodeURIComponent(query));
+
+  return api.get<SearchResult>(
+    "search?q=" + encodeURIComponent(query),
+
+    // Don't show the rate limit notification if it is hit, a message will be
+    // shown in the search box instead
+    { ignoreRateLimit: true }
+  );
 }
 
 export async function searchExtended(query?: string): Promise<SearchExtendedResult | undefined> {
   if (!query || query.length < 3) return;
-  return api.get<SearchExtendedResult>("search/extended?q=" + encodeURIComponent(query));
+
+  return api.get<SearchExtendedResult>(
+    "search/extended?q=" + encodeURIComponent(query),
+
+    // Don't show the rate limit notification if it is hit, a message will be
+    // shown in the search box instead
+    { ignoreRateLimit: true }
+  );
 }

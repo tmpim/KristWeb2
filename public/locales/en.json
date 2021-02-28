@@ -10,7 +10,11 @@
       "connecting": "Connecting"
     },
 
-    "search": "Search the Krist network",
+    "search": {
+      "placeholder": "Search the Krist network",
+      "rateLimitHit": "Please slow down.",
+      "noResults": "No results."
+    },
 
     "send": "Send",
     "request": "Request",

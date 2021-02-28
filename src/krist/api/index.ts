@@ -12,6 +12,10 @@ export class APIError extends Error {
   }
 }
 
+export class RateLimitError extends APIError {
+  constructor() { super("rate_limit_hit"); }
+}
+
 // Realistically, the only situation in which a rate limit will actually be hit
 // by KristWeb is if an infinite loop is introduced (e.g. via useEffect), so we
 // would want to avoid spamming notifications and making the performance bug
@@ -20,7 +24,13 @@ const _notifyRateLimit = () =>
   notification.error({ message: i18n.t("rateLimitTitle"), description: i18n.t("rateLimitDescription") });
 const notifyRateLimit = throttle(_notifyRateLimit, 5000);
 
-export async function request<T>(method: string, endpoint: string, options?: RequestInit): Promise<APIResponse<T>> {
+interface RequestOptions extends RequestInit {
+  /** Suppresses the notification for a rate limited request. An error will
+   * still be thrown. */
+  ignoreRateLimit?: boolean;
+}
+
+export async function request<T>(method: string, endpoint: string, options?: RequestOptions): Promise<APIResponse<T>> {
   const syncNode = store.getState().node.syncNode;
 
   // Let the fetch bubble its error upwards
@@ -30,8 +40,8 @@ export async function request<T>(method: string, endpoint: string, options?: Req
   });
 
   if (res.status === 429) {
-    notifyRateLimit();
-    throw new APIError("rate_limit_hit");
+    if (!options?.ignoreRateLimit) notifyRateLimit();
+    throw new RateLimitError();
   }
 
   const data: APIResponse<T> = await res.json();
@@ -41,7 +51,7 @@ export async function request<T>(method: string, endpoint: string, options?: Req
   return data;
 }
 
-export const get = <T>(endpoint: string, options?: RequestInit): Promise<APIResponse<T>> =>
+export const get = <T>(endpoint: string, options?: RequestOptions): Promise<APIResponse<T>> =>
   request("GET", endpoint, options);
-export const post = <T>(endpoint: string, options?: RequestInit): Promise<APIResponse<T>> =>
+export const post = <T>(endpoint: string, options?: RequestOptions): Promise<APIResponse<T>> =>
   request("POST", endpoint, options);

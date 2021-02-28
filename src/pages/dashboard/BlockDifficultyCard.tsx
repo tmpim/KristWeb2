@@ -10,7 +10,7 @@ import { useTranslation, Trans } from "react-i18next";
 
 import { Line } from "react-chartjs-2";
 
-import * as api from "../../krist/api/api";
+import * as api from "../../krist/api";
 import { estimateHashRate } from "../../utils/currency";
 import { KristConstants } from "../../krist/api/types";
 import { trailingThrottleState } from "../../utils/promiseThrottle";
