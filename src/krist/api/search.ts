@@ -17,10 +17,10 @@ export interface SearchResult {
   query: SearchQueryMatch;
 
   matches: {
-    exactAddress: KristAddress | boolean;
-    exactName: KristName | boolean;
-    exactBlock: KristBlock | boolean;
-    exactTransaction: KristTransaction | boolean;
+    exactAddress: KristAddress | false;
+    exactName: KristName | false;
+    exactBlock: KristBlock | false;
+    exactTransaction: KristTransaction | false;
   };
 }
 
@@ -29,9 +29,9 @@ export interface SearchExtendedResult {
 
   matches: {
     transactions: {
-      addressInvolved: number | boolean;
-      nameInvolved: number | boolean;
-      metadata: number | boolean;
+      addressInvolved: number | false;
+      nameInvolved: number | false;
+      metadata: number | false;
     };
   };
 }

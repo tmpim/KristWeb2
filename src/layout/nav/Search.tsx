@@ -2,19 +2,19 @@
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React, { useState, useMemo, useRef, MutableRefObject, Dispatch, SetStateAction, ReactNode } from "react";
-import { AutoComplete, Input, Typography, Spin } from "antd";
+import { AutoComplete, Input } from "antd";
 
 import { useTranslation } from "react-i18next";
 
 import { RateLimitError } from "../../krist/api";
-import { SearchResult, search, searchExtended } from "../../krist/api/search";
+import { SearchResult, search, searchExtended, SearchExtendedResult } from "../../krist/api/search";
 import { throttle, debounce } from "lodash-es";
 import LRU from "lru-cache";
 
+import * as SearchResults from "./SearchResults";
+
 import Debug from "debug";
 const debug = Debug("kristweb:search");
-
-const { Text } = Typography;
 
 const SEARCH_THROTTLE = 500;
 const SEARCH_RATE_LIMIT_WAIT = 5000;
@@ -23,31 +23,24 @@ async function performAutocomplete(
   query: string,
   waitingForRef: MutableRefObject<string>,
   setResults: (query: string, results: SearchResult | undefined) => void,
-  setRateLimitHit: Dispatch<SetStateAction<boolean>>
+  setExtendedResults: (query: string, results: SearchExtendedResult | undefined) => void,
+  onRateLimitHit: () => void
 ) {
   debug("performing search for %s", query);
 
-  // Store the most recent search query so that the results don't arrive
-  // out of order.
+  // Store the most recent search query so that the results don't arrive out of
+  // order.
   waitingForRef.current = query;
 
   try {
-    const results = await search(query);
-    setResults(query, results);
+    await Promise.all([
+      search(query).then(r => setResults(query, r)),
+      searchExtended(query).then(r => setExtendedResults(query, r)),
+    ]);
   } catch (err) {
     // Most likely error is `rate_limit_hit`:
-    if (err instanceof RateLimitError) {
-      // Lyqydate the search input and wait 5 seconds before unlocking it
-      debug("rate limit hit, locking input for 5 seconds");
-      setRateLimitHit(true);
-
-      setTimeout(() => {
-        debug("unlocking input");
-        setRateLimitHit(false);
-      }, SEARCH_RATE_LIMIT_WAIT);
-    } else {
-      console.error(err);
-    }
+    if (err instanceof RateLimitError) onRateLimitHit();
+    else console.error(err);
   }
 }
 
@@ -56,6 +49,7 @@ export function Search(): JSX.Element {
 
   const [value, setValue] = useState("");
   const [results, setResults] = useState<SearchResult | undefined>();
+  const [extendedResults, setExtendedResults] = useState<SearchExtendedResult | undefined>();
   const [loading, setLoading] = useState(false);
   const [rateLimitHit, setRateLimitHit] = useState(false);
 
@@ -71,36 +65,61 @@ export function Search(): JSX.Element {
   // The cache is cleared each time the search is focused to keep the results
   // fresh.
   const searchCache = useMemo(() => new LRU<string, SearchResult>({ max: 100, maxAge : 300000 }), []);
+  const searchExtendedCache = useMemo(() => new LRU<string, SearchExtendedResult>({ max: 100, maxAge : 300000 }), []);
 
-  function cachedSetResults(query: string, results: SearchResult | undefined) {
-    // Cowardly refuse to perform any search if the rate limit was hit
-    if (!results || rateLimitHit) return setResults(undefined);
+  // Create a function to set the results for a given result type
+  const cachedSetResultsBase =
+    <T extends SearchResult | SearchExtendedResult>(cache: LRU<string, T>, setResultsFn: Dispatch<SetStateAction<T | undefined>>) =>
+      (query: string, results: T | undefined) => {
+        // Cowardly refuse to perform any search if the rate limit was hit
+        if (!results || rateLimitHit) return setResultsFn(undefined);
 
-    // If this result isn't for the most recent search query (i.e. it arrived
-    // out of order), ignore it
-    if (query !== waitingForRef.current) {
-      debug("ignoring out of order query %s (we need %s)", query, waitingForRef.current);
-      return;
-    }
+        // If this result isn't for the most recent search query (i.e. it
+        // arrived out of order), ignore it
+        if (query !== waitingForRef.current) {
+          debug("ignoring out of order query %s (we need %s)", query, waitingForRef.current);
+          return;
+        }
 
-    searchCache.set(query, results);
-    setResults(results);
-    setLoading(false);
+        cache.set(query, results);
+        setResultsFn(results);
+        setLoading(false);
+      };
+
+  const cachedSetResults = cachedSetResultsBase(searchCache, setResults);
+  const cachedSetExtendedResults = cachedSetResultsBase(searchExtendedCache, setExtendedResults);
+
+  function onRateLimitHit() {
+    // Ignore repeated rate limit errors
+    if (rateLimitHit) return;
+
+    // Lyqydate the search input and wait 5 seconds before unlocking it
+    debug("rate limit hit, locking input for 5 seconds");
+    setRateLimitHit(true);
+
+    setTimeout(() => {
+      debug("unlocking input");
+      setRateLimitHit(false);
+    }, SEARCH_RATE_LIMIT_WAIT);
   }
 
   function onSearch(query: string) {
+    debug("query: %s", query);
+
     // Cowardly refuse to perform any search if the rate limit was hit
     if (rateLimitHit) return;
 
     const cleanQuery = query.trim();
     if (!cleanQuery) {
+      setResults(undefined);
       setLoading(false);
-      return setResults(undefined);
+      return;
     }
 
     // Use the search cache if possible, to avoid unnecessary network requests
     const cached = searchCache.get(cleanQuery);
-    if (cached) {
+    const cachedExtended = searchExtendedCache.get(cleanQuery);
+    if (cached || cachedExtended) {
       debug("using cached result for %s", query);
 
       // Ensure that an out of order request doesn't overwrite our cached result
@@ -110,7 +129,9 @@ export function Search(): JSX.Element {
       throttledAutocomplete.cancel();
       debouncedAutocomplete.cancel();
 
-      setResults(cached);
+      if (cached) setResults(cached);
+      if (cachedExtended) setExtendedResults(cachedExtended);
+
       setLoading(false);
       return;
     }
@@ -122,40 +143,50 @@ export function Search(): JSX.Element {
     // Eagerly use `throttle` for short inputs, and patiently use `debounce` for
     // longer inputs.
     const fn = cleanQuery.length < 5 ? throttledAutocomplete : debouncedAutocomplete;
-    fn(cleanQuery, waitingForRef, cachedSetResults, setRateLimitHit);
+    fn(cleanQuery, waitingForRef, cachedSetResults, cachedSetExtendedResults, onRateLimitHit);
   }
 
+  const staticResult = (value: string, label: ReactNode) => [{ value, label }];
+
   function renderResults(): { value: string; label: ReactNode }[] {
+    debug("current state: %b %b %b %b", rateLimitHit, !value.trim(), loading, results);
+
     // Show a warning instead of the results if the rate limit was hit
-    if (rateLimitHit) {
-      return [{
-        value: "rate_limit_hit",
-        label: <Text type="secondary">{t("nav.search.rateLimitHit")}</Text>
-      }];
-    }
-
+    if (rateLimitHit) return staticResult("rateLimitHit", <SearchResults.RateLimitHit />);
     // Don't return anything if there's no query at all
-    const cleanQuery = value.trim();
-    if (!cleanQuery) return [];
-
+    if (!value.trim()) return [];
     // Loading spinner, only if we don't already have some results
-    if (loading && !results) {
-      return [{ value: "loading", label: (
-        <div style={{ display: "flex", justifyContent: "center", paddingTop: 6 }}>
-          <Spin />
-        </div>
-      )}];
-    }
-
+    if (loading && !results) return staticResult("loading", <SearchResults.Loading />);
     // No results placeholder
-    if (!loading && !results) {
-      return [{
-        value: "no_results",
-        label: <Text type="secondary">{t("nav.search.noResults")}</Text>
-      }];
+    if (!loading && !results) return staticResult("noResults", <SearchResults.NoResults />);
+
+    const options = [];
+
+    if (results) {
+      const { exactAddress, exactName, exactBlock, exactTransaction } = results.matches;
+
+      if (exactAddress) options.push({
+        value: "address-" + exactAddress.address,
+        label: <SearchResults.ExactAddressMatch address={exactAddress} />
+      });
+
+      if (exactName) options.push({
+        value: "name-" + exactName.name,
+        label: <SearchResults.ExactNameMatch name={exactName} />
+      });
+
+      if (exactBlock) options.push({
+        value: "block-" + exactBlock.height,
+        label: <SearchResults.ExactBlockMatch block={exactBlock} />
+      });
+
+      if (exactTransaction) options.push({
+        value: "transaction-" + exactTransaction.id,
+        label: <SearchResults.ExactTransactionMatch transaction={exactTransaction} />
+      });
     }
 
-    return [];
+    return options;
   }
 
   return <div className="site-header-search-container">

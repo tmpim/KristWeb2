@@ -1,0 +1,53 @@
+@import (reference) "../../App.less";
+
+.search-result-loading {
+  display: flex;
+  justify-content: center;
+  padding-top: 6px;
+}
+
+.search-result {
+  display: flex;
+
+  .search-result-type {
+    display: block;
+
+    color: @text-color-secondary;
+    font-size: @font-size-sm;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .search-result-value {
+    font-weight: bold;
+  }
+
+  .result-left {
+    flex: 1;
+  }
+
+  .result-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+
+    flex: 0;
+
+    text-align: right;
+
+    .krist-value {
+      font-size: @font-size-lg;
+    }
+
+    .search-name-owner, .search-block-miner {
+      display: block;
+      color: @text-color-secondary;
+    }
+
+    .date-time {
+      color: @text-color-secondary;
+      font-size: 90%;
+    }
+  }
+}

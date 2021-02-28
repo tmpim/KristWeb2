@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import { KristTransaction } from "../../krist/api/types";
 import { Wallet } from "../../krist/wallets/Wallet";
 import { KristValue } from "../../components/KristValue";
-import { KristName } from "../../components/KristName";
+import { KristNameLink } from "../../components/KristNameLink";
 import { ContextualAddress } from "../../components/ContextualAddress";
 
 type InternalTxType = "transferred" | "sent" | "received" | "mined" |
@@ -106,7 +106,7 @@ export function TransactionItem({ transaction: tx, wallets }: Props): JSX.Elemen
       {(type === "name_a_record" || type === "name_purchased") && (
         <span className="transaction-name"><Trans t={t} i18nKey="dashboard.transactionItemName">
           <span className="transaction-field">Name:</span>
-          <KristName name={tx.name || ""} className="transaction-name" />
+          <KristNameLink name={tx.name || ""} className="transaction-name" />
         </Trans></span>
       )}
 
@@ -156,7 +156,7 @@ export function TransactionItem({ transaction: tx, wallets }: Props): JSX.Elemen
         )
         : tx.type === "name_transfer" && (
           // Transaction name
-          <KristName name={tx.name || ""} className="transaction-name" />
+          <KristNameLink name={tx.name || ""} className="transaction-name" />
         )}
     </Col>
   </Row>;

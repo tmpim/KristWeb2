@@ -14,7 +14,7 @@ import { Wallet } from "../krist/wallets/Wallet";
 import { parseCommonMeta, CommonMeta } from "../utils/commonmeta";
 import { stripNameSuffix } from "../utils/currency";
 
-import { KristName } from "./KristName";
+import { KristNameLink } from "./KristNameLink";
 
 import "./ContextualAddress.less";
 
@@ -44,7 +44,7 @@ export function AddressMetaname({ nameSuffix, address, commonMeta, source, hideN
     ? <>
       {/* Display the name/metaname (e.g. foo@bar.kst) */}
       {metaname && <><span className="address-metaname">{metaname}@</span></>}
-      <KristName name={nameWithoutSuffix!} className="address-name" />
+      <KristNameLink name={nameWithoutSuffix!} className="address-name" />
 
       {/* Display the original address too */}
       {!hideNameAddress && <>

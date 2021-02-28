@@ -13,7 +13,24 @@
     "search": {
       "placeholder": "Search the Krist network",
       "rateLimitHit": "Please slow down.",
-      "noResults": "No results."
+      "noResults": "No results.",
+
+      "resultAddress": "Address",
+      "resultName": "Name",
+      "resultNameOwner": "Owned by <1 />",
+      "resultBlockID": "Block ID",
+      "resultBlockIDMinedBy": "Mined by <1 />",
+      "resultTransactionID": "Transaction ID",
+      "resultTransactions": "Transactions",
+      "resultTransactionsAddress": "Search for transactions involving <1 />",
+      "resultTransactionsAddressResult": "<1>{{count}}</1> transaction involving <3 />",
+      "resultTransactionsAddressResult_plural": "<1>{{count}}</1> transactions involving <3 />",
+      "resultTransactionsName": "Search for transactions involving <1 />",
+      "resultTransactionsNameResult": "<1>{{count}}</1> transaction sent to <3 />",
+      "resultTransactionsNameResult_plural": "<1>{{count}}</1> transactions sent to <3 />",
+      "resultTransactionsMetadata": "Searching for metadata containing <1 />",
+      "resultTransactionsMetadataResult": "<1>{{count}}</1> transaction with metadata containing <3 />",
+      "resultTransactionsMetadataResult_plural": "<1>{{count}}</1> transactions with metadata containing <3 />"
     },
 
     "send": "Send",
