@@ -7,6 +7,8 @@ import { Switch, Route } from "react-router-dom";
 import { DashboardPage } from "../pages/dashboard/DashboardPage";
 import { WalletsPage } from "../pages/wallets/WalletsPage";
 
+import { AddressPage } from "../pages/addresses/AddressPage";
+
 import { SettingsPage } from "../pages/settings/SettingsPage";
 import { SettingsTranslations } from "../pages/settings/SettingsTranslations";
 
@@ -21,14 +23,16 @@ interface AppRoute {
 }
 
 export const APP_ROUTES: AppRoute[] = [
-  { path: "/",        name: "dashboard", component: <DashboardPage /> },
-  { path: "/wallets", name: "wallets",   component: <WalletsPage /> },
+  { path: "/",                            name: "dashboard", component: <DashboardPage /> },
+  { path: "/wallets",                     name: "wallets",   component: <WalletsPage /> },
 
-  { path: "/settings",                    name: "settings", component: <SettingsPage /> },
+  { path: "/network/addresses/:address",  name: "address",   component: <AddressPage /> },
+
+  { path: "/settings",                    name: "settings",  component: <SettingsPage /> },
   { path: "/settings/debug",              name: "settingsDebug" },
-  { path: "/settings/debug/translations", name: "settings", component: <SettingsTranslations /> },
+  { path: "/settings/debug/translations", name: "settings",  component: <SettingsTranslations /> },
 
-  { path: "/credits", name: "credits", component: <CreditsPage /> },
+  { path: "/credits",                     name: "credits",   component: <CreditsPage /> },
 ];
 
 export function AppRouter(): JSX.Element {

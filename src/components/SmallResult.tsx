@@ -6,6 +6,7 @@
  * images that we don't even use */
 
 import React from "react";
+import classNames from "classnames";
 
 import CheckCircleFilled from "@ant-design/icons/CheckCircleFilled";
 import CloseCircleFilled from "@ant-design/icons/CloseCircleFilled";
@@ -28,6 +29,7 @@ export interface ResultProps {
   extra?: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
+  fullPage?: boolean;
 }
 
 /**
@@ -50,9 +52,14 @@ export const SmallResult: React.FC<ResultProps>  = ({
   status = "info",
   icon,
   extra,
+  fullPage,
 }) => {
+  const classes = classNames("ant-result", "ant-result-" + status, customizeClassName, {
+    "full-page-result": fullPage
+  });
+
   return (
-    <div className={"ant-result ant-result-" + status + " " + (customizeClassName || "")} style={style}>
+    <div className={classes} style={style}>
       {renderIcon({ status, icon })}
       <div className="ant-result-title">{title}</div>
       {subTitle && <div className="ant-result-subtitle">{subTitle}</div>}

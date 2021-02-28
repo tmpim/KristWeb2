@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import { Wallet } from "../../krist/wallets/Wallet";
 
 import { KristValue } from "../../components/KristValue";
-import { Statistic } from "./Statistic";
+import { Statistic } from "../../components/Statistic";
 import { WalletItem } from "./WalletItem";
 
 import { keyedNullSort } from "../../utils";
@@ -34,7 +34,7 @@ export function WalletOverviewCard(): JSX.Element {
   topWallets.reverse();
   const top4Wallets = topWallets.slice(0, 4);
 
-  return <Card title={t("dashboard.walletOverviewCardTitle")} className="dashboard-card dashboard-card-wallets">
+  return <Card title={t("dashboard.walletOverviewCardTitle")} className="kw-card dashboard-card-wallets">
     <Row gutter={16} className="dashboard-wallets-top-row">
       <Col span={24} xl={12} className="dashboard-wallets-balance">
         <Statistic

@@ -4,6 +4,8 @@
 import { notification } from "antd";
 import i18n from "../../utils/i18n";
 
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 import { store } from "../../App";
 
 import { APIResponse } from "./types";
@@ -58,3 +60,7 @@ export const get = <T>(endpoint: string, options?: RequestOptions): Promise<APIR
   request("GET", endpoint, options);
 export const post = <T>(endpoint: string, options?: RequestOptions): Promise<APIResponse<T>> =>
   request("POST", endpoint, options);
+
+/** Re-usable syncNode hook, usually for refreshing things when the syncNode
+ * changes. */
+export const useSyncNode = (): string => useSelector((s: RootState) => s.node.syncNode);

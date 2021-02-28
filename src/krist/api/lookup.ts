@@ -32,6 +32,20 @@ export async function lookupAddresses(addresses: string[], fetchNames?: boolean)
   return {};
 }
 
+/** Uses the lookup API to retrieve a single address. */
+export async function lookupAddress(address: string, fetchNames?: boolean): Promise<KristAddressWithNames> {
+  const data = await api.get<LookupAddressesResponse>(
+    "lookup/addresses/"
+    + encodeURIComponent(address)
+    + (fetchNames ? "?fetchNames" : "")
+  );
+
+  const kristAddress = data.addresses[address];
+  if (!kristAddress) throw new api.APIError("address_not_found");
+
+  return kristAddress;
+}
+
 interface LookupTransactionsOptions {
   includeMined?: boolean;
   limit?: number;

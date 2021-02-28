@@ -1,0 +1,61 @@
+// Copyright (c) 2020-2021 Drew Lemmy
+// This file is part of KristWeb 2 under GPL-3.0.
+// Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
+@import (reference) "../App.less";
+
+.kw-card {
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+
+  border: none;
+  border-radius: @kw-big-card-border-radius;
+
+  .ant-card-head {
+    border-bottom: 0;
+    margin-bottom: 0;
+
+    border-radius: @kw-big-card-border-radius @kw-big-card-border-radius 0 0;
+
+    .ant-card-head-title {
+      padding-bottom: 0;
+    }
+  }
+
+  .ant-card-body {
+    padding-top: @padding-sm;
+  }
+
+  &.empty .ant-card-body {
+    height: 100%;
+    padding-top: 0;
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &::before, &::after {
+      content: none;
+    }
+
+    .ant-empty-normal {
+      margin: 0;
+    }
+
+    .ant-result {
+      padding: @padding-sm;
+
+      .ant-result-icon {
+        margin-bottom: @margin-xs;
+
+        .anticon { font-size: 48px; }
+      }
+    }
+
+    @media (max-width: @screen-lg) {
+      padding: @margin-md 0;
+    }
+  }
+}

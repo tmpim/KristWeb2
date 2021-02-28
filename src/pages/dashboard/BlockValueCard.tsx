@@ -20,7 +20,7 @@ export function BlockValueCard(): JSX.Element {
   const work = useSelector((s: RootState) => s.node.detailedWork);
   const hasNames = (work?.unpaid || 0) > 0;
 
-  return <Card title={t("dashboard.blockValueCardTitle")} className="dashboard-card dashboard-card-block-value">
+  return <Card title={t("dashboard.blockValueCardTitle")} className="kw-card dashboard-card-block-value">
     <Skeleton paragraph={{ rows: 2 }} title={false} active loading={!work}>
       {work && <>
         {/* Main block value */}

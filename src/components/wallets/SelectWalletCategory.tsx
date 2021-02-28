@@ -42,8 +42,8 @@ export function SelectWalletCategory({ onNewCategory }: Props): JSX.Element {
     setCategories(newCategories);
     setInput(undefined);
 
-    // TODO: fix bug where hitting enter will _sometimes_ not set the right
-    //       category name on the form
+    // FIXME: hitting enter will _sometimes_ not set the right category name on
+    //        the form
 
     if (onNewCategory) onNewCategory(categoryName);
   }

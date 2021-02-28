@@ -227,7 +227,7 @@ class WebsocketConnection {
 
 export function WebsocketService(): JSX.Element | null {
   const { wallets } = useSelector((s: RootState) => s.wallets, shallowEqual);
-  const syncNode = useSelector((s: RootState) => s.node.syncNode);
+  const syncNode = api.useSyncNode();
 
   const [connection, setConnection] = useState<WebsocketConnection | undefined>();
 

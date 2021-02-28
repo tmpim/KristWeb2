@@ -12,6 +12,7 @@
 
     "search": {
       "placeholder": "Search the Krist network",
+      "placeholderShortcut": "Search the Krist network ({{shortcut}})",
       "rateLimitHit": "Please slow down.",
       "noResults": "No results.",
 
@@ -327,5 +328,30 @@
   },
 
   "rateLimitTitle": "Rate limit hit",
-  "rateLimitDescription": "Too many requests were sent to the Krist server in a short period of time. This is probably caused by a bug!"
+  "rateLimitDescription": "Too many requests were sent to the Krist server in a short period of time. This is probably caused by a bug!",
+
+  "address": {
+    "title": "Address",
+    "balance": "Current balance",
+    "names": "Names",
+    "nameCount": "{{count, number}} name",
+    "nameCount_plural": "{{count, number}} names",
+    "firstSeen": "First seen",
+
+    "buttonSendKrist": "Send Krist to {{address}}",
+    "buttonTransferKrist": "Transfer Krist to {{address}}",
+    "buttonAddFriend": "Add to address book",
+    "buttonEditFriend": "Edit in address book",
+    "buttonEditWallet": "Edit wallet",
+
+    "cardRecentTransactionsTitle": "Recent transactions",
+    "cardNamesTitle": "Names",
+
+    "resultInvalidTitle": "Invalid address",
+    "resultInvalid": "That does not look like a valid Krist address.",
+    "resultNotFoundTitle": "Address not found",
+    "resultNotFound": "That address does not exist.",
+    "resultUnknownTitle": "Unknown error",
+    "resultUnknown": "See console for details."
+  }
 }

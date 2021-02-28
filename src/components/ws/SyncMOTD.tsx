@@ -28,7 +28,7 @@ export async function updateMOTD(): Promise<void> {
 
 /** Sync the MOTD with the Krist node on startup. */
 export function SyncMOTD(): JSX.Element | null {
-  const syncNode = useSelector((s: RootState) => s.node.syncNode);
+  const syncNode = api.useSyncNode();
   const connectionState = useSelector((s: RootState) => s.websocket.connectionState);
 
   // All these are used to determine if we need to recalculate the addresses

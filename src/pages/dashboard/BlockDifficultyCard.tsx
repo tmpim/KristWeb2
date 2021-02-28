@@ -2,6 +2,7 @@
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React, { useState, useEffect, useMemo } from "react";
+import classNames from "classnames";
 import { Card, Skeleton, Empty, Row, Col, Tooltip, Select } from "antd";
 
 import { useSelector, shallowEqual } from "react-redux";
@@ -16,7 +17,7 @@ import { KristConstants } from "../../krist/api/types";
 import { trailingThrottleState } from "../../utils/promiseThrottle";
 
 import { SmallResult } from "../../components/SmallResult";
-import { Statistic } from "./Statistic";
+import { Statistic } from "../../components/Statistic";
 
 import Debug from "debug";
 const debug = Debug("kristweb:block-difficulty-card");
@@ -123,7 +124,7 @@ async function _fetchWorkOverTime(constants: KristConstants): Promise<{ x: Date;
 export function BlockDifficultyCard(): JSX.Element {
   const { t } = useTranslation();
 
-  const syncNode = useSelector((s: RootState) => s.node.syncNode);
+  const syncNode = api.useSyncNode();
   const lastBlockID = useSelector((s: RootState) => s.node.lastBlockID);
   const work = useSelector((s: RootState) => s.node.detailedWork?.work);
   const constants = useSelector((s: RootState) => s.node.constants, shallowEqual);
@@ -221,8 +222,11 @@ export function BlockDifficultyCard(): JSX.Element {
   }
 
   const isEmpty = !loading && error;
+  const classes = classNames("kw-card", "dashboard-card-block-difficulty", {
+    "empty": isEmpty
+  });
 
-  return <Card title={t("dashboard.blockDifficultyCardTitle")} className={"dashboard-card dashboard-card-block-difficulty " + (isEmpty ? "empty" : "")}>
+  return <Card title={t("dashboard.blockDifficultyCardTitle")} className={classes}>
     <Skeleton paragraph={{ rows: 2 }} title={false} active loading={loading}>
       {error
         ? <SmallResult status="error" title={t("error")} subTitle={t("dashboard.blockDifficultyError")} />

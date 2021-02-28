@@ -3,10 +3,13 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 @import (reference) "../App.less";
 
-.page-not-found {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.kw-statistic {
+  &-title {
+    color: @kw-text-secondary;
+    display: block;
+  }
 
-  height: calc(100vh - @layout-header-height);
+  &-value {
+    font-size: @heading-3-size;
+  }
 }

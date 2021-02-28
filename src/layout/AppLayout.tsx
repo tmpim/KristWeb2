@@ -6,7 +6,7 @@ import { Layout, Grid } from "antd";
 
 import { AppHeader } from "./nav/AppHeader";
 import { Sidebar } from "./sidebar/Sidebar";
-import { AppRouter } from "./AppRouter";
+import { AppRouter } from "../global/AppRouter";
 
 import "./AppLayout.less";
 

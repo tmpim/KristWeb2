@@ -4,52 +4,35 @@
 import React, { Suspense } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 
-import { createStore } from "redux";
 import { Provider } from "react-redux";
-import { devToolsEnhancer } from "redux-devtools-extension";
-import rootReducer from "./store/reducers/RootReducer";
+import { initStore } from "./store/init";
 
-import { getInitialWalletManagerState } from "./store/reducers/WalletManagerReducer";
-import { getInitialWalletsState } from "./store/reducers/WalletsReducer";
-import { getInitialSettingsState } from "./store/reducers/SettingsReducer";
-import { getInitialNodeState } from "./store/reducers/NodeReducer";
+import { HotKeys } from "react-hotkeys";
+import { keyMap } from "./global/AppHotkeys";
 
 // Set up localisation
 import "./utils/i18n";
 
+// FIXME: Apparently the import order of my CSS is important. Who knew!
 import "./App.less";
-import { SyncWallets } from "./components/wallets/SyncWallets";
-import { ForcedAuth } from "./components/auth/ForcedAuth";
-import { WebsocketService } from "./components/ws/WebsocketService";
-import { SyncWork } from "./components/ws/SyncWork";
-import { SyncMOTD } from "./components/ws/SyncMOTD";
-import { CheckStatus } from "./pages/CheckStatus";
 
-export const store = createStore(
-  rootReducer,
-  {
-    walletManager: getInitialWalletManagerState(),
-    wallets: getInitialWalletsState(),
-    settings: getInitialSettingsState(),
-    node: getInitialNodeState()
-  },
-  devToolsEnhancer({})
-);
+import { CheckStatus } from "./pages/CheckStatus";
+import { AppServices } from "./global/AppServices";
+
+export const store = initStore();
 export type AppDispatch = typeof store.dispatch;
 
 function App(): JSX.Element {
   return <Suspense fallback="Loading (TODO)"> {/* TODO */}
     <Provider store={store}>
-      <Router>
-        <CheckStatus />
+      <HotKeys keyMap={keyMap}>
+        <Router>
+          <CheckStatus />
 
-        {/* Services, etc. */}
-        <SyncWallets />
-        <SyncWork />
-        <SyncMOTD />
-        <ForcedAuth />
-        <WebsocketService />
-      </Router>
+          {/* Services, etc. */}
+          <AppServices />
+        </Router>
+      </HotKeys>
     </Provider>
   </Suspense>;
 }

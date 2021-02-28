@@ -4,11 +4,17 @@
 @import (reference) "../App.less";
 
 .page-layout {
+  height: 100%;
+
   .page-layout-header.ant-page-header {
+    height: @kw-page-header-height;
+
     padding-bottom: 0;
   }
 
   .page-layout-contents {
+    height: calc(100% - @kw-page-header-height);
+
     padding: @padding-lg;
   }
 }

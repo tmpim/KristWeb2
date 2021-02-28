@@ -23,17 +23,17 @@ type SidebarItemProps = MenuItemProps & {
   group?: "network";
 }
 const sidebarItems: SidebarItemProps[] = [
-  { icon: <HomeOutlined />, name: "dashboard", to: "/" },
-  { icon: <WalletOutlined />, name: "myWallets", to: "/wallets" },
-  { icon: <TeamOutlined />, name: "addressBook", to: "/friends", nyi: true },
-  { icon: <BankOutlined />, name: "transactions", to: "/me/transactions", nyi: true },
-  { icon: <TagsOutlined />, name: "names", to: "/me/names", nyi: true },
-  { icon: <SketchOutlined />, name: "mining", to: "/mining", nyi: true },
+  { icon: <HomeOutlined />,   name: "dashboard",    to: "/" },
+  { icon: <WalletOutlined />, name: "myWallets",    to: "/wallets" },
+  { icon: <TeamOutlined />,   name: "addressBook",  to: "/friends",         nyi: true },
+  { icon: <BankOutlined />,   name: "transactions", to: "/me/transactions", nyi: true },
+  { icon: <TagsOutlined />,   name: "names",        to: "/me/names",        nyi: true },
+  { icon: <SketchOutlined />, name: "mining",       to: "/mining",          nyi: true },
 
-  { group: "network", icon: <BuildOutlined />, name: "blocks", to: "/network/blocks", nyi: true },
-  { group: "network", icon: <BankOutlined />, name: "transactions", to: "/network/transactions", nyi: true },
-  { group: "network", icon: <TagsOutlined />, name: "names", to: "/network/names", nyi: true },
-  { group: "network", icon: <StockOutlined />, name: "statistics", to: "/network/statistics", nyi: true },
+  { group: "network", icon: <BuildOutlined />, name: "blocks",       to: "/network/blocks",       nyi: true },
+  { group: "network", icon: <BankOutlined />,  name: "transactions", to: "/network/transactions", nyi: true },
+  { group: "network", icon: <TagsOutlined />,  name: "names",        to: "/network/names",        nyi: true },
+  { group: "network", icon: <StockOutlined />, name: "statistics",   to: "/network/statistics",   nyi: true },
 ];
 
 function getSidebarItems(t: TFunction<string>, group?: string) {

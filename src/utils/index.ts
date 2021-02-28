@@ -87,3 +87,14 @@ export const keyedNullSort = <T>(key: keyof T, human?: boolean) => (a: T, b: T, 
 
 // eslint-disable-next-line react-hooks/exhaustive-deps
 export const useMountEffect = (fn: EffectCallback): void => useEffect(fn, []);
+
+
+/**
+ * Returns the ⌘ (command) symbol on macOS, and "Ctrl" everywhere else.
+ *
+ * NOTE: This is only evaluated on initial page load.
+ *
+ * REVIEW: This is a rather crude way to detect the platform, but it's the only
+ *         method I could find online (with an admittedly non-exhaustive search)
+ */
+export const ctrl = /mac/i.test(navigator.platform) ? "\u2318" : "Ctrl";

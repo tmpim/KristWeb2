@@ -17,7 +17,7 @@ interface OwnProps {
   hideNullish?: boolean;
   green?: boolean;
   highlightZero?: boolean;
-};
+}
 type Props = React.HTMLProps<HTMLSpanElement> & OwnProps;
 
 export const KristValue = ({ value, long, hideNullish, green, highlightZero, ...props }: Props): JSX.Element | null => {
