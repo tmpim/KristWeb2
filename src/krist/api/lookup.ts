@@ -52,11 +52,13 @@ export async function lookupAddress(address: string, fetchNames?: boolean): Prom
 // =============================================================================
 // Transactions
 // =============================================================================
-interface LookupTransactionsOptions {
+export type SortableTransactionFields = "id" | "from" | "to" | "value" | "time"
+  | "sent_name" | "sent_metaname";
+export interface LookupTransactionsOptions {
   includeMined?: boolean;
   limit?: number;
   offset?: number;
-  orderBy?: "id" | "from" | "to" | "value" | "time";
+  orderBy?: SortableTransactionFields;
   order?: "ASC" | "DESC";
 }
 
@@ -66,9 +68,7 @@ export interface LookupTransactionsResponse {
   transactions: KristTransaction[];
 }
 
-export async function lookupTransactions(addresses: string[], opts: LookupTransactionsOptions): Promise<LookupTransactionsResponse> {
-  if (!addresses || addresses.length === 0) return { count: 0, total: 0, transactions: [] };
-
+export async function lookupTransactions(addresses: string[] | undefined, opts: LookupTransactionsOptions): Promise<LookupTransactionsResponse> {
   const qs = new URLSearchParams();
   if (opts.includeMined) qs.append("includeMined", "");
   if (opts.limit) qs.append("limit", opts.limit.toString());
@@ -78,7 +78,9 @@ export async function lookupTransactions(addresses: string[], opts: LookupTransa
 
   return await api.get<LookupTransactionsResponse>(
     "lookup/transactions/"
-    + encodeURIComponent(addresses.join(","))
+    + (addresses && addresses.length > 0
+      ? encodeURIComponent(addresses.join(","))
+      : "")
     + "?" + qs
   );
 }
@@ -86,10 +88,12 @@ export async function lookupTransactions(addresses: string[], opts: LookupTransa
 // =============================================================================
 // Names
 // =============================================================================
-interface LookupNamesOptions {
+export type SortableNameFields = "name" | "owner" | "original_owner"
+  | "registered" | "updated" | "a" | "unpaid";
+export interface LookupNamesOptions {
   limit?: number;
   offset?: number;
-  orderBy?: "name" | "owner" | "original_owner" | "registered" | "updated" | "a" | "unpaid";
+  orderBy?: SortableNameFields;
   order?: "ASC" | "DESC";
 }
 
@@ -113,4 +117,13 @@ export async function lookupNames(addresses: string[], opts: LookupNamesOptions)
     + encodeURIComponent(addresses.join(","))
     + "?" + qs
   );
+}
+
+export function convertSorterOrder(order: "descend" | "ascend" | null | undefined): "ASC" | "DESC" | undefined {
+  switch (order) {
+  case "ascend":
+    return "ASC";
+  case "descend":
+    return "DESC";
+  }
 }

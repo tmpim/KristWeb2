@@ -15,12 +15,15 @@ interface OwnProps {
 }
 type Props = React.HTMLProps<HTMLSpanElement> & OwnProps;
 
-export function KristNameLink({ name, noLink, ...props }: Props): JSX.Element {
+export function KristNameLink({ name, noLink, ...props }: Props): JSX.Element | null {
   const nameSuffix = useSelector((s: RootState) => s.node.currency.name_suffix);
 
-  const contents = `${name}.${nameSuffix}`;
+  if (!name) return null;
 
-  return <span className={classNames("krist-name", props.className)}>
+  const contents = `${name}.${nameSuffix}`;
+  const classes = classNames("krist-name", props.className);
+
+  return <span className={classes}>
     {noLink
       ? contents
       : <Link to={"/network/names/" + encodeURIComponent(name)}>{contents}</Link>}

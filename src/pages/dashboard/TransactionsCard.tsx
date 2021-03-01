@@ -25,6 +25,12 @@ const TRANSACTION_THROTTLE = 300;
 async function _fetchTransactions(wallets: WalletMap): Promise<LookupTransactionsResponse> {
   debug("fetching transactions");
 
+  // If we have no addresses, don't make a request, because it will return
+  // _all_ network transactions (in hindsight, this was kinda bad API design)
+  const addresses = Object.values(wallets).map(w => w.address);
+  if (!addresses || addresses.length === 0)
+    return { count: 0, total: 0, transactions: [] };
+
   return lookupTransactions(
     Object.values(wallets).map(w => w.address),
     { includeMined: true, limit: 5, orderBy: "id", order: "DESC" }

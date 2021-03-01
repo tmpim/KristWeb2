@@ -14,11 +14,7 @@ import { DateTime } from "../DateTime";
 import { KristValue } from "../KristValue";
 import { KristNameLink } from "../KristNameLink";
 import { ContextualAddress } from "../ContextualAddress";
-
-type InternalTxType = "transferred" | "sent" | "received" | "mined" |
-  "name_a_record" | "name_transferred" | "name_sent" | "name_received" |
-  "name_purchased" | "unknown";
-const TYPES_SHOW_VALUE = ["transferred", "sent", "received", "mined", "name_purchased"];
+import { getTransactionType, TransactionType, TYPES_SHOW_VALUE } from "./TransactionType";
 
 const MAX_A_LENGTH = 24;
 
@@ -27,29 +23,6 @@ interface Props {
 
   /** [address]: Wallet */
   wallets: Record<string, Wallet>;
-}
-
-function getTxType(tx: KristTransaction, from: Wallet | undefined, to: Wallet | undefined): InternalTxType {
-  switch (tx.type) {
-  case "transfer":
-    if (from && to) return "transferred";
-    if (from) return "sent";
-    if (to) return "received";
-    return "transferred";
-
-  case "name_transfer":
-    if (from && to) return "name_transferred";
-    if (from) return "name_sent";
-    if (to) return "name_received";
-    return "name_transferred";
-
-  case "name_a_record": return "name_a_record";
-  case "name_purchase": return "name_purchased";
-
-  case "mined": return "mined";
-
-  default: return "unknown";
-  }
 }
 
 export function TransactionARecord({ metadata }: { metadata: string | undefined | null }): JSX.Element {
@@ -77,9 +50,9 @@ export function TransactionItem({ transaction: tx, wallets }: Props): JSX.Elemen
   // Whether or not the from/to addresses are a wallet we own
   // TODO: Address book here too
   const fromWallet = tx.from ? wallets[tx.from] : undefined;
-  const toWallet = tx.to ? wallets[tx.to] : undefined;
+  const toWallet   = tx.to ? wallets[tx.to] : undefined;
 
-  const type = getTxType(tx, fromWallet, toWallet);
+  const type = getTransactionType(tx, fromWallet, toWallet);
 
   const txTime = new Date(tx.time);
   const isNew = (new Date().getTime() - txTime.getTime()) < 360000;
@@ -96,9 +69,7 @@ export function TransactionItem({ transaction: tx, wallets }: Props): JSX.Elemen
     <Col span={8} xl={7} xxl={6} className="transaction-left">
       {/* Transaction type and link to transaction */}
       <Tooltip title={t("transactionSummary.itemID", { id: tx.id })}>
-        <span className={"transaction-type transaction-type-" + type}>
-          <Link to={txLink}>{t("transactionSummary.types." + type)}</Link>
-        </span>
+        <TransactionType type={type} link={txLink} />
       </Tooltip>
 
       {/* Transaction time */}

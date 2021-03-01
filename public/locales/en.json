@@ -363,6 +363,32 @@
     "itemName": "<0>Name:</0> <1 />",
     "itemARecord": "<0>A record:</0> <1 />",
     "itemARecordRemoved": "(removed)",
+    "seeMore": "See all {{count, number}}..."
+  },
+
+  "transactions": {
+    "title": "Network Transactions",
+    "myTransactionsTitle": "My Transactions",
+
+    "columnID": "ID",
+    "columnType": "Type",
+    "columnFrom": "From",
+    "columnTo": "To",
+    "columnValue": "Value",
+    "columnName": "Name",
+    "columnMetadata": "Metadata",
+    "columnTime": "Time",
+
+    "tableTotal": "{{count, number}} item",
+    "tableTotal_plural": "{{count, number}} items",
+
+    "includeMined": "Include mined transactions",
+
+    "resultInvalidTitle": "Invalid address",
+    "resultInvalid": "That does not look like a valid Krist address.",
+    "resultUnknownTitle": "Unknown error",
+    "resultUnknown": "See console for details.",
+
     "types": {
       "transferred": "Transferred",
       "sent": "Sent",
@@ -374,7 +400,6 @@
       "name_received": "Received name",
       "name_purchased": "Purchased name",
       "unknown": "Unknown"
-    },
-    "seeMore": "See all {{count, number}}..."
+    }
   }
 }

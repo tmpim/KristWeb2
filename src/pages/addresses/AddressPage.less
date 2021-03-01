@@ -8,12 +8,23 @@
     display: flex;
     align-items: center;
 
-    h1.address {
+    .address {
       display: inline-block;
       margin-right: @margin-lg;
       margin-bottom: 0;
 
       font-size: @font-size-base * 2;
+      font-weight: 500;
+
+      .ant-typography-copy {
+        line-height: 1 !important;
+        margin-left: @padding-xs;
+
+        .anticon {
+          font-size: @font-size-base;
+          vertical-align: 0;
+        }
+      }
     }
 
     .ant-btn {

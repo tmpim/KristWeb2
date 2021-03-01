@@ -2,6 +2,7 @@
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React, { FC, useEffect } from "react";
+import classNames from "classnames";
 import { PageHeader } from "antd";
 
 import { useTranslation } from "react-i18next";
@@ -21,6 +22,7 @@ export type PageLayoutProps = React.HTMLProps<HTMLDivElement> & {
   noHeader?: boolean;
 
   className?: string;
+  withoutTopPadding?: boolean;
 }
 
 export const PageLayout: FC<PageLayoutProps> = ({
@@ -31,6 +33,7 @@ export const PageLayout: FC<PageLayoutProps> = ({
   extra, noHeader,
 
   className,
+  withoutTopPadding,
 
   children, ...rest
 }) => {
@@ -42,7 +45,11 @@ export const PageLayout: FC<PageLayoutProps> = ({
     else if (siteTitleKey) document.title = `${t(siteTitleKey)} - KristWeb`;
   }, [t, siteTitle, siteTitleKey]);
 
-  return <div className={"page-layout " + (className || "")} {...rest}>
+  const classes = classNames("page-layout", className, {
+    "page-layout-no-top-padding": withoutTopPadding
+  });
+
+  return <div className={classes} {...rest}>
     {/* Page header */}
     {!noHeader && (title || titleKey) && <PageHeader
       className="page-layout-header"

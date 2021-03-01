@@ -8,6 +8,7 @@ import { DashboardPage } from "../pages/dashboard/DashboardPage";
 import { WalletsPage } from "../pages/wallets/WalletsPage";
 
 import { AddressPage } from "../pages/addresses/AddressPage";
+import { TransactionsPage, ListingType } from "../pages/transactions/TransactionsPage";
 
 import { SettingsPage } from "../pages/settings/SettingsPage";
 import { SettingsTranslations } from "../pages/settings/SettingsTranslations";
@@ -25,8 +26,23 @@ interface AppRoute {
 export const APP_ROUTES: AppRoute[] = [
   { path: "/",                            name: "dashboard", component: <DashboardPage /> },
   { path: "/wallets",                     name: "wallets",   component: <WalletsPage /> },
+  {
+    path: "/me/transactions",
+    name: "myTransactions",
+    component: <TransactionsPage listingType={ListingType.WALLETS} />
+  },
 
   { path: "/network/addresses/:address",  name: "address",   component: <AddressPage /> },
+  {
+    path: "/network/addresses/:address/transactions",
+    name: "addressTransactions",
+    component: <TransactionsPage listingType={ListingType.NETWORK_ADDRESS} />
+  },
+  {
+    path: "/network/transactions",
+    name: "transactions",
+    component: <TransactionsPage listingType={ListingType.NETWORK_ALL} />
+  },
 
   { path: "/settings",                    name: "settings",  component: <SettingsPage /> },
   { path: "/settings/debug",              name: "settingsDebug" },

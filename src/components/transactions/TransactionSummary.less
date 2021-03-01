@@ -11,22 +11,6 @@
     flex-direction: column;
     justify-content: center;
 
-    .transaction-type {
-      a {
-        font-weight: bold;
-        color: @text-color-secondary;
-      }
-
-      &-transferred a, &-name_transferred a { color: @kw-primary; }
-      &-sent a, &-name_sent a, &-name_purchased a { color: @kw-orange; }
-      &-received a, &-mined a, &-name_received a { color: @kw-green; }
-      &-name_a_record a { color: @kw-purple; }
-
-      @media (max-width: @screen-xl) {
-        font-size: 90%;
-      }
-    }
-
     .transaction-time {
       color: @text-color-secondary;
       font-size: 90%;

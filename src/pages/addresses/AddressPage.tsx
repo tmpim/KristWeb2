@@ -2,7 +2,7 @@
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React, { useState, useEffect } from "react";
-import { Row, Col, Skeleton, Tag } from "antd";
+import { Row, Col, Skeleton, Tag, Typography } from "antd";
 
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
@@ -24,6 +24,8 @@ import { AddressNamesCard } from "./AddressNamesCard";
 
 import "./AddressPage.less";
 
+const { Text } = Typography;
+
 interface ParamTypes {
   address: string;
 }
@@ -39,7 +41,9 @@ function PageContents({ address }: { address: KristAddressWithNames }): JSX.Elem
     {/* Address and buttons */}
     <Row className="top-address-row">
       {/* Address */}
-      <h1 className="address">{address.address}</h1>
+      <Text className="address" copyable>
+        {address.address}
+      </Text>
 
       {/* Buttons (e.g. Send Krist, Add friend) */}
       <AddressButtonRow address={address} myWallet={myWallet} />

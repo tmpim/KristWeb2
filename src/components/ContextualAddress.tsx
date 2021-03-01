@@ -2,6 +2,7 @@
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React from "react";
+import classNames from "classnames";
 import { Tooltip } from "antd";
 
 import { useSelector } from "react-redux";
@@ -10,7 +11,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { KristAddress } from "../krist/api/types";
-import { Wallet } from "../krist/wallets/Wallet";
+import { Wallet, useWallets } from "../krist/wallets/Wallet";
 import { parseCommonMeta, CommonMeta } from "../utils/commonmeta";
 import { stripNameSuffix } from "../utils/currency";
 
@@ -20,10 +21,12 @@ import "./ContextualAddress.less";
 
 interface Props {
   address: KristAddress | string | null;
-  wallet?: Wallet;
+  wallet?: Wallet | false;
   metadata?: string;
   source?: boolean;
   hideNameAddress?: boolean;
+  allowWrap?: boolean;
+  className?: string;
 }
 
 interface AddressMetanameProps {
@@ -63,8 +66,17 @@ export function AddressMetaname({ nameSuffix, address, commonMeta, source, hideN
     );
 }
 
-export function ContextualAddress({ address: origAddress, wallet, metadata, source, hideNameAddress }: Props): JSX.Element {
+export function ContextualAddress({
+  address: origAddress,
+  wallet: origWallet,
+  metadata,
+  source,
+  hideNameAddress,
+  allowWrap,
+  className
+}: Props): JSX.Element {
   const { t } = useTranslation();
+  const { walletAddressMap } = useWallets();
   const nameSuffix = useSelector((s: RootState) => s.node.currency.name_suffix);
 
   if (!origAddress) return (
@@ -72,10 +84,21 @@ export function ContextualAddress({ address: origAddress, wallet, metadata, sour
   );
 
   const address = typeof origAddress === "object" ? origAddress.address : origAddress;
+
+  // If we were given a wallet, use it. Otherwise, look it up, unless it was
+  // explicitly excluded (e.g. the Wallets table)
+  const wallet = origWallet !== false
+    ? (origWallet || walletAddressMap[address])
+    : undefined;
+
   const commonMeta = parseCommonMeta(nameSuffix, metadata);
   const hasMetaname = source ? !!commonMeta?.returnRecipient : !!commonMeta?.recipient;
 
-  return <span className="contextual-address"><Tooltip title={address}>
+  const classes = classNames("contextual-address", className, {
+    "contextual-address-allow-wrap": allowWrap
+  });
+
+  return <span className={classes}><Tooltip title={address}>
     {commonMeta && hasMetaname
       ? (
         // Display the metaname and link to the name if possible

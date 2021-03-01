@@ -39,6 +39,10 @@ export function AddressTransactionsCard({ address }: { address: string }): JSX.E
   useEffect(() => {
     if (!syncNode) return;
 
+    // Remove the existing results in case the address changed
+    setRes(undefined);
+    setLoading(true);
+
     fetchTransactions(address)
       .then(setRes)
       .catch(setError)

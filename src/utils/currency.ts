@@ -14,8 +14,8 @@ export const cleanNameSuffix = memoize(_cleanNameSuffix);
 
 // Cheap way to avoid RegExp DoS
 const MAX_NAME_SUFFIX_LENGTH = 6;
-const _getNameRegex = (nameSuffix: string | undefined | null): RegExp =>
-  new RegExp(`^(?:([a-z0-9-_]{1,32})@)?([a-z0-9]{1,64}\\.${cleanNameSuffix(nameSuffix)})$`);
+const _getNameRegex = (nameSuffix: string | undefined | null, metadata?: boolean): RegExp =>
+  new RegExp(`^(?:([a-z0-9-_]{1,32})@)?([a-z0-9]{1,64}\\.${cleanNameSuffix(nameSuffix)})${metadata ? ";?" : "$"}`);
 export const getNameRegex = memoize(_getNameRegex);
 
 const _stripNameSuffixRegExp = (nameSuffix: string | undefined | null): RegExp =>
@@ -24,6 +24,9 @@ export const stripNameSuffixRegExp = memoize(_stripNameSuffixRegExp);
 
 export const stripNameSuffix = (nameSuffix: string | undefined | null, inp: string): string =>
   inp.replace(stripNameSuffixRegExp(nameSuffix), "");
+
+export const stripNameFromMetadata = (nameSuffix: string | undefined | null, metadata: string): string =>
+  metadata.replace(getNameRegex(nameSuffix, true), "");
 
 /**
  * Estimates the network mining hash-rate, returning it as a formatted string.

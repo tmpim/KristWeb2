@@ -38,6 +38,10 @@ export function AddressNamesCard({ address }: { address: string }): JSX.Element 
   useEffect(() => {
     if (!syncNode) return;
 
+    // Remove the existing results in case the address changed
+    setRes(undefined);
+    setLoading(true);
+
     fetchNames(address)
       .then(setRes)
       .catch(setError)

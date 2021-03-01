@@ -4,8 +4,14 @@
 @import (reference) "../App.less";
 
 .contextual-address {
-  .address-metaname, .address-name, .address-raw-metaname, .address-original,
-  .address-wallet, .address-address {
+  &:not(.contextual-address-allow-wrap) {
+    .address-metaname, .address-name, .address-raw-metaname,
+    .address-wallet {
+      white-space: nowrap;
+    }
+  }
+
+  .address-address, .address-original {
     white-space: nowrap;
   }
 
