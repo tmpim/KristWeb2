@@ -43,7 +43,7 @@ function PageContents({ address }: { address: KristAddressWithNames }): JSX.Elem
     {/* Main address info */}
     <Row className="address-info-row">
       {/* Current balance */}
-      <Col span={24} md={8}>
+      <Col span={24} md={12} lg={8}>
         <Statistic
           titleKey="address.balance"
           value={<KristValue long green highlightZero value={address.balance} />}
@@ -51,7 +51,7 @@ function PageContents({ address }: { address: KristAddressWithNames }): JSX.Elem
       </Col>
 
       {/* Names */}
-      <Col span={24} md={8}>
+      <Col span={24} md={12} lg={8}>
         <Statistic
           titleKey="address.names"
           value={t("address.nameCount", { count: address.names })}
@@ -59,7 +59,7 @@ function PageContents({ address }: { address: KristAddressWithNames }): JSX.Elem
       </Col>
 
       {/* First seen */}
-      <Col span={24} md={8}>
+      <Col span={24} md={24} lg={8}>
         <Statistic
           titleKey="address.firstSeen"
           value={<DateTime date={address.firstseen} />}
