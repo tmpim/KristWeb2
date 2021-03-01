@@ -204,16 +204,28 @@
 
     user-select: none;
 
-    &.site-sidebar-total-balance {
+    h5 {
+      margin-bottom: 0;
+
+      font-size: @font-size-sm;
+      font-weight: bolder;
+
+      color: @text-color-secondary;
+    }
+
+    &.site-sidebar-update {
+      padding: 1rem;
+
+      background: @primary-color;
+      color: @kw-darkest;
+
       h5 {
-        margin-bottom: 0;
-
-        font-size: @font-size-sm;
-        font-weight: bolder;
-
-        color: @text-color-secondary;
+        color: @kw-darkest;
+        margin-bottom: @padding-xs;
       }
+    }
 
+    &.site-sidebar-total-balance {
       .anticon svg {
         width: 14px;
         height: 14px;

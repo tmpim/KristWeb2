@@ -9,8 +9,13 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 
+import Debug from "debug";
+const debug = Debug("kristweb:index");
+
 // import reportWebVitals from "./reportWebVitals";
 
+debug("============================ APP STARTING ============================");
+debug("performing initial render");
 ReactDOM.render(
   // <React.StrictMode>
   <App />,

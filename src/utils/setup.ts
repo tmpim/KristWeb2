@@ -9,3 +9,6 @@ import Debug from "debug";
 Debug.formatters.b = (v: boolean) => v ? "true" : "false";
 // Buffers as hex strings (%x)
 Debug.formatters.x = (v: ArrayBufferLike | Uint8Array) => toHex(v);
+
+import { showConsoleWarning } from "./consoleWarning";
+showConsoleWarning();

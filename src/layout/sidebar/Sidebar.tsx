@@ -8,6 +8,7 @@ import { HomeOutlined, WalletOutlined, TeamOutlined, BankOutlined, TagsOutlined,
 import { TFunction, useTranslation } from "react-i18next";
 import { Link, useLocation } from "react-router-dom";
 
+import { ServiceWorkerCheck } from "./ServiceWorkerCheck";
 import { SidebarTotalBalance } from "./SidebarTotalBalance";
 import { SidebarFooter } from "./SidebarFooter";
 
@@ -62,8 +63,14 @@ export function Sidebar({ collapsed }: { collapsed: boolean }): JSX.Element {
     width={240}
     className={"site-sidebar " + (collapsed ? "collapsed" : "")}
   >
+    {/* Service worker update checker, which may appear at the top of the
+      * sidebar if an update is available. */}
+    <ServiceWorkerCheck />
+
+    {/* Total balance */}
     <SidebarTotalBalance />
 
+    {/* Menu items */}
     <Menu theme="dark" mode="inline" selectedKeys={selectedKey ? [selectedKey] : undefined}>
       {getSidebarItems(t)}
 
@@ -72,6 +79,7 @@ export function Sidebar({ collapsed }: { collapsed: boolean }): JSX.Element {
       </Menu.ItemGroup>
     </Menu>
 
+    {/* Credits footer */}
     <SidebarFooter />
   </Sider>;
 }

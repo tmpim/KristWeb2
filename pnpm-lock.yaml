@@ -34,6 +34,9 @@ dependencies:
   uuid: 8.3.2
   web-vitals: 1.1.0
   websocket-as-promised: 2.0.1
+  workbox-core: 6.1.1
+  workbox-precaching: 6.1.1
+  workbox-routing: 6.1.1
 devDependencies:
   '@craco/craco': 6.1.1_react-scripts@4.0.3
   '@types/classnames': 2.2.11
@@ -13511,6 +13514,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-+4iRQan/1D8I81nR2L5vcbaaFskZC2CL17TLbvWVzQ4qiF/ytOGF6XeV54pVxAvKUtkLANhk8TyIUMtiMw2oDg==
+  /workbox-core/6.1.1:
+    dev: false
+    resolution:
+      integrity: sha512-xsc/72AQxFtt2BHmwU8QtnVV+W5ln4nnYGuz9Q5sPWYGqW4cH0P+FpZDoGM59bmNEyNf+W9bEmidW//e5GsbwQ==
   /workbox-expiration/5.1.4:
     dependencies:
       workbox-core: 5.1.4
@@ -13538,6 +13545,14 @@ packages:
     dev: true
     resolution:
       integrity: sha512-gCIFrBXmVQLFwvAzuGLCmkUYGVhBb7D1k/IL7pUJUO5xacjLcFUaLnnsoVepBGAiKw34HU1y/YuqvTKim9qAZA==
+  /workbox-precaching/6.1.1:
+    dependencies:
+      workbox-core: 6.1.1
+      workbox-routing: 6.1.1
+      workbox-strategies: 6.1.1
+    dev: false
+    resolution:
+      integrity: sha512-x8OKwtjd5ewe/x3VlKcXri1P3Tm0uV+uChdMYg/QryrCR9K8x9xwhAw8PZPkwrY0bLLsJMUoX9/lBu8DmjVqTA==
   /workbox-range-requests/5.1.4:
     dependencies:
       workbox-core: 5.1.4
@@ -13550,6 +13565,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-8ljknRfqE1vEQtnMtzfksL+UXO822jJlHTIR7+BtJuxQ17+WPZfsHqvk1ynR/v0EHik4x2+826Hkwpgh4GKDCw==
+  /workbox-routing/6.1.1:
+    dependencies:
+      workbox-core: 6.1.1
+    dev: false
+    resolution:
+      integrity: sha512-Az3Gt3cHNK+W0gTfSb4eKGfwEap9Slak16Krr5SiLhE1gXUY2C2O123HucVCedXgIoqTLOXMtNj71Cm6SwYDEg==
   /workbox-strategies/5.1.4:
     dependencies:
       workbox-core: 5.1.4
@@ -13557,6 +13578,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-VVS57LpaJTdjW3RgZvPwX0NlhNmscR7OQ9bP+N/34cYMDzXLyA6kqWffP6QKXSkca1OFo/v6v7hW7zrrguo6EA==
+  /workbox-strategies/6.1.1:
+    dependencies:
+      workbox-core: 6.1.1
+    dev: false
+    resolution:
+      integrity: sha512-7qYA9Eiq6hnP2dyenlD7ZtWI1ArBMT8yhTvHVlaOl9kYY7W+Iv3lAfRCjj/nucOKeVXATx4iVJEuFPn5J+8lzw==
   /workbox-streams/5.1.4:
     dependencies:
       workbox-core: 5.1.4
@@ -13825,3 +13852,6 @@ specifiers:
   webpack-bundle-analyzer: ^4.4.0
   webpackbar: ^5.0.0-3
   websocket-as-promised: ^2.0.1
+  workbox-core: ^6.1.1
+  workbox-precaching: ^6.1.1
+  workbox-routing: ^6.1.1

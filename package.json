@@ -49,14 +49,17 @@
     "typesafe-actions": "^5.1.0",
     "uuid": "^8.3.2",
     "web-vitals": "^1.1.0",
-    "websocket-as-promised": "^2.0.1"
+    "websocket-as-promised": "^2.0.1",
+    "workbox-core": "^6.1.1",
+    "workbox-precaching": "^6.1.1",
+    "workbox-routing": "^6.1.1"
   },
   "scripts": {
     "start": "craco start",
     "clean": "rimraf build",
     "build": "craco build",
     "optimise": "gzip -kr build/static",
-    "full-build": "npm run clean; GENERATE_SOURCEMAP=false npm run build; npm run optimise",
+    "full-build": "npm run clean; NODE_ENV=production GENERATE_SOURCEMAP=false npm run build; npm run optimise",
     "analyze-build": "FORCE_ANALYZE=true npm run build",
     "test": "craco test"
   },

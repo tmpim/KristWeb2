@@ -55,7 +55,11 @@
     "madeBy": "Made by <1>{{authorName}}</1>",
     "hostedBy": "Hosted by <1>{{host}}</1>",
     "github": "GitHub",
-    "credits": "Credits"
+    "credits": "Credits",
+
+    "updateTitle": "Update available!",
+    "updateDescription": "A new version of KristWeb is available. Please reload.",
+    "updateReload": "Reload"
   },
 
   "dialog": {

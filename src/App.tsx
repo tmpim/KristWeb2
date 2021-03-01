@@ -16,14 +16,20 @@ import "./utils/i18n";
 // FIXME: Apparently the import order of my CSS is important. Who knew!
 import "./App.less";
 
+import { AppLoading } from "./global/AppLoading";
 import { CheckStatus } from "./pages/CheckStatus";
 import { AppServices } from "./global/AppServices";
+
+import Debug from "debug";
+const debug = Debug("kristweb:app");
 
 export const store = initStore();
 export type AppDispatch = typeof store.dispatch;
 
 function App(): JSX.Element {
-  return <Suspense fallback="Loading (TODO)"> {/* TODO */}
+  debug("whole app is being rendered!");
+
+  return <Suspense fallback={<AppLoading />}> {/* TODO */}
     <Provider store={store}>
       <HotKeys keyMap={keyMap}>
         <Router>

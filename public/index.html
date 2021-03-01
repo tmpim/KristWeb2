@@ -11,10 +11,66 @@
     />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
     <title>KristWeb</title>
+
+    <style>
+      /* Provided to prevent flash-bang on page load */
+      html, body { 
+        background: #2a304a; 
+        margin: 0;
+      }
+
+      .kw-preloader {
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        box-sizing: border-box;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        color: #eaf0fe;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+          "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+          "Noto Color Emoji";
+        font-size: 16px;
+        line-height: 1.5715;
+      }
+
+      .kw-preloader .kw-preloader-spinner {
+        border: 3px solid transparent;
+        border-bottom-color: CornFlowerBlue;
+        border-radius: 50%;
+
+        width: 96px;
+        height: 96px;
+        box-sizing: border-box;
+
+        animation: kw-preloader-spin 1s linear infinite;
+      }
+
+      .kw-preloader span {
+        margin-top: 16px;
+        max-width: 240px;
+        box-sizing: border-box;
+      }
+
+      @keyframes kw-preloader-spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div id="root">
+      <div class="kw-preloader">
+        <div class="kw-preloader-spinner"></div>
+        <span>Loading KristWeb...</span>
+      </div>
+    </div>
   </body>
 </html>
