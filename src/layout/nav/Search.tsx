@@ -347,7 +347,6 @@ export function Search(): JSX.Element {
       keyMap={{ SEARCH: ["command+k", "ctrl+k"] }}
       handlers={{
         SEARCH: e => {
-          console.log(e);
           e?.preventDefault();
           autocompleteRef.current?.focus();
         }

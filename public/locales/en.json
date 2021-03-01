@@ -329,6 +329,11 @@
     "cardNamesTitle": "Names",
 
     "transactionsError": "There was an error fetching the transactions. See the console for details.",
+    "namesError": "There was an error fetching the names. See the console for details.",
+
+    "namePurchased": "Purchased <1 />",
+    "nameReceived": "Received <1 />",
+    "namesSeeMore": "See all {{count, number}}...",
 
     "resultInvalidTitle": "Invalid address",
     "resultInvalid": "That does not look like a valid Krist address.",

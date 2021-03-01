@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 
 import { KristValue } from "../../components/KristValue";
 import { DateTime } from "../../components/DateTime";
-import { AuthorisedAction } from "../../components/auth/AuthorisedAction";
+import { WalletEditButton } from "./WalletEditButton";
 import { AddWalletModal } from "./AddWalletModal";
 
 import { Wallet, deleteWallet, useWallets } from "../../krist/wallets/Wallet";
@@ -29,19 +29,14 @@ function WalletActions({ wallet }: { wallet: Wallet }): JSX.Element {
       className="wallet-actions"
 
       buttonsRender={([leftButton, rightButton]) => [
-        <AuthorisedAction
-          key="leftButton"
-          encrypt
-          onAuthed={() => setEditWalletVisible(true)}
-          popoverPlacement="left"
-        >
+        <WalletEditButton key="leftButton" wallet={wallet}>
           <Tooltip title={t("myWallets.actionsEditTooltip")}>
             {React.cloneElement(leftButton as React.ReactElement<any>, {
               className: "ant-btn-left", // force the border-radius
               disabled: wallet.dontSave
             })}
           </Tooltip>
-        </AuthorisedAction>,
+        </WalletEditButton>,
         rightButton
       ]}
 

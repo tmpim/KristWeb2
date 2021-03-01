@@ -2,8 +2,7 @@
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React, { useState, useEffect } from "react";
-import { Row, Col, Skeleton, Button } from "antd";
-import { SendOutlined, UserAddOutlined } from "@ant-design/icons";
+import { Row, Col, Skeleton } from "antd";
 
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
@@ -18,7 +17,9 @@ import { DateTime } from "../../components/DateTime";
 import * as api from "../../krist/api";
 import { lookupAddress, KristAddressWithNames } from "../../krist/api/lookup";
 
+import { AddressButtonRow } from "./AddressButtonRow";
 import { AddressTransactionsCard } from "./AddressTransactionsCard";
+import { AddressNamesCard } from "./AddressNamesCard";
 
 import "./AddressPage.less";
 
@@ -35,18 +36,8 @@ function PageContents({ address }: { address: KristAddressWithNames }): JSX.Elem
       {/* Address */}
       <h1 className="address">{address.address}</h1>
 
-      {/* Send Krist button */}
-      {/* TODO: If this is one of our own wallets then say 'Transfer krist' */}
-      <Button type="primary" icon={<SendOutlined />}>
-        {t("address.buttonSendKrist", { address: address.address })}
-      </Button>
-
-      {/* Add friend button */}
-      {/* TODO: Change this to edit if they're already a friend, and if it is
-                one of our own wallets then say 'Edit wallet' */}
-      <Button icon={<UserAddOutlined />}>
-        {t("address.buttonAddFriend")}
-      </Button>
+      {/* Buttons (e.g. Send Krist, Add friend) */}
+      <AddressButtonRow address={address} />
     </Row>
 
     {/* Main address info */}
@@ -79,10 +70,14 @@ function PageContents({ address }: { address: KristAddressWithNames }): JSX.Elem
     {/* Transaction and name row */}
     <Row gutter={16} className="address-card-row">
       {/* Recent transactions */}
-      <Col span={24} lg={10} xxl={12}>
+      <Col span={24} xl={14} xxl={12}>
         <AddressTransactionsCard address={address.address} />
       </Col>
-      <Col span={24} lg={10} xxl={12}></Col>
+
+      {/* Names */}
+      <Col span={24} xl={10} xxl={12}>
+        <AddressNamesCard address={address.address} />
+      </Col>
     </Row>
   </>;
 }

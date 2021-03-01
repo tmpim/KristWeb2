@@ -38,9 +38,11 @@ export interface KristBlock {
 export interface KristName {
   name: string;
   owner: string;
+  original_owner?: string;
   registered: string;
   updated?: string | null;
   a?: string | null;
+  unpaid: number;
 }
 
 export interface KristWorkDetailed {

@@ -1,9 +1,12 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { KristAddress, KristTransaction } from "./types";
+import { KristAddress, KristTransaction, KristName } from "./types";
 import * as api from ".";
 
+// =============================================================================
+// Addresses
+// =============================================================================
 interface LookupAddressesResponse {
   found: number;
   notFound: number;
@@ -46,6 +49,9 @@ export async function lookupAddress(address: string, fetchNames?: boolean): Prom
   return kristAddress;
 }
 
+// =============================================================================
+// Transactions
+// =============================================================================
 interface LookupTransactionsOptions {
   includeMined?: boolean;
   limit?: number;
@@ -72,6 +78,38 @@ export async function lookupTransactions(addresses: string[], opts: LookupTransa
 
   return await api.get<LookupTransactionsResponse>(
     "lookup/transactions/"
+    + encodeURIComponent(addresses.join(","))
+    + "?" + qs
+  );
+}
+
+// =============================================================================
+// Names
+// =============================================================================
+interface LookupNamesOptions {
+  limit?: number;
+  offset?: number;
+  orderBy?: "name" | "owner" | "original_owner" | "registered" | "updated" | "a" | "unpaid";
+  order?: "ASC" | "DESC";
+}
+
+export interface LookupNamesResponse {
+  count: number;
+  total: number;
+  names: KristName[];
+}
+
+export async function lookupNames(addresses: string[], opts: LookupNamesOptions): Promise<LookupNamesResponse> {
+  if (!addresses || addresses.length === 0) return { count: 0, total: 0, names: [] };
+
+  const qs = new URLSearchParams();
+  if (opts.limit) qs.append("limit", opts.limit.toString());
+  if (opts.offset) qs.append("offset", opts.offset.toString());
+  if (opts.orderBy) qs.append("orderBy", opts.orderBy);
+  if (opts.order) qs.append("order", opts.order);
+
+  return await api.get<LookupNamesResponse>(
+    "lookup/names/"
     + encodeURIComponent(addresses.join(","))
     + "?" + qs
   );

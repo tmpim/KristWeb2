@@ -2,6 +2,7 @@
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React from "react";
+import classNames from "classnames";
 import { Row, Col, Tooltip, Grid } from "antd";
 
 import TimeAgo from "react-timeago";
@@ -88,7 +89,11 @@ export function TransactionItem({ transaction: tx, wallets }: Props): JSX.Elemen
 
   const hideNameAddress = !bps.xl;
 
-  return <Row className={"card-list-item transaction-summary-item " + (isNew ? "new" : "")}>
+  const classes = classNames("card-list-item", "transaction-summary-item", {
+    "new": isNew
+  });
+
+  return <Row className={classes}>
     <Col span={8} xl={7} xxl={6} className="transaction-left">
       {/* Transaction type and link to transaction */}
       <Tooltip title={t("transactionSummary.itemID", { id: tx.id })}>
