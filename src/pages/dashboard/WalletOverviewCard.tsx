@@ -19,21 +19,27 @@ export function WalletOverviewCard(): JSX.Element {
   const { wallets } = useWallets();
   const { t } = useTranslation();
 
+  // Turn the wallets into an array, to sort them later
   const clonedWallets = [...Object.values(wallets)];
 
+  // Sum the balance and names of all wallets
   const balance = clonedWallets.filter(w => w.balance !== undefined)
     .reduce((acc, w) => acc + w.balance!, 0);
   const names = clonedWallets.filter(w => w.names !== undefined)
     .reduce((acc, w) => acc + w.names!, 0);
 
+  // Pick the top 4 wallets sorted by balance descending
   const topWallets = [...clonedWallets];
   const sort = keyedNullSort<Wallet>("balance", undefined);
   topWallets.sort((a: Wallet, b: Wallet) => sort(a, b, "descend"));
   topWallets.reverse();
+
   const top4Wallets = topWallets.slice(0, 4);
 
   return <Card title={t("dashboard.walletOverviewCardTitle")} className="kw-card dashboard-card-wallets">
+    {/* Top row (summaries) */}
     <Row gutter={16} className="dashboard-wallets-top-row">
+      {/* Total balance */}
       <Col span={24} xl={12} className="dashboard-wallets-balance">
         <Statistic
           titleKey="dashboard.walletOverviewTotalBalance"
@@ -41,6 +47,7 @@ export function WalletOverviewCard(): JSX.Element {
         />
       </Col>
 
+      {/* Names */}
       <Col span={24} xl={12} className="dashboard-wallets-names">
         <Statistic
           titleKey="dashboard.walletOverviewNames"
@@ -49,10 +56,13 @@ export function WalletOverviewCard(): JSX.Element {
       </Col>
     </Row>
 
+    {/* Wallet list */}
     {top4Wallets.map(w => <WalletItem key={w.id} wallet={w} />)}
 
+    {/* See more link */}
     <Row className="card-more dashboard-wallets-more">
       <Link to="/wallets">
+        {/* Show an 'add wallets' button instead if there are no wallets yet */}
         {clonedWallets.length > 0
           ? t("dashboard.walletOverviewSeeMore", { count: clonedWallets.length })
           : <Button>{t("dashboard.walletOverviewAddWallets")}</Button>}

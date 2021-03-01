@@ -328,6 +328,8 @@
     "cardRecentTransactionsTitle": "Recent transactions",
     "cardNamesTitle": "Names",
 
+    "transactionsError": "There was an error fetching the transactions. See the console for details.",
+
     "resultInvalidTitle": "Invalid address",
     "resultInvalid": "That does not look like a valid Krist address.",
     "resultNotFoundTitle": "Address not found",

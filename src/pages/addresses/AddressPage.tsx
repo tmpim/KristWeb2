@@ -18,13 +18,15 @@ import { DateTime } from "../../components/DateTime";
 import * as api from "../../krist/api";
 import { lookupAddress, KristAddressWithNames } from "../../krist/api/lookup";
 
+import { AddressTransactionsCard } from "./AddressTransactionsCard";
+
 import "./AddressPage.less";
 
 interface ParamTypes {
   address: string;
 }
 
-function Page({ address }: { address: KristAddressWithNames }): JSX.Element {
+function PageContents({ address }: { address: KristAddressWithNames }): JSX.Element {
   const { t } = useTranslation();
 
   return <>
@@ -73,6 +75,15 @@ function Page({ address }: { address: KristAddressWithNames }): JSX.Element {
         />
       </Col>
     </Row>
+
+    {/* Transaction and name row */}
+    <Row gutter={16} className="address-card-row">
+      {/* Recent transactions */}
+      <Col span={24} lg={10} xxl={12}>
+        <AddressTransactionsCard address={address.address} />
+      </Col>
+      <Col span={24} lg={10} xxl={12}></Col>
+    </Row>
   </>;
 }
 
@@ -115,7 +126,7 @@ export function AddressPage(): JSX.Element {
     {error
       ? <AddressResult error={error} />
       : (kristAddress
-        ? <Page address={kristAddress} />
+        ? <PageContents address={kristAddress} />
         : <Skeleton active />)}
   </PageLayout>;
 }
