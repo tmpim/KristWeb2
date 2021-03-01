@@ -30,6 +30,7 @@
     "firstseen",
     "jwalelset",
     "languagedetector",
+    "linkify",
     "localisation",
     "metaname",
     "middot",

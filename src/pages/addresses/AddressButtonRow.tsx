@@ -23,12 +23,12 @@ export function AddressButtonRow({ address, myWallet }: Props): JSX.Element {
     {/* Send/transfer Krist button */}
     {myWallet
       ? (
-        <Button type="primary" icon={<SwapOutlined />}>
+        <Button type="primary" icon={<SwapOutlined />} className="nyi">
           {t("address.buttonTransferKrist", { address: address.address })}
         </Button>
       )
       : (
-        <Button type="primary" icon={<SendOutlined />}>
+        <Button type="primary" icon={<SendOutlined />} className="nyi">
           {t("address.buttonSendKrist", { address: address.address })}
         </Button>
       )}
@@ -42,7 +42,7 @@ export function AddressButtonRow({ address, myWallet }: Props): JSX.Element {
         </WalletEditButton>
       )
       : (
-        <Button icon={<UserAddOutlined />}>
+        <Button icon={<UserAddOutlined />} className="nyi">
           {t("address.buttonAddFriend")}
         </Button>
       )}

@@ -5,13 +5,12 @@ import React from "react";
 import classNames from "classnames";
 import { Row, Col, Tooltip, Grid } from "antd";
 
-import TimeAgo from "react-timeago";
-
 import { useTranslation, Trans } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { KristTransaction } from "../../krist/api/types";
 import { Wallet } from "../../krist/wallets/Wallet";
+import { DateTime } from "../DateTime";
 import { KristValue } from "../KristValue";
 import { KristNameLink } from "../KristNameLink";
 import { ContextualAddress } from "../ContextualAddress";
@@ -103,9 +102,9 @@ export function TransactionItem({ transaction: tx, wallets }: Props): JSX.Elemen
       </Tooltip>
 
       {/* Transaction time */}
-      <Tooltip title={txTime.toISOString()}>
-        <Link to={txLink} className="transaction-time"><TimeAgo date={txTime} /></Link>
-      </Tooltip>
+      <Link to={txLink}>
+        <DateTime date={txTime} timeAgo small secondary />
+      </Link>
     </Col>
 
     <Col className="transaction-middle">

@@ -250,7 +250,12 @@
     "blockDifficultyHashRateTooltip": "Estimated combined network mining hash rate, based on the current work.",
     "blockDifficultyChartWork": "Block Difficulty",
     "blockDifficultyChartLinear": "Linear",
-    "blockDifficultyChartLog": "Logarithmic"
+    "blockDifficultyChartLog": "Logarithmic",
+
+    "motdCardTitle": "Server MOTD",
+    "motdDebugMode": "This sync node is an unofficial development server. Balances and transactions can be manipulated. Proceed with caution.",
+
+    "whatsNewCardTitle": "What's New"
   },
 
   "credits": {

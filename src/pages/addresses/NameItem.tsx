@@ -2,15 +2,14 @@
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React from "react";
-import { Row, Col, Tooltip, Grid } from "antd";
+import { Row } from "antd";
 
 import { useTranslation, Trans } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import TimeAgo from "react-timeago";
-
 import { KristName } from "../../krist/api/types";
 import { KristNameLink } from "../../components/KristNameLink";
+import { DateTime } from "../../components/DateTime";
 
 export function NameItem({ name }: { name: KristName }): JSX.Element {
   const { t } = useTranslation();
@@ -29,8 +28,8 @@ export function NameItem({ name }: { name: KristName }): JSX.Element {
     </div>
 
     {/* Purchase time */}
-    <Tooltip title={nameTime.toISOString()}>
-      <Link to={nameLink} className="name-registered"><TimeAgo date={nameTime} /></Link>
-    </Tooltip>
+    <Link to={nameLink}>
+      <DateTime date={nameTime} timeAgo small secondary />
+    </Link>
   </Row>;
 }

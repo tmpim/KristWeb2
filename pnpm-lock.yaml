@@ -22,6 +22,7 @@ dependencies:
   react-dom: 17.0.1_react@17.0.1
   react-hotkeys: 2.0.0_react@17.0.1
   react-i18next: 11.8.8_i18next@19.9.0+react@17.0.1
+  react-linkify: 1.0.0-alpha
   react-redux: 7.2.2_380dc38591053d98779d1f25fc7202b9
   react-router-dom: 5.2.0_react@17.0.1
   react-timeago: 5.2.0_react@17.0.1
@@ -44,6 +45,7 @@ devDependencies:
   '@types/node': 14.14.31
   '@types/react': 17.0.2
   '@types/react-dom': 17.0.1
+  '@types/react-linkify': 1.0.0
   '@types/react-redux': 7.1.16
   '@types/react-router-dom': 5.1.7
   '@types/react-timeago': 4.1.2
@@ -2156,6 +2158,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-yIVyopxQb8IDZ7SOHeTovurFq+fXiPICa+GV3gp0Xedsl+MwQlMLKmvrnEjFbQxjliH5YVAEWFh975eVNmKj7Q==
+  /@types/react-linkify/1.0.0:
+    dependencies:
+      '@types/react': 17.0.2
+    dev: true
+    resolution:
+      integrity: sha512-2NKXPQGaHNfh/dCqkVC55k1tAhQyNoNZa31J50nIneMVwHqUI00FAP+Lyp8e0BarPf84kn4GRVAhtWX9XJBzSQ==
   /@types/react-redux/7.1.16:
     dependencies:
       '@types/hoist-non-react-statics': 3.3.1
@@ -8005,6 +8013,12 @@ packages:
     dev: true
     resolution:
       integrity: sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=
+  /linkify-it/2.2.0:
+    dependencies:
+      uc.micro: 1.0.6
+    dev: false
+    resolution:
+      integrity: sha512-GnAl/knGn+i1U/wjBz3akz2stz+HrHLsxMwHQGofCDfPvlf+gDKN58UtfmUquTY4/MXeE2x7k19KQmeoZi94Iw==
   /load-json-file/2.0.0:
     dependencies:
       graceful-fs: 4.2.6
@@ -10894,6 +10908,13 @@ packages:
   /react-is/17.0.1:
     resolution:
       integrity: sha512-NAnt2iGDXohE5LI7uBnLnqvLQMtzhkiAOLXTmv+qnF9Ky7xAPcX8Up/xWIhxvLVGJvuLiNc4xQLtuqDRzb4fSA==
+  /react-linkify/1.0.0-alpha:
+    dependencies:
+      linkify-it: 2.2.0
+      tlds: 1.218.0
+    dev: false
+    resolution:
+      integrity: sha512-7gcIUvJkAXXttt1fmBK9cwn+1jTa4hbKLGCZ9J1U6EOkyb2/+LKL1Z28d9rtDLMnpvImlNlLPdTPooorl5cpmg==
   /react-redux/7.2.2_380dc38591053d98779d1f25fc7202b9:
     dependencies:
       '@babel/runtime': 7.13.8
@@ -12601,6 +12622,11 @@ packages:
     dev: false
     resolution:
       integrity: sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==
+  /tlds/1.218.0:
+    dev: false
+    hasBin: true
+    resolution:
+      integrity: sha512-JpD3eSrYaIFlU/OvtI5WTEK+v5qXZSeUifz4hT2bJsJKx5ykjZvg6i5yXVBJNjoN3XbTCtryc7H5v8B16yHfMg==
   /tmpl/1.0.4:
     dev: true
     resolution:
@@ -12838,6 +12864,10 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-6OSu9PTIzmn9TCDiovULTnET6BgXtDYL4Gg4szY+cGsc3JP1dQL8qvE8kShTRx1NIw4Q9IBHlwODjkjWEtMUyA==
+  /uc.micro/1.0.6:
+    dev: false
+    resolution:
+      integrity: sha512-8Y75pvTYkLJW2hWQHXxoqRgV7qb9B+9vFEtidML+7koHUFapnVJAZ6cKs+Qjz5Aw3aZWHMC6u0wJE3At+nSGwA==
   /unicode-canonical-property-names-ecmascript/1.0.4:
     dev: true
     engines:
@@ -13740,6 +13770,7 @@ specifiers:
   '@types/node': ^14.14.31
   '@types/react': ^17.0.2
   '@types/react-dom': ^17.0.1
+  '@types/react-linkify': ^1.0.0
   '@types/react-redux': ^7.1.16
   '@types/react-router-dom': ^5.1.7
   '@types/react-timeago': ^4.1.2
@@ -13774,6 +13805,7 @@ specifiers:
   react-dom: ^17.0.1
   react-hotkeys: ^2.0.0
   react-i18next: ^11.8.8
+  react-linkify: ^1.0.0-alpha
   react-redux: ^7.2.2
   react-refresh: ^0.9.0
   react-router-dom: ^5.2.0

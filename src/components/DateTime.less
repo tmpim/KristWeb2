@@ -1,0 +1,15 @@
+@import (reference) "../App.less";
+
+.date-time {
+  &-secondary, &-secondary a, &-secondary time {
+    color: @text-color-secondary;
+  }
+
+  &-small, &-small a, &-small time {
+    font-size: 90%;
+
+    @media (max-width: @screen-xl) {
+      font-size: 85%;
+    }
+  }
+}

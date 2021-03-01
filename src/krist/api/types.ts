@@ -89,13 +89,27 @@ export const DEFAULT_CURRENCY: KristCurrency = {
   currency_name: "Krist", currency_symbol: "KST"
 };
 
+export interface KristMOTDBase {
+  motd: string;
+  motdSet: Date;
+
+  miningEnabled: boolean;
+  debugMode: boolean;
+}
+export const DEFAULT_MOTD_BASE: KristMOTDBase = {
+  motd: "",
+  motdSet: new Date(),
+  miningEnabled: true,
+  debugMode: false
+};
+
 export interface KristMOTD {
   motd: string;
-  set: string;
+  motd_set: string;
 
   public_url: string;
   mining_enabled: boolean;
-  debug_enabled: boolean;
+  debug_mode: boolean;
 
   constants: KristConstants;
   currency: KristCurrency;

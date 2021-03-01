@@ -7,6 +7,7 @@ import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 import { useTranslation } from "react-i18next";
 
+import { ContextualAddress } from "../../components/ContextualAddress";
 import { KristValue } from "../../components/KristValue";
 import { DateTime } from "../../components/DateTime";
 import { WalletEditButton } from "./WalletEditButton";
@@ -104,6 +105,8 @@ export function WalletsTable(): JSX.Element {
       {
         title: t("myWallets.columnAddress"),
         dataIndex: "address", key: "address",
+
+        render: address => <ContextualAddress address={address} />,
         sorter: (a, b) => a.address.localeCompare(b.address)
       },
 

@@ -10,7 +10,7 @@ import * as nodeActions from "../../store/actions/NodeActions";
 import { store } from "../../App";
 
 import * as api from "../../krist/api";
-import { KristMOTD } from "../../krist/api/types";
+import { KristMOTD, KristMOTDBase } from "../../krist/api/types";
 
 import { recalculateWallets, useWallets } from "../../krist/wallets/Wallet";
 
@@ -24,6 +24,14 @@ export async function updateMOTD(): Promise<void> {
   debug("motd: %s", data.motd);
   store.dispatch(nodeActions.setCurrency(data.currency));
   store.dispatch(nodeActions.setConstants(data.constants));
+
+  const motdBase: KristMOTDBase = {
+    motd: data.motd,
+    motdSet: new Date(data.motd_set),
+    debugMode: data.debug_mode,
+    miningEnabled: data.mining_enabled
+  };
+  store.dispatch(nodeActions.setMOTD(motdBase));
 }
 
 /** Sync the MOTD with the Krist node on startup. */

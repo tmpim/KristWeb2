@@ -12,6 +12,8 @@ import { WalletOverviewCard } from "./WalletOverviewCard";
 import { TransactionsCard } from "./TransactionsCard";
 import { BlockValueCard } from "./BlockValueCard";
 import { BlockDifficultyCard } from "./BlockDifficultyCard";
+import { MOTDCard } from "./MOTDCard";
+import { WhatsNewCard } from "./WhatsNewCard";
 
 import "./DashboardPage.less";
 
@@ -27,6 +29,11 @@ export function DashboardPage(): JSX.Element {
     <Row gutter={16} className="dashboard-main-row">
       <Col span={24} xl={6}><BlockValueCard /></Col>
       <Col span={24} xl={18}><BlockDifficultyCard /></Col>
+    </Row>
+
+    <Row gutter={16} className="dashboard-main-row">
+      <Col span={24} xl={12}><MOTDCard /></Col>
+      <Col span={24} xl={12}><WhatsNewCard /></Col>
     </Row>
   </PageLayout>;
 }
