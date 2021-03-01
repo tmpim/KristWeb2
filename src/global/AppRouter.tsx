@@ -43,6 +43,16 @@ export const APP_ROUTES: AppRoute[] = [
     name: "transactions",
     component: <TransactionsPage listingType={ListingType.NETWORK_ALL} />
   },
+  {
+    path: "/network/names/:name/history",
+    name: "nameHistory",
+    component: <TransactionsPage listingType={ListingType.NAME_HISTORY} />
+  },
+  {
+    path: "/network/names/:name/transactions",
+    name: "nameTransactions",
+    component: <TransactionsPage listingType={ListingType.NAME_SENT} />
+  },
 
   { path: "/settings",                    name: "settings",  component: <SettingsPage /> },
   { path: "/settings/debug",              name: "settingsDebug" },

@@ -7,7 +7,9 @@ import { Table } from "antd";
 import { useTranslation } from "react-i18next";
 
 import { KristTransaction } from "../../krist/api/types";
-import { convertSorterOrder, lookupTransactions, LookupTransactionsOptions, LookupTransactionsResponse, SortableTransactionFields } from "../../krist/api/lookup";
+import { convertSorterOrder, lookupTransactions, LookupTransactionsOptions, LookupTransactionsResponse, LookupTransactionType, SortableTransactionFields } from "../../krist/api/lookup";
+
+import { ListingType } from "./TransactionsPage";
 
 import { TransactionType } from "../../components/transactions/TransactionType";
 import { ContextualAddress } from "../../components/ContextualAddress";
@@ -19,13 +21,27 @@ import { DateTime } from "../../components/DateTime";
 import Debug from "debug";
 const debug = Debug("kristweb:transactions-table");
 
+// Received 'Cannot access LookupTransactionType before initialization' here,
+// this is a crude workaround
+const LISTING_TYPE_MAP: Record<ListingType, LookupTransactionType> = {
+  [0]: LookupTransactionType.TRANSACTIONS,
+  [1]: LookupTransactionType.TRANSACTIONS,
+  [2]: LookupTransactionType.TRANSACTIONS,
+  [3]: LookupTransactionType.NAME_HISTORY,
+  [4]: LookupTransactionType.NAME_TRANSACTIONS
+};
+
 interface Props {
+  listingType: ListingType;
+
   addresses?: string[];
+  name?: string;
+
   includeMined?: boolean;
   setError?: Dispatch<SetStateAction<Error | undefined>>;
 }
 
-export function TransactionsTable({ addresses, includeMined, setError }: Props): JSX.Element {
+export function TransactionsTable({ listingType, addresses, name, includeMined, setError }: Props): JSX.Element {
   const { t } = useTranslation();
 
   const [loading, setLoading] = useState(true);
@@ -33,20 +49,24 @@ export function TransactionsTable({ addresses, includeMined, setError }: Props):
   const [options, setOptions] = useState<LookupTransactionsOptions>({
     limit: 20,
     offset: 0,
-    orderBy: "time",
+    orderBy: "time", // Equivalent to sorting by ID
     order: "DESC"
   });
 
   // Fetch the transactions from the API, mapping the table options
   useEffect(() => {
-    debug("looking up transactions for %s", addresses ? addresses.join(",") : "network");
+    debug("looking up transactions for %s", name || (addresses ? addresses.join(",") : "network"));
     setLoading(true);
 
-    lookupTransactions(addresses, { ...options, includeMined })
+    lookupTransactions(name ? [name] : addresses, {
+      ...options,
+      includeMined,
+      type: LISTING_TYPE_MAP[listingType]
+    })
       .then(setRes)
       .catch(setError)
       .finally(() => setLoading(false));
-  }, [addresses, setError, options, includeMined ]);
+  }, [listingType, addresses, name, setError, options, includeMined]);
 
   debug("results? %b  res.transactions.length: %d  res.count: %d  res.total: %d", !!res, res?.transactions?.length, res?.count, res?.total);
 
@@ -58,8 +78,15 @@ export function TransactionsTable({ addresses, includeMined, setError }: Props):
     dataSource={res?.transactions || []}
     rowKey="id"
 
+    // Triggered whenever the filter, sorting, or pagination changes
     onChange={(pagination, _, sorter) => {
+      // While the pagination should never be undefined, it's important to
+      // ensure that the default pageSize here is equal to the pagination's
+      // default pageSize, otherwise ant-design will print a warning when the
+      // data is first populated.
       const pageSize = (pagination?.pageSize) || 20;
+
+      // This will trigger a data re-fetch
       setOptions({
         ...options,
 
@@ -89,7 +116,10 @@ export function TransactionsTable({ addresses, includeMined, setError }: Props):
         dataIndex: "id", key: "id",
 
         render: id => <>{id.toLocaleString()}</>,
-        width: 100,
+        width: 100
+
+        // Don't allow sorting by ID to save a bit of width in the columns;
+        // it's equivalent to sorting by time anyway
       },
       // Type
       {

@@ -369,6 +369,8 @@
   "transactions": {
     "title": "Network Transactions",
     "myTransactionsTitle": "My Transactions",
+    "nameHistoryTitle": "Name History",
+    "nameTransactionsTitle": "Name Transactions",
 
     "columnID": "ID",
     "columnType": "Type",

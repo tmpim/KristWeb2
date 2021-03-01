@@ -54,12 +54,20 @@ export async function lookupAddress(address: string, fetchNames?: boolean): Prom
 // =============================================================================
 export type SortableTransactionFields = "id" | "from" | "to" | "value" | "time"
   | "sent_name" | "sent_metaname";
+
+export enum LookupTransactionType {
+  TRANSACTIONS,
+  NAME_HISTORY,
+  NAME_TRANSACTIONS
+}
+
 export interface LookupTransactionsOptions {
   includeMined?: boolean;
   limit?: number;
   offset?: number;
   orderBy?: SortableTransactionFields;
   order?: "ASC" | "DESC";
+  type?: LookupTransactionType;
 }
 
 export interface LookupTransactionsResponse {
@@ -76,12 +84,24 @@ export async function lookupTransactions(addresses: string[] | undefined, opts: 
   if (opts.orderBy) qs.append("orderBy", opts.orderBy);
   if (opts.order) qs.append("order", opts.order);
 
+  // Map the lookup type to the appropriate route
+  // TODO: this is kinda wack
+  const type = opts.type || LookupTransactionType.TRANSACTIONS;
+  const route = type === LookupTransactionType.TRANSACTIONS
+    ? "transactions" : "names";
+  const routeExtra = type !== LookupTransactionType.TRANSACTIONS
+    ? (type === LookupTransactionType.NAME_HISTORY
+      ? "/history"
+      : "/transactions")
+    : "";
+
   return await api.get<LookupTransactionsResponse>(
-    "lookup/transactions/"
+    `lookup/${route}/`
     + (addresses && addresses.length > 0
       ? encodeURIComponent(addresses.join(","))
       : "")
-    + "?" + qs
+    + routeExtra
+    + `?${qs}`
   );
 }
 

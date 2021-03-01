@@ -12,6 +12,7 @@ import { TransactionsResult } from "./TransactionsResult";
 import { TransactionsTable } from "./TransactionsTable";
 
 import { useWallets } from "../../krist/wallets/Wallet";
+import { KristNameLink } from "../../components/KristNameLink";
 
 /** The type of transaction listing to search by. */
 export enum ListingType {
@@ -21,11 +22,27 @@ export enum ListingType {
   /** Transactions across the whole network */
   NETWORK_ALL,
   /** Network transactions filtered to a particular address */
-  NETWORK_ADDRESS
+  NETWORK_ADDRESS,
+
+  /** Name history transactions */
+  NAME_HISTORY,
+  /** Transactions sent to a particular name */
+  NAME_SENT,
 }
+
+const LISTING_TYPE_TITLES: Record<ListingType, string> = {
+  [ListingType.WALLETS]: "transactions.myTransactionsTitle",
+
+  [ListingType.NETWORK_ALL]: "transactions.title",
+  [ListingType.NETWORK_ADDRESS]: "transactions.title",
+
+  [ListingType.NAME_HISTORY]: "transactions.nameHistoryTitle",
+  [ListingType.NAME_SENT]: "transactions.nameTransactionsTitle"
+};
 
 interface ParamTypes {
   address?: string;
+  name?: string;
 }
 
 interface Props {
@@ -34,30 +51,32 @@ interface Props {
 
 export function TransactionsPage({ listingType }: Props): JSX.Element {
   const { t } = useTranslation();
-  const { address } = useParams<ParamTypes>();
+  const { address, name } = useParams<ParamTypes>();
 
+  const [includeMined, setIncludeMined] = useState(false);
   // If there is an error (e.g. the lookup rejected the address list due to an
   // invalid address), the table will bubble it up to here
   const [error, setError] = useState<Error | undefined>();
 
-  const [includeMined, setIncludeMined] = useState(false);
+  const subTitle = name
+    ? <KristNameLink noLink name={name} />
+    : (listingType === ListingType.NETWORK_ADDRESS
+      ? address
+      : undefined);
 
   return <PageLayout
     className="transactions-page"
     withoutTopPadding
 
     // Alter the page title depending on the listing type
-    titleKey={listingType === ListingType.WALLETS
-      ? "transactions.myTransactionsTitle"
-      : "transactions.title"}
+    titleKey={LISTING_TYPE_TITLES[listingType]}
 
-    // For an address's transaction listing, show that address in the subtitle
-    subTitle={listingType === ListingType.NETWORK_ADDRESS
-      ? address
-      : undefined}
+    // For an address's transaction listing, show that address in the subtitle.
+    // For a name listing, show the name in the subtitle.
+    subTitle={subTitle}
 
     // "Include mined transactions" switch in the top right
-    extra={<>
+    extra={!name && <>
       <Switch
         checked={includeMined}
         onChange={setIncludeMined}
@@ -77,7 +96,11 @@ export function TransactionsPage({ listingType }: Props): JSX.Element {
         )
         : (
           <TransactionsTable
+            listingType={listingType}
+
             addresses={address ? [address] : undefined}
+            name={name}
+
             includeMined={includeMined}
             setError={setError}
           />
@@ -117,7 +140,10 @@ function TransactionsTableWithWallets({ includeMined, setError }: TableWithWalle
 
   const table = useMemo(() => (
     <TransactionsTable
+      listingType={ListingType.WALLETS}
+
       addresses={addressList.split(",")}
+
       includeMined={includeMined}
       setError={setError}
     />
