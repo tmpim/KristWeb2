@@ -15,7 +15,8 @@ import "./TransactionType.less";
 export type InternalTransactionType = "transferred" | "sent" | "received" | "mined" |
   "name_a_record" | "name_transferred" | "name_sent" | "name_received" |
   "name_purchased" | "unknown";
-export const TYPES_SHOW_VALUE = ["transferred", "sent", "received", "mined", "name_purchased"];
+export const INTERNAL_TYPES_SHOW_VALUE = ["transferred", "sent", "received", "mined", "name_purchased"];
+export const TYPES_SHOW_VALUE = ["transfer", "mined", "name_purchase"];
 
 export function getTransactionType(tx: KristTransaction, from?: Wallet, to?: Wallet): InternalTransactionType {
   switch (tx.type) {

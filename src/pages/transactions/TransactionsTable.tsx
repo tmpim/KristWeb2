@@ -11,7 +11,7 @@ import { convertSorterOrder, lookupTransactions, LookupTransactionsOptions, Look
 
 import { ListingType } from "./TransactionsPage";
 
-import { TransactionType } from "../../components/transactions/TransactionType";
+import { TransactionType, TYPES_SHOW_VALUE } from "../../components/transactions/TransactionType";
 import { ContextualAddress } from "../../components/ContextualAddress";
 import { KristValue } from "../../components/KristValue";
 import { KristNameLink } from "../../components/KristNameLink";
@@ -166,7 +166,9 @@ export function TransactionsTable({ listingType, addresses, name, includeMined, 
         title: t("transactions.columnValue"),
         dataIndex: "value", key: "value",
 
-        render: value => <KristValue value={value} />,
+        render: (value, tx) => TYPES_SHOW_VALUE.includes(tx.type) && (
+          <KristValue value={value} />
+        ),
         width: 100,
 
         sorter: true

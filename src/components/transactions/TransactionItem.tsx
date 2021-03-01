@@ -14,7 +14,7 @@ import { DateTime } from "../DateTime";
 import { KristValue } from "../KristValue";
 import { KristNameLink } from "../KristNameLink";
 import { ContextualAddress } from "../ContextualAddress";
-import { getTransactionType, TransactionType, TYPES_SHOW_VALUE } from "./TransactionType";
+import { getTransactionType, TransactionType, INTERNAL_TYPES_SHOW_VALUE } from "./TransactionType";
 
 const MAX_A_LENGTH = 24;
 
@@ -126,7 +126,7 @@ export function TransactionItem({ transaction: tx, wallets }: Props): JSX.Elemen
     </Col>
 
     <Col className="transaction-right">
-      {TYPES_SHOW_VALUE.includes(type)
+      {INTERNAL_TYPES_SHOW_VALUE.includes(type)
         ? (
           // Transaction value
           <KristValue value={tx.value} highlightZero />
