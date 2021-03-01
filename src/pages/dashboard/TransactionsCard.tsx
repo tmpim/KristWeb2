@@ -67,7 +67,7 @@ export function TransactionsCard(): JSX.Element {
             <TransactionSummary
               transactions={res.transactions}
               seeMoreCount={res.total}
-              seeMoreLink="/wallets"
+              seeMoreLink="/me/transactions"
             />
           )
           : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
