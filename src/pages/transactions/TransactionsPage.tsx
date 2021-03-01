@@ -4,7 +4,7 @@
 import React, { useState, useMemo, Dispatch, SetStateAction } from "react";
 import { Switch } from "antd";
 
-import { useTranslation } from "react-i18next";
+import { useTranslation, TFunction } from "react-i18next";
 import { useParams } from "react-router-dom";
 
 import { PageLayout } from "../../layout/PageLayout";
@@ -49,6 +49,21 @@ interface Props {
   listingType: ListingType;
 }
 
+function getSiteTitle(t: TFunction, listingType: ListingType, address?: string): string {
+  switch (listingType) {
+  case ListingType.WALLETS:
+    return t("transactions.siteTitleWallets");
+  case ListingType.NETWORK_ALL:
+    return t("transactions.siteTitleNetworkAll");
+  case ListingType.NETWORK_ADDRESS:
+    return t("transactions.siteTitleNetworkAddress", { address });
+  case ListingType.NAME_HISTORY:
+    return t("transactions.siteTitleNameHistory");
+  case ListingType.NAME_SENT:
+    return t("transactions.siteTitleNameSent");
+  }
+}
+
 export function TransactionsPage({ listingType }: Props): JSX.Element {
   const { t } = useTranslation();
   const { address, name } = useParams<ParamTypes>();
@@ -58,6 +73,7 @@ export function TransactionsPage({ listingType }: Props): JSX.Element {
   // invalid address), the table will bubble it up to here
   const [error, setError] = useState<Error | undefined>();
 
+  const siteTitle = getSiteTitle(t, listingType, address);
   const subTitle = name
     ? <KristNameLink noLink name={name} />
     : (listingType === ListingType.NETWORK_ADDRESS
@@ -70,6 +86,7 @@ export function TransactionsPage({ listingType }: Props): JSX.Element {
 
     // Alter the page title depending on the listing type
     titleKey={LISTING_TYPE_TITLES[listingType]}
+    siteTitle={siteTitle}
 
     // For an address's transaction listing, show that address in the subtitle.
     // For a name listing, show the name in the subtitle.

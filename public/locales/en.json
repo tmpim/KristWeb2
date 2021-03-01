@@ -372,6 +372,12 @@
     "nameHistoryTitle": "Name History",
     "nameTransactionsTitle": "Name Transactions",
 
+    "siteTitleWallets": "My Transactions",
+    "siteTitleNetworkAll": "Network Transactions",
+    "siteTitleNetworkAddress": "{{address}}'s Transactions",
+    "siteTitleNameHistory": "Name History",
+    "siteTitleNameSent": "Name Transactions",
+
     "columnID": "ID",
     "columnType": "Type",
     "columnFrom": "From",
