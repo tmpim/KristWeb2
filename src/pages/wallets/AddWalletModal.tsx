@@ -5,7 +5,7 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import { Modal, Form, Input, Checkbox, Collapse, Button, Tooltip, Typography, Row, Col, message, notification, Grid } from "antd";
 import { ReloadOutlined } from "@ant-design/icons";
 
-import { useSelector, shallowEqual } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { useTranslation, Trans } from "react-i18next";
 
@@ -18,7 +18,7 @@ import { SelectWalletCategory } from "../../components/wallets/SelectWalletCateg
 import { WalletFormatName, applyWalletFormat, formatNeedsUsername } from "../../krist/wallets/formats/WalletFormat";
 import { SelectWalletFormat } from "../../components/wallets/SelectWalletFormat";
 import { makeV2Address } from "../../krist/AddressAlgo";
-import { addWallet, decryptWallet, editWallet, Wallet, ADDRESS_LIST_LIMIT } from "../../krist/wallets/Wallet";
+import { useWallets, addWallet, decryptWallet, editWallet, Wallet, ADDRESS_LIST_LIMIT } from "../../krist/wallets/Wallet";
 
 const { Text } = Typography;
 const { useBreakpoint } = Grid;
@@ -50,9 +50,9 @@ export function AddWalletModal({ create, editing, visible, setVisible, setAddExi
   const initialFormat = editing?.format || "kristwallet";
 
   // Required to encrypt new wallets
-  const { masterPassword } = useSelector((s: RootState) => s.walletManager, shallowEqual);
+  const masterPassword = useSelector((s: RootState) => s.walletManager.masterPassword);
   // Required to check for existing wallets
-  const { wallets } = useSelector((s: RootState) => s.wallets, shallowEqual);
+  const { wallets } = useWallets();
   const addressPrefix = useSelector((s: RootState) => s.node.currency.address_prefix);
 
   const { t } = useTranslation();

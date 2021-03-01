@@ -11,9 +11,9 @@ import { Link } from "react-router-dom";
 
 import { KristTransaction } from "../../krist/api/types";
 import { Wallet } from "../../krist/wallets/Wallet";
-import { KristValue } from "../../components/KristValue";
-import { KristNameLink } from "../../components/KristNameLink";
-import { ContextualAddress } from "../../components/ContextualAddress";
+import { KristValue } from "../KristValue";
+import { KristNameLink } from "../KristNameLink";
+import { ContextualAddress } from "../ContextualAddress";
 
 type InternalTxType = "transferred" | "sent" | "received" | "mined" |
   "name_a_record" | "name_transferred" | "name_sent" | "name_received" |
@@ -65,7 +65,7 @@ export function TransactionARecord({ metadata }: { metadata: string | undefined 
     </span>
     : (
       <span className="transaction-a-record-removed">
-        {t("dashboard.transactionItemARecordRemoved")}
+        {t("transactionSummary.itemARecordRemoved")}
       </span>
     );
 }
@@ -74,6 +74,8 @@ export function TransactionItem({ transaction: tx, wallets }: Props): JSX.Elemen
   const { t } = useTranslation();
   const bps = Grid.useBreakpoint();
 
+  // Whether or not the from/to addresses are a wallet we own
+  // TODO: Address book here too
   const fromWallet = tx.from ? wallets[tx.from] : undefined;
   const toWallet = tx.to ? wallets[tx.to] : undefined;
 
@@ -86,12 +88,12 @@ export function TransactionItem({ transaction: tx, wallets }: Props): JSX.Elemen
 
   const hideNameAddress = !bps.xl;
 
-  return <Row className={"dashboard-list-item dashboard-transaction-item " + (isNew ? "new" : "")}>
+  return <Row className={"card-list-item transaction-summary-item " + (isNew ? "new" : "")}>
     <Col span={8} xl={7} xxl={6} className="transaction-left">
       {/* Transaction type and link to transaction */}
-      <Tooltip title={t("dashboard.transactionItemID", { id: tx.id })}>
+      <Tooltip title={t("transactionSummary.itemID", { id: tx.id })}>
         <span className={"transaction-type transaction-type-" + type}>
-          <Link to={txLink}>{t("dashboard.transactionTypes." + type)}</Link>
+          <Link to={txLink}>{t("transactionSummary.types." + type)}</Link>
         </span>
       </Tooltip>
 
@@ -104,7 +106,7 @@ export function TransactionItem({ transaction: tx, wallets }: Props): JSX.Elemen
     <Col className="transaction-middle">
       {/* Transaction name */}
       {(type === "name_a_record" || type === "name_purchased") && (
-        <span className="transaction-name"><Trans t={t} i18nKey="dashboard.transactionItemName">
+        <span className="transaction-name"><Trans t={t} i18nKey="transactionSummary.itemName">
           <span className="transaction-field">Name:</span>
           <KristNameLink name={tx.name || ""} className="transaction-name" />
         </Trans></span>
@@ -112,7 +114,7 @@ export function TransactionItem({ transaction: tx, wallets }: Props): JSX.Elemen
 
       {/* Transaction A record */}
       {type === "name_a_record" && (
-        <span className="transaction-a-record"><Trans t={t} i18nKey="dashboard.transactionItemARecord">
+        <span className="transaction-a-record"><Trans t={t} i18nKey="transactionSummary.itemARecord">
           <span className="transaction-field">A record:</span>
           <TransactionARecord metadata={tx.metadata} />
         </Trans></span>
@@ -120,7 +122,7 @@ export function TransactionItem({ transaction: tx, wallets }: Props): JSX.Elemen
 
       {/* Transaction to */}
       {type !== "name_a_record" && (
-        <span className="transaction-to"><Trans t={t} i18nKey="dashboard.transactionItemTo">
+        <span className="transaction-to"><Trans t={t} i18nKey="transactionSummary.itemTo">
           <span className="transaction-field">To:</span>
           {type === "name_purchased"
             ? <ContextualAddress address={tx.from} wallet={fromWallet} />
@@ -135,7 +137,7 @@ export function TransactionItem({ transaction: tx, wallets }: Props): JSX.Elemen
 
       {/* Transaction from */}
       {type !== "name_a_record" && type !== "name_purchased" && type !== "mined" && (
-        <span className="transaction-from"><Trans t={t} i18nKey="dashboard.transactionItemFrom">
+        <span className="transaction-from"><Trans t={t} i18nKey="transactionSummary.itemFrom">
           <span className="transaction-field">From:</span>
           <ContextualAddress
             address={tx.from}

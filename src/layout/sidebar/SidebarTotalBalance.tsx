@@ -4,15 +4,13 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import { useSelector, shallowEqual } from "react-redux";
-import { RootState } from "../../store";
-
+import { useWallets } from "../../krist/wallets/Wallet";
 import { KristValue } from "../../components/KristValue";
 
 export function SidebarTotalBalance(): JSX.Element {
   const { t } = useTranslation();
 
-  const { wallets } = useSelector((s: RootState) => s.wallets, shallowEqual);
+  const { wallets } = useWallets();
   const balance = Object.values(wallets)
     .filter(w => w.balance !== undefined)
     .reduce((acc, w) => acc + w.balance!, 0);

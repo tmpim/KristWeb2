@@ -58,4 +58,37 @@
       padding: @margin-md 0;
     }
   }
+
+  .card-list-item {
+    padding: (@padding-sm / 2) @padding-md;
+    margin-bottom: @margin-xs;
+
+    background: @kw-dark;
+    border-radius: @kw-big-card-border-radius;
+
+    box-sizing: border-box;
+    min-height: 60px;
+    justify-content: center;
+
+    line-height: 1.5;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .card-more a {
+    display: block;
+    width: 100%;
+
+    margin-bottom: -@padding-sm;
+
+    color: @text-color-secondary;
+    font-size: 90%;
+    text-align: center;
+
+    &:hover {
+      color: lighten(@text-color-secondary, 10%);
+    }
+  }
 }

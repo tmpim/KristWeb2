@@ -14,6 +14,9 @@ import { store } from "../../App";
 import * as actions from "../../store/actions/WalletsActions";
 import { WalletMap } from "../../store/reducers/WalletsReducer";
 
+import { useSelector, shallowEqual } from "react-redux";
+import { RootState } from "../../store";
+
 import { Mutex } from "async-mutex";
 
 import Debug from "debug";
@@ -164,7 +167,9 @@ export function syncWalletUpdate(wallet: Wallet, address: KristAddressWithNames)
 
 /** Sync the data for all the wallets from the sync node, save it to local
  * storage, and dispatch the changes to the Redux store. */
-export async function syncWallets(wallets: WalletMap): Promise<void> {
+export async function syncWallets(): Promise<void> {
+  const { wallets } = store.getState().wallets;
+
   const syncTime = new Date();
 
   // Fetch all the data from the sync node (e.g. balances)
@@ -375,4 +380,13 @@ export async function recalculateWallets(masterPassword: string, wallets: Wallet
     debug("recalculation done, saving prefix");
     localStorage.setItem("lastAddressPrefix", addressPrefix);
   });
+}
+
+/** Hook that fetches the wallets from the Redux store. */
+export function useWallets(): { wallets: WalletMap; walletAddressMap: Record<string, Wallet> } {
+  const { wallets } = useSelector((s: RootState) => s.wallets, shallowEqual);
+  const walletAddressMap = Object.values(wallets)
+    .reduce((o, wallet) => ({ ...o, [wallet.address]: wallet }), {});
+
+  return { wallets, walletAddressMap };
 }

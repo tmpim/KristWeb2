@@ -4,12 +4,10 @@
 import React from "react";
 import { Card, Row, Col, Button } from "antd";
 
-import { useSelector, shallowEqual } from "react-redux";
-import { RootState } from "../../store";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import { Wallet } from "../../krist/wallets/Wallet";
+import { Wallet, useWallets } from "../../krist/wallets/Wallet";
 
 import { KristValue } from "../../components/KristValue";
 import { Statistic } from "../../components/Statistic";
@@ -18,7 +16,7 @@ import { WalletItem } from "./WalletItem";
 import { keyedNullSort } from "../../utils";
 
 export function WalletOverviewCard(): JSX.Element {
-  const { wallets } = useSelector((s: RootState) => s.wallets, shallowEqual);
+  const { wallets } = useWallets();
   const { t } = useTranslation();
 
   const clonedWallets = [...Object.values(wallets)];
@@ -53,7 +51,7 @@ export function WalletOverviewCard(): JSX.Element {
 
     {top4Wallets.map(w => <WalletItem key={w.id} wallet={w} />)}
 
-    <Row className="dashboard-wallets-more dashboard-more">
+    <Row className="card-more dashboard-wallets-more">
       <Link to="/wallets">
         {clonedWallets.length > 0
           ? t("dashboard.walletOverviewSeeMore", { count: clonedWallets.length })

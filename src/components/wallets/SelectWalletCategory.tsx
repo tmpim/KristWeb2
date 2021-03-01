@@ -5,11 +5,10 @@ import React, { useState } from "react";
 import { Select, Input, Button, Typography, Divider } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 
-import { useSelector, shallowEqual } from "react-redux";
-import { RootState } from "../../store";
 import { useTranslation } from "react-i18next";
 
 import { localeSort } from "../../utils";
+import { useWallets } from "../../krist/wallets/Wallet";
 
 const { Text } = Typography;
 
@@ -19,7 +18,7 @@ interface Props {
 
 export function SelectWalletCategory({ onNewCategory }: Props): JSX.Element {
   // Required to fetch existing categories
-  const { wallets } = useSelector((s: RootState) => s.wallets, shallowEqual);
+  const { wallets } = useWallets();
   const existingCategories = [...new Set(Object.values(wallets)
     .filter(w => w.category !== undefined && w.category !== "")
     .map(w => w.category) as string[])];

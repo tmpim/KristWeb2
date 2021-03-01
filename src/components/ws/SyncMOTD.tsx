@@ -3,7 +3,7 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { useEffect } from "react";
 
-import { useSelector, shallowEqual } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import * as nodeActions from "../../store/actions/NodeActions";
 
@@ -12,7 +12,7 @@ import { store } from "../../App";
 import * as api from "../../krist/api";
 import { KristMOTD } from "../../krist/api/types";
 
-import { recalculateWallets } from "../../krist/wallets/Wallet";
+import { recalculateWallets, useWallets } from "../../krist/wallets/Wallet";
 
 import Debug from "debug";
 const debug = Debug("kristweb:sync-motd");
@@ -34,7 +34,7 @@ export function SyncMOTD(): JSX.Element | null {
   // All these are used to determine if we need to recalculate the addresses
   const addressPrefix = useSelector((s: RootState) => s.node.currency.address_prefix);
   const masterPassword = useSelector((s: RootState) => s.walletManager.masterPassword);
-  const wallets = useSelector((s: RootState) => s.wallets.wallets, shallowEqual);
+  const { wallets } = useWallets();
 
   // Update the MOTD when the sync node changes, and on startup
   useEffect(() => {

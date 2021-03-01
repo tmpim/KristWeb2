@@ -5,8 +5,6 @@ import React, { useState } from "react";
 import { Table, Tooltip, Dropdown, Tag, Menu, Popconfirm } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
-import { useSelector, shallowEqual } from "react-redux";
-import { RootState } from "../../store";
 import { useTranslation } from "react-i18next";
 
 import { KristValue } from "../../components/KristValue";
@@ -14,7 +12,7 @@ import { DateTime } from "../../components/DateTime";
 import { AuthorisedAction } from "../../components/auth/AuthorisedAction";
 import { AddWalletModal } from "./AddWalletModal";
 
-import { Wallet, deleteWallet } from "../../krist/wallets/Wallet";
+import { Wallet, deleteWallet, useWallets } from "../../krist/wallets/Wallet";
 
 import { keyedNullSort, localeSort } from "../../utils";
 
@@ -74,8 +72,7 @@ function WalletActions({ wallet }: { wallet: Wallet }): JSX.Element {
 
 export function WalletsTable(): JSX.Element {
   const { t } = useTranslation();
-
-  const { wallets } = useSelector((s: RootState) => s.wallets, shallowEqual);
+  const { wallets } = useWallets();
 
   // Required to filter by categories
   const categories = [...new Set(Object.values(wallets)

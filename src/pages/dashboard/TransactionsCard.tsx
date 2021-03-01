@@ -3,17 +3,16 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React, { useState, useEffect, useMemo } from "react";
 import classNames from "classnames";
-import { Card, Skeleton, Empty, Row } from "antd";
+import { Card, Skeleton, Empty } from "antd";
 
-import { useSelector, shallowEqual } from "react-redux";
-import { RootState } from "../../store";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
 
-import { TransactionItem } from "./TransactionItem";
-import { WalletMap } from "../../store/reducers/WalletsReducer";
-import { useSyncNode } from "../../krist/api";
+import { TransactionSummary } from "../../components/transactions/TransactionSummary";
 import { lookupTransactions, LookupTransactionsResponse } from "../../krist/api/lookup";
+
+import { useSyncNode } from "../../krist/api";
+import { useWallets } from "../../krist/wallets/Wallet";
+import { WalletMap } from "../../store/reducers/WalletsReducer";
 
 import { SmallResult } from "../../components/SmallResult";
 
@@ -34,7 +33,7 @@ async function _fetchTransactions(wallets: WalletMap): Promise<LookupTransaction
 
 export function TransactionsCard(): JSX.Element {
   const syncNode = useSyncNode();
-  const { wallets } = useSelector((s: RootState) => s.wallets, shallowEqual);
+  const { wallets } = useWallets();
   const { t } = useTranslation();
 
   const [res, setRes] = useState<LookupTransactionsResponse | undefined>();
@@ -48,27 +47,6 @@ export function TransactionsCard(): JSX.Element {
     fetchTxs(wallets);
   }, [syncNode, wallets, fetchTxs]);
 
-  const walletAddressMap = Object.values(wallets)
-    .reduce((o, wallet) => ({ ...o, [wallet.address]: wallet }), {});
-
-  function cardContents(): JSX.Element {
-    return <>
-      {res && res.transactions.map(t => (
-        <TransactionItem
-          key={t.id}
-          transaction={t}
-          wallets={walletAddressMap}
-        />
-      ))}
-
-      <Row className="dashboard-transactions-more dashboard-more">
-        <Link to="/wallets">
-          {t("dashboard.transactionsSeeMore", { count: res?.total || 0 })}
-        </Link>
-      </Row>
-    </>;
-  }
-
   const isEmpty = !loading && (error || !res || res.count === 0);
   const classes = classNames("kw-card", "dashboard-card-transactions", {
     "empty": isEmpty
@@ -79,7 +57,13 @@ export function TransactionsCard(): JSX.Element {
       {error
         ? <SmallResult status="error" title={t("error")} subTitle={t("dashboard.transactionsError")} />
         : (res && res.count > 0
-          ? cardContents()
+          ? (
+            <TransactionSummary
+              transactions={res.transactions}
+              seeMoreCount={res.total}
+              seeMoreLink="/wallets"
+            />
+          )
           : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
         )}
     </Skeleton>

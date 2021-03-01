@@ -5,8 +5,6 @@ import React, { useState } from "react";
 import { Button } from "antd";
 import { DatabaseOutlined, PlusOutlined } from "@ant-design/icons";
 
-import { useSelector, shallowEqual } from "react-redux";
-import { RootState } from "../../store";
 import { useTranslation } from "react-i18next";
 
 import { PageLayout } from "../../layout/PageLayout";
@@ -14,13 +12,15 @@ import { AuthorisedAction } from "../../components/auth/AuthorisedAction";
 import { AddWalletModal } from "./AddWalletModal";
 import { WalletsTable } from "./WalletsTable";
 
+import { useWallets } from "../../krist/wallets/Wallet";
+
 import "./WalletsPage.less";
 
 /** Extract the subtitle into its own component to avoid re-rendering the
  * entire page when a wallet is added. */
 function WalletsPageSubtitle(): JSX.Element {
   const { t } = useTranslation();
-  const { wallets } = useSelector((s: RootState) => s.wallets, shallowEqual);
+  const { wallets } = useWallets();
 
   return <>{t("myWallets.walletCount", { count: Object.keys(wallets).length })}</>;
 }

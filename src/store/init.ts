@@ -6,11 +6,13 @@ import { getInitialWalletsState } from "./reducers/WalletsReducer";
 import { getInitialSettingsState } from "./reducers/SettingsReducer";
 import { getInitialNodeState } from "./reducers/NodeReducer";
 
-import { createStore } from "redux";
+import { createStore, Store } from "redux";
 import { devToolsEnhancer } from "redux-devtools-extension";
 import rootReducer from "./reducers/RootReducer";
 
-export const initStore = () => createStore(
+import { RootState, RootAction } from "./index";
+
+export const initStore = (): Store<RootState, RootAction> => createStore(
   rootReducer,
   {
     walletManager: getInitialWalletManagerState(),
