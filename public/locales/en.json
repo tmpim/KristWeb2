@@ -313,6 +313,10 @@
 
   "address": {
     "title": "Address",
+
+    "walletLabel": "Label:",
+    "walletCategory": "Category:",
+
     "balance": "Current balance",
     "names": "Names",
     "nameCount": "{{count, number}} name",

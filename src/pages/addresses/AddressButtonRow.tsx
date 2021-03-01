@@ -8,15 +8,16 @@ import { SendOutlined, SwapOutlined, UserAddOutlined, EditOutlined } from "@ant-
 import { useTranslation } from "react-i18next";
 
 import { KristAddressWithNames } from "../../krist/api/lookup";
-import { useWallets } from "../../krist/wallets/Wallet";
+import { Wallet } from "../../krist/wallets/Wallet";
 import { WalletEditButton } from "../wallets/WalletEditButton";
 
-export function AddressButtonRow({ address }: { address: KristAddressWithNames }): JSX.Element {
-  const { t } = useTranslation();
-  const { wallets } = useWallets();
+interface Props {
+  address: KristAddressWithNames;
+  myWallet?: Wallet;
+}
 
-  const myWallet = Object.values(wallets)
-    .find(w => w.address === address.address);
+export function AddressButtonRow({ address, myWallet }: Props): JSX.Element {
+  const { t } = useTranslation();
 
   return <>
     {/* Send/transfer Krist button */}

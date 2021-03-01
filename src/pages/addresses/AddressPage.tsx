@@ -2,7 +2,7 @@
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React, { useState, useEffect } from "react";
-import { Row, Col, Skeleton } from "antd";
+import { Row, Col, Skeleton, Tag } from "antd";
 
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
@@ -16,6 +16,7 @@ import { DateTime } from "../../components/DateTime";
 
 import * as api from "../../krist/api";
 import { lookupAddress, KristAddressWithNames } from "../../krist/api/lookup";
+import { useWallets } from "../../krist/wallets/Wallet";
 
 import { AddressButtonRow } from "./AddressButtonRow";
 import { AddressTransactionsCard } from "./AddressTransactionsCard";
@@ -29,6 +30,10 @@ interface ParamTypes {
 
 function PageContents({ address }: { address: KristAddressWithNames }): JSX.Element {
   const { t } = useTranslation();
+  const { wallets } = useWallets();
+
+  const myWallet = Object.values(wallets)
+    .find(w => w.address === address.address);
 
   return <>
     {/* Address and buttons */}
@@ -37,8 +42,23 @@ function PageContents({ address }: { address: KristAddressWithNames }): JSX.Elem
       <h1 className="address">{address.address}</h1>
 
       {/* Buttons (e.g. Send Krist, Add friend) */}
-      <AddressButtonRow address={address} />
+      <AddressButtonRow address={address} myWallet={myWallet} />
     </Row>
+
+    {/* Wallet tags (if applicable) */}
+    {myWallet && (myWallet.label || myWallet.category) && (
+      <Row className="address-wallet-row">
+        {myWallet.label && <span className="address-wallet-label">
+          <span className="prefix">{t("address.walletLabel")}</span>
+          <Tag>{myWallet.label}</Tag>
+        </span>}
+
+        {myWallet.category && <span className="address-wallet-category">
+          <span className="prefix">{t("address.walletCategory")}</span>
+          <Tag>{myWallet.category}</Tag>
+        </span>}
+      </Row>
+    )}
 
     {/* Main address info */}
     <Row className="address-info-row">
