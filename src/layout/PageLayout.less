@@ -23,4 +23,11 @@
       padding-top: 0;
     }
   }
+
+  &.page-layout-negative-margin {
+    .page-layout-contents {
+      // Used to pull table pagination up to the 'extra' area of the header
+      margin-top: -@kw-page-header-height + 4;
+    }
+  }
 }

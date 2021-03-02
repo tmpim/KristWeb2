@@ -13,7 +13,8 @@ import { stripNameFromMetadata } from "../../utils/currency";
 import "./TransactionConciseMetadata.less";
 
 interface Props {
-  transaction: KristTransaction;
+  transaction?: KristTransaction;
+  metadata?: string;
   limit?: number;
   className?: string;
 }
@@ -22,17 +23,18 @@ interface Props {
  * Trims the name and metaname from the start of metadata, and truncates it
  * to a specified amount of characters.
  */
-export function TransactionConciseMetadata({ transaction, limit = 30, className }: Props): JSX.Element | null {
+export function TransactionConciseMetadata({ transaction, metadata, limit = 30, className }: Props): JSX.Element | null {
   const nameSuffix = useSelector((s: RootState) => s.node.currency.name_suffix);
 
   // Don't render anything if there's no metadata (after the hooks)
-  if (!transaction || !transaction.metadata) return null;
+  const meta = metadata || transaction?.metadata;
+  if (!meta) return null;
 
   // Strip the name from the start of the transaction metadata, if it is present
-  const hasName = transaction.sent_name || transaction.sent_metaname;
+  const hasName = transaction && (transaction.sent_name || transaction.sent_metaname);
   const withoutName = hasName
-    ? stripNameFromMetadata(nameSuffix, transaction.metadata)
-    : transaction.metadata;
+    ? stripNameFromMetadata(nameSuffix, meta)
+    : meta;
 
   // Trim it down to the limit if necessary
   const wasTruncated = withoutName.length > limit;

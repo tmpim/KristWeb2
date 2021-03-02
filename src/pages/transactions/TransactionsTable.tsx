@@ -115,7 +115,7 @@ export function TransactionsTable({ listingType, addresses, name, includeMined, 
         title: t("transactions.columnID"),
         dataIndex: "id", key: "id",
 
-        render: id => <>{id.toLocaleString()}</>,
+        render: id => id.toLocaleString(),
         width: 100
 
         // Don't allow sorting by ID to save a bit of width in the columns;

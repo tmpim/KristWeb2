@@ -409,5 +409,31 @@
       "name_purchased": "Purchased name",
       "unknown": "Unknown"
     }
+  },
+
+  "names": {
+    "titleWallets": "My Names",
+    "titleNetworkAll": "Network Names",
+    "titleNetworkAddress": "Network Names",
+
+    "siteTitleWallets": "My Names",
+    "siteTitleNetworkAll": "Network Names",
+    "siteTitleNetworkAddress": "{{address}}'s Names",
+
+    "columnName": "Name",
+    "columnOwner": "Owner",
+    "columnOriginalOwner": "Original Owner",
+    "columnRegistered": "Registered",
+    "columnUpdated": "Updated",
+    "columnARecord": "A Record",
+    "columnUnpaid": "Unpaid Blocks",
+
+    "tableTotal": "{{count, number}} name",
+    "tableTotal_plural": "{{count, number}} names",
+
+    "resultInvalidTitle": "Invalid address",
+    "resultInvalid": "That does not look like a valid Krist address.",
+    "resultUnknownTitle": "Unknown error",
+    "resultUnknown": "See console for details."
   }
 }

@@ -84,6 +84,10 @@ export function TransactionsPage({ listingType }: Props): JSX.Element {
     className="transactions-page"
     withoutTopPadding
 
+    // If there's no "Include mined transactions" switch, pull the table's
+    // pagination up to the page header's extra area
+    negativeMargin={!!name}
+
     // Alter the page title depending on the listing type
     titleKey={LISTING_TYPE_TITLES[listingType]}
     siteTitle={siteTitle}

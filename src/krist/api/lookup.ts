@@ -123,9 +123,7 @@ export interface LookupNamesResponse {
   names: KristName[];
 }
 
-export async function lookupNames(addresses: string[], opts: LookupNamesOptions): Promise<LookupNamesResponse> {
-  if (!addresses || addresses.length === 0) return { count: 0, total: 0, names: [] };
-
+export async function lookupNames(addresses: string[] | undefined, opts: LookupNamesOptions): Promise<LookupNamesResponse> {
   const qs = new URLSearchParams();
   if (opts.limit) qs.append("limit", opts.limit.toString());
   if (opts.offset) qs.append("offset", opts.offset.toString());
@@ -134,7 +132,9 @@ export async function lookupNames(addresses: string[], opts: LookupNamesOptions)
 
   return await api.get<LookupNamesResponse>(
     "lookup/names/"
-    + encodeURIComponent(addresses.join(","))
+    + (addresses && addresses.length > 0
+      ? encodeURIComponent(addresses.join(","))
+      : "")
     + "?" + qs
   );
 }
