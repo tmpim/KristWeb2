@@ -53,6 +53,11 @@ export function SettingsPage(): JSX.Element {
 
       {/* Advanced settings */}
       <Menu.SubMenu key="sub-advanced" icon={<SettingOutlined />} title={t("settings.subMenuAdvanced")}>
+        {/* Always include mined transactions */}
+        <Menu.Item key="advanced/alwaysIncludeMined">
+          <SettingBoolean setting="alwaysIncludeMined" titleKey="settings.alwaysIncludeMined" />
+        </Menu.Item>
+
         {/* Copy name suffixes */}
         <Menu.Item key="advanced/copyNameSuffixes">
           <SettingBoolean setting="copyNameSuffixes" titleKey="settings.copyNameSuffixes" />

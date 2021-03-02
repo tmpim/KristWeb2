@@ -285,6 +285,7 @@
     "autoRefreshTablesDescription": "Whether or not large table listings (e.g. transactions, names) should automatically refresh when a change is detected on the network.",
 
     "subMenuAdvanced": "Advanced settings",
+    "alwaysIncludeMined": "Always include mined transactions in transaction listings (may require refresh)",
     "copyNameSuffixes": "Include suffix when copying names",
     "addressCopyButtons": "Show copy buttons next to all addresses",
     "nameCopyButtons": "Show copy buttons next to all names",

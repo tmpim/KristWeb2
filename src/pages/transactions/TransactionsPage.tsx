@@ -91,8 +91,9 @@ function getRefreshID(listingType: ListingType, includeMined: boolean, node: Nod
 export function TransactionsPage({ listingType }: Props): JSX.Element {
   const { t } = useTranslation();
   const { address, name } = useParams<ParamTypes>();
+  const alwaysIncludeMined = useBooleanSetting("alwaysIncludeMined");
 
-  const [includeMined, setIncludeMined] = useState(false);
+  const [includeMined, setIncludeMined] = useState(alwaysIncludeMined);
   // If there is an error (e.g. the lookup rejected the address list due to an
   // invalid address), the table will bubble it up to here
   const [error, setError] = useState<Error | undefined>();

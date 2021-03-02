@@ -17,6 +17,8 @@ export interface SettingsState {
    * when a change is detected on the network. */
   readonly autoRefreshTables: boolean;
 
+  /** Always include mined transactions by default in transaction listings. */
+  readonly alwaysIncludeMined: boolean;
   /** Whether or not to include the name suffix when copying a name. */
   readonly copyNameSuffixes: boolean;
   /** Show copy buttons next to all addresses. */
@@ -31,6 +33,7 @@ export interface SettingsState {
 export const DEFAULT_SETTINGS: SettingsState = {
   autoRefreshTables: true,
 
+  alwaysIncludeMined: false,
   copyNameSuffixes: true,
   addressCopyButtons: false,
   nameCopyButtons: false,
