@@ -16,18 +16,20 @@ const { Text } = Typography;
 
 interface OwnProps {
   name: string;
+  text?: string;
   noLink?: boolean;
   neverCopyable?: boolean;
 }
 type Props = React.HTMLProps<HTMLSpanElement> & OwnProps;
 
-export function KristNameLink({ name, noLink, neverCopyable, ...props }: Props): JSX.Element | null {
+export function KristNameLink({ name, text, noLink, neverCopyable, ...props }: Props): JSX.Element | null {
   const nameSuffix = useSelector((s: RootState) => s.node.currency.name_suffix);
   const nameCopyButtons = useBooleanSetting("nameCopyButtons");
   const copyNameSuffixes = useBooleanSetting("copyNameSuffixes");
 
   if (!name) return null;
   const nameWithSuffix = `${name}.${nameSuffix}`;
+  const content = text || nameWithSuffix;
 
   const copyable = !neverCopyable && nameCopyButtons
     ? { text: copyNameSuffixes ? nameWithSuffix : name }
@@ -37,10 +39,10 @@ export function KristNameLink({ name, noLink, neverCopyable, ...props }: Props):
 
   return <Text className={classes} copyable={copyable}>
     {noLink
-      ? nameWithSuffix
+      ? content
       : (
         <Link to={"/network/names/" + encodeURIComponent(name)}>
-          {nameWithSuffix}
+          {content}
         </Link>
       )}
   </Text>;

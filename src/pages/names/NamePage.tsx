@@ -25,6 +25,7 @@ import { useWallets } from "../../krist/wallets/Wallet";
 import { useBooleanSetting } from "../../utils/settings";
 
 import { NameButtonRow } from "./NameButtonRow";
+import { NameARecordLink } from "./NameARecordLink";
 import { NameTransactionsCard } from "./NameTransactionsCard";
 
 import "./NamePage.less";
@@ -124,7 +125,7 @@ function PageContents({ name, nameWithSuffix }: { name: KristName; nameWithSuffi
                 </Typography.Link>
               </Tooltip>
             </>}
-            value={<a href={name.a} target="_blank" rel="noreferrer noopener">{name.a}</a>}
+            value={<NameARecordLink a={name.a} />}
           />
         </Col>
       </Row>
