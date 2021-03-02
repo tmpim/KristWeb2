@@ -13,6 +13,20 @@
     margin-bottom: 0;
 
     user-select: none;
+
+    height: auto;
+
+    &:last-child { border-bottom: none; }
+  }
+
+  .ant-menu-submenu {
+    border-bottom: 1px solid @border-color-split;
+    &:last-child { border-bottom: none; }
+  }
+
+  .menu-item-description {
+    color: @text-color-secondary;
+    font-size: @font-size-sm;
   }
 }
 

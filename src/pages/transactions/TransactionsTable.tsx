@@ -34,6 +34,9 @@ const LISTING_TYPE_MAP: Record<ListingType, LookupTransactionType> = {
 interface Props {
   listingType: ListingType;
 
+  // Number used to trigger a refresh of the transactions listing
+  refreshingID?: number;
+
   addresses?: string[];
   name?: string;
 
@@ -41,7 +44,7 @@ interface Props {
   setError?: Dispatch<SetStateAction<Error | undefined>>;
 }
 
-export function TransactionsTable({ listingType, addresses, name, includeMined, setError }: Props): JSX.Element {
+export function TransactionsTable({ listingType, refreshingID, addresses, name, includeMined, setError }: Props): JSX.Element {
   const { t } = useTranslation();
 
   const [loading, setLoading] = useState(true);
@@ -66,7 +69,7 @@ export function TransactionsTable({ listingType, addresses, name, includeMined, 
       .then(setRes)
       .catch(setError)
       .finally(() => setLoading(false));
-  }, [listingType, addresses, name, setError, options, includeMined]);
+  }, [listingType, refreshingID, addresses, name, setError, options, includeMined]);
 
   debug("results? %b  res.transactions.length: %d  res.count: %d  res.total: %d", !!res, res?.transactions?.length, res?.count, res?.total);
 

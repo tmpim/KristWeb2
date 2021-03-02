@@ -1,11 +1,15 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import React, { useState, useMemo, Dispatch, SetStateAction } from "react";
+import React, { useState, useMemo } from "react";
 import { Switch } from "antd";
 
 import { useTranslation, TFunction } from "react-i18next";
 import { useParams } from "react-router-dom";
+
+import { useSelector, shallowEqual } from "react-redux";
+import { RootState } from "../../store";
+import { State as NodeState } from "../../store/reducers/NodeReducer";
 
 import { PageLayout } from "../../layout/PageLayout";
 import { TransactionsResult } from "./TransactionsResult";
@@ -49,6 +53,8 @@ interface Props {
   listingType: ListingType;
 }
 
+/** Returns the correct site title key (with parameters if necessary) for the
+ * given listing type. */
 function getSiteTitle(t: TFunction, listingType: ListingType, address?: string): string {
   switch (listingType) {
   case ListingType.WALLETS:
@@ -64,6 +70,23 @@ function getSiteTitle(t: TFunction, listingType: ListingType, address?: string):
   }
 }
 
+/** Returns the correct auto-refresh ID for the given listing type. */
+function getRefreshID(listingType: ListingType, includeMined: boolean, node: NodeState): number {
+  switch (listingType) {
+  case ListingType.WALLETS:
+    return node.lastOwnTransactionID;
+  case ListingType.NAME_HISTORY:
+    return node.lastNameTransactionID;
+  case ListingType.NAME_SENT:
+  case ListingType.NETWORK_ALL:
+  case ListingType.NETWORK_ADDRESS: // TODO: subscribe to a single name
+    // Prevent annoying refreshes when blocks are mined
+    return includeMined
+      ? node.lastTransactionID
+      : node.lastNonMinedTransactionID;
+  }
+}
+
 export function TransactionsPage({ listingType }: Props): JSX.Element {
   const { t } = useTranslation();
   const { address, name } = useParams<ParamTypes>();
@@ -72,6 +95,35 @@ export function TransactionsPage({ listingType }: Props): JSX.Element {
   // If there is an error (e.g. the lookup rejected the address list due to an
   // invalid address), the table will bubble it up to here
   const [error, setError] = useState<Error | undefined>();
+
+  // Used to handle memoisation and auto-refreshing
+  const { joinedAddressList } = useWallets();
+  const nodeState = useSelector((s: RootState) => s.node, shallowEqual);
+  const shouldAutoRefresh = useSelector((s: RootState) => s.settings.autoRefreshTables);
+
+  // Comma-separated list of addresses, used as an optimisation for
+  // memoisation (no deep equality in useMemo)
+  const usedAddresses = listingType === ListingType.WALLETS
+    ? joinedAddressList : address;
+
+  // If auto-refresh is disabled, use a static refresh ID
+  const usedRefreshID = shouldAutoRefresh
+    ? getRefreshID(listingType, includeMined, nodeState) : 0;
+
+  // Memoise the table so that it only updates the props (thus triggering a
+  // re-fetch of the transactions) when something relevant changes
+  const memoTable = useMemo(() => (
+    <TransactionsTable
+      listingType={ListingType.WALLETS}
+      refreshingID={usedRefreshID}
+
+      addresses={usedAddresses?.split(",")}
+      name={name}
+
+      includeMined={includeMined}
+      setError={setError}
+    />
+  ), [usedAddresses, name, usedRefreshID, includeMined, setError]);
 
   const siteTitle = getSiteTitle(t, listingType, address);
   const subTitle = name
@@ -107,68 +159,6 @@ export function TransactionsPage({ listingType }: Props): JSX.Element {
   >
     {error
       ? <TransactionsResult error={error} />
-      : (listingType === ListingType.WALLETS
-        ? (
-          // Version of the table component that memoises the wallets
-          <TransactionsTableWithWallets
-            includeMined={includeMined}
-            setError={setError}
-          />
-        )
-        : (
-          <TransactionsTable
-            listingType={listingType}
-
-            addresses={address ? [address] : undefined}
-            name={name}
-
-            includeMined={includeMined}
-            setError={setError}
-          />
-        ))}
+      : memoTable}
   </PageLayout>;
-}
-
-interface TableWithWalletsProps {
-  includeMined: boolean;
-  setError: Dispatch<SetStateAction<Error | undefined>>;
-}
-
-/**
- * We only want to fetch the wallets (because changes will cause re-renders)
- * if this is a wallet transactions listing. In order to achieve a conditional
- * hook, the table is wrapped in this component only if the listing type is
- * WALLETS.
- */
-function TransactionsTableWithWallets({ includeMined, setError }: TableWithWalletsProps): JSX.Element {
-  const { walletAddressMap } = useWallets();
-  const addresses = Object.keys(walletAddressMap);
-
-  // The instance created by Object.keys is going to be different every time,
-  // but its values probably won't change. So, we're going to need a rather
-  // crude deep equality check.
-  // TODO: Perhaps do this check on the whole wallets object, so that we can
-  //       auto-refresh the table when balances change, but still avoid
-  //       refreshing otherwise.
-  // REVIEW: Another idea is to store a 'lastTransactionID' in Redux,
-  //         concerning only our own wallets (and, in the future, a subscribed
-  //         wallet when viewing an external address?). This way, we can still
-  //         auto-refresh whenever we have to (a wallet is added/removed, a
-  //         transaction is made to one of our wallets), and never when we
-  //         don't.
-  addresses.sort();
-  const addressList = addresses.join(",");
-
-  const table = useMemo(() => (
-    <TransactionsTable
-      listingType={ListingType.WALLETS}
-
-      addresses={addressList.split(",")}
-
-      includeMined={includeMined}
-      setError={setError}
-    />
-  ), [addressList, includeMined, setError]);
-
-  return table;
 }

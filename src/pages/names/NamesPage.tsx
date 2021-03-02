@@ -1,10 +1,13 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import React, { useState, useMemo, Dispatch, SetStateAction } from "react";
+import React, { useState, useMemo } from "react";
 
 import { useTranslation, TFunction } from "react-i18next";
 import { useParams } from "react-router-dom";
+
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 import { PageLayout } from "../../layout/PageLayout";
 import { NamesResult } from "./NamesResult";
@@ -56,6 +59,34 @@ export function NamesPage({ listingType }: Props): JSX.Element {
   // invalid address), the table will bubble it up to here
   const [error, setError] = useState<Error | undefined>();
 
+  // Used to handle memoisation and auto-refreshing
+  const { joinedAddressList } = useWallets();
+  const lastNameTransactionID = useSelector((s: RootState) => s.node.lastNameTransactionID);
+  const lastOwnNameTransactionID = useSelector((s: RootState) => s.node.lastOwnNameTransactionID);
+  const shouldAutoRefresh = useSelector((s: RootState) => s.settings.autoRefreshTables);
+
+  // Comma-separated list of addresses, used as an optimisation for
+  // memoisation (no deep equality in useMemo)
+  const usedAddresses = listingType === ListingType.WALLETS
+    ? joinedAddressList : address;
+
+  // If auto-refresh is disabled, use a static refresh ID
+  const usedRefreshID = shouldAutoRefresh
+    ? (listingType === ListingType.WALLETS
+      ? lastOwnNameTransactionID
+      : lastNameTransactionID)
+    : 0;
+
+  // Memoise the table so that it only updates the props (thus triggering a
+  // re-fetch of the transactions) when something relevant changes
+  const memoTable = useMemo(() => (
+    <NamesTable
+      refreshingID={usedRefreshID}
+      addresses={usedAddresses?.split(",")}
+      setError={setError}
+    />
+  ), [usedAddresses, usedRefreshID, setError]);
+
   const siteTitle = getSiteTitle(t, listingType, address);
   const subTitle = listingType === ListingType.NETWORK_ADDRESS
     ? address : undefined;
@@ -73,33 +104,6 @@ export function NamesPage({ listingType }: Props): JSX.Element {
   >
     {error
       ? <NamesResult error={error} />
-      : (listingType === ListingType.WALLETS
-        // Version of the table component that memoises the wallets
-        ? <NamesTableWithWallets setError={setError} />
-        : <NamesTable addresses={address ? [address] : undefined} setError={setError} />)}
+      : memoTable}
   </PageLayout>;
-}
-
-/**
- * This is equivalent to TransactionsPage.TransactionsTableWithWallets. See that
- * component for some comments and review on why this is necessary, and how it
- * could be improved in the future.
- */
-function NamesTableWithWallets({ setError }: { setError: Dispatch<SetStateAction<Error | undefined>> }): JSX.Element {
-  const { walletAddressMap } = useWallets();
-
-  // See TransactionsPage.tsx for comments
-  // TODO: improve this
-  const addresses = Object.keys(walletAddressMap);
-  addresses.sort();
-  const addressList = addresses.join(",");
-
-  const table = useMemo(() => (
-    <NamesTable
-      addresses={addressList.split(",")}
-      setError={setError}
-    />
-  ), [addressList, setError]);
-
-  return table;
 }

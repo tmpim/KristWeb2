@@ -6,12 +6,20 @@ import { PickByValue } from "utility-types";
 import { store } from "../App";
 import * as actions from "../store/actions/SettingsActions";
 
+import Debug from "debug";
+const debug = Debug("kristweb:settings");
+
 export interface SettingsState {
+  /** Whether or not tables (e.g. transactions, names) should auto-refresh
+   * when a change is detected on the network. */
+  readonly autoRefreshTables: boolean;
+
   /** Whether or not advanced wallet formats are enabled. */
   readonly walletFormats: boolean;
 }
 
 export const DEFAULT_SETTINGS: SettingsState = {
+  autoRefreshTables: true,
   walletFormats: false
 };
 
@@ -24,12 +32,18 @@ export const getSettingKey = (settingName: AnySettingName): string =>
 export function loadSettings(): SettingsState {
   // Import the default settings first
   const settings = { ...DEFAULT_SETTINGS };
+  debug("loading settings");
 
   // Using the default settings as a template, import the settings from local
   // storage
   for (const [settingName, value] of Object.entries(settings) as [AnySettingName, any][]) {
     const stored = localStorage.getItem(getSettingKey(settingName));
-    if (stored === null) continue;
+    debug("setting %s - stored: %o - default: %o", settingName, stored, value);
+
+    if (stored === null) {
+      debug("setting %s does not have a stored value", settingName);
+      continue;
+    }
 
     switch (typeof value) {
     case "boolean":
@@ -44,6 +58,7 @@ export function loadSettings(): SettingsState {
 }
 
 export function setBooleanSetting(settingName: SettingName<boolean>, value: boolean): void {
+  debug("changing setting %s value to %o", settingName, value);
   localStorage.setItem(getSettingKey(settingName), value ? "true" : "false");
   store.dispatch(actions.setBooleanSetting(settingName, value));
 }

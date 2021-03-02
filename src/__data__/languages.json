@@ -23,14 +23,8 @@
       {
         "name": "Anavrins",
         "url": "https://github.com/xAnavrins"
-      }      
+      }
     ]
-  },
-  "ja": {
-    "name": "Japanese",
-    "nativeName": "日本語",
-    "country": "jp",
-    "contributors": []
   },
   "vi": {
     "name": "Vietnamese",
@@ -40,7 +34,7 @@
       {
         "name": "Boom",
         "url": "https://github.com/signalhunter"
-      }      
+      }
     ]
   }
 }

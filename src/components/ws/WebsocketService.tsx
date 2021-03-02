@@ -10,7 +10,7 @@ import * as nodeActions from "../../store/actions/NodeActions";
 
 import * as api from "../../krist/api";
 import { KristAddress, KristBlock, KristTransaction, WSConnectionState, WSIncomingMessage, WSSubscriptionLevel } from "../../krist/api/types";
-import { useWallets, findWalletByAddress, syncWallet, syncWalletUpdate } from "../../krist/wallets/Wallet";
+import { useWallets, findWalletByAddress, syncWallet, syncWalletUpdate, Wallet } from "../../krist/wallets/Wallet";
 import WebSocketAsPromised from "websocket-as-promised";
 
 import { throttle } from "lodash-es";
@@ -149,6 +149,8 @@ class WebsocketConnection {
         const fromWallet = findWalletByAddress(this.wallets, transaction.from || undefined);
         const toWallet = findWalletByAddress(this.wallets, transaction.to);
 
+        this.updateTransactionIDs(transaction, fromWallet, toWallet);
+
         switch (transaction.type) {
         // Update the name counts using the address lookup
         case "name_purchase":
@@ -177,6 +179,35 @@ class WebsocketConnection {
         break;
       }
       }
+    }
+  }
+
+  private updateTransactionIDs(transaction: KristTransaction, fromWallet?: Wallet | null, toWallet?: Wallet | null) {
+    // Updating these last IDs will trigger auto-refreshes on pages that
+    // need them
+    const id = transaction.id;
+
+    debug("lastTransactionID now %d", id);
+    store.dispatch(nodeActions.setLastTransactionID(id));
+
+    if (fromWallet || toWallet) {
+      debug("lastOwnTransactionID now %d", id);
+      store.dispatch(nodeActions.setLastOwnTransactionID(id));
+    }
+
+    if (transaction.type.startsWith("name_")) {
+      debug("lastNameTransactionID now %d", id);
+      store.dispatch(nodeActions.setLastNameTransactionID(id));
+
+      if (fromWallet || toWallet) {
+        debug("lastOwnNameTransactionID now %d", id);
+        store.dispatch(nodeActions.setLastOwnNameTransactionID(id));
+      }
+    }
+
+    if (transaction.type !== "mined") {
+      debug("lastNonMinedTransactionID now %d", id);
+      store.dispatch(nodeActions.setLastNonMinedTransactionID(id));
     }
   }
 

@@ -279,7 +279,13 @@
     "title": "Settings",
 
     "menuLanguage": "Language",
+
+    "subMenuAutoRefresh": "Auto-refresh",
+    "autoRefreshTables": "Auto-refresh tables",
+    "autoRefreshTablesDescription": "Whether or not large table listings (e.g. transactions, names) should automatically refresh when a change is detected on the network.",
+
     "subMenuDebug": "Debug settings",
+
     "advancedWalletFormats": "Advanced wallet formats",
     "menuTranslations": "Translations",
 

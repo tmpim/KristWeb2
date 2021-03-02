@@ -18,11 +18,14 @@ import Debug from "debug";
 const debug = Debug("kristweb:names-table");
 
 interface Props {
+  // Number used to trigger a refresh of the names listing
+  refreshingID?: number;
+
   addresses?: string[];
   setError?: Dispatch<SetStateAction<Error | undefined>>;
 }
 
-export function NamesTable({ addresses, setError }: Props): JSX.Element {
+export function NamesTable({ refreshingID, addresses, setError }: Props): JSX.Element {
   const { t } = useTranslation();
 
   const [loading, setLoading] = useState(true);
@@ -43,7 +46,7 @@ export function NamesTable({ addresses, setError }: Props): JSX.Element {
       .then(setRes)
       .catch(setError)
       .finally(() => setLoading(false));
-  }, [addresses, setError, options]);
+  }, [refreshingID, addresses, setError, options]);
 
   debug("results? %b  res.names.length: %d  res.count: %d  res.total: %d", !!res, res?.names?.length, res?.count, res?.total);
 

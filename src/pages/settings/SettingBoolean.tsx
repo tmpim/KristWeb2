@@ -14,9 +14,15 @@ interface Props {
   setting: SettingName<boolean>;
   title?: string;
   titleKey?: string;
+  description?: string;
+  descriptionKey?: string;
 }
 
-export function SettingBoolean({ setting, title, titleKey }: Props): JSX.Element {
+export function SettingBoolean({
+  setting,
+  title, titleKey,
+  description, descriptionKey
+}: Props): JSX.Element {
   const settingValue = useSelector((s: RootState) => s.settings[setting]);
 
   const { t } = useTranslation();
@@ -31,5 +37,11 @@ export function SettingBoolean({ setting, title, titleKey }: Props): JSX.Element
   >
     <Switch onChange={onChange} checked={settingValue} style={{ marginRight: 12 }} />
     {titleKey ? t(titleKey) : title}
+
+    {description || descriptionKey && (
+      <div className="menu-item-description menu-item-setting-description">
+        {descriptionKey ? t(descriptionKey) : description}
+      </div>
+    )}
   </div>;
 }

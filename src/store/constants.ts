@@ -25,9 +25,18 @@ export const SET_BOOLEAN_SETTING = "SET_BOOLEAN_SETTING";
 // ---
 export const CONNECTION_STATE = "CONNECTION_STATE";
 
-// Node state
-export const SYNC_NODE = "SYNC_NODE";
+// Node state (auto-refreshing)
+// ---
 export const LAST_BLOCK_ID = "LAST_BLOCK_ID";
+export const LAST_NON_MINED_TRANSACTION_ID = "LAST_NON_MINED_TRANSACTION_ID";
+export const LAST_TRANSACTION_ID = "LAST_TRANSACTION_ID";
+export const LAST_OWN_TRANSACTION_ID = "LAST_OWN_TRANSACTION_ID";
+export const LAST_NAME_TRANSACTION_ID = "LAST_NAME_TRANSACTION_ID";
+export const LAST_OWN_NAME_TRANSACTION_ID = "LAST_OWN_NAME_TRANSACTION_ID";
+
+// Node state (MOTD)
+// ---
+export const SYNC_NODE = "SYNC_NODE";
 export const DETAILED_WORK = "DETAILED_WORK";
 export const CURRENCY = "CURRENCY";
 export const CONSTANTS = "CONSTANTS";
