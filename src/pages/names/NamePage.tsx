@@ -2,7 +2,8 @@
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React, { useState, useEffect } from "react";
-import { Row, Col, Skeleton, Typography } from "antd";
+import { Row, Col, Skeleton, Typography, Tooltip } from "antd";
+import { EditOutlined } from "@ant-design/icons";
 
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
@@ -109,6 +110,25 @@ function PageContents({ name, nameWithSuffix }: { name: KristName; nameWithSuffi
         </Col>
       ) : <></>}
     </Row>
+
+    {/* A record */}
+    {name.a && (
+      <Row gutter={16} className="name-a-record-row">
+        <Col span={24}>
+          <Statistic
+            titleKey="name.aRecord"
+            titleExtra={myWallet && <>
+              <Tooltip title={t("name.aRecordEditTooltip")}>
+                <Typography.Link className="name-a-record-edit nyi">
+                  <EditOutlined />
+                </Typography.Link>
+              </Tooltip>
+            </>}
+            value={<a href={name.a} target="_blank" rel="noreferrer noopener">{name.a}</a>}
+          />
+        </Col>
+      </Row>
+    )}
 
     {/* Transactions and name history row */}
     <Row gutter={16} className="name-card-row">

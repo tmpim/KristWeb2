@@ -462,6 +462,8 @@
     "unpaid": "Unpaid blocks",
     "unpaidCount": "{{count, number}} block",
     "unpaidCount_plural": "{{count, number}} blocks",
+    "aRecord": "A record",
+    "aRecordEditTooltip": "Update A record",
 
     "cardRecentTransactionsTitle": "Recent transactions",
     "cardHistoryTitle": "Name history",

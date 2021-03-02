@@ -32,7 +32,7 @@ export function DateTime({ date, timeAgo, small, secondary, ...props }: Props): 
     <span className={classes}>
       {timeAgo
         ? <TimeAgo date={realDate} />
-        : dayjs(realDate).format("YYYY-MM-DD HH:mm:ss")}
+        : dayjs(realDate).format("YYYY/MM/DD HH:mm:ss")}
     </span>
   </Tooltip>;
 }

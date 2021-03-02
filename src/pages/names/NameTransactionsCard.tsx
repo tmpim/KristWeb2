@@ -44,7 +44,7 @@ export function NameTransactionsCard({ name, type }: Props): JSX.Element {
   useEffect(() => {
     if (!syncNode) return;
 
-    // Remove the existing results in case the address changed
+    // Remove the existing results in case the name changed
     setRes(undefined);
     setLoading(true);
 

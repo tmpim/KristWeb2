@@ -11,13 +11,14 @@ import "./Statistic.less";
 interface Props {
   title?: string;
   titleKey?: string;
+  titleExtra?: React.ReactNode;
   value?: React.ReactNode;
 
   className?: string;
   green?: boolean;
 }
 
-export function Statistic({ title, titleKey, value, className, green }: Props): JSX.Element {
+export function Statistic({ title, titleKey, titleExtra, value, className, green }: Props): JSX.Element {
   const { t } = useTranslation();
 
   const classes = classNames("kw-statistic", className, {
@@ -25,7 +26,7 @@ export function Statistic({ title, titleKey, value, className, green }: Props): 
   });
 
   return <div className={classes}>
-    <span className="kw-statistic-title">{titleKey ? t(titleKey) : title}</span>
+    <span className="kw-statistic-title">{titleKey ? t(titleKey) : title}{titleExtra}</span>
     <span className="kw-statistic-value">{value}</span>
   </div>;
 }
