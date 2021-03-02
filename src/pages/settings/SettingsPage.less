@@ -1,0 +1,32 @@
+// Copyright (c) 2020-2021 Drew Lemmy
+// This file is part of KristWeb 2 under GPL-3.0.
+// Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
+@import (reference) "../../App.less";
+
+.settings-page {
+  .settings-language-item {
+    // ant-design adds `width: calc(100% + 1px)` to menu items for some reason
+    width: 100%;
+
+    &.settings-language-item-current {
+      background: lighten(@kw-darker, 5%);
+      color: @primary-color;
+    }
+
+    .settings-language-flag {
+      display: inline-block;
+
+      width: 30px;
+      height: 20px;
+
+      vertical-align: -0.25em;
+
+      margin-right: @margin-sm;
+    }
+
+    .settings-language-native-name {
+      color: @text-color-secondary;
+      margin-left: @padding-xs;
+    }
+  }
+}

@@ -10,12 +10,16 @@ import { Link } from "react-router-dom";
 
 import { PageLayout, PageLayoutProps } from "../../layout/PageLayout";
 import { SettingBoolean } from "./SettingBoolean";
+import { getLanguageItems } from "./LanguageItem";
+
+import "./SettingsPage.less";
 
 interface SettingsPageLayoutProps extends PageLayoutProps {
   pageName?: string;
 }
 export const SettingsPageLayout: FC<SettingsPageLayoutProps> = ({ pageName, children, ...rest }) => {
   return <PageLayout
+    className="settings-page"
     siteTitleKey="settings.siteTitle"
     titleKey="settings.title"
     subTitleKey={pageName ? "settings.subTitle" + pageName : undefined}
@@ -31,10 +35,12 @@ export function SettingsPage(): JSX.Element {
   return <SettingsPageLayout>
     <Menu mode="inline" className="big-menu" selectable={false}>
       {/* Language selector */}
-      <Menu.Item key="language" icon={<GlobalOutlined />}>{t("settings.menuLanguage")}</Menu.Item>
+      <Menu.SubMenu key="sub-language" icon={<GlobalOutlined />} title={t("settings.menuLanguage")}>
+        {getLanguageItems()}
+      </Menu.SubMenu>
 
       {/* Auto-refresh settings */}
-      <Menu.SubMenu key="sub1" icon={<ReloadOutlined />} title={t("settings.subMenuAutoRefresh")}>
+      <Menu.SubMenu key="sub-autoRefresh" icon={<ReloadOutlined />} title={t("settings.subMenuAutoRefresh")}>
         {/* Auto-refresh tables */}
         <Menu.Item key="autoRefresh/autoRefreshTables">
           <SettingBoolean
@@ -46,7 +52,7 @@ export function SettingsPage(): JSX.Element {
       </Menu.SubMenu>
 
       {/* Debug settings */}
-      <Menu.SubMenu key="sub2" icon={<BugOutlined />} title={t("settings.subMenuDebug")}>
+      <Menu.SubMenu key="sub-debug" icon={<BugOutlined />} title={t("settings.subMenuDebug")}>
         {/* Advanced wallet formats */}
         <Menu.Item key="debug/advancedWalletFormats">
           <SettingBoolean setting="walletFormats" titleKey="settings.advancedWalletFormats" />
