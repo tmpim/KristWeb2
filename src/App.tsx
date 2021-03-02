@@ -29,7 +29,7 @@ export type AppDispatch = typeof store.dispatch;
 function App(): JSX.Element {
   debug("whole app is being rendered!");
 
-  return <Suspense fallback={<AppLoading />}> {/* TODO */}
+  return <Suspense fallback={<AppLoading />}>
     <Provider store={store}>
       <HotKeys keyMap={keyMap}>
         <Router>

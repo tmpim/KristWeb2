@@ -1,8 +1,10 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { KristAddress, KristTransaction, KristName } from "./types";
+import { KristAddress, KristTransaction, KristName, KristBlock } from "./types";
 import * as api from ".";
+
+import { LookupFilterOptionsBase, LookupResultsBase, getFilterOptionsQuery } from "../../utils/table";
 
 // =============================================================================
 // Addresses
@@ -50,6 +52,22 @@ export async function lookupAddress(address: string, fetchNames?: boolean): Prom
 }
 
 // =============================================================================
+// Blocks
+// =============================================================================
+export type SortableBlockFields = "height" | "address" | "hash" | "value" |
+  "time" | "difficulty";
+export type LookupBlocksOptions = LookupFilterOptionsBase<SortableBlockFields>;
+
+export interface LookupBlocksResponse extends LookupResultsBase {
+  blocks: KristBlock[];
+}
+
+export async function lookupBlocks(opts: LookupBlocksOptions): Promise<LookupBlocksResponse> {
+  const qs = getFilterOptionsQuery(opts);
+  return await api.get<LookupBlocksResponse>("lookup/blocks?" + qs);
+}
+
+// =============================================================================
 // Transactions
 // =============================================================================
 export type SortableTransactionFields = "id" | "from" | "to" | "value" | "time"
@@ -61,28 +79,18 @@ export enum LookupTransactionType {
   NAME_TRANSACTIONS
 }
 
-export interface LookupTransactionsOptions {
+export interface LookupTransactionsOptions extends LookupFilterOptionsBase<SortableTransactionFields> {
   includeMined?: boolean;
-  limit?: number;
-  offset?: number;
-  orderBy?: SortableTransactionFields;
-  order?: "ASC" | "DESC";
   type?: LookupTransactionType;
 }
 
-export interface LookupTransactionsResponse {
-  count: number;
-  total: number;
+export interface LookupTransactionsResponse extends LookupResultsBase {
   transactions: KristTransaction[];
 }
 
 export async function lookupTransactions(addresses: string[] | undefined, opts: LookupTransactionsOptions): Promise<LookupTransactionsResponse> {
-  const qs = new URLSearchParams();
+  const qs = getFilterOptionsQuery(opts);
   if (opts.includeMined) qs.append("includeMined", "");
-  if (opts.limit) qs.append("limit", opts.limit.toString());
-  if (opts.offset) qs.append("offset", opts.offset.toString());
-  if (opts.orderBy) qs.append("orderBy", opts.orderBy);
-  if (opts.order) qs.append("order", opts.order);
 
   // Map the lookup type to the appropriate route
   // TODO: this is kinda wack
@@ -110,26 +118,14 @@ export async function lookupTransactions(addresses: string[] | undefined, opts: 
 // =============================================================================
 export type SortableNameFields = "name" | "owner" | "original_owner"
   | "registered" | "updated" | "a" | "unpaid";
-export interface LookupNamesOptions {
-  limit?: number;
-  offset?: number;
-  orderBy?: SortableNameFields;
-  order?: "ASC" | "DESC";
-}
+export type LookupNamesOptions = LookupFilterOptionsBase<SortableNameFields>;
 
-export interface LookupNamesResponse {
-  count: number;
-  total: number;
+export interface LookupNamesResponse extends LookupResultsBase {
   names: KristName[];
 }
 
 export async function lookupNames(addresses: string[] | undefined, opts: LookupNamesOptions): Promise<LookupNamesResponse> {
-  const qs = new URLSearchParams();
-  if (opts.limit) qs.append("limit", opts.limit.toString());
-  if (opts.offset) qs.append("offset", opts.offset.toString());
-  if (opts.orderBy) qs.append("orderBy", opts.orderBy);
-  if (opts.order) qs.append("order", opts.order);
-
+  const qs = getFilterOptionsQuery(opts);
   return await api.get<LookupNamesResponse>(
     "lookup/names/"
     + (addresses && addresses.length > 0
@@ -137,13 +133,4 @@ export async function lookupNames(addresses: string[] | undefined, opts: LookupN
       : "")
     + "?" + qs
   );
-}
-
-export function convertSorterOrder(order: "descend" | "ascend" | null | undefined): "ASC" | "DESC" | undefined {
-  switch (order) {
-  case "ascend":
-    return "ASC";
-  case "descend":
-    return "DESC";
-  }
 }

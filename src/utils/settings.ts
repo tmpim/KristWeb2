@@ -25,6 +25,8 @@ export interface SettingsState {
   readonly addressCopyButtons: boolean;
   /** Show copy buttons next to all names. */
   readonly nameCopyButtons: boolean;
+  /** Show copy buttons next to all block hashes. */
+  readonly blockHashCopyButtons: boolean;
 
   /** Whether or not advanced wallet formats are enabled. */
   readonly walletFormats: boolean;
@@ -37,6 +39,7 @@ export const DEFAULT_SETTINGS: SettingsState = {
   copyNameSuffixes: true,
   addressCopyButtons: false,
   nameCopyButtons: false,
+  blockHashCopyButtons: false,
 
   walletFormats: false
 };

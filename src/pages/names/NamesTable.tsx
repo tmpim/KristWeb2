@@ -7,7 +7,8 @@ import { Table } from "antd";
 import { useTranslation } from "react-i18next";
 
 import { KristName } from "../../krist/api/types";
-import { convertSorterOrder, lookupNames, LookupNamesOptions, LookupNamesResponse, SortableNameFields } from "../../krist/api/lookup";
+import { lookupNames, LookupNamesOptions, LookupNamesResponse } from "../../krist/api/lookup";
+import { getTablePaginationSettings, handleLookupTableChange } from "../../utils/table";
 
 import { KristNameLink } from "../../components/KristNameLink";
 import { ContextualAddress } from "../../components/ContextualAddress";
@@ -59,31 +60,8 @@ export function NamesTable({ refreshingID, addresses, setError }: Props): JSX.El
     rowKey="name"
 
     // Triggered whenever the filter, sorting, or pagination changes
-    onChange={(pagination, _, sorter) => {
-      const pageSize = (pagination?.pageSize) || 20;
-
-      // This will trigger a data re-fetch
-      setOptions({
-        ...options,
-
-        limit: pageSize,
-        offset: pageSize * ((pagination?.current || 1) - 1),
-
-        orderBy: sorter instanceof Array ? undefined : sorter.field as SortableNameFields,
-        order: sorter instanceof Array ? undefined : convertSorterOrder(sorter.order),
-      });
-    }}
-
-    pagination={{
-      size: "default",
-      position: ["topRight", "bottomRight"],
-
-      showSizeChanger: true,
-      defaultPageSize: 20,
-
-      total: res?.total || 0,
-      showTotal: total => t("names.tableTotal", { count: total || 0 })
-    }}
+    onChange={handleLookupTableChange(setOptions)}
+    pagination={getTablePaginationSettings(t, res, "names.tableTotal")}
 
     columns={[
       // Name

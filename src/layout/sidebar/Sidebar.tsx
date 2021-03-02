@@ -31,7 +31,7 @@ const sidebarItems: SidebarItemProps[] = [
   { icon: <TagsOutlined />,   name: "names",        to: "/me/names" },
   { icon: <SketchOutlined />, name: "mining",       to: "/mining",          nyi: true },
 
-  { group: "network", icon: <BuildOutlined />, name: "blocks",       to: "/network/blocks",       nyi: true },
+  { group: "network", icon: <BuildOutlined />, name: "blocks",       to: "/network/blocks" },
   { group: "network", icon: <BankOutlined />,  name: "transactions", to: "/network/transactions" },
   { group: "network", icon: <TagsOutlined />,  name: "names",        to: "/network/names" },
   { group: "network", icon: <StockOutlined />, name: "statistics",   to: "/network/statistics",   nyi: true },

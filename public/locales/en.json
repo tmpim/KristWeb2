@@ -289,6 +289,7 @@
     "copyNameSuffixes": "Include suffix when copying names",
     "addressCopyButtons": "Show copy buttons next to all addresses",
     "nameCopyButtons": "Show copy buttons next to all names",
+    "blockHashCopyButtons": "Show copy buttons next to all block hashes",
 
     "subMenuDebug": "Debug settings",
     "advancedWalletFormats": "Advanced wallet formats",
@@ -475,6 +476,25 @@
     "resultInvalid": "That does not look like a valid Krist name.",
     "resultNotFoundTitle": "Name not found",
     "resultNotFound": "That name does not exist.",
+    "resultUnknownTitle": "Unknown error",
+    "resultUnknown": "See console for details."
+  },
+
+  "blocks": {
+    "title": "Network Blocks",
+    "siteTitle": "Network Blocks",
+
+    "columnHeight": "Height",
+    "columnAddress": "Miner",
+    "columnShortHash": "Short Hash",
+    "columnHash": "Full Hash",
+    "columnValue": "Value",
+    "columnDifficulty": "Difficulty",
+    "columnTime": "Time",
+
+    "tableTotal": "{{count, number}} block",
+    "tableTotal_plural": "{{count, number}} blocks",
+
     "resultUnknownTitle": "Unknown error",
     "resultUnknown": "See console for details."
   }

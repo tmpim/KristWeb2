@@ -79,7 +79,7 @@ export function NamesPage({ listingType }: Props): JSX.Element {
     : 0;
 
   // Memoise the table so that it only updates the props (thus triggering a
-  // re-fetch of the transactions) when something relevant changes
+  // re-fetch of the names) when something relevant changes
   const memoTable = useMemo(() => (
     <NamesTable
       refreshingID={usedRefreshID}

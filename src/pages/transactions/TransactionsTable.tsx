@@ -7,7 +7,8 @@ import { Table } from "antd";
 import { useTranslation } from "react-i18next";
 
 import { KristTransaction } from "../../krist/api/types";
-import { convertSorterOrder, lookupTransactions, LookupTransactionsOptions, LookupTransactionsResponse, LookupTransactionType, SortableTransactionFields } from "../../krist/api/lookup";
+import { lookupTransactions, LookupTransactionsOptions, LookupTransactionsResponse, LookupTransactionType } from "../../krist/api/lookup";
+import { getTablePaginationSettings, handleLookupTableChange } from "../../utils/table";
 
 import { ListingType } from "./TransactionsPage";
 
@@ -82,35 +83,8 @@ export function TransactionsTable({ listingType, refreshingID, addresses, name, 
     rowKey="id"
 
     // Triggered whenever the filter, sorting, or pagination changes
-    onChange={(pagination, _, sorter) => {
-      // While the pagination should never be undefined, it's important to
-      // ensure that the default pageSize here is equal to the pagination's
-      // default pageSize, otherwise ant-design will print a warning when the
-      // data is first populated.
-      const pageSize = (pagination?.pageSize) || 20;
-
-      // This will trigger a data re-fetch
-      setOptions({
-        ...options,
-
-        limit: pageSize,
-        offset: pageSize * ((pagination?.current || 1) - 1),
-
-        orderBy: sorter instanceof Array ? undefined : sorter.field as SortableTransactionFields,
-        order: sorter instanceof Array ? undefined : convertSorterOrder(sorter.order),
-      });
-    }}
-
-    pagination={{
-      size: "default",
-      position: ["topRight", "bottomRight"],
-
-      showSizeChanger: true,
-      defaultPageSize: 20,
-
-      total: res?.total || 0,
-      showTotal: total => t("transactions.tableTotal", { count: total || 0 })
-    }}
+    onChange={handleLookupTableChange(setOptions)}
+    pagination={getTablePaginationSettings(t, res, "transactions.tableTotal")}
 
     columns={[
       // ID

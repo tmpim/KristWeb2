@@ -72,6 +72,11 @@ export function SettingsPage(): JSX.Element {
         <Menu.Item key="advanced/nameCopyButtons">
           <SettingBoolean setting="nameCopyButtons" titleKey="settings.nameCopyButtons" />
         </Menu.Item>
+
+        {/* Block hash copy buttons */}
+        <Menu.Item key="advanced/blockHashCopyButtons">
+          <SettingBoolean setting="blockHashCopyButtons" titleKey="settings.blockHashCopyButtons" />
+        </Menu.Item>
       </Menu.SubMenu>
 
       {/* Debug settings */}
