@@ -10,6 +10,12 @@
     height: @kw-page-header-height;
 
     padding-bottom: 0;
+
+    .ant-page-header-heading-sub-title {
+      .ant-typography {
+        color: inherit;
+      }
+    }
   }
 
   .page-layout-contents {
@@ -25,6 +31,11 @@
   }
 
   &.page-layout-negative-margin {
+    .page-layout-header.ant-page-header {
+      // Ensure it's still clickable
+      z-index: 10;
+    }
+
     .page-layout-contents {
       // Used to pull table pagination up to the 'extra' area of the header
       margin-top: -@kw-page-header-height + 4;

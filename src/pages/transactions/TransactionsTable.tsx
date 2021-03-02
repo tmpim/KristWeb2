@@ -58,7 +58,7 @@ export function TransactionsTable({ listingType, refreshingID, addresses, name, 
 
   // Fetch the transactions from the API, mapping the table options
   useEffect(() => {
-    debug("looking up transactions for %s", name || (addresses ? addresses.join(",") : "network"));
+    debug("looking up transactions (type: %d mapped: %d) for %s", listingType, LISTING_TYPE_MAP[listingType], name || (addresses ? addresses.join(",") : "network"));
     setLoading(true);
 
     lookupTransactions(name ? [name] : addresses, {

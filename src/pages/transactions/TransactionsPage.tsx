@@ -16,6 +16,7 @@ import { TransactionsResult } from "./TransactionsResult";
 import { TransactionsTable } from "./TransactionsTable";
 
 import { useWallets } from "../../krist/wallets/Wallet";
+import { useBooleanSetting } from "../../utils/settings";
 import { KristNameLink } from "../../components/KristNameLink";
 
 /** The type of transaction listing to search by. */
@@ -99,7 +100,7 @@ export function TransactionsPage({ listingType }: Props): JSX.Element {
   // Used to handle memoisation and auto-refreshing
   const { joinedAddressList } = useWallets();
   const nodeState = useSelector((s: RootState) => s.node, shallowEqual);
-  const shouldAutoRefresh = useSelector((s: RootState) => s.settings.autoRefreshTables);
+  const shouldAutoRefresh = useBooleanSetting("autoRefreshTables");
 
   // Comma-separated list of addresses, used as an optimisation for
   // memoisation (no deep equality in useMemo)
@@ -114,7 +115,7 @@ export function TransactionsPage({ listingType }: Props): JSX.Element {
   // re-fetch of the transactions) when something relevant changes
   const memoTable = useMemo(() => (
     <TransactionsTable
-      listingType={ListingType.WALLETS}
+      listingType={listingType}
       refreshingID={usedRefreshID}
 
       addresses={usedAddresses?.split(",")}
@@ -123,11 +124,11 @@ export function TransactionsPage({ listingType }: Props): JSX.Element {
       includeMined={includeMined}
       setError={setError}
     />
-  ), [usedAddresses, name, usedRefreshID, includeMined, setError]);
+  ), [listingType, usedAddresses, name, usedRefreshID, includeMined, setError]);
 
   const siteTitle = getSiteTitle(t, listingType, address);
   const subTitle = name
-    ? <KristNameLink noLink name={name} />
+    ? <KristNameLink noLink name={name} neverCopyable />
     : (listingType === ListingType.NETWORK_ADDRESS
       ? address
       : undefined);

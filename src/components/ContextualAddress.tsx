@@ -3,7 +3,7 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React from "react";
 import classNames from "classnames";
-import { Tooltip } from "antd";
+import { Tooltip, Typography } from "antd";
 
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
@@ -14,10 +14,13 @@ import { KristAddress } from "../krist/api/types";
 import { Wallet, useWallets } from "../krist/wallets/Wallet";
 import { parseCommonMeta, CommonMeta } from "../utils/commonmeta";
 import { stripNameSuffix } from "../utils/currency";
+import { useBooleanSetting } from "../utils/settings";
 
 import { KristNameLink } from "./KristNameLink";
 
 import "./ContextualAddress.less";
+
+const { Text } = Typography;
 
 interface Props {
   address: KristAddress | string | null;
@@ -26,6 +29,7 @@ interface Props {
   source?: boolean;
   hideNameAddress?: boolean;
   allowWrap?: boolean;
+  neverCopyable?: boolean;
   className?: string;
 }
 
@@ -73,11 +77,13 @@ export function ContextualAddress({
   source,
   hideNameAddress,
   allowWrap,
+  neverCopyable,
   className
 }: Props): JSX.Element {
   const { t } = useTranslation();
   const { walletAddressMap } = useWallets();
   const nameSuffix = useSelector((s: RootState) => s.node.currency.name_suffix);
+  const addressCopyButtons = useBooleanSetting("addressCopyButtons");
 
   if (!origAddress) return (
     <span className="contextual-address address-unknown">{t("contextualAddressUnknown")}</span>
@@ -94,30 +100,35 @@ export function ContextualAddress({
   const commonMeta = parseCommonMeta(nameSuffix, metadata);
   const hasMetaname = source ? !!commonMeta?.returnRecipient : !!commonMeta?.recipient;
 
+  const copyable = !neverCopyable && addressCopyButtons
+    ? { text: address } : undefined;
+
   const classes = classNames("contextual-address", className, {
     "contextual-address-allow-wrap": allowWrap
   });
 
-  return <span className={classes}><Tooltip title={address}>
-    {commonMeta && hasMetaname
-      ? (
-        // Display the metaname and link to the name if possible
-        <AddressMetaname
-          nameSuffix={nameSuffix}
-          address={address}
-          commonMeta={commonMeta}
-          source={!!source}
-          hideNameAddress={!!hideNameAddress}
-        />
-      )
-      : (
-        // Display our wallet label if present, but link to the address
-        <Link to={"/network/addresses/" + encodeURIComponent(address)}>
-          {wallet && wallet.label
-            ? <span className="address-wallet">{wallet.label}</span>
-            : <span className="address-address">{address}</span>}
-        </Link>
-      )
-    }
-  </Tooltip></span>;
+  return <Text className={classes} copyable={copyable}>
+    <Tooltip title={address}>
+      {commonMeta && hasMetaname
+        ? (
+          // Display the metaname and link to the name if possible
+          <AddressMetaname
+            nameSuffix={nameSuffix}
+            address={address}
+            commonMeta={commonMeta}
+            source={!!source}
+            hideNameAddress={!!hideNameAddress}
+          />
+        )
+        : (
+          // Display our wallet label if present, but link to the address
+          <Link to={"/network/addresses/" + encodeURIComponent(address)}>
+            {wallet && wallet.label
+              ? <span className="address-wallet">{wallet.label}</span>
+              : <span className="address-address">{address}</span>}
+          </Link>
+        )
+      }
+    </Tooltip>
+  </Text>;
 }

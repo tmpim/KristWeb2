@@ -3,29 +3,45 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React from "react";
 import classNames from "classnames";
+import { Typography } from "antd";
 
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 
 import { Link } from "react-router-dom";
 
+import { useBooleanSetting } from "../utils/settings";
+
+const { Text } = Typography;
+
 interface OwnProps {
   name: string;
   noLink?: boolean;
+  neverCopyable?: boolean;
 }
 type Props = React.HTMLProps<HTMLSpanElement> & OwnProps;
 
-export function KristNameLink({ name, noLink, ...props }: Props): JSX.Element | null {
+export function KristNameLink({ name, noLink, neverCopyable, ...props }: Props): JSX.Element | null {
   const nameSuffix = useSelector((s: RootState) => s.node.currency.name_suffix);
+  const nameCopyButtons = useBooleanSetting("nameCopyButtons");
+  const copyNameSuffixes = useBooleanSetting("copyNameSuffixes");
 
   if (!name) return null;
+  const nameWithSuffix = `${name}.${nameSuffix}`;
 
-  const contents = `${name}.${nameSuffix}`;
+  const copyable = !neverCopyable && nameCopyButtons
+    ? { text: copyNameSuffixes ? nameWithSuffix : name }
+    : undefined;
+
   const classes = classNames("krist-name", props.className);
 
-  return <span className={classes}>
+  return <Text className={classes} copyable={copyable}>
     {noLink
-      ? contents
-      : <Link to={"/network/names/" + encodeURIComponent(name)}>{contents}</Link>}
-  </span>;
+      ? nameWithSuffix
+      : (
+        <Link to={"/network/names/" + encodeURIComponent(name)}>
+          {nameWithSuffix}
+        </Link>
+      )}
+  </Text>;
 }

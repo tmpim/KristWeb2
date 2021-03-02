@@ -6,6 +6,9 @@ import { PickByValue } from "utility-types";
 import { store } from "../App";
 import * as actions from "../store/actions/SettingsActions";
 
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
+
 import Debug from "debug";
 const debug = Debug("kristweb:settings");
 
@@ -14,12 +17,24 @@ export interface SettingsState {
    * when a change is detected on the network. */
   readonly autoRefreshTables: boolean;
 
+  /** Whether or not to include the name suffix when copying a name. */
+  readonly copyNameSuffixes: boolean;
+  /** Show copy buttons next to all addresses. */
+  readonly addressCopyButtons: boolean;
+  /** Show copy buttons next to all names. */
+  readonly nameCopyButtons: boolean;
+
   /** Whether or not advanced wallet formats are enabled. */
   readonly walletFormats: boolean;
 }
 
 export const DEFAULT_SETTINGS: SettingsState = {
   autoRefreshTables: true,
+
+  copyNameSuffixes: true,
+  addressCopyButtons: false,
+  nameCopyButtons: false,
+
   walletFormats: false
 };
 
@@ -73,3 +88,7 @@ export function isValidSyncNode(syncNode?: string): boolean {
     return false;
   }
 }
+
+/** React hook that gets the value of a boolean setting. */
+export const useBooleanSetting = (setting: SettingName<boolean>): boolean =>
+  useSelector((s: RootState) => s.settings[setting]);

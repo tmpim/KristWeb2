@@ -86,7 +86,7 @@ export async function lookupTransactions(addresses: string[] | undefined, opts: 
 
   // Map the lookup type to the appropriate route
   // TODO: this is kinda wack
-  const type = opts.type || LookupTransactionType.TRANSACTIONS;
+  const type = opts.type ?? LookupTransactionType.TRANSACTIONS;
   const route = type === LookupTransactionType.TRANSACTIONS
     ? "transactions" : "names";
   const routeExtra = type !== LookupTransactionType.TRANSACTIONS

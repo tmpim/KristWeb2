@@ -238,7 +238,7 @@
     "transactionsCardTitle": "Transactions",
     "transactionsError": "There was an error fetching your transactions. See the console for details.",
 
-    "blockValueCardTitle": "Block Value",
+    "blockValueCardTitle": "Block value",
     "blockValueBaseValue": "Base value (<1></1>)",
     "blockValueBaseValueNames": "{{count, number}} name",
     "blockValueBaseValueNames_plural": "{{count, number}} names",
@@ -248,7 +248,7 @@
     "blockValueReset_plural": "Resets in <1>{{count, number}} blocks</1>",
     "blockValueEmptyDescription": "The block value increases when <1>names</1> are purchased.",
 
-    "blockDifficultyCardTitle": "Block Difficulty",
+    "blockDifficultyCardTitle": "Block difficulty",
     "blockDifficultyError": "There was an error fetching the block difficulty. See the console for details.",
     "blockDifficultyHashRate": "Approx. <1 />",
     "blockDifficultyHashRateTooltip": "Estimated combined network mining hash rate, based on the current work.",
@@ -259,7 +259,7 @@
     "motdCardTitle": "Server MOTD",
     "motdDebugMode": "This sync node is an unofficial development server. Balances and transactions can be manipulated. Proceed with caution.",
 
-    "whatsNewCardTitle": "What's New"
+    "whatsNewCardTitle": "What's new"
   },
 
   "credits": {
@@ -284,8 +284,12 @@
     "autoRefreshTables": "Auto-refresh tables",
     "autoRefreshTablesDescription": "Whether or not large table listings (e.g. transactions, names) should automatically refresh when a change is detected on the network.",
 
-    "subMenuDebug": "Debug settings",
+    "subMenuAdvanced": "Advanced settings",
+    "copyNameSuffixes": "Include suffix when copying names",
+    "addressCopyButtons": "Show copy buttons next to all addresses",
+    "nameCopyButtons": "Show copy buttons next to all names",
 
+    "subMenuDebug": "Debug settings",
     "advancedWalletFormats": "Advanced wallet formats",
     "menuTranslations": "Translations",
 
@@ -439,6 +443,35 @@
 
     "resultInvalidTitle": "Invalid address",
     "resultInvalid": "That does not look like a valid Krist address.",
+    "resultUnknownTitle": "Unknown error",
+    "resultUnknown": "See console for details."
+  },
+
+  "name": {
+    "title": "Name",
+
+    "buttonSendKrist": "Send Krist to {{name}}",
+    "buttonTransferKrist": "Transfer Krist to {{name}}",
+    "buttonARecord": "Update A record",
+    "buttonTransferName": "Transfer name",
+
+    "owner": "Owned by",
+    "originalOwner": "Purchased by",
+    "registered": "Registered",
+    "updated": "Last updated",
+    "unpaid": "Unpaid blocks",
+    "unpaidCount": "{{count, number}} block",
+    "unpaidCount_plural": "{{count, number}} blocks",
+
+    "cardRecentTransactionsTitle": "Recent transactions",
+    "cardHistoryTitle": "Name history",
+    "transactionsError": "There was an error fetching the transactions. See the console for details.",
+    "historyError": "There was an error fetching the name history. See the console for details.",
+
+    "resultInvalidTitle": "Invalid name",
+    "resultInvalid": "That does not look like a valid Krist name.",
+    "resultNotFoundTitle": "Name not found",
+    "resultNotFound": "That name does not exist.",
     "resultUnknownTitle": "Unknown error",
     "resultUnknown": "See console for details."
   }

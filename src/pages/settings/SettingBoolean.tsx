@@ -5,10 +5,8 @@ import React from "react";
 import { Switch } from "antd";
 
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
 
-import { SettingName, setBooleanSetting } from "../../utils/settings";
+import { SettingName, setBooleanSetting, useBooleanSetting } from "../../utils/settings";
 
 interface Props {
   setting: SettingName<boolean>;
@@ -23,7 +21,7 @@ export function SettingBoolean({
   title, titleKey,
   description, descriptionKey
 }: Props): JSX.Element {
-  const settingValue = useSelector((s: RootState) => s.settings[setting]);
+  const settingValue = useBooleanSetting(setting);
 
   const { t } = useTranslation();
 

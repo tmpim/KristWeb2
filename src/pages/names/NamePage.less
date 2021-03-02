@@ -1,0 +1,49 @@
+// Copyright (c) 2020-2021 Drew Lemmy
+// This file is part of KristWeb 2 under GPL-3.0.
+// Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
+@import (reference) "../../App.less";
+
+.name-page {
+  .top-name-row {
+    display: flex;
+    align-items: center;
+
+    .name {
+      display: inline-block;
+      margin-right: @margin-lg;
+      margin-bottom: 0;
+
+      font-size: @font-size-base * 2;
+      font-weight: 500;
+
+      .ant-typography-copy {
+        line-height: 1 !important;
+        margin-left: @padding-xs;
+
+        .anticon {
+          font-size: @font-size-base;
+          vertical-align: 0;
+        }
+      }
+    }
+
+    .ant-btn {
+      margin-right: @margin-md;
+      &:last-child { margin-right: 0; }
+    }
+  }
+
+  .name-info-row {
+    max-width: 768px;
+    margin-bottom: @margin-lg;
+
+    .kw-statistic {
+      margin-top: @margin-lg;
+      margin-right: @margin-lg;
+
+      .date-time {
+        font-size: @font-size-base * 1.5;
+      }
+    }
+  }
+}

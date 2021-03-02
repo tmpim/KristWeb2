@@ -133,7 +133,11 @@ export function TransactionItem({ transaction: tx, wallets }: Props): JSX.Elemen
         )
         : tx.type === "name_transfer" && (
           // Transaction name
-          <KristNameLink name={tx.name || ""} className="transaction-name" />
+          <KristNameLink
+            name={tx.name || ""}
+            className="transaction-name"
+            neverCopyable
+          />
         )}
     </Col>
   </Row>;

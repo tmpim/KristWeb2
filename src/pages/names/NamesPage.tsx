@@ -14,6 +14,7 @@ import { NamesResult } from "./NamesResult";
 import { NamesTable } from "./NamesTable";
 
 import { useWallets } from "../../krist/wallets/Wallet";
+import { useBooleanSetting } from "../../utils/settings";
 
 /** The type of name listing to search by. */
 export enum ListingType {
@@ -63,7 +64,7 @@ export function NamesPage({ listingType }: Props): JSX.Element {
   const { joinedAddressList } = useWallets();
   const lastNameTransactionID = useSelector((s: RootState) => s.node.lastNameTransactionID);
   const lastOwnNameTransactionID = useSelector((s: RootState) => s.node.lastOwnNameTransactionID);
-  const shouldAutoRefresh = useSelector((s: RootState) => s.settings.autoRefreshTables);
+  const shouldAutoRefresh = useBooleanSetting("autoRefreshTables");
 
   // Comma-separated list of addresses, used as an optimisation for
   // memoisation (no deep equality in useMemo)

@@ -11,5 +11,19 @@
 
   &-value {
     font-size: @heading-3-size;
+
+    .ant-typography-copy {
+      line-height: 1 !important;
+      margin-left: @padding-xs;
+
+      .anticon {
+        font-size: @font-size-base;
+        vertical-align: 0;
+      }
+    }
+  }
+
+  &-green &-value {
+    color: @kw-green;
   }
 }

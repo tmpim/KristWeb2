@@ -3,7 +3,7 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React, { FC } from "react";
 import { Menu } from "antd";
-import { BugOutlined, GlobalOutlined, ReloadOutlined } from "@ant-design/icons";
+import { BugOutlined, GlobalOutlined, ReloadOutlined, SettingOutlined } from "@ant-design/icons";
 
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -48,6 +48,24 @@ export function SettingsPage(): JSX.Element {
             titleKey="settings.autoRefreshTables"
             descriptionKey="settings.autoRefreshTablesDescription"
           />
+        </Menu.Item>
+      </Menu.SubMenu>
+
+      {/* Advanced settings */}
+      <Menu.SubMenu key="sub-advanced" icon={<SettingOutlined />} title={t("settings.subMenuAdvanced")}>
+        {/* Copy name suffixes */}
+        <Menu.Item key="advanced/copyNameSuffixes">
+          <SettingBoolean setting="copyNameSuffixes" titleKey="settings.copyNameSuffixes" />
+        </Menu.Item>
+
+        {/* Address copy buttons */}
+        <Menu.Item key="advanced/addressCopyButtons">
+          <SettingBoolean setting="addressCopyButtons" titleKey="settings.addressCopyButtons" />
+        </Menu.Item>
+
+        {/* Name copy buttons */}
+        <Menu.Item key="advanced/nameCopyButtons">
+          <SettingBoolean setting="nameCopyButtons" titleKey="settings.nameCopyButtons" />
         </Menu.Item>
       </Menu.SubMenu>
 

@@ -4,19 +4,17 @@
 import React from "react";
 import { Select } from "antd";
 
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
-
 import { useTranslation } from "react-i18next";
 
 import { WalletFormatName, ADVANCED_FORMATS } from "../../krist/wallets/formats/WalletFormat";
+import { useBooleanSetting } from "../../utils/settings";
 
 interface Props {
   initialFormat: WalletFormatName;
 }
 
 export function SelectWalletFormat({ initialFormat }: Props): JSX.Element {
-  const advancedWalletFormats = useSelector((s: RootState) => s.settings.walletFormats);
+  const advancedWalletFormats = useBooleanSetting("walletFormats");
   const { t } = useTranslation();
 
   return <Select>
