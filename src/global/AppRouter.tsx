@@ -47,6 +47,8 @@ export const APP_ROUTES: AppRoute[] = [
     component: <TransactionsPage listingType={TXListing.NETWORK_ALL} /> },
   { path: "/network/names", name: "networkNames",
     component: <NamesPage listingType={NamesListing.NETWORK_ALL} /> },
+  { path: "/network/names/new", name: "networkNamesNew",
+    component: <NamesPage listingType={NamesListing.NETWORK_ALL} sortNew={true} /> },
   { path: "/network/names/:name", name: "networkNames",
     component: <NamePage /> },
   { path: "/network/names/:name/history", name: "nameHistory",

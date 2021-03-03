@@ -39,6 +39,7 @@ interface ParamTypes {
 
 interface Props {
   listingType: ListingType;
+  sortNew?: boolean;
 }
 
 function getSiteTitle(t: TFunction, listingType: ListingType, address?: string): string {
@@ -52,7 +53,7 @@ function getSiteTitle(t: TFunction, listingType: ListingType, address?: string):
   }
 }
 
-export function NamesPage({ listingType }: Props): JSX.Element {
+export function NamesPage({ listingType, sortNew }: Props): JSX.Element {
   const { t } = useTranslation();
   const { address } = useParams<ParamTypes>();
 
@@ -83,10 +84,11 @@ export function NamesPage({ listingType }: Props): JSX.Element {
   const memoTable = useMemo(() => (
     <NamesTable
       refreshingID={usedRefreshID}
+      sortNew={sortNew}
       addresses={usedAddresses?.split(",")}
       setError={setError}
     />
-  ), [usedAddresses, usedRefreshID, setError]);
+  ), [usedAddresses, sortNew, usedRefreshID, setError]);
 
   const siteTitle = getSiteTitle(t, listingType, address);
   const subTitle = listingType === ListingType.NETWORK_ADDRESS

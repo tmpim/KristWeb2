@@ -38,7 +38,7 @@ export function BlockValueCard(): JSX.Element {
               Base value (<KristValue value={work.base_value} green />)
             </Trans></Text>
             &nbsp;+&nbsp;
-            <b><Link to="/network/names">
+            <b><Link to="/network/names/new">
               {t("dashboard.blockValueBaseValueNames", { count: work.unpaid })}
             </Link></b>
           </div>

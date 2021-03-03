@@ -22,11 +22,14 @@ interface Props {
   // Number used to trigger a refresh of the names listing
   refreshingID?: number;
 
+  // Whether or not to sort by newest first by default
+  sortNew?: boolean;
+
   addresses?: string[];
   setError?: Dispatch<SetStateAction<Error | undefined>>;
 }
 
-export function NamesTable({ refreshingID, addresses, setError }: Props): JSX.Element {
+export function NamesTable({ refreshingID, sortNew, addresses, setError }: Props): JSX.Element {
   const { t } = useTranslation();
 
   const [loading, setLoading] = useState(true);
@@ -34,8 +37,8 @@ export function NamesTable({ refreshingID, addresses, setError }: Props): JSX.El
   const [options, setOptions] = useState<LookupNamesOptions>({
     limit: 20,
     offset: 0,
-    orderBy: "name",
-    order: "ASC"
+    orderBy: sortNew ? "registered" : "name",
+    order: sortNew ? "DESC" : "ASC"
   });
 
   // Fetch the names from the API, mapping the table options
@@ -72,7 +75,7 @@ export function NamesTable({ refreshingID, addresses, setError }: Props): JSX.El
         render: name => <KristNameLink name={name} />,
 
         sorter: true,
-        defaultSortOrder: "ascend"
+        defaultSortOrder: sortNew ? undefined : "ascend"
       },
 
       // Owner
@@ -137,7 +140,8 @@ export function NamesTable({ refreshingID, addresses, setError }: Props): JSX.El
         render: time => <DateTime date={time} />,
         width: 200,
 
-        sorter: true
+        sorter: true,
+        defaultSortOrder: sortNew ? "descend" : undefined
       },
 
       // Updated time
