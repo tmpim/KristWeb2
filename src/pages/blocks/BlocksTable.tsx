@@ -22,10 +22,11 @@ const debug = Debug("kristweb:blocks-table");
 interface Props {
   // Number used to trigger a refresh of the blocks listing
   refreshingID?: number;
+  lowest?: boolean;
   setError?: Dispatch<SetStateAction<Error | undefined>>;
 }
 
-export function BlocksTable({ refreshingID, setError }: Props): JSX.Element {
+export function BlocksTable({ refreshingID, lowest, setError }: Props): JSX.Element {
   const { t } = useTranslation();
 
   const [loading, setLoading] = useState(true);
@@ -33,8 +34,8 @@ export function BlocksTable({ refreshingID, setError }: Props): JSX.Element {
   const [options, setOptions] = useState<LookupBlocksOptions>({
     limit: 20,
     offset: 0,
-    orderBy: "height",
-    order: "DESC"
+    orderBy: lowest ? "hash" : "height",
+    order: lowest ? "ASC" : "DESC"
   });
 
   // Fetch the blocks from the API, mapping the table options
@@ -99,7 +100,8 @@ export function BlocksTable({ refreshingID, setError }: Props): JSX.Element {
 
         render: hash => <BlockHash hash={hash} />,
 
-        sorter: true
+        sorter: true,
+        defaultSortOrder: lowest ? "ascend" : undefined
       },
 
       // Value
@@ -131,7 +133,7 @@ export function BlocksTable({ refreshingID, setError }: Props): JSX.Element {
         width: 200,
 
         sorter: true,
-        defaultSortOrder: "descend"
+        defaultSortOrder: lowest ? undefined : "descend"
       }
     ]}
   />;

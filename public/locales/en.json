@@ -484,7 +484,9 @@
 
   "blocks": {
     "title": "Network Blocks",
+    "titleLowest": "Lowest Blocks",
     "siteTitle": "Network Blocks",
+    "siteTitleLowest": "Lowest Blocks",
 
     "columnHeight": "Height",
     "columnAddress": "Miner",

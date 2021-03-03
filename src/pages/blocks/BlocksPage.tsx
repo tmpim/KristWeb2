@@ -12,7 +12,11 @@ import { BlocksTable } from "./BlocksTable";
 
 import { useBooleanSetting } from "../../utils/settings";
 
-export function BlocksPage(): JSX.Element {
+interface Props {
+  lowest?: boolean;
+}
+
+export function BlocksPage({ lowest }: Props): JSX.Element {
   const [error, setError] = useState<Error | undefined>();
 
   // Used to handle memoisation and auto-refreshing
@@ -25,16 +29,20 @@ export function BlocksPage(): JSX.Element {
   // Memoise the table so that it only updates the props (thus triggering a
   // re-fetch of the blocks) when something relevant changes
   const memoTable = useMemo(() => (
-    <BlocksTable refreshingID={usedRefreshID} setError={setError} />
-  ), [usedRefreshID, setError]);
+    <BlocksTable
+      refreshingID={usedRefreshID}
+      lowest={lowest}
+      setError={setError}
+    />
+  ), [usedRefreshID, lowest, setError]);
 
   return <PageLayout
     className="blocks-page"
     withoutTopPadding
     negativeMargin
 
-    titleKey={"blocks.title"}
-    siteTitleKey={"blocks.siteTitle"}
+    titleKey={lowest ? "blocks.titleLowest" : "blocks.title"}
+    siteTitleKey={lowest ? "blocks.siteTitleLowest" : "blocks.siteTitle"}
   >
     {error
       ? <BlocksResult />
