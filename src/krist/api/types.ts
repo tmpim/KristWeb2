@@ -28,8 +28,8 @@ export interface KristTransaction {
 export interface KristBlock {
   height: number;
   address: string;
-  hash: string;
-  short_hash: string;
+  hash?: string | null;
+  short_hash?: string | null;
   value: number;
   difficulty: number;
   time: string;

@@ -14,14 +14,16 @@ const { Text } = Typography;
 const SHORT_HASH_LENGTH = 12;
 
 interface Props {
-  hash: string;
+  hash?: string | null;
   alwaysCopyable?: boolean;
   neverCopyable?: boolean;
   className?: string;
 }
 
-export function BlockHash({ hash, alwaysCopyable, neverCopyable, className }: Props): JSX.Element {
+export function BlockHash({ hash, alwaysCopyable, neverCopyable, className }: Props): JSX.Element | null {
   const blockHashCopyButtons = useBooleanSetting("blockHashCopyButtons");
+
+  if (hash === undefined || hash === null) return null;
 
   // If the hash is longer than 12 characters (i.e. it's not just a short hash
   // on its own), then split it into two parts, so the short hash can be
