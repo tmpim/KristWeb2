@@ -11,7 +11,8 @@ export interface KristAddress {
   firstseen: string;
 }
 
-export type KristTransactionType = "unknown" | "mined" | "name_purchase" | "name_a_record" | "name_transfer" | "transfer";
+export type KristTransactionType = "unknown" | "mined" | "name_purchase"
+  | "name_a_record" | "name_transfer" | "transfer";
 export interface KristTransaction {
   id: number;
   from: string | null;

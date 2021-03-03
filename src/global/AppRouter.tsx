@@ -11,6 +11,7 @@ import { AddressPage } from "../pages/addresses/AddressPage";
 import { BlocksPage } from "../pages/blocks/BlocksPage";
 import { BlockPage } from "../pages/blocks/BlockPage";
 import { TransactionsPage, ListingType as TXListing } from "../pages/transactions/TransactionsPage";
+import { TransactionPage } from "../pages/transactions/TransactionPage";
 import { NamesPage, ListingType as NamesListing } from "../pages/names/NamesPage";
 import { NamePage } from "../pages/names/NamePage";
 
@@ -48,6 +49,8 @@ export const APP_ROUTES: AppRoute[] = [
   { path: "/network/blocks/:id", name: "block", component: <BlockPage /> },
   { path: "/network/transactions", name: "transactions",
     component: <TransactionsPage listingType={TXListing.NETWORK_ALL} /> },
+  { path: "/network/transactions/:id", name: "transaction",
+    component: <TransactionPage /> },
   { path: "/network/names", name: "networkNames",
     component: <NamesPage listingType={NamesListing.NETWORK_ALL} /> },
   { path: "/network/names/new", name: "networkNamesNew",

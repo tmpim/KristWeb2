@@ -1,0 +1,76 @@
+// Copyright (c) 2020-2021 Drew Lemmy
+// This file is part of KristWeb 2 under GPL-3.0.
+// Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
+@import (reference) "../../App.less";
+
+.transaction-page {
+  .transaction-info-row {
+    max-width: 768px;
+    margin-top: -@margin-lg;
+    margin-bottom: @margin-lg;
+
+    .kw-statistic {
+      margin-top: @margin-lg;
+      margin-right: @margin-lg;
+
+      .transaction-type {
+        font-size: @font-size-base * 1.5;
+        &, a { font-weight: normal; }
+      }
+
+      &.transaction-statistic-address {
+        .kw-statistic-value {
+          // Hack to deal with the line heights being huge while wrapping
+          line-height: 1;
+
+          // And to make it line up with the other stats,
+          display: inline-block;
+          margin-top: 0.275em;
+        }
+
+        .contextual-address {
+          font-size: @font-size-base * 1.1;
+
+          .address-address {
+            font-size: @font-size-base * 1.5;
+          }
+
+          .address-original {
+            display: block;
+            margin-top: @padding-sm;
+            font-size: @font-size-base;
+          }
+        }
+      }
+
+      .date-time {
+        font-size: @font-size-base * 1.5;
+      }
+    }
+  }
+
+  .transaction-card-row {
+    .transaction-card-metadata {
+      .ant-card-body {
+        padding: @card-padding-base;
+      }
+    }
+
+    .transaction-metadata-raw, td.transaction-metadata-cell-value,
+    td.transaction-raw-data-cell-value {
+      color: @kw-text-tertiary;
+
+      font-family: monospace;
+      font-size: 90%;
+
+      line-height: 1.5;
+    }
+
+    .transaction-raw-data-null {
+      color: @text-color-secondary;
+
+      font-family: @font-family;
+      font-style: italic;
+    }
+  }
+}

@@ -528,5 +528,46 @@
     "resultNotFound": "That block does not exist.",
     "resultUnknownTitle": "Unknown error",
     "resultUnknown": "See console for details."
+  },
+
+  "transaction": {
+    "title": "Transaction",
+    "siteTitle": "Transaction",
+    "siteTitleTransaction": "Transaction #{{id, number}}",
+    "subTitleTransaction": "#{{id, number}}",
+
+    "type": "Type",
+    "from": "From",
+    "to": "To",
+    "address": "Address",
+    "name": "Name",
+    "value": "Value",
+    "time": "Time",
+    "aRecord": "A record",
+
+    "cardMetadataTitle": "Metadata",
+    "tabCommonMeta": "CommonMeta",
+    "tabRaw": "Raw",
+
+    "commonMetaError": "CommonMeta parsing failed.",
+    "commonMetaParsed": "Parsed records",
+    "commonMetaParsedHelp": "These values were not directly contained in the transaction metadata, but they were inferred by the CommonMeta parser.",
+    "commonMetaCustom": "Transaction records",
+    "commonMetaCustomHelp": "These values were directly contained in the transaction metadata.",
+    "commonMetaColumnKey": "Key",
+    "commonMetaColumnValue": "Value",
+
+    "cardRawDataTitle": "Raw data",
+    "cardRawDataHelp": "The transaction exactly as it was returned by the Krist API.",
+
+    "rawDataColumnKey": "Key",
+    "rawDataColumnValue": "Value",
+
+    "resultInvalidTitle": "Invalid transaction ID",
+    "resultInvalid": "That does not look like a valid transaction ID.",
+    "resultNotFoundTitle": "Transaction not found",
+    "resultNotFound": "That transaction does not exist.",
+    "resultUnknownTitle": "Unknown error",
+    "resultUnknown": "See console for details."
   }
 }

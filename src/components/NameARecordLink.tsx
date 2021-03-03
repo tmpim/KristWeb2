@@ -2,12 +2,15 @@
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React from "react";
+import classNames from "classnames";
 
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
-import { stripNameSuffix } from "../../utils/currency";
+import { RootState } from "../store";
+import { stripNameSuffix } from "../utils/currency";
 
-import { KristNameLink } from "../../components/KristNameLink";
+import { KristNameLink } from "./KristNameLink";
+
+import "./NameARecordLink.less";
 
 function forceURL(link: string): string {
   // TODO: this is rather crude
@@ -17,12 +20,15 @@ function forceURL(link: string): string {
 
 interface Props {
   a?: string;
+  className?: string;
 }
 
-export function NameARecordLink({ a }: Props): JSX.Element | null {
+export function NameARecordLink({ a, className }: Props): JSX.Element | null {
   const nameSuffix = useSelector((s: RootState) => s.node.currency.name_suffix);
 
   if (!a) return null;
+
+  const classes = classNames("name-a-record-link", className);
 
   // I don't have a citation for this other than a vague memory, but there are
   // (as of writing this) 45 names in the database whose A records begin with
@@ -37,13 +43,19 @@ export function NameARecordLink({ a }: Props): JSX.Element | null {
     const nameWithoutSuffix = stripNameSuffix(nameSuffix, withoutPrefix);
 
     return <KristNameLink
+      className={classes}
       name={nameWithoutSuffix}
       text={a}
       neverCopyable
     />;
   }
 
-  return <a href={forceURL(a)} target="_blank" rel="noreferrer noopener">
+  return <a
+    className={classes}
+    href={forceURL(a)}
+    target="_blank"
+    rel="noreferrer noopener"
+  >
     {a}
   </a>;
 }

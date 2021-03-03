@@ -17,6 +17,7 @@ import { NameResult } from "./NameResult";
 import { Statistic } from "../../components/Statistic";
 import { ContextualAddress } from "../../components/ContextualAddress";
 import { DateTime } from "../../components/DateTime";
+import { NameARecordLink } from "../../components/NameARecordLink";
 
 import * as api from "../../krist/api";
 import { KristName } from "../../krist/api/types";
@@ -25,7 +26,6 @@ import { useWallets } from "../../krist/wallets/Wallet";
 import { useBooleanSetting } from "../../utils/settings";
 
 import { NameButtonRow } from "./NameButtonRow";
-import { NameARecordLink } from "./NameARecordLink";
 import { NameTransactionsCard } from "./NameTransactionsCard";
 
 import "./NamePage.less";

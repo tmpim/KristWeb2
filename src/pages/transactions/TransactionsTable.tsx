@@ -5,6 +5,7 @@ import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { Table } from "antd";
 
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 import { KristTransaction } from "../../krist/api/types";
 import { lookupTransactions, LookupTransactionsOptions, LookupTransactionsResponse, LookupTransactionType } from "../../krist/api/lookup";
@@ -92,7 +93,11 @@ export function TransactionsTable({ listingType, refreshingID, addresses, name, 
         title: t("transactions.columnID"),
         dataIndex: "id", key: "id",
 
-        render: id => id.toLocaleString(),
+        render: id => (
+          <Link to={`/network/transactions/${encodeURIComponent(id)}`}>
+            {id.toLocaleString()}
+          </Link>
+        ),
         width: 100
 
         // Don't allow sorting by ID to save a bit of width in the columns;
@@ -110,7 +115,7 @@ export function TransactionsTable({ listingType, refreshingID, addresses, name, 
         title: t("transactions.columnFrom"),
         dataIndex: "from", key: "from",
 
-        render: (from, tx) => from && (
+        render: (from, tx) => from && tx.type !== "mined" && (
           <ContextualAddress
             className="transactions-table-address"
             address={from}
@@ -126,7 +131,7 @@ export function TransactionsTable({ listingType, refreshingID, addresses, name, 
         title: t("transactions.columnTo"),
         dataIndex: "to", key: "to",
 
-        render: (to, tx) => to && tx.type !== "name_a_record" && (
+        render: (to, tx) => to && tx.type !== "name_purchase" && tx.type !== "name_a_record" && (
           <ContextualAddress
             className="transactions-table-address"
             address={to}

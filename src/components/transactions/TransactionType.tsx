@@ -7,7 +7,7 @@ import classNames from "classnames";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import { KristTransaction } from "../../krist/api/types";
+import { KristTransaction, KristTransactionType } from "../../krist/api/types";
 import { Wallet, useWallets } from "../../krist/wallets/Wallet";
 
 import "./TransactionType.less";
@@ -15,8 +15,13 @@ import "./TransactionType.less";
 export type InternalTransactionType = "transferred" | "sent" | "received" | "mined" |
   "name_a_record" | "name_transferred" | "name_sent" | "name_received" |
   "name_purchased" | "unknown";
-export const INTERNAL_TYPES_SHOW_VALUE = ["transferred", "sent", "received", "mined", "name_purchased"];
-export const TYPES_SHOW_VALUE = ["transfer", "mined", "name_purchase"];
+export const INTERNAL_TYPES_SHOW_VALUE: InternalTransactionType[] = [
+  "transferred", "sent", "received", "mined", "name_purchased"
+];
+
+export const TYPES_SHOW_VALUE: KristTransactionType[] = [
+  "transfer", "mined", "name_purchase"
+];
 
 export function getTransactionType(tx: KristTransaction, from?: Wallet, to?: Wallet): InternalTransactionType {
   switch (tx.type) {

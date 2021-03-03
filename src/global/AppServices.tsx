@@ -5,9 +5,9 @@ import React from "react";
 
 import { SyncWallets } from "../components/wallets/SyncWallets";
 import { ForcedAuth } from "../components/auth/ForcedAuth";
-import { WebsocketService } from "../components/ws/WebsocketService";
-import { SyncWork } from "../components/ws/SyncWork";
-import { SyncMOTD } from "../components/ws/SyncMOTD";
+import { WebsocketService } from "./ws/WebsocketService";
+import { SyncWork } from "./ws/SyncWork";
+import { SyncMOTD } from "./ws/SyncMOTD";
 
 export function AppServices(): JSX.Element {
   return <>

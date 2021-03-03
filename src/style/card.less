@@ -91,4 +91,36 @@
       color: lighten(@text-color-secondary, 10%);
     }
   }
+
+  // Deal with tabbed cards
+  &.ant-card-contain-tabs {
+    .ant-card-head {
+      // These padding hacks allow the border to stretch to the outer edges
+      // of the card, while keeping everything padded nicely
+      padding: 0;
+
+      .ant-card-head-wrapper {
+        padding: 0 @card-padding-base;
+      }
+
+      .ant-tabs {
+        .ant-tabs-nav-wrap {
+          padding: 0 @card-padding-base;
+        }
+
+        // The tabs were also just way too large
+        .ant-tabs-tab {
+          padding: @padding-sm 0;
+          margin-right: @margin-md;
+          font-size: @font-size-base;
+
+          color: @text-color-secondary;
+
+          &:hover {
+            color: lighten(@text-color-secondary, 10%);
+          }
+        }
+      }
+    }
+  }
 }
