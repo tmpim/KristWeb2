@@ -86,6 +86,11 @@ export function SettingsPage(): JSX.Element {
             descriptionKey="settings.showRelativeDatesDescription"
           />
         </Menu.Item>
+
+        {/* Default to 'Raw' on transaction page */}
+        <Menu.Item key="advanced/transactionDefaultRaw">
+          <SettingBoolean setting="transactionDefaultRaw" titleKey="settings.transactionDefaultRaw" />
+        </Menu.Item>
       </Menu.SubMenu>
 
       {/* Debug settings */}

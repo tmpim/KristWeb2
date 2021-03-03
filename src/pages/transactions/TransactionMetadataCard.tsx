@@ -12,13 +12,19 @@ import { RootState } from "../../store";
 import { parseCommonMeta } from "../../utils/commonmeta";
 
 import { HelpIcon } from "../../components/HelpIcon";
+import { useBooleanSetting } from "../../utils/settings";
 
 const { Text, Title } = Typography;
 
 // TODO: This is definitely too crude for my taste, but I had no better ideas
 const HAS_COMMONMETA = /[=;]/;
 
-export function CommonMetaTable({ metadata, nameSuffix }: { metadata: string; nameSuffix: string }): JSX.Element {
+interface CommonMetaTableProps {
+  metadata: string;
+  nameSuffix: string;
+}
+
+export function CommonMetaTable({ metadata, nameSuffix }: CommonMetaTableProps): JSX.Element {
   const { t } = useTranslation();
 
   // Parse the CommonMeta from the transaction, showing an error if it fails
@@ -89,10 +95,13 @@ export function TransactionMetadataCard({ metadata }: { metadata: string }): JSX
   const { t } = useTranslation();
   const nameSuffix = useSelector((s: RootState) => s.node.currency.name_suffix);
 
+  // Default to the 'Raw' tab instead of 'CommonMeta'
+  const defaultRaw = useBooleanSetting("transactionDefaultRaw");
+
   // Estimate in advance if a CommonMeta tab should be showed
   const hasCommonMeta = HAS_COMMONMETA.test(metadata);
   const [activeTab, setActiveTab] = useState<"commonMeta" | "raw">(
-    hasCommonMeta ? "commonMeta" : "raw"
+    hasCommonMeta && !defaultRaw ? "commonMeta" : "raw"
   );
 
   // Tab list for the card

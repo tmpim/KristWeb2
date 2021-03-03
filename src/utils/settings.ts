@@ -29,6 +29,8 @@ export interface SettingsState {
   readonly blockHashCopyButtons: boolean;
   /** Show relative dates instead of absolute ones when they are recent. */
   readonly showRelativeDates: boolean;
+  /** Default to the 'Raw' tab instead of 'CommonMeta' on the transaction page. */
+  readonly transactionDefaultRaw: boolean;
 
   /** Whether or not advanced wallet formats are enabled. */
   readonly walletFormats: boolean;
@@ -43,6 +45,7 @@ export const DEFAULT_SETTINGS: SettingsState = {
   nameCopyButtons: false,
   blockHashCopyButtons: false,
   showRelativeDates: false,
+  transactionDefaultRaw: false,
 
   walletFormats: false
 };
