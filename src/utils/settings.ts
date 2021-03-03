@@ -27,6 +27,8 @@ export interface SettingsState {
   readonly nameCopyButtons: boolean;
   /** Show copy buttons next to all block hashes. */
   readonly blockHashCopyButtons: boolean;
+  /** Show relative dates instead of absolute ones when they are recent. */
+  readonly showRelativeDates: boolean;
 
   /** Whether or not advanced wallet formats are enabled. */
   readonly walletFormats: boolean;
@@ -40,6 +42,7 @@ export const DEFAULT_SETTINGS: SettingsState = {
   addressCopyButtons: false,
   nameCopyButtons: false,
   blockHashCopyButtons: false,
+  showRelativeDates: false,
 
   walletFormats: false
 };

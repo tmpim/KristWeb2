@@ -77,6 +77,15 @@ export function SettingsPage(): JSX.Element {
         <Menu.Item key="advanced/blockHashCopyButtons">
           <SettingBoolean setting="blockHashCopyButtons" titleKey="settings.blockHashCopyButtons" />
         </Menu.Item>
+
+        {/* Show relative dates */}
+        <Menu.Item key="advanced/showRelativeDates">
+          <SettingBoolean
+            setting="showRelativeDates"
+            titleKey="settings.showRelativeDates"
+            descriptionKey="settings.showRelativeDatesDescription"
+          />
+        </Menu.Item>
       </Menu.SubMenu>
 
       {/* Debug settings */}
