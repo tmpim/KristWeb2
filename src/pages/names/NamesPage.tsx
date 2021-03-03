@@ -16,6 +16,8 @@ import { NamesTable } from "./NamesTable";
 import { useWallets } from "../../krist/wallets/Wallet";
 import { useBooleanSetting } from "../../utils/settings";
 
+import "./NamesPage.less";
+
 /** The type of name listing to search by. */
 export enum ListingType {
   /** Names owned by the user's wallets */

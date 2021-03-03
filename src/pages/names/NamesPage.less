@@ -1,0 +1,27 @@
+// Copyright (c) 2020-2021 Drew Lemmy
+// This file is part of KristWeb 2 under GPL-3.0.
+// Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
+@import (reference) "../../App.less";
+
+.names-page {
+  // Highlight unpaid names
+  .ant-table .name-row-unpaid {
+    background: fade(@kw-primary, 15%);
+
+    td.ant-table-cell {
+      border-bottom-color: fade(@kw-primary, 20%);
+    }
+
+    .ant-table-cell.ant-table-column-sort {
+      background: fade(@kw-primary, 20%);
+    }
+
+    &:hover td.ant-table-cell {
+      background: fade(@kw-primary, 20%);
+
+      &.ant-table-cell.ant-table-column-sort {
+        background: fade(@kw-primary, 35%);
+      }
+    }
+  }
+}
