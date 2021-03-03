@@ -9,9 +9,10 @@ import { WalletsPage } from "../pages/wallets/WalletsPage";
 
 import { AddressPage } from "../pages/addresses/AddressPage";
 import { BlocksPage } from "../pages/blocks/BlocksPage";
+import { BlockPage } from "../pages/blocks/BlockPage";
 import { TransactionsPage, ListingType as TXListing } from "../pages/transactions/TransactionsPage";
-import { NamePage } from "../pages/names/NamePage";
 import { NamesPage, ListingType as NamesListing } from "../pages/names/NamesPage";
+import { NamePage } from "../pages/names/NamePage";
 
 import { SettingsPage } from "../pages/settings/SettingsPage";
 import { SettingsTranslations } from "../pages/settings/SettingsTranslations";
@@ -43,6 +44,7 @@ export const APP_ROUTES: AppRoute[] = [
   { path: "/network/addresses/:address/names", name: "addressNames",
     component: <NamesPage listingType={NamesListing.NETWORK_ADDRESS} /> },
   { path: "/network/blocks", name: "blocks", component: <BlocksPage /> },
+  { path: "/network/blocks/:id", name: "blocks", component: <BlockPage /> },
   { path: "/network/transactions", name: "transactions",
     component: <TransactionsPage listingType={TXListing.NETWORK_ALL} /> },
   { path: "/network/names", name: "networkNames",

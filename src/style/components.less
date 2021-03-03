@@ -42,11 +42,21 @@
 
   &:focus { background: lighten(@kw-lighter, 10%); }
 
+  &[disabled] {
+    background: @kw-light;
+    border-color: transparent;
+  }
+
   &.ant-btn-primary {
     background: @primary-color;
 
     &:hover, &:focus { background: lighten(@primary-color, 5%); }
     &:focus { background: lighten(@primary-color, 10%); }
+
+    &[disabled] {
+      background: fade(@primary-color, 75%);
+      border-color: transparent;
+    }
   }
 
   &.ant-btn-dangerous {

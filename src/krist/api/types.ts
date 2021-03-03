@@ -111,6 +111,8 @@ export interface KristMOTD {
   mining_enabled: boolean;
   debug_mode: boolean;
 
+  last_block?: KristBlock;
+
   constants: KristConstants;
   currency: KristCurrency;
 }

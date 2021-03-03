@@ -34,7 +34,7 @@ export function BlocksPage(): JSX.Element {
     negativeMargin
 
     titleKey={"blocks.title"}
-    siteTitle={"blocks.siteTitle"}
+    siteTitleKey={"blocks.siteTitle"}
   >
     {error
       ? <BlocksResult />

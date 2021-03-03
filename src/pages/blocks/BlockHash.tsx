@@ -11,21 +11,33 @@ import "./BlockHash.less";
 
 const { Text } = Typography;
 
+const SHORT_HASH_LENGTH = 12;
+
 interface Props {
   hash: string;
+  alwaysCopyable?: boolean;
   neverCopyable?: boolean;
   className?: string;
 }
 
-export function BlockHash({ hash, neverCopyable, className }: Props): JSX.Element {
+export function BlockHash({ hash, alwaysCopyable, neverCopyable, className }: Props): JSX.Element {
   const blockHashCopyButtons = useBooleanSetting("blockHashCopyButtons");
 
-  const copyable = !neverCopyable && blockHashCopyButtons
-    ? true : undefined;
+  // If the hash is longer than 12 characters (i.e. it's not just a short hash
+  // on its own), then split it into two parts, so the short hash can be
+  // highlighted. Otherwise, just put the whole hash in restHash.
+  const shortHash = hash.length > SHORT_HASH_LENGTH
+    ? hash.substr(0, SHORT_HASH_LENGTH) : "";
+  const restHash = hash.length > SHORT_HASH_LENGTH
+    ? hash.substring(SHORT_HASH_LENGTH, hash.length) : hash;
+
+  const copyable = alwaysCopyable || (!neverCopyable && blockHashCopyButtons)
+    ? { text: hash } : undefined;
 
   const classes = classNames("block-hash", className);
 
   return <Text className={classes} copyable={copyable}>
-    {hash}
+    {shortHash && <span className="block-hash-short-part">{shortHash}</span>}
+    <span className="block-hash-rest-part">{restHash}</span>
   </Text>;
 }

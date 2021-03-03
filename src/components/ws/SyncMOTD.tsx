@@ -25,6 +25,11 @@ export async function updateMOTD(): Promise<void> {
   store.dispatch(nodeActions.setCurrency(data.currency));
   store.dispatch(nodeActions.setConstants(data.constants));
 
+  if (data.last_block) {
+    debug("motd last block id: %d", data.last_block.height);
+    store.dispatch(nodeActions.setLastBlockID(data.last_block.height));
+  }
+
   const motdBase: KristMOTDBase = {
     motd: data.motd,
     motdSet: new Date(data.motd_set),

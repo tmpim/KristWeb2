@@ -5,6 +5,7 @@ import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { Table } from "antd";
 
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 import { KristBlock } from "../../krist/api/types";
 import { lookupBlocks, LookupBlocksOptions, LookupBlocksResponse } from "../../krist/api/lookup";
@@ -12,6 +13,7 @@ import { getTablePaginationSettings, handleLookupTableChange } from "../../utils
 
 import { ContextualAddress } from "../../components/ContextualAddress";
 import { BlockHash } from "./BlockHash";
+import { KristValue } from "../../components/KristValue";
 import { DateTime } from "../../components/DateTime";
 
 import Debug from "debug";
@@ -66,7 +68,11 @@ export function BlocksTable({ refreshingID, setError }: Props): JSX.Element {
         title: t("blocks.columnHeight"),
         dataIndex: "height", key: "height",
 
-        render: height => height.toLocaleString(),
+        render: height => (
+          <Link to={`/network/blocks/${encodeURIComponent(height)}`}>
+            {height.toLocaleString()}
+          </Link>
+        ),
         width: 100
       },
 
@@ -86,20 +92,23 @@ export function BlocksTable({ refreshingID, setError }: Props): JSX.Element {
         sorter: true
       },
 
-      // Short hash
-      {
-        title: t("blocks.columnShortHash"),
-        dataIndex: "short_hash", key: "short_hash",
-
-        render: hash => <BlockHash hash={hash} />
-      },
-
-      // Full hash
+      // Hash
       {
         title: t("blocks.columnHash"),
         dataIndex: "hash", key: "hash",
 
         render: hash => <BlockHash hash={hash} />,
+
+        sorter: true
+      },
+
+      // Value
+      {
+        title: t("blocks.columnValue"),
+        dataIndex: "value", key: "value",
+
+        render: value => <KristValue value={value} />,
+        width: 100,
 
         sorter: true
       },

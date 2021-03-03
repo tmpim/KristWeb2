@@ -486,8 +486,7 @@
 
     "columnHeight": "Height",
     "columnAddress": "Miner",
-    "columnShortHash": "Short Hash",
-    "columnHash": "Full Hash",
+    "columnHash": "Block Hash",
     "columnValue": "Value",
     "columnDifficulty": "Difficulty",
     "columnTime": "Time",
@@ -495,6 +494,34 @@
     "tableTotal": "{{count, number}} block",
     "tableTotal_plural": "{{count, number}} blocks",
 
+    "resultUnknownTitle": "Unknown error",
+    "resultUnknown": "See console for details."
+  },
+
+  "block": {
+    "title": "Block",
+    "siteTitle": "Block",
+    "siteTitleBlock": "Block #{{id, number}}",
+    "subTitleBlock": "#{{id, number}}",
+
+    "height": "Height",
+    "miner": "Miner",
+    "value": "Value",
+    "time": "Time",
+    "hash": "Hash",
+    "difficulty": "Difficulty",
+
+    "previous": "Prev",
+    "previousTooltip": "Previous block (#{{id, number}})",
+    "previousTooltipNone": "Previous block",
+    "next": "Next",
+    "nextTooltip": "Next block (#{{id, number}})",
+    "nextTooltipNone": "Next block",
+
+    "resultInvalidTitle": "Invalid block height",
+    "resultInvalid": "That does not look like a valid block height.",
+    "resultNotFoundTitle": "Block not found",
+    "resultNotFound": "That block does not exist.",
     "resultUnknownTitle": "Unknown error",
     "resultUnknown": "See console for details."
   }
