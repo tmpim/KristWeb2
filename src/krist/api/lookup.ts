@@ -18,7 +18,10 @@ interface LookupAddressesResponse {
 export interface KristAddressWithNames extends KristAddress { names?: number }
 export type AddressLookupResults = Record<string, KristAddressWithNames | null>;
 
-export async function lookupAddresses(addresses: string[], fetchNames?: boolean): Promise<AddressLookupResults> {
+export async function lookupAddresses(
+  addresses: string[],
+  fetchNames?: boolean
+): Promise<AddressLookupResults> {
   if (!addresses || addresses.length === 0) return {};
 
   try {
@@ -38,7 +41,10 @@ export async function lookupAddresses(addresses: string[], fetchNames?: boolean)
 }
 
 /** Uses the lookup API to retrieve a single address. */
-export async function lookupAddress(address: string, fetchNames?: boolean): Promise<KristAddressWithNames> {
+export async function lookupAddress(
+  address: string,
+  fetchNames?: boolean
+): Promise<KristAddressWithNames> {
   const data = await api.get<LookupAddressesResponse>(
     "lookup/addresses/"
     + encodeURIComponent(address)
@@ -62,7 +68,9 @@ export interface LookupBlocksResponse extends LookupResponseBase {
   blocks: KristBlock[];
 }
 
-export async function lookupBlocks(opts: LookupBlocksOptions): Promise<LookupBlocksResponse> {
+export async function lookupBlocks(
+  opts: LookupBlocksOptions
+): Promise<LookupBlocksResponse> {
   const qs = getFilterOptionsQuery(opts);
   return await api.get<LookupBlocksResponse>("lookup/blocks?" + qs);
 }
@@ -76,41 +84,57 @@ export type SortableTransactionFields = "id" | "from" | "to" | "value" | "time"
 export enum LookupTransactionType {
   TRANSACTIONS,
   NAME_HISTORY,
-  NAME_TRANSACTIONS
+  NAME_TRANSACTIONS,
+  SEARCH,
 }
 
 export interface LookupTransactionsOptions extends LookupFilterOptionsBase<SortableTransactionFields> {
   includeMined?: boolean;
   type?: LookupTransactionType;
+  searchType?: "address" | "name" | "metadata";
 }
 
 export interface LookupTransactionsResponse extends LookupResponseBase {
   transactions: KristTransaction[];
 }
 
-export async function lookupTransactions(addresses: string[] | undefined, opts: LookupTransactionsOptions): Promise<LookupTransactionsResponse> {
+/** Maps a transaction lookup type to its appropriate API endpoint. */
+function getTransactionLookupRoute(
+  addresses: string[] | undefined,
+  opts: LookupTransactionsOptions
+): string {
+  // Combine an address array into comma-separated values
+  const addressList = addresses && addresses.length > 0
+    ? encodeURIComponent(addresses.join(","))
+    : "";
+
+  switch (opts.type ?? LookupTransactionType.TRANSACTIONS) {
+  case LookupTransactionType.TRANSACTIONS:
+    return "lookup/transactions/" + addressList;
+  case LookupTransactionType.NAME_HISTORY:
+    return "lookup/names/" + addressList + "/history";
+  case LookupTransactionType.NAME_TRANSACTIONS:
+    return "lookup/names/" + addressList + "/transactions";
+  case LookupTransactionType.SEARCH:
+    return "search/extended/results/transactions/" + opts.searchType;
+  }
+}
+
+export async function lookupTransactions(
+  addresses: string[] | undefined,
+  opts: LookupTransactionsOptions
+): Promise<LookupTransactionsResponse> {
   const qs = getFilterOptionsQuery(opts);
   if (opts.includeMined) qs.append("includeMined", "");
 
-  // Map the lookup type to the appropriate route
-  // TODO: this is kinda wack
   const type = opts.type ?? LookupTransactionType.TRANSACTIONS;
-  const route = type === LookupTransactionType.TRANSACTIONS
-    ? "transactions" : "names";
-  const routeExtra = type !== LookupTransactionType.TRANSACTIONS
-    ? (type === LookupTransactionType.NAME_HISTORY
-      ? "/history"
-      : "/transactions")
-    : "";
+  const route = getTransactionLookupRoute(addresses, opts);
 
-  return await api.get<LookupTransactionsResponse>(
-    `lookup/${route}/`
-    + (addresses && addresses.length > 0
-      ? encodeURIComponent(addresses.join(","))
-      : "")
-    + routeExtra
-    + `?${qs}`
-  );
+  // For searches, append the search query as a query parameter
+  if (type === LookupTransactionType.SEARCH)
+    qs.append("q", addresses?.[0] || "");
+
+  return await api.get<LookupTransactionsResponse>(route + "?" + qs);
 }
 
 // =============================================================================
@@ -124,7 +148,10 @@ export interface LookupNamesResponse extends LookupResponseBase {
   names: KristName[];
 }
 
-export async function lookupNames(addresses: string[] | undefined, opts: LookupNamesOptions): Promise<LookupNamesResponse> {
+export async function lookupNames(
+  addresses: string[] | undefined,
+  opts: LookupNamesOptions
+): Promise<LookupNamesResponse> {
   const qs = getFilterOptionsQuery(opts);
   return await api.get<LookupNamesResponse>(
     "lookup/names/"

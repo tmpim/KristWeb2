@@ -5,7 +5,8 @@ import React, { useState, useMemo } from "react";
 import { Switch } from "antd";
 
 import { useTranslation, TFunction } from "react-i18next";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
+import { Location } from "history";
 
 import { useSelector, shallowEqual } from "react-redux";
 import { RootState } from "../../store";
@@ -36,6 +37,13 @@ export enum ListingType {
   NAME_HISTORY,
   /** Transactions sent to a particular name */
   NAME_SENT,
+
+  /** Transaction search for address */
+  SEARCH_ADDRESS,
+  /** Transaction search for name */
+  SEARCH_NAME,
+  /** Transaction search for metadata */
+  SEARCH_METADATA
 }
 
 const LISTING_TYPE_TITLES: Record<ListingType, string> = {
@@ -45,12 +53,17 @@ const LISTING_TYPE_TITLES: Record<ListingType, string> = {
   [ListingType.NETWORK_ADDRESS]: "transactions.title",
 
   [ListingType.NAME_HISTORY]: "transactions.nameHistoryTitle",
-  [ListingType.NAME_SENT]: "transactions.nameTransactionsTitle"
+  [ListingType.NAME_SENT]: "transactions.nameTransactionsTitle",
+
+  [ListingType.SEARCH_ADDRESS]: "transactions.searchTitle",
+  [ListingType.SEARCH_NAME]: "transactions.searchTitle",
+  [ListingType.SEARCH_METADATA]: "transactions.searchTitle"
 };
 
 interface ParamTypes {
   address?: string;
   name?: string;
+  query?: string;
 }
 
 interface Props {
@@ -71,6 +84,35 @@ function getSiteTitle(t: TFunction, listingType: ListingType, address?: string):
     return t("transactions.siteTitleNameHistory");
   case ListingType.NAME_SENT:
     return t("transactions.siteTitleNameSent");
+  case ListingType.SEARCH_ADDRESS:
+  case ListingType.SEARCH_NAME:
+  case ListingType.SEARCH_METADATA:
+    return t("transactions.siteTitleSearch");
+  }
+}
+
+/** Returns the correct PageHeader sub title for the given listing type. */
+function getSubTitle(t: TFunction, listingType: ListingType, params: ParamTypes): React.ReactNode {
+  switch (listingType) {
+  // Lookup for an individual address's transactions show that address
+  case ListingType.NETWORK_ADDRESS:
+    return params.address;
+
+  // Name lookups show the name
+  case ListingType.NAME_HISTORY:
+  case ListingType.NAME_SENT:
+    return <KristNameLink noLink name={params.name || ""} neverCopyable />;
+
+  // The searches show a special sub title for each type of query
+  case ListingType.SEARCH_ADDRESS:
+    return t("transactions.subTitleSearchAddress", { address: params.address });
+  case ListingType.SEARCH_NAME:
+    return t("transactions.subTitleSearchName", { name: params.name });
+  case ListingType.SEARCH_METADATA:
+    return t("transactions.subTitleSearchMetadata", { query: params.query });
+
+  // Everything else does not show a sub title
+  default: return undefined;
   }
 }
 
@@ -88,15 +130,53 @@ function getRefreshID(listingType: ListingType, includeMined: boolean, node: Nod
     return includeMined
       ? node.lastTransactionID
       : node.lastNonMinedTransactionID;
+  // No auto-refresh for searches
+  case ListingType.SEARCH_ADDRESS:
+  case ListingType.SEARCH_NAME:
+  case ListingType.SEARCH_METADATA:
+    return 0;
+  }
+}
+
+/**
+ * Returns the lookup parameters based on the URL. Uses 'address' and 'name'
+ * from the params unless this is a search, in which case they are derived from
+ * the search query parameter `?q`.
+ */
+function getParams(
+  listingType: ListingType,
+  urlParams: ParamTypes,
+  location: Location
+): ParamTypes {
+  // Parse the query parameters
+  const qs = new URLSearchParams(location.search);
+
+  switch (listingType) {
+  // For the search lookups, get the params from the URL
+  case ListingType.SEARCH_ADDRESS:
+    return { address: qs.get("q") || "" };
+  case ListingType.SEARCH_NAME:
+    return { name: qs.get("q") || "" };
+  case ListingType.SEARCH_METADATA:
+    return { query: qs.get("q") || "" };
+  // For everything else, return what we already have
+  default:
+    return urlParams;
   }
 }
 
 export function TransactionsPage({ listingType }: Props): JSX.Element {
   const { t } = useTranslation();
-  const { address, name } = useParams<ParamTypes>();
-  const alwaysIncludeMined = useBooleanSetting("alwaysIncludeMined");
 
+  // Derive the lookup parameters from the URL
+  const urlParams = useParams<ParamTypes>();
+  const location = useLocation();
+  const { address, name, query } = getParams(listingType, urlParams, location);
+
+  // Whether or not to show mined transactions
+  const alwaysIncludeMined = useBooleanSetting("alwaysIncludeMined");
   const [includeMined, setIncludeMined] = useState(alwaysIncludeMined);
+
   // If there is an error (e.g. the lookup rejected the address list due to an
   // invalid address), the table will bubble it up to here
   const [error, setError] = useState<Error | undefined>();
@@ -127,30 +207,32 @@ export function TransactionsPage({ listingType }: Props): JSX.Element {
 
       addresses={usedAddresses?.split(",")}
       name={name}
+      query={query}
 
       includeMined={includeMined}
 
       setError={setError}
       setPagination={setPagination}
     />
-  ), [listingType, usedAddresses, name, usedRefreshID, includeMined, setError, setPagination]);
+  ), [
+    listingType,
+    usedAddresses, name, query,
+    usedRefreshID,
+    includeMined,
+    setError, setPagination
+  ]);
 
+  // Alter the page titles depending on the listing type
+  const titleKey = LISTING_TYPE_TITLES[listingType];
   const siteTitle = getSiteTitle(t, listingType, address);
-  const subTitle = name
-    ? <KristNameLink noLink name={name} neverCopyable />
-    : (listingType === ListingType.NETWORK_ADDRESS
-      ? address
-      : undefined);
+  const subTitle = getSubTitle(t, listingType, { address, name, query });
 
   return <PageLayout
     className="transactions-page"
 
-    // Alter the page title depending on the listing type
-    titleKey={LISTING_TYPE_TITLES[listingType]}
+    // Alter the page titles depending on the listing type
+    titleKey={titleKey}
     siteTitle={siteTitle}
-
-    // For an address's transaction listing, show that address in the subtitle.
-    // For a name listing, show the name in the subtitle.
     subTitle={subTitle}
 
     extra={paginationComponent}
@@ -168,13 +250,15 @@ export function TransactionsPage({ listingType }: Props): JSX.Element {
         {memoTable}
 
         {/* "Include mined transactions" switch in the bottom right */}
-        {!name && <div className="transactions-mined-switch">
-          <Switch
-            checked={includeMined}
-            onChange={setIncludeMined}
-          />
-          <span>{t("transactions.includeMined")}</span>
-        </div>}
+        {listingType !== ListingType.SEARCH_METADATA && !name && (
+          <div className="transactions-mined-switch">
+            <Switch
+              checked={includeMined}
+              onChange={setIncludeMined}
+            />
+            <span>{t("transactions.includeMined")}</span>
+          </div>
+        )}
       </>}
   </PageLayout>;
 }

@@ -39,7 +39,7 @@ export async function request<T>(method: string, endpoint: string, options?: Req
   const syncNode = store.getState().node.syncNode;
 
   // Let the fetch bubble its error upwards
-  const res = await fetch(syncNode + "/" + endpoint, {
+  const res = await fetch(syncNode + "/" + endpoint.replace(/^\//, ""), {
     method,
     ...options
   });

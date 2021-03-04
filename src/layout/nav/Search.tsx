@@ -206,12 +206,16 @@ export function Search(): JSX.Element {
     } else if (query === "exactTransaction" && exactTransaction) {
       history.push(`/network/transactions/${encodeURIComponent(exactTransaction.id)}`);
     } else if (extendedResults) {
+      const { originalQuery } = extendedResults.query;
+      const q = "?q=" + encodeURIComponent(originalQuery);
+      debug("extended search query: %s (?q: %s)", originalQuery, q);
+
       if (query === "extendedTransactionsAddress") {
-        // TODO
+        history.push("/network/search/transactions/address" + q);
       } else if (query === "extendedTransactionsName") {
-        // TODO
+        history.push("/network/search/transactions/name" + q);
       } else if (query === "extendedTransactionsMetadata") {
-        // TODO
+        history.push("/network/search/transactions/metadata" + q);
       } else {
         matched = false;
         debug("warn: unknown search type %s", query);
@@ -315,7 +319,7 @@ export function Search(): JSX.Element {
         label: <SearchResults.ExtendedNameMatch
           loading={extendedLoading}
           count={typeof nameInvolved === "number" ? nameInvolved : undefined}
-          query={value}
+          query={extendedResults?.query?.strippedName || value}
         />
       });
 

@@ -61,6 +61,12 @@ export const APP_ROUTES: AppRoute[] = [
     component: <TransactionsPage listingType={TXListing.NAME_HISTORY} /> },
   { path: "/network/names/:name/transactions", name: "nameTransactions",
     component: <TransactionsPage listingType={TXListing.NAME_SENT} /> },
+  { path: "/network/search/transactions/address", name: "searchTransactionsAddress",
+    component: <TransactionsPage listingType={TXListing.SEARCH_ADDRESS} /> },
+  { path: "/network/search/transactions/name", name: "searchTransactionsName",
+    component: <TransactionsPage listingType={TXListing.SEARCH_NAME} /> },
+  { path: "/network/search/transactions/metadata", name: "searchTransactionsMetadata",
+    component: <TransactionsPage listingType={TXListing.SEARCH_METADATA} /> },
 
   // Settings
   { path: "/settings", name: "settings", component: <SettingsPage /> },

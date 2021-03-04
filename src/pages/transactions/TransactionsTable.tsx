@@ -31,7 +31,10 @@ const LISTING_TYPE_MAP: Record<ListingType, LookupTransactionType> = {
   [1]: LookupTransactionType.TRANSACTIONS,
   [2]: LookupTransactionType.TRANSACTIONS,
   [3]: LookupTransactionType.NAME_HISTORY,
-  [4]: LookupTransactionType.NAME_TRANSACTIONS
+  [4]: LookupTransactionType.NAME_TRANSACTIONS,
+  [5]: LookupTransactionType.SEARCH,
+  [6]: LookupTransactionType.SEARCH,
+  [7]: LookupTransactionType.SEARCH,
 };
 
 interface Props {
@@ -42,6 +45,7 @@ interface Props {
 
   addresses?: string[];
   name?: string;
+  query?: string;
 
   includeMined?: boolean;
 
@@ -49,10 +53,23 @@ interface Props {
   setPagination?: Dispatch<SetStateAction<TablePaginationConfig>>;
 }
 
+/** Map the search listing types to their API endpoint name */
+function getLookupSearchType(listingType: ListingType): "address" | "name" | "metadata" | undefined {
+  switch (listingType) {
+  case ListingType.SEARCH_ADDRESS:
+    return "address";
+  case ListingType.SEARCH_NAME:
+    return "name";
+  case ListingType.SEARCH_METADATA:
+    return "metadata";
+  default: return undefined;
+  }
+}
+
 export function TransactionsTable({
   listingType,
   refreshingID,
-  addresses, name,
+  addresses, name, query,
   includeMined,
   setError, setPagination
 }: Props): JSX.Element {
@@ -80,15 +97,20 @@ export function TransactionsTable({
     debug("looking up transactions (type: %d mapped: %d) for %s", listingType, LISTING_TYPE_MAP[listingType], name || (addresses ? addresses.join(",") : "network"));
     setLoading(true);
 
-    lookupTransactions(name ? [name] : addresses, {
+    const lookupQuery = query
+      ? [query]
+      : (name ? [name] : addresses);
+
+    lookupTransactions(lookupQuery, {
       ...options,
       includeMined,
-      type: LISTING_TYPE_MAP[listingType]
+      type: LISTING_TYPE_MAP[listingType],
+      searchType: getLookupSearchType(listingType)
     })
       .then(setRes)
       .catch(setError)
       .finally(() => setLoading(false));
-  }, [listingType, refreshingID, addresses, name, setError, options, includeMined]);
+  }, [listingType, refreshingID, addresses, name, query, setError, options, includeMined]);
 
   debug("results? %b  res.transactions.length: %d  res.count: %d  res.total: %d", !!res, res?.transactions?.length, res?.count, res?.total);
 

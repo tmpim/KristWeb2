@@ -389,12 +389,18 @@
     "myTransactionsTitle": "My Transactions",
     "nameHistoryTitle": "Name History",
     "nameTransactionsTitle": "Name Transactions",
+    "searchTitle": "Transaction Search",
 
     "siteTitleWallets": "My Transactions",
     "siteTitleNetworkAll": "Network Transactions",
     "siteTitleNetworkAddress": "{{address}}'s Transactions",
     "siteTitleNameHistory": "Name History",
     "siteTitleNameSent": "Name Transactions",
+    "siteTitleSearch": "Transaction Search",
+
+    "subTitleSearchAddress": "Involving {{address}}",
+    "subTitleSearchName": "Involving {{name}}",
+    "subTitleSearchMetadata": "With metadata '{{query}}'",
 
     "columnID": "ID",
     "columnType": "Type",
