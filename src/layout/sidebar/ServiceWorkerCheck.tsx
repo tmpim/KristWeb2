@@ -16,6 +16,7 @@ export function ServiceWorkerCheck(): JSX.Element | null {
 
   const [showReload, setShowReload] = useState(false);
   const [waitingWorker, setWaitingWorker] = useState<ServiceWorker | null>(null);
+  const [loading, setLoading] = useState(false);
 
   function onUpdate(registration: ServiceWorkerRegistration) {
     setShowReload(true);
@@ -25,10 +26,10 @@ export function ServiceWorkerCheck(): JSX.Element | null {
   /** Force the service worker to update, wait for it to become active, then
    * reload the page. */
   function reloadPage() {
+    setLoading(true);
     debug("emitting skipWaiting now");
 
     waitingWorker?.postMessage({ type: "SKIP_WAITING" });
-    setShowReload(false);
 
     waitingWorker?.addEventListener("statechange", () => {
       debug("SW state changed to %s", waitingWorker?.state);
@@ -43,7 +44,7 @@ export function ServiceWorkerCheck(): JSX.Element | null {
   // NOTE: The update checker is also responsible for registering the service
   //       worker in the first place.
   useEffect(() => {
-    debug("Registering service worker");
+    debug("registering service worker");
     serviceWorker.register({ onUpdate });
   }, []);
 
@@ -52,7 +53,7 @@ export function ServiceWorkerCheck(): JSX.Element | null {
       <h5>{t("sidebar.updateTitle")}</h5>
       <p>{t("sidebar.updateDescription")}</p>
 
-      <Button onClick={reloadPage}>
+      <Button onClick={reloadPage} loading={loading}>
         {t("sidebar.updateReload")}
       </Button>
     </div>

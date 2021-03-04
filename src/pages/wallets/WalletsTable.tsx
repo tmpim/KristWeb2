@@ -7,8 +7,8 @@ import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 import { useTranslation } from "react-i18next";
 
-import { ContextualAddress } from "../../components/ContextualAddress";
-import { KristValue } from "../../components/KristValue";
+import { ContextualAddress } from "../../components/addresses/ContextualAddress";
+import { KristValue } from "../../components/krist/KristValue";
 import { DateTime } from "../../components/DateTime";
 import { WalletEditButton } from "./WalletEditButton";
 import { AddWalletModal } from "./AddWalletModal";

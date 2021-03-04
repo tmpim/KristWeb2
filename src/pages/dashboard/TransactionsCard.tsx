@@ -14,7 +14,7 @@ import { useSyncNode } from "../../krist/api";
 import { useWallets } from "../../krist/wallets/Wallet";
 import { WalletMap } from "../../store/reducers/WalletsReducer";
 
-import { SmallResult } from "../../components/SmallResult";
+import { SmallResult } from "../../components/results/SmallResult";
 
 import { trailingThrottleState } from "../../utils/promiseThrottle";
 

@@ -13,7 +13,7 @@ import csvStringify from "csv-stringify";
 import { saveAs } from "file-saver";
 
 import { Flag } from "../../components/Flag";
-import { SmallResult } from "../../components/SmallResult";
+import { SmallResult } from "../../components/results/SmallResult";
 import { SettingsPageLayout } from "./SettingsPage";
 
 const { Text } = Typography;

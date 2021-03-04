@@ -8,15 +8,15 @@ import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 
 import { PageLayout } from "../../layout/PageLayout";
-import { TransactionResult } from "./TransactionResult";
+import { APIErrorResult } from "../../components/results/APIErrorResult";
 
 import { Statistic } from "../../components/Statistic";
 import { TransactionType, TYPES_SHOW_VALUE } from "../../components/transactions/TransactionType";
-import { ContextualAddress } from "../../components/ContextualAddress";
-import { KristNameLink } from "../../components/KristNameLink";
-import { KristValue } from "../../components/KristValue";
+import { ContextualAddress } from "../../components/addresses/ContextualAddress";
+import { KristNameLink } from "../../components/names/KristNameLink";
+import { KristValue } from "../../components/krist/KristValue";
 import { DateTime } from "../../components/DateTime";
-import { NameARecordLink } from "../../components/NameARecordLink";
+import { NameARecordLink } from "../../components/names/NameARecordLink";
 
 import * as api from "../../krist/api";
 import { KristTransaction, KristTransactionType } from "../../krist/api/types";
@@ -161,7 +161,18 @@ export function TransactionPage(): JSX.Element {
     {...titleData}
   >
     {error
-      ? <TransactionResult error={error} />
+      ? (
+        <APIErrorResult
+          error={error}
+
+          invalidParameterTitleKey="transaction.resultInvalidTitle"
+          invalidParameterSubTitleKey="transaction.resultInvalid"
+
+          notFoundMessage="transaction_not_found"
+          notFoundTitleKey="transaction.resultNotFoundTitle"
+          notFoundSubTitleKey="transaction.resultNotFound"
+        />
+      )
       : (kristTransaction
         ? <PageContents transaction={kristTransaction} />
         : <Skeleton active />)}

@@ -8,8 +8,8 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { Trans, useTranslation } from "react-i18next";
 
 import { KristAddress, KristName, KristBlock, KristTransaction } from "../../krist/api/types";
-import { KristValue } from "../../components/KristValue";
-import { KristNameLink } from "../../components/KristNameLink";
+import { KristValue } from "../../components/krist/KristValue";
+import { KristNameLink } from "../../components/names/KristNameLink";
 import { DateTime } from "../../components/DateTime";
 
 import "./SearchResults.less";

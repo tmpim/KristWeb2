@@ -14,9 +14,9 @@ import { getTablePaginationSettings, handleLookupTableChange } from "../../utils
 import { ListingType } from "./TransactionsPage";
 
 import { TransactionType, TYPES_SHOW_VALUE } from "../../components/transactions/TransactionType";
-import { ContextualAddress } from "../../components/ContextualAddress";
-import { KristValue } from "../../components/KristValue";
-import { KristNameLink } from "../../components/KristNameLink";
+import { ContextualAddress } from "../../components/addresses/ContextualAddress";
+import { KristValue } from "../../components/krist/KristValue";
+import { KristNameLink } from "../../components/names/KristNameLink";
 import { TransactionConciseMetadata } from "../../components/transactions/TransactionConciseMetadata";
 import { DateTime } from "../../components/DateTime";
 

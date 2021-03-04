@@ -5,8 +5,8 @@ import React from "react";
 import classNames from "classnames";
 
 import { useSelector } from "react-redux";
-import { RootState } from "../store";
-import { stripNameSuffix } from "../utils/currency";
+import { RootState } from "../../store";
+import { stripNameSuffix } from "../../utils/currency";
 
 import { KristNameLink } from "./KristNameLink";
 

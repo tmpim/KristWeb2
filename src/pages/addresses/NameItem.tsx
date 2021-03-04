@@ -8,7 +8,7 @@ import { useTranslation, Trans } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { KristName } from "../../krist/api/types";
-import { KristNameLink } from "../../components/KristNameLink";
+import { KristNameLink } from "../../components/names/KristNameLink";
 import { DateTime } from "../../components/DateTime";
 
 export function NameItem({ name }: { name: KristName }): JSX.Element {

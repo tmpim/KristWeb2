@@ -366,9 +366,7 @@
     "resultInvalidTitle": "Invalid address",
     "resultInvalid": "That does not look like a valid Krist address.",
     "resultNotFoundTitle": "Address not found",
-    "resultNotFound": "That address does not exist.",
-    "resultUnknownTitle": "Unknown error",
-    "resultUnknown": "See console for details."
+    "resultNotFound": "That address does not exist."
   },
 
   "transactionSummary": {
@@ -409,8 +407,6 @@
 
     "resultInvalidTitle": "Invalid address",
     "resultInvalid": "That does not look like a valid Krist address.",
-    "resultUnknownTitle": "Unknown error",
-    "resultUnknown": "See console for details.",
 
     "types": {
       "transferred": "Transferred",
@@ -447,9 +443,7 @@
     "tableTotal_plural": "{{count, number}} names",
 
     "resultInvalidTitle": "Invalid address",
-    "resultInvalid": "That does not look like a valid Krist address.",
-    "resultUnknownTitle": "Unknown error",
-    "resultUnknown": "See console for details."
+    "resultInvalid": "That does not look like a valid Krist address."
   },
 
   "name": {
@@ -478,9 +472,7 @@
     "resultInvalidTitle": "Invalid name",
     "resultInvalid": "That does not look like a valid Krist name.",
     "resultNotFoundTitle": "Name not found",
-    "resultNotFound": "That name does not exist.",
-    "resultUnknownTitle": "Unknown error",
-    "resultUnknown": "See console for details."
+    "resultNotFound": "That name does not exist."
   },
 
   "blocks": {
@@ -497,10 +489,7 @@
     "columnTime": "Time",
 
     "tableTotal": "{{count, number}} block",
-    "tableTotal_plural": "{{count, number}} blocks",
-
-    "resultUnknownTitle": "Unknown error",
-    "resultUnknown": "See console for details."
+    "tableTotal_plural": "{{count, number}} blocks"
   },
 
   "block": {
@@ -526,9 +515,7 @@
     "resultInvalidTitle": "Invalid block height",
     "resultInvalid": "That does not look like a valid block height.",
     "resultNotFoundTitle": "Block not found",
-    "resultNotFound": "That block does not exist.",
-    "resultUnknownTitle": "Unknown error",
-    "resultUnknown": "See console for details."
+    "resultNotFound": "That block does not exist."
   },
 
   "transaction": {
@@ -567,7 +554,10 @@
     "resultInvalidTitle": "Invalid transaction ID",
     "resultInvalid": "That does not look like a valid transaction ID.",
     "resultNotFoundTitle": "Transaction not found",
-    "resultNotFound": "That transaction does not exist.",
+    "resultNotFound": "That transaction does not exist."
+  },
+
+  "apiErrorResult": {
     "resultUnknownTitle": "Unknown error",
     "resultUnknown": "See console for details."
   }

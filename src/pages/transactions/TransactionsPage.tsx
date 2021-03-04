@@ -12,12 +12,12 @@ import { RootState } from "../../store";
 import { State as NodeState } from "../../store/reducers/NodeReducer";
 
 import { PageLayout } from "../../layout/PageLayout";
-import { TransactionsResult } from "./TransactionsResult";
+import { APIErrorResult } from "../../components/results/APIErrorResult";
 import { TransactionsTable } from "./TransactionsTable";
 
 import { useWallets } from "../../krist/wallets/Wallet";
 import { useBooleanSetting } from "../../utils/settings";
-import { KristNameLink } from "../../components/KristNameLink";
+import { KristNameLink } from "../../components/names/KristNameLink";
 
 /** The type of transaction listing to search by. */
 export enum ListingType {
@@ -160,7 +160,14 @@ export function TransactionsPage({ listingType }: Props): JSX.Element {
     </>}
   >
     {error
-      ? <TransactionsResult error={error} />
+      ? (
+        <APIErrorResult
+          error={error}
+
+          invalidParameterTitleKey="transactions.resultInvalidTitle"
+          invalidParameterSubTitleKey="transactions.resultInvalid"
+        />
+      )
       : memoTable}
   </PageLayout>;
 }

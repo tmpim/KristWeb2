@@ -12,12 +12,12 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 
 import { PageLayout } from "../../layout/PageLayout";
-import { NameResult } from "./NameResult";
+import { APIErrorResult } from "../../components/results/APIErrorResult";
 
 import { Statistic } from "../../components/Statistic";
-import { ContextualAddress } from "../../components/ContextualAddress";
+import { ContextualAddress } from "../../components/addresses/ContextualAddress";
 import { DateTime } from "../../components/DateTime";
-import { NameARecordLink } from "../../components/NameARecordLink";
+import { NameARecordLink } from "../../components/names/NameARecordLink";
 
 import * as api from "../../krist/api";
 import { KristName } from "../../krist/api/types";
@@ -175,7 +175,18 @@ export function NamePage(): JSX.Element {
     {...title}
   >
     {error
-      ? <NameResult error={error} />
+      ? (
+        <APIErrorResult
+          error={error}
+
+          invalidParameterTitleKey="name.resultInvalidTitle"
+          invalidParameterSubTitleKey="name.resultInvalid"
+
+          notFoundMessage="name_not_found"
+          notFoundTitleKey="name.resultNotFoundTitle"
+          notFoundSubTitleKey="name.resultNotFound"
+        />
+      )
       : (kristName
         ? <PageContents name={kristName} nameWithSuffix={nameWithSuffix!} />
         : <Skeleton active />)}

@@ -10,8 +10,8 @@ import { KristName } from "../../krist/api/types";
 import { lookupNames, LookupNamesOptions, LookupNamesResponse } from "../../krist/api/lookup";
 import { getTablePaginationSettings, handleLookupTableChange } from "../../utils/table";
 
-import { KristNameLink } from "../../components/KristNameLink";
-import { ContextualAddress } from "../../components/ContextualAddress";
+import { KristNameLink } from "../../components/names/KristNameLink";
+import { ContextualAddress } from "../../components/addresses/ContextualAddress";
 import { TransactionConciseMetadata } from "../../components/transactions/TransactionConciseMetadata";
 import { DateTime } from "../../components/DateTime";
 

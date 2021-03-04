@@ -16,7 +16,7 @@ import { estimateHashRate } from "../../utils/currency";
 import { KristConstants } from "../../krist/api/types";
 import { trailingThrottleState } from "../../utils/promiseThrottle";
 
-import { SmallResult } from "../../components/SmallResult";
+import { SmallResult } from "../../components/results/SmallResult";
 import { Statistic } from "../../components/Statistic";
 
 import Debug from "debug";

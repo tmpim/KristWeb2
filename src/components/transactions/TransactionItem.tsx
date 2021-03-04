@@ -11,9 +11,9 @@ import { Link } from "react-router-dom";
 import { KristTransaction } from "../../krist/api/types";
 import { Wallet } from "../../krist/wallets/Wallet";
 import { DateTime } from "../DateTime";
-import { KristValue } from "../KristValue";
-import { KristNameLink } from "../KristNameLink";
-import { ContextualAddress } from "../ContextualAddress";
+import { KristValue } from "../krist/KristValue";
+import { KristNameLink } from "../names/KristNameLink";
+import { ContextualAddress } from "../addresses/ContextualAddress";
 import { getTransactionType, TransactionType, INTERNAL_TYPES_SHOW_VALUE } from "./TransactionType";
 
 const MAX_A_LENGTH = 24;

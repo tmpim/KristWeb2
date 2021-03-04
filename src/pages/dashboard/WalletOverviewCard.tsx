@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 import { Wallet, useWallets } from "../../krist/wallets/Wallet";
 
-import { KristValue } from "../../components/KristValue";
+import { KristValue } from "../../components/krist/KristValue";
 import { Statistic } from "../../components/Statistic";
 import { WalletItem } from "./WalletItem";
 

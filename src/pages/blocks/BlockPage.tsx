@@ -12,12 +12,12 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 
 import { PageLayout } from "../../layout/PageLayout";
-import { BlockResult } from "./BlockResult";
+import { APIErrorResult } from "../../components/results/APIErrorResult";
 
 import { Statistic } from "../../components/Statistic";
-import { ContextualAddress } from "../../components/ContextualAddress";
+import { ContextualAddress } from "../../components/addresses/ContextualAddress";
 import { BlockHash } from "./BlockHash";
-import { KristValue } from "../../components/KristValue";
+import { KristValue } from "../../components/krist/KristValue";
 import { DateTime } from "../../components/DateTime";
 
 import * as api from "../../krist/api";
@@ -180,7 +180,18 @@ export function BlockPage(): JSX.Element {
     extra={<NavButtons block={kristBlock} />}
   >
     {error
-      ? <BlockResult error={error} />
+      ? (
+        <APIErrorResult
+          error={error}
+
+          invalidParameterTitleKey="block.resultInvalidTitle"
+          invalidParameterSubTitleKey="block.resultInvalid"
+
+          notFoundMessage="block_not_found"
+          notFoundTitleKey="block.resultNotFoundTitle"
+          notFoundSubTitleKey="block.resultNotFound"
+        />
+      )
       : (kristBlock
         ? <PageContents block={kristBlock} />
         : <Skeleton active />)}

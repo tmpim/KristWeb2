@@ -5,7 +5,7 @@ import React from "react";
 import classNames from "classnames";
 
 import { useSelector } from "react-redux";
-import { RootState } from "../store";
+import { RootState } from "../../store";
 
 import { KristSymbol } from "./KristSymbol";
 

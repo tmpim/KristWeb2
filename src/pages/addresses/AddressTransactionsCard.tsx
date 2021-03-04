@@ -12,7 +12,7 @@ import { lookupTransactions, LookupTransactionsResponse } from "../../krist/api/
 
 import { useSyncNode } from "../../krist/api";
 
-import { SmallResult } from "../../components/SmallResult";
+import { SmallResult } from "../../components/results/SmallResult";
 
 import Debug from "debug";
 const debug = Debug("kristweb:address-transactions-card");

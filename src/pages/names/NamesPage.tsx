@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 
 import { PageLayout } from "../../layout/PageLayout";
-import { NamesResult } from "./NamesResult";
+import { APIErrorResult } from "../../components/results/APIErrorResult";
 import { NamesTable } from "./NamesTable";
 
 import { useWallets } from "../../krist/wallets/Wallet";
@@ -108,7 +108,14 @@ export function NamesPage({ listingType, sortNew }: Props): JSX.Element {
     subTitle={subTitle}
   >
     {error
-      ? <NamesResult error={error} />
+      ? (
+        <APIErrorResult
+          error={error}
+
+          invalidParameterTitleKey="names.resultInvalidTitle"
+          invalidParameterSubTitleKey="names.resultInvalid"
+        />
+      )
       : memoTable}
   </PageLayout>;
 }

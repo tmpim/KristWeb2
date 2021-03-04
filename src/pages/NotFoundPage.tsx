@@ -8,7 +8,7 @@ import { FrownOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import { SmallResult } from "../components/SmallResult";
+import { SmallResult } from "../components/results/SmallResult";
 
 export function NotFoundPage(): JSX.Element {
   const { t } = useTranslation();

@@ -8,10 +8,10 @@ import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 
 import { PageLayout } from "../../layout/PageLayout";
-import { AddressResult } from "./AddressResult";
+import { APIErrorResult } from "../../components/results/APIErrorResult";
 
 import { Statistic } from "../../components/Statistic";
-import { KristValue } from "../../components/KristValue";
+import { KristValue } from "../../components/krist/KristValue";
 import { DateTime } from "../../components/DateTime";
 
 import * as api from "../../krist/api";
@@ -143,7 +143,18 @@ export function AddressPage(): JSX.Element {
     {...title}
   >
     {error
-      ? <AddressResult error={error} />
+      ? (
+        <APIErrorResult
+          error={error}
+
+          invalidParameterTitleKey="address.resultInvalidTitle"
+          invalidParameterSubTitleKey="address.resultInvalid"
+
+          notFoundMessage="address_not_found"
+          notFoundTitleKey="address.resultNotFoundTitle"
+          notFoundSubTitleKey="address.resultNotFound"
+        />
+      )
       : (kristAddress
         ? <PageContents address={kristAddress} />
         : <Skeleton active />)}

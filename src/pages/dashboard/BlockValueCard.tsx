@@ -10,7 +10,7 @@ import { RootState } from "../../store";
 import { useTranslation, Trans } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import { KristValue } from "../../components/KristValue";
+import { KristValue } from "../../components/krist/KristValue";
 
 const { Text } = Typography;
 

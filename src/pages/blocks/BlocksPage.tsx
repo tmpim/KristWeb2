@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 
 import { PageLayout } from "../../layout/PageLayout";
-import { BlocksResult } from "./BlocksResult";
+import { APIErrorResult } from "../../components/results/APIErrorResult";
 import { BlocksTable } from "./BlocksTable";
 
 import { useBooleanSetting } from "../../utils/settings";
@@ -45,7 +45,7 @@ export function BlocksPage({ lowest }: Props): JSX.Element {
     siteTitleKey={lowest ? "blocks.siteTitleLowest" : "blocks.siteTitle"}
   >
     {error
-      ? <BlocksResult />
+      ? <APIErrorResult error={error} />
       : memoTable}
   </PageLayout>;
 }

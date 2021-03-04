@@ -6,7 +6,7 @@ import { Row, Col } from "antd";
 
 import { Wallet } from "../../krist/wallets/Wallet";
 
-import { KristValue } from "../../components/KristValue";
+import { KristValue } from "../../components/krist/KristValue";
 
 export function WalletItem({ wallet }: { wallet: Wallet }): JSX.Element {
   return <Row className="card-list-item dashboard-wallet-item">

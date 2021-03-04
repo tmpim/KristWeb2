@@ -392,6 +392,9 @@ export function Search(): JSX.Element {
       <Input.Search
         placeholder={t("nav.search.placeholderShortcut", { shortcut: `${ctrl}+K` })}
         onSearch={onInputSearch}
+
+        role="searchbox"
+        aria-label={t("nav.search.placeholder")}
       />
     </AutoComplete>
   </div>;

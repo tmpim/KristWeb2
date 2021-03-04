@@ -58,7 +58,7 @@ export function AppHeader({ sidebarCollapsed, setSidebarCollapsed }: Props): JSX
     {/* Settings button */}
     <Menu theme="dark" mode="horizontal" selectable={false} forceSubMenuRender={true} className="site-header-settings">
       <Menu.Item key="1" icon={<SettingOutlined />} title={t("nav.settings")}>
-        <Link to="/settings"></Link>
+        <Link to="/settings" aria-label={t("nav.settings")}></Link>
       </Menu.Item>
     </Menu>
   </Layout.Header>;

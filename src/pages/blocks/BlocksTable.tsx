@@ -11,9 +11,9 @@ import { KristBlock } from "../../krist/api/types";
 import { lookupBlocks, LookupBlocksOptions, LookupBlocksResponse } from "../../krist/api/lookup";
 import { getTablePaginationSettings, handleLookupTableChange } from "../../utils/table";
 
-import { ContextualAddress } from "../../components/ContextualAddress";
+import { ContextualAddress } from "../../components/addresses/ContextualAddress";
 import { BlockHash } from "./BlockHash";
-import { KristValue } from "../../components/KristValue";
+import { KristValue } from "../../components/krist/KristValue";
 import { DateTime } from "../../components/DateTime";
 
 import Debug from "debug";
