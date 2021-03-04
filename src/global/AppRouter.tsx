@@ -20,6 +20,8 @@ import { SettingsTranslations } from "../pages/settings/SettingsTranslations";
 
 import { CreditsPage } from "../pages/credits/CreditsPage";
 
+import { DevPage } from "../pages/dev/DevPage";
+
 import { NotFoundPage } from "../pages/NotFoundPage";
 
 interface AppRoute {
@@ -74,6 +76,9 @@ export const APP_ROUTES: AppRoute[] = [
   { path: "/settings/debug/translations", name: "settings", component: <SettingsTranslations /> },
 
   { path: "/credits", name: "credits", component: <CreditsPage /> },
+
+  // TODO: remove this
+  { path: "/dev", name: "dev", component: <DevPage /> }
 ];
 
 export function AppRouter(): JSX.Element {

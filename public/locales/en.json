@@ -571,5 +571,88 @@
   "apiErrorResult": {
     "resultUnknownTitle": "Unknown error",
     "resultUnknown": "See console for details."
+  },
+
+  "backups": {
+    "importButton": "Import backup",
+    "exportButton": "Export backup"
+  },
+
+  "import": {
+    "description": "Paste the backup code (or import from a file below) and enter the corresponding master password.",
+    "masterPasswordPlaceholder": "Master password",
+    "masterPasswordRequired": "Master password is required.",
+    "masterPasswordIncorrect": "Master password is incorrect.",
+    "fromFileButton": "Import from file",
+    "textareaPlaceholder": "Paste backup code here",
+    "modalButton": "Import",
+
+    "detectedFormat": "<0>Detected format:</0> <2 />",
+    "detectedFormatKristWebV1": "KristWeb v1",
+    "detectedFormatKristWebV2": "KristWeb v2",
+    "detectedFormatInvalid": "Invalid!",
+
+    "treeHeaderWallets": "Wallets",
+    "treeHeaderFriends": "Friends (Address Book)",
+
+    "treeWallet": "Wallet {{id}}",
+    "treeFriend": "Friend {{id}}",
+
+    "decodeErrors": {
+      "atob": "The backup could not be decoded as it is not valid base64!",
+      "json": "The backup could not be decoded as it is not valid JSON!",
+      "missingTester": "The backup could not be decoded as it is missing a tester key!",
+      "missingSalt": "The backup could not be decoded as it is missing a salt key!",
+      "invalidWallets": "The backup could not be decoded as the 'wallets' key is the wrong type!",
+      "invalidFriends": "The backup could not be decoded as the 'wallets' key is the wrong type!",
+      "unknown": "The backup could not be decoded due to an unknown error. See console for details."
+    },
+
+    "walletMessages": {
+      "success": "Wallet imported successfully.",
+      "successSkipped": "A wallet with the same address ({{address}}) and settings already exists, so it was skipped.",
+      "successUpdated": "A wallet with the same address ({{address}}) already exists. Its label was updated to \"{{label}}\"",
+      "successSkippedNoOverwrite": "A wallet with the same address ({{address}}) already exists, and you chose not to overwrite the label, so it was skipped.",
+
+      "warningSyncNode": "This wallet had a custom sync node, which is not supported in KristWeb v2. It was changed to the current sync node (<1 />).",
+      "warningIcon": "This wallet had a custom icon, which is not supported in KristWeb v2. It was skipped.",
+      "warningLabelInvalid": "The label for this wallet was invalid. It was skipped.",
+      "warningCategoryInvalid": "The label for this wallet was invalid. It was skipped.",
+
+      "errorDecrypt": "This wallet could not be decrypted!",
+      "errorPasswordDecrypt": "The password for this wallet could not be decrypted!",
+      "errorUnknownFormat": "This wallet uses an unknown or unsupported format!",
+      "errorFormatMissing": "This wallet is missing a format!",
+      "errorUsernameMissing": "This wallet is missing a username!",
+      "errorPasswordMissing": "This wallet is missing a password!",
+      "errorPrivateKeyMissing": "This wallet is missing a private key!",
+      "errorMasterKeyMissing": "This wallet is missing a master key!",
+      "errorLimitReached": "You reached the wallet limit. You currently cannot add any more wallets.",
+      "errorUnknown": "An unknown error occurred. See console for details."
+    },
+
+    "friendMessages": {
+      "errorNYI": "The Address Book has not yet been implemented, so it was skipped."
+    },
+
+    "results": {
+      "noneImported": "No new wallets were imported.",
+
+      "walletsImported": "<0>{{count, number}} new wallet</0> was imported.",
+      "walletsImported_plural": "<0>{{count, number}} new wallets</0> were imported.",
+      "walletsSkipped": "{{count, number}} wallet was skipped.",
+      "walletsSkipped_plural": "{{count, number}} wallets were skipped.",
+
+      "friendsImported": "<0>{{count, number}} new friend</0> was imported.",
+      "friendsImported_plural": "<0>{{count, number}} new friends</0> were imported.",
+      "friendsSkipped": "{{count, number}} friend was skipped.",
+      "friendsSkipped_plural": "{{count, number}} friends were skipped.",
+
+      "warnings": "There was <1>{{count, number}} warning</1> while importing your backup.",
+      "warnings_plural": "There were <1>{{count, number}} warning</1> while importing your backup.",
+      "errors": "There was <1>{{count, number}} error</1> while importing your backup.",
+      "errors_plural": "There were <1>{{count, number}} errors</1> while importing your backup.",
+      "errorsAndWarnings": "There were <1>{{errors, number}} error(s)</1> and <3>{{warnings, number}} warning(s)</3> while importing your backup."
+    }
   }
 }
