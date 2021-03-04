@@ -7,6 +7,7 @@ import { Switch } from "antd";
 import { useTranslation } from "react-i18next";
 
 import { SettingName, setBooleanSetting, useBooleanSetting } from "../../utils/settings";
+import { SettingDescription } from "./SettingDescription";
 
 interface Props {
   setting: SettingName<boolean>;
@@ -33,13 +34,16 @@ export function SettingBoolean({
     className="menu-item-setting menu-item-setting-switch"
     onClick={() => onChange(!settingValue)}
   >
-    <Switch onChange={onChange} checked={settingValue} style={{ marginRight: 12 }} />
+    <Switch
+      // FIXME: This was double-firing change events (due to the click listener
+      //        on the parent div); omitting this event is bad for a11y
+      // onChange={onChange}
+      checked={settingValue}
+      style={{ marginRight: 12 }}
+    />
+
     {titleKey ? t(titleKey) : title}
 
-    {description || descriptionKey && (
-      <div className="menu-item-description menu-item-setting-description">
-        {descriptionKey ? t(descriptionKey) : description}
-      </div>
-    )}
+    <SettingDescription description={description} descriptionKey={descriptionKey} />
   </div>;
 }

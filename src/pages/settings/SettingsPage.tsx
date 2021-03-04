@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 
 import { PageLayout, PageLayoutProps } from "../../layout/PageLayout";
 import { SettingBoolean } from "./SettingBoolean";
+import { SettingInteger } from "./SettingInteger";
 import { getLanguageItems } from "./LanguageItem";
 
 import "./SettingsPage.less";
@@ -90,6 +91,11 @@ export function SettingsPage(): JSX.Element {
         {/* Default to 'Raw' on transaction page */}
         <Menu.Item key="advanced/transactionDefaultRaw">
           <SettingBoolean setting="transactionDefaultRaw" titleKey="settings.transactionDefaultRaw" />
+        </Menu.Item>
+
+        {/* Default page size for table listings */}
+        <Menu.Item key="advanced/defaultPageSize">
+          <SettingInteger setting="defaultPageSize" titleKey="settings.defaultPageSize" />
         </Menu.Item>
       </Menu.SubMenu>
 

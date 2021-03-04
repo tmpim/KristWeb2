@@ -2,14 +2,15 @@
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
-import { Table } from "antd";
+import { Table, TablePaginationConfig } from "antd";
 
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { KristTransaction } from "../../krist/api/types";
 import { lookupTransactions, LookupTransactionsOptions, LookupTransactionsResponse, LookupTransactionType } from "../../krist/api/lookup";
-import { getTablePaginationSettings, handleLookupTableChange } from "../../utils/table";
+import { useMalleablePagination } from "../../utils/table";
+import { useIntegerSetting } from "../../utils/settings";
 
 import { ListingType } from "./TransactionsPage";
 
@@ -43,20 +44,36 @@ interface Props {
   name?: string;
 
   includeMined?: boolean;
+
   setError?: Dispatch<SetStateAction<Error | undefined>>;
+  setPagination?: Dispatch<SetStateAction<TablePaginationConfig>>;
 }
 
-export function TransactionsTable({ listingType, refreshingID, addresses, name, includeMined, setError }: Props): JSX.Element {
+export function TransactionsTable({
+  listingType,
+  refreshingID,
+  addresses, name,
+  includeMined,
+  setError, setPagination
+}: Props): JSX.Element {
   const { t } = useTranslation();
+
+  const defaultPageSize = useIntegerSetting("defaultPageSize");
 
   const [loading, setLoading] = useState(true);
   const [res, setRes] = useState<LookupTransactionsResponse>();
   const [options, setOptions] = useState<LookupTransactionsOptions>({
-    limit: 20,
+    limit: defaultPageSize,
     offset: 0,
     orderBy: "time", // Equivalent to sorting by ID
     order: "DESC"
   });
+
+  const { paginationTableProps } = useMalleablePagination(
+    res, res?.transactions,
+    "transactions.tableTotal",
+    options, setOptions, setPagination
+  );
 
   // Fetch the transactions from the API, mapping the table options
   useEffect(() => {
@@ -83,9 +100,7 @@ export function TransactionsTable({ listingType, refreshingID, addresses, name, 
     dataSource={res?.transactions || []}
     rowKey="id"
 
-    // Triggered whenever the filter, sorting, or pagination changes
-    onChange={handleLookupTableChange(setOptions)}
-    pagination={getTablePaginationSettings(t, res, "transactions.tableTotal")}
+    {...paginationTableProps}
 
     columns={[
       // ID

@@ -4,7 +4,7 @@
 import { KristAddress, KristTransaction, KristName, KristBlock } from "./types";
 import * as api from ".";
 
-import { LookupFilterOptionsBase, LookupResultsBase, getFilterOptionsQuery } from "../../utils/table";
+import { LookupFilterOptionsBase, LookupResponseBase, getFilterOptionsQuery } from "../../utils/table";
 
 // =============================================================================
 // Addresses
@@ -58,7 +58,7 @@ export type SortableBlockFields = "height" | "address" | "hash" | "value" |
   "time" | "difficulty";
 export type LookupBlocksOptions = LookupFilterOptionsBase<SortableBlockFields>;
 
-export interface LookupBlocksResponse extends LookupResultsBase {
+export interface LookupBlocksResponse extends LookupResponseBase {
   blocks: KristBlock[];
 }
 
@@ -84,7 +84,7 @@ export interface LookupTransactionsOptions extends LookupFilterOptionsBase<Sorta
   type?: LookupTransactionType;
 }
 
-export interface LookupTransactionsResponse extends LookupResultsBase {
+export interface LookupTransactionsResponse extends LookupResponseBase {
   transactions: KristTransaction[];
 }
 
@@ -120,7 +120,7 @@ export type SortableNameFields = "name" | "owner" | "original_owner"
   | "registered" | "updated" | "a" | "unpaid";
 export type LookupNamesOptions = LookupFilterOptionsBase<SortableNameFields>;
 
-export interface LookupNamesResponse extends LookupResultsBase {
+export interface LookupNamesResponse extends LookupResponseBase {
   names: KristName[];
 }
 

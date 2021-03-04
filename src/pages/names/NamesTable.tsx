@@ -2,13 +2,14 @@
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
-import { Table, Tag } from "antd";
+import { Table, TablePaginationConfig, Tag } from "antd";
 
 import { useTranslation } from "react-i18next";
 
 import { KristName } from "../../krist/api/types";
 import { lookupNames, LookupNamesOptions, LookupNamesResponse } from "../../krist/api/lookup";
-import { getTablePaginationSettings, handleLookupTableChange } from "../../utils/table";
+import { useMalleablePagination } from "../../utils/table";
+import { useIntegerSetting } from "../../utils/settings";
 
 import { KristNameLink } from "../../components/names/KristNameLink";
 import { ContextualAddress } from "../../components/addresses/ContextualAddress";
@@ -27,19 +28,28 @@ interface Props {
 
   addresses?: string[];
   setError?: Dispatch<SetStateAction<Error | undefined>>;
+  setPagination?: Dispatch<SetStateAction<TablePaginationConfig>>;
 }
 
-export function NamesTable({ refreshingID, sortNew, addresses, setError }: Props): JSX.Element {
+export function NamesTable({ refreshingID, sortNew, addresses, setError, setPagination }: Props): JSX.Element {
   const { t } = useTranslation();
+
+  const defaultPageSize = useIntegerSetting("defaultPageSize");
 
   const [loading, setLoading] = useState(true);
   const [res, setRes] = useState<LookupNamesResponse>();
   const [options, setOptions] = useState<LookupNamesOptions>({
-    limit: 20,
+    limit: defaultPageSize,
     offset: 0,
     orderBy: sortNew ? "registered" : "name",
     order: sortNew ? "DESC" : "ASC"
   });
+
+  const { paginationTableProps } = useMalleablePagination(
+    res, res?.names,
+    "names.tableTotal",
+    options, setOptions, setPagination
+  );
 
   // Fetch the names from the API, mapping the table options
   useEffect(() => {
@@ -62,9 +72,7 @@ export function NamesTable({ refreshingID, sortNew, addresses, setError }: Props
     dataSource={res?.names || []}
     rowKey="name"
 
-    // Triggered whenever the filter, sorting, or pagination changes
-    onChange={handleLookupTableChange(setOptions)}
-    pagination={getTablePaginationSettings(t, res, "names.tableTotal")}
+    {...paginationTableProps}
 
     rowClassName={name => name.unpaid > 0 ? "name-row-unpaid" : ""}
 

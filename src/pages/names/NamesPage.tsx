@@ -15,6 +15,7 @@ import { NamesTable } from "./NamesTable";
 
 import { useWallets } from "../../krist/wallets/Wallet";
 import { useBooleanSetting } from "../../utils/settings";
+import { useLinkedPagination } from "../../utils/table";
 
 import "./NamesPage.less";
 
@@ -63,6 +64,9 @@ export function NamesPage({ listingType, sortNew }: Props): JSX.Element {
   // invalid address), the table will bubble it up to here
   const [error, setError] = useState<Error | undefined>();
 
+  // Linked pagination from the table
+  const [paginationComponent, setPagination] = useLinkedPagination();
+
   // Used to handle memoisation and auto-refreshing
   const { joinedAddressList } = useWallets();
   const lastNameTransactionID = useSelector((s: RootState) => s.node.lastNameTransactionID);
@@ -89,8 +93,9 @@ export function NamesPage({ listingType, sortNew }: Props): JSX.Element {
       sortNew={sortNew}
       addresses={usedAddresses?.split(",")}
       setError={setError}
+      setPagination={setPagination}
     />
-  ), [usedAddresses, sortNew, usedRefreshID, setError]);
+  ), [usedAddresses, sortNew, usedRefreshID, setError, setPagination]);
 
   const siteTitle = getSiteTitle(t, listingType, address);
   const subTitle = listingType === ListingType.NETWORK_ADDRESS
@@ -98,14 +103,14 @@ export function NamesPage({ listingType, sortNew }: Props): JSX.Element {
 
   return <PageLayout
     className="names-page"
-    withoutTopPadding
-    negativeMargin
 
     // Alter the page title depending on the listing type
     titleKey={LISTING_TYPE_TITLES[listingType]}
     siteTitle={siteTitle}
     // For an address's name listing, show that address in the subtitle.
     subTitle={subTitle}
+
+    extra={paginationComponent}
   >
     {error
       ? (

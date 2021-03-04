@@ -17,7 +17,10 @@ import { TransactionsTable } from "./TransactionsTable";
 
 import { useWallets } from "../../krist/wallets/Wallet";
 import { useBooleanSetting } from "../../utils/settings";
+import { useLinkedPagination } from "../../utils/table";
 import { KristNameLink } from "../../components/names/KristNameLink";
+
+import "./TransactionsPage.less";
 
 /** The type of transaction listing to search by. */
 export enum ListingType {
@@ -98,6 +101,9 @@ export function TransactionsPage({ listingType }: Props): JSX.Element {
   // invalid address), the table will bubble it up to here
   const [error, setError] = useState<Error | undefined>();
 
+  // Linked pagination from the table
+  const [paginationComponent, setPagination] = useLinkedPagination();
+
   // Used to handle memoisation and auto-refreshing
   const { joinedAddressList } = useWallets();
   const nodeState = useSelector((s: RootState) => s.node, shallowEqual);
@@ -123,9 +129,11 @@ export function TransactionsPage({ listingType }: Props): JSX.Element {
       name={name}
 
       includeMined={includeMined}
+
       setError={setError}
+      setPagination={setPagination}
     />
-  ), [listingType, usedAddresses, name, usedRefreshID, includeMined, setError]);
+  ), [listingType, usedAddresses, name, usedRefreshID, includeMined, setError, setPagination]);
 
   const siteTitle = getSiteTitle(t, listingType, address);
   const subTitle = name
@@ -136,11 +144,6 @@ export function TransactionsPage({ listingType }: Props): JSX.Element {
 
   return <PageLayout
     className="transactions-page"
-    withoutTopPadding
-
-    // If there's no "Include mined transactions" switch, pull the table's
-    // pagination up to the page header's extra area
-    negativeMargin={!!name}
 
     // Alter the page title depending on the listing type
     titleKey={LISTING_TYPE_TITLES[listingType]}
@@ -150,14 +153,7 @@ export function TransactionsPage({ listingType }: Props): JSX.Element {
     // For a name listing, show the name in the subtitle.
     subTitle={subTitle}
 
-    // "Include mined transactions" switch in the top right
-    extra={!name && <>
-      <Switch
-        checked={includeMined}
-        onChange={setIncludeMined}
-      />
-      <span>{t("transactions.includeMined")}</span>
-    </>}
+    extra={paginationComponent}
   >
     {error
       ? (
@@ -168,6 +164,17 @@ export function TransactionsPage({ listingType }: Props): JSX.Element {
           invalidParameterSubTitleKey="transactions.resultInvalid"
         />
       )
-      : memoTable}
+      : <>
+        {memoTable}
+
+        {/* "Include mined transactions" switch in the bottom right */}
+        {!name && <div className="transactions-mined-switch">
+          <Switch
+            checked={includeMined}
+            onChange={setIncludeMined}
+          />
+          <span>{t("transactions.includeMined")}</span>
+        </div>}
+      </>}
   </PageLayout>;
 }

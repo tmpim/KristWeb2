@@ -20,6 +20,7 @@ export const RECALCULATE_WALLETS = "RECALCULATE_WALLETS";
 // Settings
 // ---
 export const SET_BOOLEAN_SETTING = "SET_BOOLEAN_SETTING";
+export const SET_INTEGER_SETTING = "SET_INTEGER_SETTING";
 
 // Websockets
 // ---

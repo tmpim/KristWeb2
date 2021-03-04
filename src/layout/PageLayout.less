@@ -29,22 +29,4 @@
       padding-top: 0;
     }
   }
-
-  &.page-layout-negative-margin {
-    .page-layout-header.ant-page-header {
-      // Ensure it's still clickable
-      z-index: 10;
-
-      // And to ensure the extra content is still clickable, make the header
-      // smaller.
-      // TODO: This is a pretty unreliable hack. Is there a way to just get the
-      //       pagination in the header?
-      display: inline-block;
-    }
-
-    .page-layout-contents {
-      // Used to pull table pagination up to the 'extra' area of the header
-      margin-top: -@kw-page-header-height + 4;
-    }
-  }
 }

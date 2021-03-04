@@ -2,14 +2,15 @@
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
-import { Table } from "antd";
+import { Table, TablePaginationConfig } from "antd";
 
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { KristBlock } from "../../krist/api/types";
 import { lookupBlocks, LookupBlocksOptions, LookupBlocksResponse } from "../../krist/api/lookup";
-import { getTablePaginationSettings, handleLookupTableChange } from "../../utils/table";
+import { useMalleablePagination } from "../../utils/table";
+import { useIntegerSetting } from "../../utils/settings";
 
 import { ContextualAddress } from "../../components/addresses/ContextualAddress";
 import { BlockHash } from "./BlockHash";
@@ -23,20 +24,30 @@ interface Props {
   // Number used to trigger a refresh of the blocks listing
   refreshingID?: number;
   lowest?: boolean;
+
   setError?: Dispatch<SetStateAction<Error | undefined>>;
+  setPagination?: Dispatch<SetStateAction<TablePaginationConfig>>;
 }
 
-export function BlocksTable({ refreshingID, lowest, setError }: Props): JSX.Element {
+export function BlocksTable({ refreshingID, lowest, setError, setPagination }: Props): JSX.Element {
   const { t } = useTranslation();
+
+  const defaultPageSize = useIntegerSetting("defaultPageSize");
 
   const [loading, setLoading] = useState(true);
   const [res, setRes] = useState<LookupBlocksResponse>();
   const [options, setOptions] = useState<LookupBlocksOptions>({
-    limit: 20,
+    limit: defaultPageSize,
     offset: 0,
     orderBy: lowest ? "hash" : "height",
     order: lowest ? "ASC" : "DESC"
   });
+
+  const { paginationTableProps } = useMalleablePagination(
+    res, res?.blocks,
+    "blocks.tableTotal",
+    options, setOptions, setPagination
+  );
 
   // Fetch the blocks from the API, mapping the table options
   useEffect(() => {
@@ -59,9 +70,7 @@ export function BlocksTable({ refreshingID, lowest, setError }: Props): JSX.Elem
     dataSource={res?.blocks || []}
     rowKey="height"
 
-    // Triggered whenever the filter, sorting, or pagination changes
-    onChange={handleLookupTableChange(setOptions)}
-    pagination={getTablePaginationSettings(t, res, "blocks.tableTotal")}
+    {...paginationTableProps}
 
     columns={[
       // Height

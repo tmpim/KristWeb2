@@ -8,6 +8,7 @@ import * as constants from "../constants";
 
 import { State } from "../reducers/SettingsReducer";
 
+// Boolean settings
 export interface SetBooleanSettingPayload {
   settingName: keyof PickByValue<State, boolean>;
   value: boolean;
@@ -15,3 +16,12 @@ export interface SetBooleanSettingPayload {
 export const setBooleanSetting = createAction(constants.SET_BOOLEAN_SETTING,
   (settingName, value): SetBooleanSettingPayload =>
     ({ settingName, value }))<SetBooleanSettingPayload>();
+
+// Integer settings
+export interface SetIntegerSettingPayload {
+  settingName: keyof PickByValue<State, number>;
+  value: number;
+}
+export const setIntegerSetting = createAction(constants.SET_INTEGER_SETTING,
+  (settingName, value): SetIntegerSettingPayload =>
+    ({ settingName, value }))<SetIntegerSettingPayload>();

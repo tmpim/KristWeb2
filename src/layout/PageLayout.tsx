@@ -23,7 +23,6 @@ export type PageLayoutProps = React.HTMLProps<HTMLDivElement> & {
 
   className?: string;
   withoutTopPadding?: boolean;
-  negativeMargin?: boolean;
 }
 
 export const PageLayout: FC<PageLayoutProps> = ({
@@ -35,7 +34,6 @@ export const PageLayout: FC<PageLayoutProps> = ({
 
   className,
   withoutTopPadding,
-  negativeMargin,
 
   children, ...rest
 }) => {
@@ -48,8 +46,7 @@ export const PageLayout: FC<PageLayoutProps> = ({
   }, [t, siteTitle, siteTitleKey]);
 
   const classes = classNames("page-layout", className, {
-    "page-layout-no-top-padding": withoutTopPadding,
-    "page-layout-negative-margin": negativeMargin
+    "page-layout-no-top-padding": withoutTopPadding
   });
 
   return <div className={classes} {...rest}>

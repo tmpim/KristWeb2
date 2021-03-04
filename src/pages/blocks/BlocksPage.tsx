@@ -11,6 +11,7 @@ import { APIErrorResult } from "../../components/results/APIErrorResult";
 import { BlocksTable } from "./BlocksTable";
 
 import { useBooleanSetting } from "../../utils/settings";
+import { useLinkedPagination } from "../../utils/table";
 
 interface Props {
   lowest?: boolean;
@@ -18,6 +19,9 @@ interface Props {
 
 export function BlocksPage({ lowest }: Props): JSX.Element {
   const [error, setError] = useState<Error | undefined>();
+
+  // Linked pagination from the table
+  const [paginationComponent, setPagination] = useLinkedPagination();
 
   // Used to handle memoisation and auto-refreshing
   const lastBlockID = useSelector((s: RootState) => s.node.lastBlockID);
@@ -33,16 +37,17 @@ export function BlocksPage({ lowest }: Props): JSX.Element {
       refreshingID={usedRefreshID}
       lowest={lowest}
       setError={setError}
+      setPagination={setPagination}
     />
-  ), [usedRefreshID, lowest, setError]);
+  ), [usedRefreshID, lowest, setError, setPagination]);
 
   return <PageLayout
     className="blocks-page"
-    withoutTopPadding
-    negativeMargin
 
     titleKey={lowest ? "blocks.titleLowest" : "blocks.title"}
     siteTitleKey={lowest ? "blocks.siteTitleLowest" : "blocks.siteTitle"}
+
+    extra={paginationComponent}
   >
     {error
       ? <APIErrorResult error={error} />

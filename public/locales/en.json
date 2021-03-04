@@ -278,6 +278,10 @@
     "siteTitle": "Settings",
     "title": "Settings",
 
+    "messageSuccess": "Setting changed successfully!",
+
+    "settingIntegerSave": "Save",
+
     "menuLanguage": "Language",
 
     "subMenuAutoRefresh": "Auto-refresh",
@@ -293,6 +297,7 @@
     "showRelativeDates": "Show relative dates instead of absolute ones if recent",
     "showRelativeDatesDescription": "Everywhere on the site, if a date is less than 7 days ago, it will show as a relative date instead.",
     "transactionDefaultRaw": "Default to the 'Raw' tab instead of 'CommonMeta' on the transaction page",
+    "defaultPageSize": "Default page size for table listings",
 
     "subMenuDebug": "Debug settings",
     "advancedWalletFormats": "Advanced wallet formats",
