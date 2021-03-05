@@ -579,7 +579,7 @@
   },
 
   "import": {
-    "description": "Paste the backup code (or import from a file below) and enter the corresponding master password.",
+    "description": "Paste the backup code (or import from a file below) and enter the corresponding master password. Backups from KristWeb v1 are also supported.",
 
     "masterPasswordPlaceholder": "Master password",
     "masterPasswordRequired": "Master password is required.",
@@ -591,6 +591,8 @@
     "fileErrorTitle": "Import error",
     "fileErrorNotText": "The imported file must be a text file.",
 
+    "overwriteCheckboxLabel": "Update existing wallet labels if there are conflicts",
+
     "modalTitle": "Import backup",
     "modalButton": "Import",
 
@@ -598,12 +600,6 @@
     "detectedFormatKristWebV1": "KristWeb v1",
     "detectedFormatKristWebV2": "KristWeb v2",
     "detectedFormatInvalid": "Invalid!",
-
-    "treeHeaderWallets": "Wallets",
-    "treeHeaderFriends": "Friends (Address Book)",
-
-    "treeWallet": "Wallet {{id}}",
-    "treeFriend": "Friend {{id}}",
 
     "decodeErrors": {
       "atob": "The backup could not be decoded as it is not valid base64!",
@@ -622,6 +618,7 @@
       "successSkipped": "A wallet with the same address ({{address}}) and settings already exists, so it was skipped.",
       "successUpdated": "A wallet with the same address ({{address}}) already exists. Its label was updated to \"{{label}}\"",
       "successSkippedNoOverwrite": "A wallet with the same address ({{address}}) already exists, and you chose not to overwrite the label, so it was skipped.",
+      "successImportSkipped": "A wallet with the same address ({{address}}) was already imported, so it was skipped.",
 
       "warningSyncNode": "This wallet had a custom sync node, which is not supported in KristWeb v2. The sync node was skipped.",
       "warningIcon": "This wallet had a custom icon, which is not supported in KristWeb v2. The icon was skipped.",
@@ -640,6 +637,8 @@
       "errorPasswordMissing": "This wallet is missing a password!",
       "errorPrivateKeyMissing": "This wallet is missing a private key!",
       "errorMasterKeyMissing": "This wallet is missing a master key!",
+      "errorPrivateKeyMismatch": "This wallet's password did not map to its stored private key!",
+      "errorMasterKeyMismatch": "This wallet's password did not map to its stored master key!",
       "errorLimitReached": "You reached the wallet limit. You currently cannot add any more wallets.",
       "errorUnknown": "An unknown error occurred. See console for details."
     },
@@ -665,7 +664,13 @@
       "warnings_plural": "There were <1>{{count, number}} warning</1> while importing your backup.",
       "errors": "There was <1>{{count, number}} error</1> while importing your backup.",
       "errors_plural": "There were <1>{{count, number}} errors</1> while importing your backup.",
-      "errorsAndWarnings": "There were <1>{{errors, number}} error(s)</1> and <3>{{warnings, number}} warning(s)</3> while importing your backup."
+      "errorsAndWarnings": "There were <1>{{errors, number}} error(s)</1> and <3>{{warnings, number}} warning(s)</3> while importing your backup.",
+
+      "treeHeaderWallets": "Wallets",
+      "treeHeaderFriends": "Friends (Address Book)",
+
+      "treeWallet": "Wallet {{id}}",
+      "treeFriend": "Friend {{id}}"
     }
   }
 }

@@ -1,6 +1,8 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
+import { store } from "@app";
+
 import { TranslatedError } from "@utils/i18n";
 
 import { aesGcmDecrypt } from "@utils/crypto";
@@ -76,11 +78,19 @@ export async function backupVerifyPassword(
  */
 export async function backupImport(
   backup: Backup,
-  masterPassword: string
+  masterPassword: string,
+  noOverwrite: boolean
 ): Promise<BackupResults> {
   // It is assumed at this point that the backup was already successfully
   // decoded, and the master password was verified to be correct.
   debug("beginning import (format: %s)", backup.type, backup);
+
+  // Fetch the current set of wallets from the Redux store, to ensure the limit
+  // isn't reached, and to handle duplication checking.
+  const existingWallets = store.getState().wallets.wallets;
+  // Fetch other useful state from the Redux store
+  const appSyncNode = store.getState().node.syncNode;
+  const addressPrefix = store.getState().node.currency.address_prefix;
 
   // The results instance to keep track of logged messages, etc.
   const results = new BackupResults();
@@ -99,7 +109,12 @@ export async function backupImport(
       debug("importing v1 wallet uuid %s: %o", uuid, rawWallet);
 
       try {
-        await importV1Wallet(backup, masterPassword, uuid, rawWallet, results);
+        await importV1Wallet(
+          existingWallets, appSyncNode, addressPrefix,
+          backup, masterPassword, noOverwrite,
+          uuid, rawWallet,
+          results
+        );
       } catch (err) {
         debug("error importing v1 wallet", err);
         results.addErrorMessage("wallets", uuid, undefined, err);

@@ -207,7 +207,7 @@ export async function addWallet(
   wallet: WalletNew,
   password: string,
   save: boolean
-): Promise<void> {
+): Promise<Wallet> {
   // Calculate the privatekey for the given wallet format
   const privatekey = await applyWalletFormat(wallet.format || "kristwallet", password, wallet.username);
   const address = await makeV2Address(addressPrefix, privatekey);
@@ -239,6 +239,8 @@ export async function addWallet(
   store.dispatch(actions.addWallet(newWallet));
 
   syncWallet(newWallet);
+
+  return newWallet;
 }
 
 /**

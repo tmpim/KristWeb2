@@ -2,7 +2,7 @@
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React, { useState, Dispatch, SetStateAction } from "react";
-import { Modal, Form, FormInstance, Input, Button, Typography, notification } from "antd";
+import { Modal, Form, FormInstance, Input, Checkbox, Button, Typography, notification } from "antd";
 
 import { useTranslation } from "react-i18next";
 import { translateError } from "@utils/i18n";
@@ -24,6 +24,7 @@ const { TextArea } = Input;
 interface FormValues {
   masterPassword: string;
   code: string;
+  overwrite: boolean;
 }
 
 interface Props {
@@ -102,7 +103,7 @@ export function ImportBackupModal({ visible, setVisible }: Props): JSX.Element {
 
     const values = await form.validateFields();
 
-    const { masterPassword, code } = values;
+    const { masterPassword, code, overwrite } = values;
     if (!masterPassword || !code) return;
 
     try {
@@ -116,7 +117,7 @@ export function ImportBackupModal({ visible, setVisible }: Props): JSX.Element {
       setMasterPasswordError(undefined);
 
       // Perform the import
-      const results = await backupImport(backup, masterPassword);
+      const results = await backupImport(backup, masterPassword, !overwrite);
       setResults(results);
     } catch (err) {
       if (err.message === "import.masterPasswordRequired"
@@ -136,6 +137,11 @@ export function ImportBackupModal({ visible, setVisible }: Props): JSX.Element {
 
     visible={visible}
     destroyOnClose
+
+    // Grow the modal when there are results. This not only helps make it look
+    // better, but also prevents the user from accidentally double clicking
+    // the 'Import' button and immediately closing the results.
+    width={results ? 768 : undefined}
 
     onCancel={closeModal}
 
@@ -231,7 +237,8 @@ function ImportBackupForm({ form, code, decodeError, setDecodeError, masterPassw
 
     initialValues={{
       masterPassword: "",
-      code: ""
+      code: "",
+      overwrite: true
     }}
 
     onValuesChange={onValuesChange}
@@ -282,6 +289,17 @@ function ImportBackupForm({ form, code, decodeError, setDecodeError, masterPassw
         autoSize={{ minRows: 4, maxRows: 4 }}
         placeholder={t("import.textareaPlaceholder")}
       />
+    </Form.Item>
+
+    {/* Overwrite checkbox */}
+    <Form.Item
+      name="overwrite"
+      valuePropName="checked"
+      style={{ marginBottom: 0 }}
+    >
+      <Checkbox>
+        {t("import.overwriteCheckboxLabel")}
+      </Checkbox>
     </Form.Item>
   </Form>;
 }

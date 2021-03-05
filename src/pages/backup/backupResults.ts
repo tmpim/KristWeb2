@@ -3,6 +3,10 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React from "react";
 
+import { TranslatedError } from "@utils/i18n";
+
+import { Wallet } from "@wallets/Wallet";
+
 import Debug from "debug";
 const debug = Debug("kristweb:backup-results");
 
@@ -17,14 +21,19 @@ export type ResultType = "success" | "warning" | "error";
 
 export class BackupResults {
   /** Number of new wallets that were added as a result of this import. */
-  private newWallets = 0;
+  public newWallets = 0;
 
   /** Number of wallets from the backup that were skipped (not imported). */
-  private skippedWallets = 0;
+  public skippedWallets = 0;
+
+  /** Array of wallets that were successfully imported, used to handle
+   * duplication checking (since the Redux state isn't guaranteed to be up to
+   * date). */
+  public importedWallets: Wallet[] = [];
 
   /** For both wallets and friends, a map of wallet/friend UUIDs containing
    * all the messages (success, warning, error). */
-  private messages: {
+  public messages: {
     wallets: Record<string, BackupMessage[]>;
     friends: Record<string, BackupMessage[]>;
   } = {
@@ -58,16 +67,6 @@ export class BackupResults {
   public addErrorMessage(src: MessageSource, uuid: string, message?: MessageType, error?: Error): void {
     this.addMessage(src, uuid, { type: "error", message, error });
   }
-
-  /** Increments the new wallets counter. */
-  public incrNewWallets(): void {
-    this.newWallets++;
-  }
-
-  /** Increments the skipped wallets counter. */
-  public incrSkippedWallets(): void {
-    this.skippedWallets++;
-  }
 }
 
 export interface BackupMessage {
@@ -76,7 +75,7 @@ export interface BackupMessage {
   message?: MessageType;
 }
 
-export class BackupError extends Error {
+export class BackupError extends TranslatedError {
   constructor(message: string) { super(message); }
 }
 
