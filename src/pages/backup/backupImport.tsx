@@ -6,8 +6,9 @@ import { TranslatedError } from "@utils/i18n";
 import { aesGcmDecrypt } from "@utils/crypto";
 import { decryptCryptoJS } from "@utils/CryptoJS";
 
-import { Backup, BackupFormatType } from "./backupFormats";
+import { Backup, BackupFormatType, isBackupKristWebV1 } from "./backupFormats";
 import { BackupResults } from "./backupResults";
+import { importV1Wallet } from "./backupImportV1";
 
 import Debug from "debug";
 const debug = Debug("kristweb:backup-import");
@@ -84,5 +85,30 @@ export async function backupImport(
   // The results instance to keep track of logged messages, etc.
   const results = new BackupResults();
 
+  // Attempt to add the wallets
+  if (isBackupKristWebV1(backup)) {
+    // Import wallets from a KristWeb v1 backup
+    for (const uuid in backup.wallets) {
+      if (!uuid || !uuid.startsWith("Wallet-")) {
+        // Not a wallet
+        debug("skipping v1 wallet key %s", uuid);
+        continue;
+      }
+
+      const rawWallet = backup.wallets[uuid];
+      debug("importing v1 wallet uuid %s: %o", uuid, rawWallet);
+
+      try {
+        await importV1Wallet(backup, masterPassword, uuid, rawWallet, results);
+      } catch (err) {
+        debug("error importing v1 wallet", err);
+        results.addErrorMessage("wallets", uuid, undefined, err);
+      }
+    }
+  } else {
+    debug("WTF: unsupported backup format %s", backup.type);
+  }
+
+  debug("import finished, final results:", results);
   return results;
 }

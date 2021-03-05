@@ -3,7 +3,7 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { v4 as uuid } from "uuid";
 
-import { applyWalletFormat, WalletFormatName } from "./formats/WalletFormat";
+import { applyWalletFormat, WalletFormatName } from "./WalletFormat";
 import { makeV2Address } from "../AddressAlgo";
 
 import { aesGcmDecrypt, aesGcmEncrypt } from "@utils/crypto";

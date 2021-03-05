@@ -5,6 +5,7 @@ dependencies:
   '@testing-library/user-event': 12.8.0
   antd: 4.13.0_89622fd8e4ec221151a62783d49305af
   async-mutex: 0.3.1
+  await-to-js: 2.1.1
   base64-arraybuffer: 0.2.0
   chart.js: 2.9.4
   classnames: 2.2.6
@@ -3146,6 +3147,12 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-XrvP4VVHdRBCdX1S3WXVD8+RyG9qeb1D5Sn1DeLiG2xfSpzellk5k54xbUERJ3M5DggQxes39UGOTP8CFrEGbg==
+  /await-to-js/2.1.1:
+    dev: false
+    engines:
+      node: '>=6.0.0'
+    resolution:
+      integrity: sha512-CHBC6gQGCIzjZ09tJ+XmpQoZOn4GdWePB4qUweCaKNJ0D3f115YdhmYVTZ4rMVpiJ3cFzZcTYK1VMYEICV4YXw==
   /aws-sign2/0.7.0:
     dev: true
     resolution:
@@ -13814,6 +13821,7 @@ specifiers:
   antd: ^4.13.0
   antd-dayjs-webpack-plugin: ^1.0.6
   async-mutex: ^0.3.1
+  await-to-js: ^2.1.1
   babel-plugin-lodash: ^3.3.4
   base64-arraybuffer: ^0.2.0
   chart.js: ^2.9.4

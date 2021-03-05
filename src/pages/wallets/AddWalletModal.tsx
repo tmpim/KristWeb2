@@ -15,7 +15,7 @@ import { FakeUsernameInput } from "@comp/auth/FakeUsernameInput";
 import { CopyInputButton } from "@comp/CopyInputButton";
 import { SelectWalletCategory } from "@comp/wallets/SelectWalletCategory";
 
-import { WalletFormatName, applyWalletFormat, formatNeedsUsername } from "@wallets/formats/WalletFormat";
+import { WalletFormatName, applyWalletFormat, formatNeedsUsername } from "@wallets/WalletFormat";
 import { SelectWalletFormat } from "@comp/wallets/SelectWalletFormat";
 import { makeV2Address } from "@krist/AddressAlgo";
 import { useWallets, addWallet, decryptWallet, editWallet, Wallet, ADDRESS_LIST_LIMIT } from "@wallets/Wallet";

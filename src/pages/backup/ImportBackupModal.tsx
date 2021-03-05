@@ -167,8 +167,9 @@ export function ImportBackupModal({ visible, setVisible }: Props): JSX.Element {
           <input
             id="import-backup-file"
             type="file"
-            style={{ display: "none" }}
+            accept="text/plain"
             onChange={onFileChange}
+            style={{ display: "none" }}
           />
         </div>,
 

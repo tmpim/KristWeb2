@@ -6,8 +6,13 @@ import React from "react";
 import Debug from "debug";
 const debug = Debug("kristweb:backup-results");
 
+export interface TranslatedMessage {
+  key: string;
+  args?: Record<string, string>;
+}
+
 export type MessageSource = "wallets" | "friends";
-export type MessageType = React.ReactNode | string;
+export type MessageType = React.ReactNode | TranslatedMessage | string;
 export type ResultType = "success" | "warning" | "error";
 
 export class BackupResults {
@@ -50,7 +55,7 @@ export class BackupResults {
 
   /** Logs an error message for the given wallet/friend UUID to the appropriate
    * message map. */
-  public addErrorMessage(src: MessageSource, uuid: string, message: MessageType, error?: Error): void {
+  public addErrorMessage(src: MessageSource, uuid: string, message?: MessageType, error?: Error): void {
     this.addMessage(src, uuid, { type: "error", message, error });
   }
 
@@ -68,9 +73,13 @@ export class BackupResults {
 export interface BackupMessage {
   type: ResultType;
   error?: Error;
-  message: MessageType;
+  message?: MessageType;
 }
 
 export class BackupError extends Error {
   constructor(message: string) { super(message); }
+}
+
+export class BackupWalletError extends BackupError {
+  constructor(message: string) { super("import.walletMessages." + message); }
 }
