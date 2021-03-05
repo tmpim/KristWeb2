@@ -137,6 +137,8 @@ export function ImportBackupModal({ visible, setVisible }: Props): JSX.Element {
     visible={visible}
     destroyOnClose
 
+    onCancel={closeModal}
+
     // Handle showing just an 'OK' button on the results screen, or all three
     // 'Import from file', 'Close', 'Import' buttons otherwise
     footer={results
