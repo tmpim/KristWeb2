@@ -1,22 +1,24 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import React, { useState, Dispatch, SetStateAction} from "react";
-import { Modal, Form, Input, Button, Typography } from "antd";
+import React, { useState, Dispatch, SetStateAction } from "react";
+import { Modal, Form, FormInstance, Input, Button, Typography, Upload, UploadProps, notification } from "antd";
 
-import { useTranslation, Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { translateError } from "@utils/i18n";
 
-import { FakeUsernameInput } from "@comp/auth/FakeUsernameInput";
 import { getMasterPasswordInput } from "@comp/auth/MasterPasswordInput";
 
 import { ImportDetectFormat } from "./ImportDetectFormat";
-import { detectBackupFormat } from "../backup/backupParser";
+import { decodeBackup } from "./backupParser";
+import { backupVerifyPassword, backupImport } from "./backupImport";
+import { BackupResults } from "./backupResults";
+import { BackupResultsTree } from "./BackupResultsTree";
 
 import Debug from "debug";
 const debug = Debug("kristweb:import-backup-modal");
 
-const { Text, Paragraph } = Typography;
+const { Paragraph } = Typography;
 const { TextArea } = Input;
 
 interface FormValues {
@@ -34,12 +36,60 @@ export function ImportBackupModal({ visible, setVisible }: Props): JSX.Element {
 
   const [form] = Form.useForm<FormValues>();
   const [code, setCode] = useState("");
-  const [decodeError, setDecodeError] = useState<string | undefined>();
+  const [decodeError, setDecodeError] = useState<string>();
+  const [masterPasswordError, setMasterPasswordError] = useState<string>();
+  const [results, setResults] = useState<BackupResults>();
+
+  const uploadProps: UploadProps = {
+    showUploadList: false,
+
+    /** Updates the contents of the 'code' field with the given file. */
+    beforeUpload(file) {
+      debug("importing file %s: %o", file.name, file);
+
+      // Disallow non-plaintext files
+      if (file.type !== "text/plain") {
+        notification.error({
+          message: t("import.fileErrorTitle"),
+          description: t("import.fileErrorNotText")
+        });
+        return false;
+      }
+
+      // Read the file and update the contents of the code field
+      const reader = new FileReader();
+      reader.readAsText(file, "UTF-8");
+      reader.onload = e => {
+        if (!e.target || !e.target.result) {
+          debug("reader.onload target was null?!", e);
+          return;
+        }
+
+        const contents = e.target.result.toString();
+        debug("got file contents: %s", contents);
+
+        // Update the form
+        setCode(contents); // Triggers a format re-detection
+        form.setFieldsValue({ code: contents });
+      };
+
+      // Don't actually upload the file
+      return false;
+    }
+  };
+
+  /** Resets all the state when the modal is closed. */
+  function resetState() {
+    form.resetFields();
+    setCode("");
+    setDecodeError("");
+    setMasterPasswordError("");
+    setResults(undefined);
+  }
 
   function closeModal() {
     debug("closing modal and resetting fields");
-    form.resetFields();
-    setCode("");
+    resetState();
     setVisible(false);
   }
 
@@ -50,89 +100,170 @@ export function ImportBackupModal({ visible, setVisible }: Props): JSX.Element {
   // Detect the backup format for the final time, validate the password, and
   // if all is well, begin the import
   async function onFinish() {
+    // If we're already on the results screen, close the modal instead
+    if (results) return closeModal();
+
     const values = await form.validateFields();
-    if (!values.masterPassword || !values.code) return;
+
+    const { masterPassword, code } = values;
+    if (!masterPassword || !code) return;
 
     try {
       // Decode first
-      const format = detectBackupFormat(code);
-      debug("detected format: %s", format.type);
-
+      const backup = decodeBackup(code);
+      debug("detected format: %s", backup.type);
       setDecodeError(undefined);
+
+      // Attempt to verify the master password
+      await backupVerifyPassword(backup, masterPassword);
+      setMasterPasswordError(undefined);
+
+      // Perform the import
+      const results = await backupImport(backup, masterPassword);
+      setResults(results);
     } catch (err) {
-      console.error(err);
-      setDecodeError(translateError(t, err, "import.decodeErrors.unknown"));
+      if (err.message === "import.masterPasswordRequired"
+        || err.message === "import.masterPasswordIncorrect") {
+        // Master password incorrect error
+        setMasterPasswordError(translateError(t, err));
+      } else {
+        // Any other decoding error
+        console.error(err);
+        setDecodeError(translateError(t, err, "import.decodeErrors.unknown"));
+      }
     }
   }
 
   return <Modal
     title={t("import.modalTitle")}
-    okText={t("import.modalButton")}
-    cancelText={t("dialog.cancel")}
 
     visible={visible}
     destroyOnClose
 
-    onCancel={closeModal}
-    onOk={onFinish}
+    // Handle showing just an 'OK' button on the results screen, or all three
+    // 'Import from file', 'Close', 'Import' buttons otherwise
+    footer={results
+      ? [ // Results screen
+        // "Close" button for results screen
+        <Button key="close" onClick={closeModal}>
+          {t("dialog.close")}
+        </Button>
+      ]
+      : [ // Import screen
+        // "Import from file" button for import screen
+        <div key="importFromFile"  style={{ float: "left" }}>
+          <Upload {...uploadProps}>
+            <Button>{t("import.fromFileButton")}</Button>
+          </Upload>
+        </div>,
+
+        // "Cancel" button for import screen
+        <Button key="cancel" onClick={closeModal}>
+          {t("dialog.cancel")}
+        </Button>,
+
+        // "Import" button for import screen
+        <Button key="import" type="primary" onClick={onFinish}>
+          {t("import.modalButton")}
+        </Button>
+      ]}
   >
-    <Form
-      form={form}
-      layout="vertical"
+    {results
+      ? (
+        // Got results - show them
+        <BackupResultsTree results={results} />
+      )
+      : (
+        // No results - show the import form
+        <ImportBackupForm
+          form={form}
 
-      name={"importBackupForm"}
+          code={code}
+          decodeError={decodeError}
+          setDecodeError={setDecodeError}
+          masterPasswordError={masterPasswordError}
 
-      initialValues={{
-        masterPassword: "",
-        code: ""
-      }}
-
-      onValuesChange={onValuesChange}
-      onFinish={onFinish}
-    >
-      {/* Import lead */}
-      <Paragraph>{t("import.description")}</Paragraph>
-
-      {/* Detected format information */}
-      <ImportDetectFormat
-        code={code}
-        setDecodeError={setDecodeError}
-      />
-
-      {/* Password input */}
-      <Form.Item
-        name="masterPassword"
-        rules={[
-          { required: true, message: t("import.masterPasswordRequired") },
-          { min: 0, message: t("import.masterPasswordRequired") },
-        ]}
-        style={{ marginBottom: 8 }}
-      >
-        {getMasterPasswordInput({
-          placeholder: t("import.masterPasswordPlaceholder"),
-          autoFocus: true
-        })}
-      </Form.Item>
-
-
-      {/* Code textarea */}
-      <Form.Item
-        name="code"
-        rules={[
-          { required: true, message: t("import.textareaRequired") },
-          { min: 0, message: t("import.textareaRequired") },
-        ]}
-
-        // Show the decode error here, if present
-        validateStatus={decodeError ? "error" : undefined}
-        help={decodeError}
-      >
-        <TextArea
-          rows={4}
-          autoSize={{ minRows: 4, maxRows: 4 }}
-          placeholder={t("import.textareaPlaceholder")}
+          onValuesChange={onValuesChange}
+          onFinish={onFinish}
         />
-      </Form.Item>
-    </Form>
+      )}
   </Modal>;
+}
+
+interface FormProps {
+  form: FormInstance<FormValues>;
+
+  code: string;
+  decodeError?: string;
+  setDecodeError: Dispatch<SetStateAction<string | undefined>>;
+  masterPasswordError?: string;
+
+  onValuesChange: (changed: Partial<FormValues>) => void;
+  onFinish: () => void;
+}
+
+function ImportBackupForm({ form, code, decodeError, setDecodeError, masterPasswordError, onValuesChange, onFinish }: FormProps): JSX.Element {
+  const { t } = useTranslation();
+
+  return <Form
+    form={form}
+    layout="vertical"
+
+    name="importBackupForm"
+
+    initialValues={{
+      masterPassword: "",
+      code: ""
+    }}
+
+    onValuesChange={onValuesChange}
+    onFinish={onFinish}
+  >
+    {/* Import lead */}
+    <Paragraph>{t("import.description")}</Paragraph>
+
+    {/* Detected format information */}
+    <ImportDetectFormat
+      code={code}
+      setDecodeError={setDecodeError}
+    />
+
+    {/* Password input */}
+    <Form.Item
+      name="masterPassword"
+      rules={[
+        { required: true, message: t("import.masterPasswordRequired") },
+        { min: 0, message: t("import.masterPasswordRequired") },
+      ]}
+      style={{ marginBottom: 8 }}
+
+      // Show the master password error here, if present
+      validateStatus={masterPasswordError ? "error" : undefined}
+      help={masterPasswordError || undefined}
+    >
+      {getMasterPasswordInput({
+        placeholder: t("import.masterPasswordPlaceholder"),
+        autoFocus: true
+      })}
+    </Form.Item>
+
+    {/* Code textarea */}
+    <Form.Item
+      name="code"
+      rules={[
+        { required: true, message: t("import.textareaRequired") },
+        { min: 0, message: t("import.textareaRequired") },
+      ]}
+
+      // Show the decode error here, if present
+      validateStatus={decodeError ? "error" : undefined}
+      help={decodeError || undefined}
+    >
+      <TextArea
+        rows={4}
+        autoSize={{ minRows: 4, maxRows: 4 }}
+        placeholder={t("import.textareaPlaceholder")}
+      />
+    </Form.Item>
+  </Form>;
 }

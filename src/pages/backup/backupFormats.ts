@@ -9,7 +9,7 @@ export enum BackupFormatType {
   KRISTWEB_V2 = "import.detectedFormatKristWebV2"
 }
 
-export interface BackupFormat {
+export interface Backup {
   // This value is inserted by `detectBackupFormat`.
   type: BackupFormatType;
 
@@ -17,14 +17,14 @@ export interface BackupFormat {
   tester: string;
 }
 
-export interface BackupFormatKristWebV1 extends BackupFormat {
+export interface BackupKristWebV1 extends Backup {
   // KristWeb v1 backups contain a map of wallets, where the values are
   // encrypted JSON.
   wallets: Record<string, string>;
   friends: Record<string, string>;
 }
 
-export interface BackupFormatKristWebV2 extends BackupFormat {
+export interface BackupKristWebV2 extends Backup {
   version: 2;
 
   wallets: Record<string, Wallet>;

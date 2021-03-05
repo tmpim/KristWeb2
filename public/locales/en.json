@@ -588,6 +588,8 @@
     "fromFileButton": "Import from file",
     "textareaPlaceholder": "Paste backup code here",
     "textareaRequired": "Backup code is required.",
+    "fileErrorTitle": "Import error",
+    "fileErrorNotText": "The imported file must be a text file.",
 
     "modalTitle": "Import backup",
     "modalButton": "Import",
@@ -608,6 +610,8 @@
       "json": "The backup could not be decoded as it is not valid JSON!",
       "missingTester": "The backup could not be decoded as it is missing a tester key!",
       "missingSalt": "The backup could not be decoded as it is missing a salt key!",
+      "invalidTester": "The backup could not be decoded as the 'tester' key is the wrong type!",
+      "invalidSalt": "The backup could not be decoded as the 'salt' key is the wrong type!",
       "invalidWallets": "The backup could not be decoded as the 'wallets' key is the wrong type!",
       "invalidFriends": "The backup could not be decoded as the 'wallets' key is the wrong type!",
       "unknown": "The backup could not be decoded due to an unknown error. See console for details."

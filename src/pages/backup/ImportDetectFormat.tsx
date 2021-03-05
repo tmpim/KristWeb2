@@ -7,8 +7,8 @@ import { Typography } from "antd";
 import { useTranslation, Trans, TFunction } from "react-i18next";
 import { translateError } from "@utils/i18n";
 
-import { BackupFormatType } from "../backup/backupFormats";
-import { detectBackupFormat } from "../backup/backupParser";
+import { BackupFormatType } from "./backupFormats";
+import { decodeBackup } from "./backupParser";
 
 import { debounce } from "lodash-es";
 
@@ -34,11 +34,11 @@ function _checkDecode(
 ) {
   debug("checking decode");
   try {
-    const format = detectBackupFormat(code);
-    debug("detected format: %s", format.type);
+    const backup = decodeBackup(code);
+    debug("detected format: %s", backup.type);
 
     setDecodeError(undefined);
-    setDetectedFormatType(format.type);
+    setDetectedFormatType(backup.type);
   } catch (err) {
     console.error(err);
     setDecodeError(translateError(t, err, "import.decodeErrors.unknown"));
