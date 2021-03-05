@@ -5,12 +5,12 @@ import { createReducer } from "typesafe-actions";
 import {
   KristWorkDetailed, KristCurrency, DEFAULT_CURRENCY, KristConstants,
   DEFAULT_CONSTANTS, KristMOTDBase, DEFAULT_MOTD_BASE
-} from "../../krist/api/types";
+} from "@api/types";
 import {
   setLastBlockID, setLastTransactionID, setLastNonMinedTransactionID,
   setLastOwnTransactionID, setLastNameTransactionID, setLastOwnNameTransactionID,
   setSyncNode, setDetailedWork, setCurrency, setConstants, setMOTD
-} from "../actions/NodeActions";
+} from "@actions/NodeActions";
 
 import packageJson from "../../../package.json";
 

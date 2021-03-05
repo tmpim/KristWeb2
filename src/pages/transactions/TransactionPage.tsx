@@ -8,18 +8,18 @@ import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 
 import { PageLayout } from "../../layout/PageLayout";
-import { APIErrorResult } from "../../components/results/APIErrorResult";
+import { APIErrorResult } from "@comp/results/APIErrorResult";
 
-import { Statistic } from "../../components/Statistic";
-import { TransactionType, TYPES_SHOW_VALUE } from "../../components/transactions/TransactionType";
-import { ContextualAddress } from "../../components/addresses/ContextualAddress";
-import { KristNameLink } from "../../components/names/KristNameLink";
-import { KristValue } from "../../components/krist/KristValue";
-import { DateTime } from "../../components/DateTime";
-import { NameARecordLink } from "../../components/names/NameARecordLink";
+import { Statistic } from "@comp/Statistic";
+import { TransactionType, TYPES_SHOW_VALUE } from "@comp/transactions/TransactionType";
+import { ContextualAddress } from "@comp/addresses/ContextualAddress";
+import { KristNameLink } from "@comp/names/KristNameLink";
+import { KristValue } from "@comp/krist/KristValue";
+import { DateTime } from "@comp/DateTime";
+import { NameARecordLink } from "@comp/names/NameARecordLink";
 
-import * as api from "../../krist/api";
-import { KristTransaction, KristTransactionType } from "../../krist/api/types";
+import * as api from "@api";
+import { KristTransaction, KristTransactionType } from "@api/types";
 
 import { TransactionMetadataCard } from "./TransactionMetadataCard";
 import { TransactionRawDataCard } from "./TransactionRawDataCard";

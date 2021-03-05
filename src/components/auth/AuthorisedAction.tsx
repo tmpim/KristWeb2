@@ -5,7 +5,7 @@ import React, { FC, useState } from "react";
 import { TooltipPlacement } from "antd/lib/tooltip";
 
 import { useSelector, shallowEqual } from "react-redux";
-import { RootState } from "../../store";
+import { RootState } from "@store";
 
 import { AuthMasterPasswordPopover } from "./AuthMasterPasswordPopover";
 import { SetMasterPasswordModal } from "./SetMasterPasswordModal";

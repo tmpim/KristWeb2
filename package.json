@@ -100,6 +100,7 @@
     "@typescript-eslint/parser": "4.15.3-alpha.17",
     "antd-dayjs-webpack-plugin": "^1.0.6",
     "babel-plugin-lodash": "^3.3.4",
+    "craco-alias": "^2.2.0",
     "craco-less": "^1.17.1",
     "eslint": "^7.21.0",
     "eslint-plugin-react": "^7.22.0",

@@ -7,12 +7,12 @@ import { Card, Table, TableProps, Typography } from "antd";
 import { useTranslation } from "react-i18next";
 
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { RootState } from "@store";
 
-import { parseCommonMeta } from "../../utils/commonmeta";
+import { parseCommonMeta } from "@utils/commonmeta";
 
-import { HelpIcon } from "../../components/HelpIcon";
-import { useBooleanSetting } from "../../utils/settings";
+import { HelpIcon } from "@comp/HelpIcon";
+import { useBooleanSetting } from "@utils/settings";
 
 const { Text, Title } = Typography;
 

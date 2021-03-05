@@ -7,15 +7,15 @@ import { Table, TablePaginationConfig } from "antd";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import { KristBlock } from "../../krist/api/types";
-import { lookupBlocks, LookupBlocksOptions, LookupBlocksResponse } from "../../krist/api/lookup";
-import { useMalleablePagination } from "../../utils/table";
-import { useIntegerSetting } from "../../utils/settings";
+import { KristBlock } from "@api/types";
+import { lookupBlocks, LookupBlocksOptions, LookupBlocksResponse } from "@api/lookup";
+import { useMalleablePagination } from "@utils/table";
+import { useIntegerSetting } from "@utils/settings";
 
-import { ContextualAddress } from "../../components/addresses/ContextualAddress";
+import { ContextualAddress } from "@comp/addresses/ContextualAddress";
 import { BlockHash } from "./BlockHash";
-import { KristValue } from "../../components/krist/KristValue";
-import { DateTime } from "../../components/DateTime";
+import { KristValue } from "@comp/krist/KristValue";
+import { DateTime } from "@comp/DateTime";
 
 import Debug from "debug";
 const debug = Debug("kristweb:blocks-table");

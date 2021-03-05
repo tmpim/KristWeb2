@@ -7,10 +7,10 @@ import { LoadingOutlined } from "@ant-design/icons";
 
 import { Trans, useTranslation } from "react-i18next";
 
-import { KristAddress, KristName, KristBlock, KristTransaction } from "../../krist/api/types";
-import { KristValue } from "../../components/krist/KristValue";
-import { KristNameLink } from "../../components/names/KristNameLink";
-import { DateTime } from "../../components/DateTime";
+import { KristAddress, KristName, KristBlock, KristTransaction } from "@api/types";
+import { KristValue } from "@comp/krist/KristValue";
+import { KristNameLink } from "@comp/names/KristNameLink";
+import { DateTime } from "@comp/DateTime";
 
 import "./SearchResults.less";
 

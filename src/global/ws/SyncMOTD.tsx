@@ -4,15 +4,15 @@
 import { useEffect } from "react";
 
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
-import * as nodeActions from "../../store/actions/NodeActions";
+import { RootState } from "@store";
+import * as nodeActions from "@actions/NodeActions";
 
-import { store } from "../../App";
+import { store } from "@app";
 
-import * as api from "../../krist/api";
-import { KristMOTD, KristMOTDBase } from "../../krist/api/types";
+import * as api from "@api";
+import { KristMOTD, KristMOTDBase } from "@api/types";
 
-import { recalculateWallets, useWallets } from "../../krist/wallets/Wallet";
+import { recalculateWallets, useWallets } from "@wallets/Wallet";
 
 import Debug from "debug";
 const debug = Debug("kristweb:sync-motd");

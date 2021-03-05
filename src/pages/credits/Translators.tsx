@@ -6,9 +6,9 @@ import { Space, Button, List, Typography } from "antd";
 import { GlobalOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 
-import { Flag } from "../../components/Flag";
+import { Flag } from "@comp/Flag";
 
-import { getLanguages } from "../../utils/i18n";
+import { getLanguages } from "@utils/i18n";
 import packageJson from "../../../package.json";
 
 const { Text } = Typography;

@@ -6,15 +6,15 @@ import classNames from "classnames";
 import { Tooltip, Typography } from "antd";
 
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { RootState } from "@store";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import { KristAddress } from "../../krist/api/types";
-import { Wallet, useWallets } from "../../krist/wallets/Wallet";
-import { parseCommonMeta, CommonMeta } from "../../utils/commonmeta";
-import { stripNameSuffix } from "../../utils/currency";
-import { useBooleanSetting } from "../../utils/settings";
+import { KristAddress } from "@api/types";
+import { Wallet, useWallets } from "@wallets/Wallet";
+import { parseCommonMeta, CommonMeta } from "@utils/commonmeta";
+import { stripNameSuffix } from "@utils/currency";
+import { useBooleanSetting } from "@utils/settings";
 
 import { KristNameLink } from "../names/KristNameLink";
 

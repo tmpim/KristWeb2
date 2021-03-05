@@ -1,10 +1,10 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import * as actions from "../actions/WalletsActions";
+import * as actions from "@actions/WalletsActions";
 import { createReducer, ActionType } from "typesafe-actions";
 
-import { Wallet, loadWallets, WALLET_UPDATABLE_KEYS, WALLET_SYNCABLE_KEYS } from "../../krist/wallets/Wallet";
+import { Wallet, loadWallets, WALLET_UPDATABLE_KEYS, WALLET_SYNCABLE_KEYS } from "@wallets/Wallet";
 
 export interface WalletMap { [key: string]: Wallet }
 export interface State {

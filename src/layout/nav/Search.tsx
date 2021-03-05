@@ -9,10 +9,10 @@ import { useTranslation } from "react-i18next";
 import { useHistory } from "react-router-dom";
 
 import { GlobalHotKeys } from "react-hotkeys";
-import { ctrl } from "../../utils";
+import { ctrl } from "@utils";
 
-import { RateLimitError } from "../../krist/api";
-import { SearchResult, search, searchExtended, SearchExtendedResult } from "../../krist/api/search";
+import { RateLimitError } from "@api";
+import { SearchResult, search, searchExtended, SearchExtendedResult } from "@api/search";
 import { throttle, debounce } from "lodash-es";
 import LRU from "lru-cache";
 

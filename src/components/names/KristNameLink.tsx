@@ -6,11 +6,11 @@ import classNames from "classnames";
 import { Typography } from "antd";
 
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { RootState } from "@store";
 
 import { Link } from "react-router-dom";
 
-import { useBooleanSetting } from "../../utils/settings";
+import { useBooleanSetting } from "@utils/settings";
 
 const { Text } = Typography;
 

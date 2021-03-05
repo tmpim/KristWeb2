@@ -2,7 +2,7 @@
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { createReducer, ActionType } from "typesafe-actions";
-import { authMasterPassword, setMasterPassword } from "../actions/WalletManagerActions";
+import { authMasterPassword, setMasterPassword } from "@actions/WalletManagerActions";
 
 export interface State {
   /** Whether or not the user has authenticated with the master password,

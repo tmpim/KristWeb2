@@ -5,7 +5,7 @@ import React from "react";
 import classNames from "classnames";
 import { Typography } from "antd";
 
-import { useBooleanSetting } from "../../utils/settings";
+import { useBooleanSetting } from "@utils/settings";
 
 import "./BlockHash.less";
 

@@ -6,7 +6,7 @@ import { Button } from "antd";
 
 import { useTranslation } from "react-i18next";
 
-import * as serviceWorker from "../../utils/serviceWorkerRegistration";
+import * as serviceWorker from "@utils/serviceWorkerRegistration";
 
 import Debug from "debug";
 const debug = Debug("kristweb:service-worker-check");

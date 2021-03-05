@@ -10,7 +10,7 @@ import { Supporters } from "./Supporters";
 import { Translators } from "./Translators";
 import "./CreditsPage.less";
 
-import { getAuthorInfo } from "../../utils/credits";
+import { getAuthorInfo } from "@utils/credits";
 
 const { Title } = Typography;
 

@@ -6,6 +6,8 @@ import {
   BackupFormatKristWebV1, BackupFormatKristWebV2
 } from "./backupFormats";
 
+import { TranslatedError } from "@utils/i18n";
+
 import { isPlainObject } from "lodash-es";
 
 export function detectBackupFormat(rawData: string): BackupFormat {
@@ -17,12 +19,14 @@ export function detectBackupFormat(rawData: string): BackupFormat {
     const data = JSON.parse(plainData);
 
     // Check for required properties
-    if (!data.tester) throw new Error("import.decodeErrors.missingTester");
-    if (!data.salt) throw new Error("import.decodeErrors.missingSalt");
+    if (!data.tester)
+      throw new TranslatedError("import.decodeErrors.missingTester");
+    if (!data.salt)
+      throw new TranslatedError("import.decodeErrors.missingSalt");
     if (!isPlainObject(data.wallets))
-      throw new Error("import.decodeErrors.invalidWallets");
+      throw new TranslatedError("import.decodeErrors.invalidWallets");
     if (data.friends !== undefined && !isPlainObject(data.friends))
-      throw new Error("import.decodeErrors.invalidFriends");
+      throw new TranslatedError("import.decodeErrors.invalidFriends");
 
     // Determine the format
     if (data.version === 2) {
@@ -37,11 +41,11 @@ export function detectBackupFormat(rawData: string): BackupFormat {
   } catch (err) {
     // Invalid base64
     if (err instanceof DOMException && err.name === "InvalidCharacterError")
-      throw new Error("import.decodeErrors.atob");
+      throw new TranslatedError("import.decodeErrors.atob");
 
     // Invalid json
     if (err instanceof SyntaxError)
-      throw new Error("import.decodeErrors.json");
+      throw new TranslatedError("import.decodeErrors.json");
 
     throw err;
   }

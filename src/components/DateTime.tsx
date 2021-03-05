@@ -5,7 +5,7 @@ import React from "react";
 import classNames from "classnames";
 import { Tooltip } from "antd";
 
-import { useBooleanSetting } from "../utils/settings";
+import { useBooleanSetting } from "@utils/settings";
 
 import dayjs from "dayjs";
 import TimeAgo from "react-timeago";

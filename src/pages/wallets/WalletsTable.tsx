@@ -7,15 +7,15 @@ import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 import { useTranslation } from "react-i18next";
 
-import { ContextualAddress } from "../../components/addresses/ContextualAddress";
-import { KristValue } from "../../components/krist/KristValue";
-import { DateTime } from "../../components/DateTime";
+import { ContextualAddress } from "@comp/addresses/ContextualAddress";
+import { KristValue } from "@comp/krist/KristValue";
+import { DateTime } from "@comp/DateTime";
 import { WalletEditButton } from "./WalletEditButton";
 import { AddWalletModal } from "./AddWalletModal";
 
-import { Wallet, deleteWallet, useWallets } from "../../krist/wallets/Wallet";
+import { Wallet, deleteWallet, useWallets } from "@wallets/Wallet";
 
-import { keyedNullSort, localeSort } from "../../utils";
+import { keyedNullSort, localeSort } from "@utils";
 
 function WalletActions({ wallet }: { wallet: Wallet }): JSX.Element {
   const { t } = useTranslation();

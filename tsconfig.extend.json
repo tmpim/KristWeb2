@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@app": ["./App.tsx"],
+
+      "@actions": ["./store/actions"],
+      "@actions/*": ["./store/actions/*"],
+      "@reducers/*": ["./store/reducers/*"],
+      "@store": ["./store"],
+      "@store/*": ["./store/*"],
+
+      "@comp/*": ["./components/*"],
+      "@pages/*": ["./pages/*"],
+
+      "@api": ["./krist/api"],
+      "@api/*": ["./krist/api/*"],
+      "@wallets": ["./krist/wallets"],
+      "@wallets/*": ["./krist/wallets/*"],
+      "@krist/*": ["./krist/*"],
+
+      "@utils": ["./utils"],
+      "@utils/*": ["./utils/*"]
+    }
+  }
+}

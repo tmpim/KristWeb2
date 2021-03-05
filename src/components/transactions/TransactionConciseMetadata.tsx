@@ -5,10 +5,10 @@ import React from "react";
 import classNames from "classnames";
 
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { RootState } from "@store";
 
-import { KristTransaction } from "../../krist/api/types";
-import { stripNameFromMetadata } from "../../utils/currency";
+import { KristTransaction } from "@api/types";
+import { stripNameFromMetadata } from "@utils/currency";
 
 import "./TransactionConciseMetadata.less";
 

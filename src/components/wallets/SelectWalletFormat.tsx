@@ -6,8 +6,8 @@ import { Select } from "antd";
 
 import { useTranslation } from "react-i18next";
 
-import { WalletFormatName, ADVANCED_FORMATS } from "../../krist/wallets/formats/WalletFormat";
-import { useBooleanSetting } from "../../utils/settings";
+import { WalletFormatName, ADVANCED_FORMATS } from "@wallets/formats/WalletFormat";
+import { useBooleanSetting } from "@utils/settings";
 
 interface Props {
   initialFormat: WalletFormatName;

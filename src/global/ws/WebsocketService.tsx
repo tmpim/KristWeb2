@@ -3,14 +3,14 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { useState,  useEffect } from "react";
 
-import { store } from "../../App";
-import { WalletMap } from "../../store/reducers/WalletsReducer";
-import * as wsActions from "../../store/actions/WebsocketActions";
-import * as nodeActions from "../../store/actions/NodeActions";
+import { store } from "@app";
+import { WalletMap } from "@reducers/WalletsReducer";
+import * as wsActions from "@actions/WebsocketActions";
+import * as nodeActions from "@actions/NodeActions";
 
-import * as api from "../../krist/api";
-import { KristAddress, KristBlock, KristTransaction, WSConnectionState, WSIncomingMessage, WSSubscriptionLevel } from "../../krist/api/types";
-import { useWallets, findWalletByAddress, syncWallet, syncWalletUpdate, Wallet } from "../../krist/wallets/Wallet";
+import * as api from "@api";
+import { KristAddress, KristBlock, KristTransaction, WSConnectionState, WSIncomingMessage, WSSubscriptionLevel } from "@api/types";
+import { useWallets, findWalletByAddress, syncWallet, syncWalletUpdate, Wallet } from "@wallets/Wallet";
 import WebSocketAsPromised from "websocket-as-promised";
 
 import { throttle } from "lodash-es";

@@ -7,19 +7,19 @@ import { Table, TablePaginationConfig } from "antd";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import { KristTransaction } from "../../krist/api/types";
-import { lookupTransactions, LookupTransactionsOptions, LookupTransactionsResponse, LookupTransactionType } from "../../krist/api/lookup";
-import { useMalleablePagination } from "../../utils/table";
-import { useIntegerSetting } from "../../utils/settings";
+import { KristTransaction } from "@api/types";
+import { lookupTransactions, LookupTransactionsOptions, LookupTransactionsResponse, LookupTransactionType } from "@api/lookup";
+import { useMalleablePagination } from "@utils/table";
+import { useIntegerSetting } from "@utils/settings";
 
 import { ListingType } from "./TransactionsPage";
 
-import { TransactionType, TYPES_SHOW_VALUE } from "../../components/transactions/TransactionType";
-import { ContextualAddress } from "../../components/addresses/ContextualAddress";
-import { KristValue } from "../../components/krist/KristValue";
-import { KristNameLink } from "../../components/names/KristNameLink";
-import { TransactionConciseMetadata } from "../../components/transactions/TransactionConciseMetadata";
-import { DateTime } from "../../components/DateTime";
+import { TransactionType, TYPES_SHOW_VALUE } from "@comp/transactions/TransactionType";
+import { ContextualAddress } from "@comp/addresses/ContextualAddress";
+import { KristValue } from "@comp/krist/KristValue";
+import { KristNameLink } from "@comp/names/KristNameLink";
+import { TransactionConciseMetadata } from "@comp/transactions/TransactionConciseMetadata";
+import { DateTime } from "@comp/DateTime";
 
 import Debug from "debug";
 const debug = Debug("kristweb:transactions-table");

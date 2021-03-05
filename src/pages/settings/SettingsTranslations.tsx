@@ -6,14 +6,14 @@ import { Table, Progress, Typography, Tooltip, Button } from "antd";
 import { ExclamationCircleOutlined, FileExcelOutlined } from "@ant-design/icons";
 
 import { useTranslation } from "react-i18next";
-import { getLanguages, Language } from "../../utils/i18n";
-import { useMountEffect } from "../../utils";
+import { getLanguages, Language } from "@utils/i18n";
+import { useMountEffect } from "@utils";
 
 import csvStringify from "csv-stringify";
 import { saveAs } from "file-saver";
 
-import { Flag } from "../../components/Flag";
-import { SmallResult } from "../../components/results/SmallResult";
+import { Flag } from "@comp/Flag";
+import { SmallResult } from "@comp/results/SmallResult";
 import { SettingsPageLayout } from "./SettingsPage";
 
 const { Text } = Typography;

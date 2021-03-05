@@ -8,15 +8,15 @@ import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 
 import { PageLayout } from "../../layout/PageLayout";
-import { APIErrorResult } from "../../components/results/APIErrorResult";
+import { APIErrorResult } from "@comp/results/APIErrorResult";
 
-import { Statistic } from "../../components/Statistic";
-import { KristValue } from "../../components/krist/KristValue";
-import { DateTime } from "../../components/DateTime";
+import { Statistic } from "@comp/Statistic";
+import { KristValue } from "@comp/krist/KristValue";
+import { DateTime } from "@comp/DateTime";
 
-import * as api from "../../krist/api";
-import { lookupAddress, KristAddressWithNames } from "../../krist/api/lookup";
-import { useWallets } from "../../krist/wallets/Wallet";
+import * as api from "@api";
+import { lookupAddress, KristAddressWithNames } from "@api/lookup";
+import { useWallets } from "@wallets/Wallet";
 
 import { AddressButtonRow } from "./AddressButtonRow";
 import { AddressTransactionsCard } from "./AddressTransactionsCard";

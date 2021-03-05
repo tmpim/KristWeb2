@@ -4,25 +4,25 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 
-import { DashboardPage } from "../pages/dashboard/DashboardPage";
-import { WalletsPage } from "../pages/wallets/WalletsPage";
+import { DashboardPage } from "@pages/dashboard/DashboardPage";
+import { WalletsPage } from "@pages/wallets/WalletsPage";
 
-import { AddressPage } from "../pages/addresses/AddressPage";
-import { BlocksPage } from "../pages/blocks/BlocksPage";
-import { BlockPage } from "../pages/blocks/BlockPage";
-import { TransactionsPage, ListingType as TXListing } from "../pages/transactions/TransactionsPage";
-import { TransactionPage } from "../pages/transactions/TransactionPage";
-import { NamesPage, ListingType as NamesListing } from "../pages/names/NamesPage";
-import { NamePage } from "../pages/names/NamePage";
+import { AddressPage } from "@pages/addresses/AddressPage";
+import { BlocksPage } from "@pages/blocks/BlocksPage";
+import { BlockPage } from "@pages/blocks/BlockPage";
+import { TransactionsPage, ListingType as TXListing } from "@pages/transactions/TransactionsPage";
+import { TransactionPage } from "@pages/transactions/TransactionPage";
+import { NamesPage, ListingType as NamesListing } from "@pages/names/NamesPage";
+import { NamePage } from "@pages/names/NamePage";
 
-import { SettingsPage } from "../pages/settings/SettingsPage";
-import { SettingsTranslations } from "../pages/settings/SettingsTranslations";
+import { SettingsPage } from "@pages/settings/SettingsPage";
+import { SettingsTranslations } from "@pages/settings/SettingsTranslations";
 
-import { CreditsPage } from "../pages/credits/CreditsPage";
+import { CreditsPage } from "@pages/credits/CreditsPage";
 
-import { DevPage } from "../pages/dev/DevPage";
+import { DevPage } from "@pages/dev/DevPage";
 
-import { NotFoundPage } from "../pages/NotFoundPage";
+import { NotFoundPage } from "@pages/NotFoundPage";
 
 interface AppRoute {
   path: string;

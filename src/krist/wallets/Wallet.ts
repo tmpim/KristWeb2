@@ -6,16 +6,16 @@ import { v4 as uuid } from "uuid";
 import { applyWalletFormat, WalletFormatName } from "./formats/WalletFormat";
 import { makeV2Address } from "../AddressAlgo";
 
-import { aesGcmDecrypt, aesGcmEncrypt } from "../../utils/crypto";
+import { aesGcmDecrypt, aesGcmEncrypt } from "@utils/crypto";
 
 import { KristAddressWithNames, lookupAddresses } from "../api/lookup";
 
-import { store } from "../../App";
-import * as actions from "../../store/actions/WalletsActions";
-import { WalletMap } from "../../store/reducers/WalletsReducer";
+import { store } from "@app";
+import * as actions from "@actions/WalletsActions";
+import { WalletMap } from "@reducers/WalletsReducer";
 
 import { useSelector, shallowEqual } from "react-redux";
-import { RootState } from "../../store";
+import { RootState } from "@store";
 
 import { Mutex } from "async-mutex";
 

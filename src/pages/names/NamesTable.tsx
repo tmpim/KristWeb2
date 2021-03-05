@@ -6,15 +6,15 @@ import { Table, TablePaginationConfig, Tag } from "antd";
 
 import { useTranslation } from "react-i18next";
 
-import { KristName } from "../../krist/api/types";
-import { lookupNames, LookupNamesOptions, LookupNamesResponse } from "../../krist/api/lookup";
-import { useMalleablePagination } from "../../utils/table";
-import { useIntegerSetting } from "../../utils/settings";
+import { KristName } from "@api/types";
+import { lookupNames, LookupNamesOptions, LookupNamesResponse } from "@api/lookup";
+import { useMalleablePagination } from "@utils/table";
+import { useIntegerSetting } from "@utils/settings";
 
-import { KristNameLink } from "../../components/names/KristNameLink";
-import { ContextualAddress } from "../../components/addresses/ContextualAddress";
-import { TransactionConciseMetadata } from "../../components/transactions/TransactionConciseMetadata";
-import { DateTime } from "../../components/DateTime";
+import { KristNameLink } from "@comp/names/KristNameLink";
+import { ContextualAddress } from "@comp/addresses/ContextualAddress";
+import { TransactionConciseMetadata } from "@comp/transactions/TransactionConciseMetadata";
+import { DateTime } from "@comp/DateTime";
 
 import Debug from "debug";
 const debug = Debug("kristweb:names-table");

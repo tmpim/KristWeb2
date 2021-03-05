@@ -5,12 +5,12 @@ import React from "react";
 import { Card, Skeleton, Typography, Progress } from "antd";
 
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { RootState } from "@store";
 
 import { useTranslation, Trans } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import { KristValue } from "../../components/krist/KristValue";
+import { KristValue } from "@comp/krist/KristValue";
 
 const { Text } = Typography;
 

@@ -3,11 +3,11 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { PickByValue } from "utility-types";
 
-import { store } from "../App";
-import * as actions from "../store/actions/SettingsActions";
+import { store } from "@app";
+import * as actions from "@actions/SettingsActions";
 
 import { useSelector } from "react-redux";
-import { RootState } from "../store";
+import { RootState } from "@store";
 
 import i18n from "./i18n";
 import { message } from "antd";

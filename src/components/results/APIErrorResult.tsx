@@ -8,7 +8,7 @@ import { FrownOutlined, ExclamationCircleOutlined, QuestionCircleOutlined } from
 import { useTranslation } from "react-i18next";
 
 import { SmallResult, ResultProps } from "./SmallResult";
-import { APIError } from "../../krist/api";
+import { APIError } from "@api";
 
 interface Props {
   error: Error;

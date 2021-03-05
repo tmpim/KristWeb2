@@ -8,8 +8,8 @@ import { Row, Col, Tooltip, Grid } from "antd";
 import { useTranslation, Trans } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import { KristTransaction } from "../../krist/api/types";
-import { Wallet } from "../../krist/wallets/Wallet";
+import { KristTransaction } from "@api/types";
+import { Wallet } from "@wallets/Wallet";
 import { DateTime } from "../DateTime";
 import { KristValue } from "../krist/KristValue";
 import { KristNameLink } from "../names/KristNameLink";

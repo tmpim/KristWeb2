@@ -3,8 +3,8 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React from "react";
 
-import { aesGcmDecrypt } from "../../utils/crypto";
-import { decryptCryptoJS } from "../../utils/CryptoJS";
+import { aesGcmDecrypt } from "@utils/crypto";
+import { decryptCryptoJS } from "@utils/CryptoJS";
 
 import { BackupFormatType } from "./backupFormats";
 

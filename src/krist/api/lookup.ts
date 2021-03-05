@@ -4,7 +4,7 @@
 import { KristAddress, KristTransaction, KristName, KristBlock } from "./types";
 import * as api from ".";
 
-import { LookupFilterOptionsBase, LookupResponseBase, getFilterOptionsQuery } from "../../utils/table";
+import { LookupFilterOptionsBase, LookupResponseBase, getFilterOptionsQuery } from "@utils/table";
 
 // =============================================================================
 // Addresses

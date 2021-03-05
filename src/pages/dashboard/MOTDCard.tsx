@@ -5,12 +5,12 @@ import React from "react";
 import { Card, Alert } from "antd";
 
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { RootState } from "@store";
 
 import { useTranslation } from "react-i18next";
 
 import Linkify from "react-linkify";
-import { DateTime } from "../../components/DateTime";
+import { DateTime } from "@comp/DateTime";
 
 export function MOTDCard(): JSX.Element {
   const { t } = useTranslation();

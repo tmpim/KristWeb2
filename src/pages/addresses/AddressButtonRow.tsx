@@ -7,8 +7,8 @@ import { SendOutlined, SwapOutlined, UserAddOutlined, EditOutlined } from "@ant-
 
 import { useTranslation } from "react-i18next";
 
-import { KristAddressWithNames } from "../../krist/api/lookup";
-import { Wallet } from "../../krist/wallets/Wallet";
+import { KristAddressWithNames } from "@api/lookup";
+import { Wallet } from "@wallets/Wallet";
 import { WalletEditButton } from "../wallets/WalletEditButton";
 
 interface Props {

@@ -6,9 +6,9 @@ import classNames from "classnames";
 import { Menu } from "antd";
 
 import { useTranslation } from "react-i18next";
-import { getLanguages, Language } from "../../utils/i18n";
+import { getLanguages, Language } from "@utils/i18n";
 
-import { Flag } from "../../components/Flag";
+import { Flag } from "@comp/Flag";
 
 interface LanguageItemProps {
   code: string;

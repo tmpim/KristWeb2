@@ -9,17 +9,17 @@ import { useParams, useLocation } from "react-router-dom";
 import { Location } from "history";
 
 import { useSelector, shallowEqual } from "react-redux";
-import { RootState } from "../../store";
-import { State as NodeState } from "../../store/reducers/NodeReducer";
+import { RootState } from "@store";
+import { State as NodeState } from "@reducers/NodeReducer";
 
 import { PageLayout } from "../../layout/PageLayout";
-import { APIErrorResult } from "../../components/results/APIErrorResult";
+import { APIErrorResult } from "@comp/results/APIErrorResult";
 import { TransactionsTable } from "./TransactionsTable";
 
-import { useWallets } from "../../krist/wallets/Wallet";
-import { useBooleanSetting } from "../../utils/settings";
-import { useLinkedPagination } from "../../utils/table";
-import { KristNameLink } from "../../components/names/KristNameLink";
+import { useWallets } from "@wallets/Wallet";
+import { useBooleanSetting } from "@utils/settings";
+import { useLinkedPagination } from "@utils/table";
+import { KristNameLink } from "@comp/names/KristNameLink";
 
 import "./TransactionsPage.less";
 

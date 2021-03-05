@@ -580,11 +580,16 @@
 
   "import": {
     "description": "Paste the backup code (or import from a file below) and enter the corresponding master password.",
+
     "masterPasswordPlaceholder": "Master password",
     "masterPasswordRequired": "Master password is required.",
     "masterPasswordIncorrect": "Master password is incorrect.",
+
     "fromFileButton": "Import from file",
     "textareaPlaceholder": "Paste backup code here",
+    "textareaRequired": "Backup code is required.",
+
+    "modalTitle": "Import backup",
     "modalButton": "Import",
 
     "detectedFormat": "<0>Detected format:</0> <2 />",

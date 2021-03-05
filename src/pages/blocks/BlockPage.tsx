@@ -9,19 +9,19 @@ import { useTranslation } from "react-i18next";
 import { useParams, Link } from "react-router-dom";
 
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { RootState } from "@store";
 
 import { PageLayout } from "../../layout/PageLayout";
-import { APIErrorResult } from "../../components/results/APIErrorResult";
+import { APIErrorResult } from "@comp/results/APIErrorResult";
 
-import { Statistic } from "../../components/Statistic";
-import { ContextualAddress } from "../../components/addresses/ContextualAddress";
+import { Statistic } from "@comp/Statistic";
+import { ContextualAddress } from "@comp/addresses/ContextualAddress";
 import { BlockHash } from "./BlockHash";
-import { KristValue } from "../../components/krist/KristValue";
-import { DateTime } from "../../components/DateTime";
+import { KristValue } from "@comp/krist/KristValue";
+import { DateTime } from "@comp/DateTime";
 
-import * as api from "../../krist/api";
-import { KristBlock } from "../../krist/api/types";
+import * as api from "@api";
+import { KristBlock } from "@api/types";
 
 import "./BlockPage.less";
 

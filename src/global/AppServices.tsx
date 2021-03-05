@@ -3,8 +3,8 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React from "react";
 
-import { SyncWallets } from "../components/wallets/SyncWallets";
-import { ForcedAuth } from "../components/auth/ForcedAuth";
+import { SyncWallets } from "@comp/wallets/SyncWallets";
+import { ForcedAuth } from "@comp/auth/ForcedAuth";
 import { WebsocketService } from "./ws/WebsocketService";
 import { SyncWork } from "./ws/SyncWork";
 import { SyncMOTD } from "./ws/SyncMOTD";

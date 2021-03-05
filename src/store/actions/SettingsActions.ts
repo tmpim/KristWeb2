@@ -6,7 +6,7 @@ import { createAction } from "typesafe-actions";
 
 import * as constants from "../constants";
 
-import { State } from "../reducers/SettingsReducer";
+import { State } from "@reducers/SettingsReducer";
 
 // Boolean settings
 export interface SetBooleanSettingPayload {

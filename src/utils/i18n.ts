@@ -6,7 +6,7 @@ import { isLocalhost } from "./";
 import i18n from "i18next";
 import Backend from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
-import { initReactI18next } from "react-i18next";
+import { initReactI18next, TFunction } from "react-i18next";
 
 import languagesJson from "../__data__/languages.json";
 import packageJson from "../../package.json";
@@ -25,6 +25,18 @@ export interface Contributor {
 
 export function getLanguages(): { [key: string]: Language } | null {
   return languagesJson;
+}
+
+export class TranslatedError extends Error {
+  constructor(message: string) { super(message); }
+}
+
+export function translateError(t: TFunction, error: Error, unknownErrorKey?: string): string {
+  if (error instanceof TranslatedError) {
+    return t(error.message);
+  } else {
+    return unknownErrorKey ? t(unknownErrorKey) : error.message;
+  }
 }
 
 // Provided as a testing polyfill

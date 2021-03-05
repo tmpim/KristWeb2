@@ -7,9 +7,9 @@ import { Row } from "antd";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import { useWallets } from "../../krist/wallets/Wallet";
+import { useWallets } from "@wallets/Wallet";
 
-import { KristTransaction } from "../../krist/api/types";
+import { KristTransaction } from "@api/types";
 import { TransactionItem } from "./TransactionItem";
 
 import "./TransactionSummary.less";

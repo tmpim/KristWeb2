@@ -3,6 +3,6 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { ActionType, StateType } from "typesafe-actions";
 
-export type Store = StateType<typeof import("../App").store>;
+export type Store = StateType<typeof import("@app").store>;
 export type RootAction = ActionType<typeof import("./actions/index").default>;
 export type RootState = StateType<typeof import("./reducers/RootReducer").default>;

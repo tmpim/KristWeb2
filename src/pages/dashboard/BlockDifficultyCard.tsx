@@ -6,18 +6,18 @@ import classNames from "classnames";
 import { Card, Skeleton, Empty, Row, Col, Tooltip, Select } from "antd";
 
 import { useSelector, shallowEqual } from "react-redux";
-import { RootState } from "../../store";
+import { RootState } from "@store";
 import { useTranslation, Trans } from "react-i18next";
 
 import { Line } from "react-chartjs-2";
 
-import * as api from "../../krist/api";
-import { estimateHashRate } from "../../utils/currency";
-import { KristConstants } from "../../krist/api/types";
-import { trailingThrottleState } from "../../utils/promiseThrottle";
+import * as api from "@api";
+import { estimateHashRate } from "@utils/currency";
+import { KristConstants } from "@api/types";
+import { trailingThrottleState } from "@utils/promiseThrottle";
 
-import { SmallResult } from "../../components/results/SmallResult";
-import { Statistic } from "../../components/Statistic";
+import { SmallResult } from "@comp/results/SmallResult";
+import { Statistic } from "@comp/Statistic";
 
 import Debug from "debug";
 const debug = Debug("kristweb:block-difficulty-card");

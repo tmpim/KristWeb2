@@ -6,13 +6,14 @@ import { Popover, Button, Input, Form } from "antd";
 import { TooltipPlacement } from "antd/lib/tooltip";
 
 import { useSelector, shallowEqual } from "react-redux";
-import { RootState } from "../../store";
+import { RootState } from "@store";
 import { useTranslation } from "react-i18next";
+import { translateError } from "@utils/i18n";
 
 import { FakeUsernameInput } from "./FakeUsernameInput";
 import { getMasterPasswordInput } from "./MasterPasswordInput";
 
-import { authMasterPassword } from "../../krist/wallets/WalletManager";
+import { authMasterPassword } from "@wallets/WalletManager";
 
 interface FormValues {
   masterPassword: string;
@@ -36,12 +37,8 @@ export const AuthMasterPasswordPopover: FC<Props> = ({ encrypt, onSubmit, placem
     try {
       await authMasterPassword(salt, tester, values.masterPassword);
       onSubmit();
-    } catch (e) {
-      const message = e.message // Translate the error if we can
-        ? e.message.startsWith("masterPassword.") ? t(e.message) : e.message
-        : t("masterPassword.errorUnknown");
-
-      setPasswordError(message);
+    } catch (err) {
+      setPasswordError(translateError(t, err, "masterPassword.errorUnknown"));
     }
   }
 

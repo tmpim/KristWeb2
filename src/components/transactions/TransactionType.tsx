@@ -7,8 +7,8 @@ import classNames from "classnames";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import { KristTransaction, KristTransactionType } from "../../krist/api/types";
-import { Wallet, useWallets } from "../../krist/wallets/Wallet";
+import { KristTransaction, KristTransactionType } from "@api/types";
+import { Wallet, useWallets } from "@wallets/Wallet";
 
 import "./TransactionType.less";
 

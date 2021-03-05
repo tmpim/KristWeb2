@@ -5,8 +5,8 @@ import React from "react";
 import Icon from "@ant-design/icons";
 
 import { useSelector, shallowEqual } from "react-redux";
-import { RootState } from "../../store";
-import { SettingsState } from "../../utils/settings";
+import { RootState } from "@store";
+import { SettingsState } from "@utils/settings";
 
 export const CymbalIconSvg = (): JSX.Element => (
   <svg width="1em" height="1em" fill="currentColor" viewBox="0 0 270.93 270.93">

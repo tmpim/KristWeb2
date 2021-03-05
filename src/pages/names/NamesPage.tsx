@@ -7,15 +7,15 @@ import { useTranslation, TFunction } from "react-i18next";
 import { useParams } from "react-router-dom";
 
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { RootState } from "@store";
 
 import { PageLayout } from "../../layout/PageLayout";
-import { APIErrorResult } from "../../components/results/APIErrorResult";
+import { APIErrorResult } from "@comp/results/APIErrorResult";
 import { NamesTable } from "./NamesTable";
 
-import { useWallets } from "../../krist/wallets/Wallet";
-import { useBooleanSetting } from "../../utils/settings";
-import { useLinkedPagination } from "../../utils/table";
+import { useWallets } from "@wallets/Wallet";
+import { useBooleanSetting } from "@utils/settings";
+import { useLinkedPagination } from "@utils/table";
 
 import "./NamesPage.less";
 

@@ -6,8 +6,8 @@ import { useTranslation, Trans } from "react-i18next";
 
 import { Link } from "react-router-dom";
 
-import { useMountEffect } from "../../utils";
-import { getAuthorInfo } from "../../utils/credits";
+import { useMountEffect } from "@utils";
+import { getAuthorInfo } from "@utils/credits";
 
 export function SidebarFooter(): JSX.Element {
   const { t } = useTranslation();

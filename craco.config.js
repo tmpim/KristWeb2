@@ -1,6 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
+const CracoAlias = require("craco-alias");
 const CracoLessPlugin = require("craco-less");
 const AntdDayjsWebpackPlugin = require("antd-dayjs-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
@@ -20,6 +21,14 @@ module.exports = {
   },
 
   plugins: [
+    {
+      plugin: CracoAlias,
+      options: {
+        source: "tsconfig",
+        baseUrl: "./src",
+        tsConfigPath: "./tsconfig.extend.json"
+      }
+    },
     {
       plugin: CracoLessPlugin,
       options: {

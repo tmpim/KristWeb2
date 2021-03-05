@@ -6,9 +6,9 @@ import { Card, Table } from "antd";
 
 import { useTranslation } from "react-i18next";
 
-import { KristTransaction } from "../../krist/api/types";
+import { KristTransaction } from "@api/types";
 
-import { HelpIcon } from "../../components/HelpIcon";
+import { HelpIcon } from "@comp/HelpIcon";
 
 export function TransactionRawDataCard({ transaction }: { transaction: KristTransaction }): JSX.Element {
   const { t } = useTranslation();

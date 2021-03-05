@@ -9,11 +9,11 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { NameItem } from "./NameItem";
-import { lookupNames, LookupNamesResponse } from "../../krist/api/lookup";
+import { lookupNames, LookupNamesResponse } from "@api/lookup";
 
-import { useSyncNode } from "../../krist/api";
+import { useSyncNode } from "@api";
 
-import { SmallResult } from "../../components/results/SmallResult";
+import { SmallResult } from "@comp/results/SmallResult";
 
 import Debug from "debug";
 const debug = Debug("kristweb:address-names-card");

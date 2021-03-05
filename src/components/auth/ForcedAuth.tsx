@@ -5,11 +5,11 @@ import { message } from "antd";
 import { useTranslation, TFunction } from "react-i18next";
 
 import { useSelector, shallowEqual } from "react-redux";
-import { RootState } from "../../store";
+import { RootState } from "@store";
 
-import { authMasterPassword } from "../../krist/wallets/WalletManager";
+import { authMasterPassword } from "@wallets/WalletManager";
 
-import { useMountEffect } from "../../utils";
+import { useMountEffect } from "@utils";
 
 async function forceAuth(t: TFunction, salt: string, tester: string): Promise<void> {
   try {

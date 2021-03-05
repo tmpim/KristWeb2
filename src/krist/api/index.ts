@@ -2,11 +2,11 @@
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { notification } from "antd";
-import i18n from "../../utils/i18n";
+import i18n from "@utils/i18n";
 
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
-import { store } from "../../App";
+import { RootState } from "@store";
+import { store } from "@app";
 
 import { APIResponse } from "./types";
 import { throttle } from "lodash-es";

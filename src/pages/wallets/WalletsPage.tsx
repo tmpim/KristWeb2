@@ -8,11 +8,11 @@ import { DatabaseOutlined, PlusOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 
 import { PageLayout } from "../../layout/PageLayout";
-import { AuthorisedAction } from "../../components/auth/AuthorisedAction";
+import { AuthorisedAction } from "@comp/auth/AuthorisedAction";
 import { AddWalletModal } from "./AddWalletModal";
 import { WalletsTable } from "./WalletsTable";
 
-import { useWallets } from "../../krist/wallets/Wallet";
+import { useWallets } from "@wallets/Wallet";
 
 import "./WalletsPage.less";
 

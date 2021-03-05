@@ -7,12 +7,12 @@ import { Card, Skeleton, Empty } from "antd";
 
 import { useTranslation } from "react-i18next";
 
-import { TransactionSummary } from "../../components/transactions/TransactionSummary";
-import { lookupTransactions, LookupTransactionsResponse } from "../../krist/api/lookup";
+import { TransactionSummary } from "@comp/transactions/TransactionSummary";
+import { lookupTransactions, LookupTransactionsResponse } from "@api/lookup";
 
-import { useSyncNode } from "../../krist/api";
+import { useSyncNode } from "@api";
 
-import { SmallResult } from "../../components/results/SmallResult";
+import { SmallResult } from "@comp/results/SmallResult";
 
 import Debug from "debug";
 const debug = Debug("kristweb:address-transactions-card");

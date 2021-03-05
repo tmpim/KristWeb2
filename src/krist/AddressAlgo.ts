@@ -1,7 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { sha256, doubleSHA256 } from "../utils/crypto";
+import { sha256, doubleSHA256 } from "@utils/crypto";
 
 const hexToBase36 = (input: number): string => {
   const byte = 48 + Math.floor(input / 7);

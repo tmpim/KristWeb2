@@ -6,19 +6,19 @@ import { Modal, Form, Input, Checkbox, Collapse, Button, Tooltip, Typography, Ro
 import { ReloadOutlined } from "@ant-design/icons";
 
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { RootState } from "@store";
 import { useTranslation, Trans } from "react-i18next";
 
-import { generatePassword } from "../../utils";
+import { generatePassword } from "@utils";
 
-import { FakeUsernameInput } from "../../components/auth/FakeUsernameInput";
-import { CopyInputButton } from "../../components/CopyInputButton";
-import { SelectWalletCategory } from "../../components/wallets/SelectWalletCategory";
+import { FakeUsernameInput } from "@comp/auth/FakeUsernameInput";
+import { CopyInputButton } from "@comp/CopyInputButton";
+import { SelectWalletCategory } from "@comp/wallets/SelectWalletCategory";
 
-import { WalletFormatName, applyWalletFormat, formatNeedsUsername } from "../../krist/wallets/formats/WalletFormat";
-import { SelectWalletFormat } from "../../components/wallets/SelectWalletFormat";
-import { makeV2Address } from "../../krist/AddressAlgo";
-import { useWallets, addWallet, decryptWallet, editWallet, Wallet, ADDRESS_LIST_LIMIT } from "../../krist/wallets/Wallet";
+import { WalletFormatName, applyWalletFormat, formatNeedsUsername } from "@wallets/formats/WalletFormat";
+import { SelectWalletFormat } from "@comp/wallets/SelectWalletFormat";
+import { makeV2Address } from "@krist/AddressAlgo";
+import { useWallets, addWallet, decryptWallet, editWallet, Wallet, ADDRESS_LIST_LIMIT } from "@wallets/Wallet";
 
 const { Text } = Typography;
 const { useBreakpoint } = Grid;

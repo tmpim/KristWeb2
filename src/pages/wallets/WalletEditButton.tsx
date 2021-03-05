@@ -3,10 +3,10 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React, { useState, FC } from "react";
 
-import { AuthorisedAction } from "../../components/auth/AuthorisedAction";
+import { AuthorisedAction } from "@comp/auth/AuthorisedAction";
 import { AddWalletModal } from "./AddWalletModal";
 
-import { Wallet } from "../../krist/wallets/Wallet";
+import { Wallet } from "@wallets/Wallet";
 
 interface Props {
   wallet: Wallet;

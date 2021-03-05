@@ -6,7 +6,7 @@ import { Input, InputNumber, Button } from "antd";
 
 import { useTranslation } from "react-i18next";
 
-import { SettingName, setIntegerSetting, useIntegerSetting, validateIntegerSetting } from "../../utils/settings";
+import { SettingName, setIntegerSetting, useIntegerSetting, validateIntegerSetting } from "@utils/settings";
 import { SettingDescription } from "./SettingDescription";
 
 interface Props {

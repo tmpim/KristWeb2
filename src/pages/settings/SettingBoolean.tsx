@@ -6,7 +6,7 @@ import { Switch } from "antd";
 
 import { useTranslation } from "react-i18next";
 
-import { SettingName, setBooleanSetting, useBooleanSetting } from "../../utils/settings";
+import { SettingName, setBooleanSetting, useBooleanSetting } from "@utils/settings";
 import { SettingDescription } from "./SettingDescription";
 
 interface Props {

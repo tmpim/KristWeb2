@@ -3,7 +3,7 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import App from "../App";
+import App from "@app";
 
 test("renders the app", async () => {
   render(<App />);

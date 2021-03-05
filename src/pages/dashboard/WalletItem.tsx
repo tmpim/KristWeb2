@@ -4,9 +4,9 @@
 import React from "react";
 import { Row, Col } from "antd";
 
-import { Wallet } from "../../krist/wallets/Wallet";
+import { Wallet } from "@wallets/Wallet";
 
-import { KristValue } from "../../components/krist/KristValue";
+import { KristValue } from "@comp/krist/KristValue";
 
 export function WalletItem({ wallet }: { wallet: Wallet }): JSX.Element {
   return <Row className="card-list-item dashboard-wallet-item">

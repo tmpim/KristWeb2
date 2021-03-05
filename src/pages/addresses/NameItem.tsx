@@ -7,9 +7,9 @@ import { Row } from "antd";
 import { useTranslation, Trans } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import { KristName } from "../../krist/api/types";
-import { KristNameLink } from "../../components/names/KristNameLink";
-import { DateTime } from "../../components/DateTime";
+import { KristName } from "@api/types";
+import { KristNameLink } from "@comp/names/KristNameLink";
+import { DateTime } from "@comp/DateTime";
 
 export function NameItem({ name }: { name: KristName }): JSX.Element {
   const { t } = useTranslation();

@@ -5,10 +5,10 @@ import React from "react";
 import { Tooltip } from "antd";
 
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { RootState } from "@store";
 import { useTranslation } from "react-i18next";
 
-import { WSConnectionState } from "../../krist/api/types";
+import { WSConnectionState } from "@api/types";
 
 import "./ConnectionIndicator.less";
 

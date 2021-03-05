@@ -4,14 +4,14 @@
 import React, { useState, useMemo } from "react";
 
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { RootState } from "@store";
 
 import { PageLayout } from "../../layout/PageLayout";
-import { APIErrorResult } from "../../components/results/APIErrorResult";
+import { APIErrorResult } from "@comp/results/APIErrorResult";
 import { BlocksTable } from "./BlocksTable";
 
-import { useBooleanSetting } from "../../utils/settings";
-import { useLinkedPagination } from "../../utils/table";
+import { useBooleanSetting } from "@utils/settings";
+import { useLinkedPagination } from "@utils/table";
 
 interface Props {
   lowest?: boolean;

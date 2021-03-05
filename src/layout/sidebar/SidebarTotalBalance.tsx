@@ -4,8 +4,8 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import { useWallets } from "../../krist/wallets/Wallet";
-import { KristValue } from "../../components/krist/KristValue";
+import { useWallets } from "@wallets/Wallet";
+import { KristValue } from "@comp/krist/KristValue";
 
 export function SidebarTotalBalance(): JSX.Element {
   const { t } = useTranslation();
