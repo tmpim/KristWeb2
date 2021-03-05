@@ -2,7 +2,7 @@
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React, { useState, Dispatch, SetStateAction } from "react";
-import { Modal, Form, FormInstance, Input, Button, Typography, Upload, UploadProps, notification } from "antd";
+import { Modal, Form, FormInstance, Input, Button, Typography, notification } from "antd";
 
 import { useTranslation } from "react-i18next";
 import { translateError } from "@utils/i18n";
@@ -40,44 +40,6 @@ export function ImportBackupModal({ visible, setVisible }: Props): JSX.Element {
   const [masterPasswordError, setMasterPasswordError] = useState<string>();
   const [results, setResults] = useState<BackupResults>();
 
-  const uploadProps: UploadProps = {
-    showUploadList: false,
-
-    /** Updates the contents of the 'code' field with the given file. */
-    beforeUpload(file) {
-      debug("importing file %s: %o", file.name, file);
-
-      // Disallow non-plaintext files
-      if (file.type !== "text/plain") {
-        notification.error({
-          message: t("import.fileErrorTitle"),
-          description: t("import.fileErrorNotText")
-        });
-        return false;
-      }
-
-      // Read the file and update the contents of the code field
-      const reader = new FileReader();
-      reader.readAsText(file, "UTF-8");
-      reader.onload = e => {
-        if (!e.target || !e.target.result) {
-          debug("reader.onload target was null?!", e);
-          return;
-        }
-
-        const contents = e.target.result.toString();
-        debug("got file contents: %s", contents);
-
-        // Update the form
-        setCode(contents); // Triggers a format re-detection
-        form.setFieldsValue({ code: contents });
-      };
-
-      // Don't actually upload the file
-      return false;
-    }
-  };
-
   /** Resets all the state when the modal is closed. */
   function resetState() {
     form.resetFields();
@@ -95,6 +57,41 @@ export function ImportBackupModal({ visible, setVisible }: Props): JSX.Element {
 
   function onValuesChange(changed: Partial<FormValues>) {
     if (changed.code) setCode(changed.code);
+  }
+
+  /** Updates the contents of the 'code' field with the given file. */
+  function onFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const { files } = e.target;
+    if (!files?.[0]) return;
+    const file = files[0];
+
+    debug("importing file %s: %o", file.name, file);
+
+    // Disallow non-plaintext files
+    if (file.type !== "text/plain") {
+      notification.error({
+        message: t("import.fileErrorTitle"),
+        description: t("import.fileErrorNotText")
+      });
+      return;
+    }
+
+    // Read the file and update the contents of the code field
+    const reader = new FileReader();
+    reader.readAsText(file, "UTF-8");
+    reader.onload = e => {
+      if (!e.target || !e.target.result) {
+        debug("reader.onload target was null?!", e);
+        return;
+      }
+
+      const contents = e.target.result.toString();
+      debug("got file contents: %s", contents);
+
+      // Update the form
+      setCode(contents); // Triggers a format re-detection
+      form.setFieldsValue({ code: contents });
+    };
   }
 
   // Detect the backup format for the final time, validate the password, and
@@ -151,10 +148,28 @@ export function ImportBackupModal({ visible, setVisible }: Props): JSX.Element {
       ]
       : [ // Import screen
         // "Import from file" button for import screen
-        <div key="importFromFile"  style={{ float: "left" }}>
-          <Upload {...uploadProps}>
-            <Button>{t("import.fromFileButton")}</Button>
-          </Upload>
+        <div key="importFromFile" style={{ float: "left" }}>
+          {/* Pretend to be an ant-design button (for some reason, nesting a
+            * Button in a label just wouldn't work) */}
+          <label htmlFor="import-backup-file" className="ant-btn">
+            {/* I have no idea why verticalAlign has to be specified here */}
+            <span style={{ verticalAlign: "middle" }}>
+              {t("import.fromFileButton")}
+            </span>
+          </label>
+
+          {/* ant-design's Upload/rc-upload was over 24 kB for this, and we
+            * only use it for the most trivial functionality, so may as well
+            * just use a bare component. It's okay that this input will
+            * probably get re-rendered (and thus lose its value) every time
+            * the state changes, as we only use it to update `code`'s state
+            * immediately after a file is picked. */}
+          <input
+            id="import-backup-file"
+            type="file"
+            style={{ display: "none" }}
+            onChange={onFileChange}
+          />
         </div>,
 
         // "Cancel" button for import screen
