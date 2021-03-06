@@ -8,7 +8,7 @@ import { backupDecryptValue } from "./backupImport";
 import {
   ADDRESS_LIST_LIMIT,
   WALLET_FORMATS, ADVANCED_FORMATS, WalletFormatName, formatNeedsUsername,
-  WalletMap, calculateAddress
+  WalletMap, WalletNew, calculateAddress, editWalletLabel, addWallet
 } from "@wallets";
 
 import { isPlainObject, memoize } from "lodash-es";
@@ -30,6 +30,7 @@ const _upgradeFormatName = (name: string): WalletFormatName =>
 export async function importV1Wallet(
   // Things regarding the app's existing state
   existingWallets: WalletMap,
+  appMasterPassword: string,
   appSyncNode: string,
   addressPrefix: string,
 
@@ -124,6 +125,11 @@ export async function importV1Wallet(
   if (str(wallet.icon)) importWarn("warningIcon");
 
   // Check that the label is valid for KristWeb v2
+  // NOTE: this length check is unlikely to fail for KristWeb v1 imports
+  //       because the label max length is set to 30, though it looks like that
+  //       limit was added retroactively, so there may be some violating
+  //       wallets. Better safe than sorry.
+  //       See: https://github.com/tmpim/KristWeb/commit/82cab97
   const { label } = wallet;
   const labelValid = str(label) && label.trim().length < 32;
   if (label && !labelValid) importWarn("warningLabelInvalid");
@@ -157,8 +163,10 @@ export async function importV1Wallet(
 
   // Skip with no additional checks or updates if this wallet was already
   // handled by this backup import
-  if (existingImportWallet)
+  if (existingImportWallet) {
+    results.skippedWallets++;
     return success({ key: "import.walletMessages.successImportSkipped", args: { address }});
+  }
 
   // ---------------------------------------------------------------------------
   // WALLET IMPORT
@@ -170,11 +178,22 @@ export async function importV1Wallet(
     if (labelValid && existingWallet.label !== label!.trim()) {
       if (noOverwrite) {
         // The user didn't want to overwrite the wallet, so skip it
+        results.skippedWallets++;
         return success({ key: "import.walletMessages.successSkippedNoOverwrite", args: { address }});
       } else {
-        // TODO: Edit the wallet
+        const newLabel = label!.trim();
+        debug(
+          "changing existing wallet %s (%s) label from %s to %s",
+          existingWallet.id, existingWallet.address,
+          existingWallet.label, newLabel
+        );
+
+        await editWalletLabel(existingWallet, newLabel);
+
+        return success({ key: "import.walletMessages.successUpdated", args: { address, label: newLabel }});
       }
     } else {
+      results.skippedWallets++;
       return success({ key: "import.walletMessages.successSkipped", args: { address }});
     }
   }
@@ -189,4 +208,24 @@ export async function importV1Wallet(
   // Now that we're actually importing the wallet, push any warnings that may
   // have been generated
   importWarnings.forEach(warn);
+
+  const newWalletData: WalletNew = {
+    label,
+    // Password is provided to addWallet for encryption
+    username,
+    format,
+  };
+
+  debug("adding new wallet %s", address);
+  const newWallet = await addWallet(
+    addressPrefix, appMasterPassword,
+    newWalletData, password,
+    true
+  );
+  debug("new wallet %s (%s): %o", newWallet.id, newWallet.address, newWallet);
+
+  // Add it to the results
+  results.newWallets++;
+  results.importedWallets.push(newWallet); // To keep track of limits
+  return success("import.walletMessages.success");
 }

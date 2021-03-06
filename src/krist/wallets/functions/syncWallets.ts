@@ -8,6 +8,9 @@ import { KristAddressWithNames, lookupAddresses } from "../../api/lookup";
 
 import { Wallet, saveWallet } from "..";
 
+import Debug from "debug";
+const debug = Debug("kristweb:sync-wallets");
+
 function syncWalletProperties(
   wallet: Wallet,
   address: KristAddressWithNames,
@@ -28,6 +31,8 @@ export async function syncWallet(wallet: Wallet): Promise<void> {
   // Fetch the data from the sync node (e.g. balance)
   const { address } = wallet;
   const lookupResults = await lookupAddresses([address], true);
+
+  debug("synced individual wallet %s (%s): %o", wallet.id, wallet.address, lookupResults);
 
   const kristAddress = lookupResults[address];
   if (!kristAddress) return; // Skip unsyncable wallet

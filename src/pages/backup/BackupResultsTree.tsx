@@ -2,7 +2,7 @@
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React, { useMemo } from "react";
-import { Tree, Typography } from "antd";
+import { Tree } from "antd";
 import { DataNode } from "antd/lib/tree";
 import { CheckCircleOutlined, WarningOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 
@@ -15,8 +15,6 @@ import {
 } from "./backupResults";
 
 import "./BackupResultsTree.less";
-
-const { Paragraph } = Typography;
 
 interface Props {
   results: BackupResults;
@@ -74,7 +72,7 @@ function getTreeData(
   results: BackupResults
 ): DataNode[] {
   // Add the wallet messages data
-  const walletData: DataNode[] = [];
+  const out: DataNode[] = [];
 
   for (const id in results.messages.wallets) {
     // The IDs are the keys of the backup, which may begin with prefixes like
@@ -97,7 +95,7 @@ function getTreeData(
       });
     }
 
-    walletData.push({
+    out.push({
       key: `wallets-${cleanID}`,
       title: t("import.results.treeWallet", { id: cleanID }),
       children: messageNodes
@@ -106,11 +104,7 @@ function getTreeData(
 
   // TODO: Add the friends data
 
-  return [{
-    key: "wallets",
-    title: t("import.results.treeHeaderWallets"),
-    children: walletData
-  }];
+  return out;
 }
 
 export function BackupResultsTree({ results }: Props): JSX.Element {
@@ -119,19 +113,13 @@ export function BackupResultsTree({ results }: Props): JSX.Element {
   const treeData = useMemo(() =>
     getTreeData(t, i18n, results), [t, i18n, results]);
 
-  return <>
-    {/* Results summary */}
-    <Paragraph></Paragraph>
+  return <Tree
+    className="backup-results-tree"
 
-    {/* Results tree */}
-    <Tree
-      className="backup-results-tree"
+    selectable={false}
+    defaultExpandAll
+    showIcon
 
-      selectable={false}
-      defaultExpandAll
-      showIcon
-
-      treeData={treeData}
-    />
-  </>;
+    treeData={treeData}
+  />;
 }

@@ -586,6 +586,8 @@
     "masterPasswordRequired": "Master password is required.",
     "masterPasswordIncorrect": "Master password is incorrect.",
 
+    "appMasterPasswordRequired": "You must be authenticated to import wallets.",
+
     "fromFileButton": "Import from file",
     "textareaPlaceholder": "Paste backup code here",
     "textareaRequired": "Backup code is required.",
@@ -673,5 +675,7 @@
       "treeWallet": "Wallet {{id}}",
       "treeFriend": "Friend {{id}}"
     }
-  }
+  },
+
+  "walletLimitMessage": "You have more wallets stored than KristWeb supports. This was either caused by a bug, or you bypassed it intentionally. Expect issues with syncing."
 }

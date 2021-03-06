@@ -88,9 +88,19 @@ export async function backupImport(
   // Fetch the current set of wallets from the Redux store, to ensure the limit
   // isn't reached, and to handle duplication checking.
   const existingWallets = store.getState().wallets.wallets;
-  // Fetch other useful state from the Redux store
+  // Used to encrypt new wallets/edited wallets
+  const appMasterPassword = store.getState().masterPassword.masterPassword;
+  // Used to check if an imported v1 wallet has a custom sync node
   const appSyncNode = store.getState().node.syncNode;
+  // Used to re-calculate the addresses
   const addressPrefix = store.getState().node.currency.address_prefix;
+
+  // The app master password is required to import wallets. The backup import
+  // is usually done through an authenticated action anyway.
+  // TODO: When adding legacy wallet imports, use the 'previous' master
+  //       password as the new one. Add a screen to change it at any point.
+  if (!appMasterPassword)
+    throw new TranslatedError("import.appMasterPasswordRequired");
 
   // The results instance to keep track of logged messages, etc.
   const results = new BackupResults();
@@ -110,7 +120,7 @@ export async function backupImport(
 
       try {
         await importV1Wallet(
-          existingWallets, appSyncNode, addressPrefix,
+          existingWallets, appMasterPassword, appSyncNode, addressPrefix,
           backup, masterPassword, noOverwrite,
           uuid, rawWallet,
           results

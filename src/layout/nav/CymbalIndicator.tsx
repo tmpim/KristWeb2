@@ -2,11 +2,16 @@
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React from "react";
+import { Typography } from "antd";
 import Icon from "@ant-design/icons";
 
 import { useSelector, shallowEqual } from "react-redux";
 import { RootState } from "@store";
 import { SettingsState } from "@utils/settings";
+
+import { useWallets, ADDRESS_LIST_LIMIT } from "@wallets";
+
+const { Text } = Typography;
 
 export const CymbalIconSvg = (): JSX.Element => (
   <svg width="1em" height="1em" fill="currentColor" viewBox="0 0 270.93 270.93">
@@ -18,9 +23,17 @@ export const CymbalIcon = (props: any): JSX.Element =>
 
 export function CymbalIndicator(): JSX.Element | null {
   const allSettings: SettingsState = useSelector((s: RootState) => s.settings, shallowEqual);
-  const on = allSettings.walletFormats;
+  const { addressList } = useWallets();
+
+  const on = allSettings.walletFormats
+    || addressList.length > ADDRESS_LIST_LIMIT;
 
   return on ? <div className="site-header-element">
     <CymbalIcon className="site-header-cymbal" />
+    {addressList.length > ADDRESS_LIST_LIMIT && (
+      <Text type="secondary" style={{ fontSize: "80%", marginLeft: "4px" }}>
+        {addressList.length.toLocaleString()}
+      </Text>
+    )}
   </div> : null;
 }

@@ -13,6 +13,7 @@ import { ImportDetectFormat } from "./ImportDetectFormat";
 import { decodeBackup } from "./backupParser";
 import { backupVerifyPassword, backupImport } from "./backupImport";
 import { BackupResults } from "./backupResults";
+import { BackupResultsSummary } from "./BackupResultsSummary";
 import { BackupResultsTree } from "./BackupResultsTree";
 
 import Debug from "debug";
@@ -36,6 +37,7 @@ export function ImportBackupModal({ visible, setVisible }: Props): JSX.Element {
   const { t } = useTranslation();
 
   const [form] = Form.useForm<FormValues>();
+  const [loading, setLoading] = useState(false);
   const [code, setCode] = useState("");
   const [decodeError, setDecodeError] = useState<string>();
   const [masterPasswordError, setMasterPasswordError] = useState<string>();
@@ -44,6 +46,7 @@ export function ImportBackupModal({ visible, setVisible }: Props): JSX.Element {
   /** Resets all the state when the modal is closed. */
   function resetState() {
     form.resetFields();
+    setLoading(false);
     setCode("");
     setDecodeError("");
     setMasterPasswordError("");
@@ -106,6 +109,8 @@ export function ImportBackupModal({ visible, setVisible }: Props): JSX.Element {
     const { masterPassword, code, overwrite } = values;
     if (!masterPassword || !code) return;
 
+    setLoading(true);
+
     try {
       // Decode first
       const backup = decodeBackup(code);
@@ -129,6 +134,8 @@ export function ImportBackupModal({ visible, setVisible }: Props): JSX.Element {
         console.error(err);
         setDecodeError(translateError(t, err, "import.decodeErrors.unknown"));
       }
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -141,7 +148,7 @@ export function ImportBackupModal({ visible, setVisible }: Props): JSX.Element {
     // Grow the modal when there are results. This not only helps make it look
     // better, but also prevents the user from accidentally double clicking
     // the 'Import' button and immediately closing the results.
-    width={results ? 768 : undefined}
+    width={results ? 640 : undefined}
 
     onCancel={closeModal}
 
@@ -187,16 +194,23 @@ export function ImportBackupModal({ visible, setVisible }: Props): JSX.Element {
         </Button>,
 
         // "Import" button for import screen
-        <Button key="import" type="primary" onClick={onFinish}>
+        <Button
+          key="import"
+          type="primary"
+
+          loading={loading}
+          onClick={onFinish}
+        >
           {t("import.modalButton")}
         </Button>
       ]}
   >
     {results
-      ? (
-        // Got results - show them
+      ? <>
+        {/* Got results - show them */}
+        <BackupResultsSummary results={results} />
         <BackupResultsTree results={results} />
-      )
+      </>
       : (
         // No results - show the import form
         <ImportBackupForm

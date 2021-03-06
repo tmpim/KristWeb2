@@ -54,3 +54,39 @@ export async function editWallet(
 
   syncWallet(finalWallet);
 }
+
+/**
+ * Edits just a wallet's label and category. They can be set to an empty
+ * string to be removed, or to `undefined` to use the existing value.
+ *
+ * @param wallet - The old wallet information.
+ * @param label - The new wallet label.
+ * @param category - The new wallet category.
+ */
+export async function editWalletLabel(
+  wallet: Wallet,
+  label: string | "" | undefined,
+  category?: string | "" | undefined
+): Promise<void> {
+  const updatedLabel = label?.trim() === ""
+    ? undefined
+    : (label?.trim() || wallet.label);
+  const updatedCategory = category?.trim() === ""
+    ? undefined
+    : (category?.trim() || wallet.category);
+
+  const finalWallet = {
+    ...wallet,
+    label: updatedLabel,
+    category: updatedCategory
+  };
+
+  // Save the updated wallet to local storage
+  saveWallet(finalWallet);
+
+  // Dispatch the changes to the redux store
+  store.dispatch(actions.updateWallet(wallet.id, finalWallet));
+
+  syncWallet(finalWallet);
+}
+

@@ -4,6 +4,9 @@
 @import (reference) "../../App.less";
 
 .backup-results-tree {
+  max-height: 480px;
+  overflow-y: auto;
+
   .backup-result-icon {
     margin-right: @padding-xs;
   }
@@ -16,5 +19,10 @@
   // Make the non-leaf nodes bold, so the tree is more readable
   .ant-tree-treenode:not(.backup-results-tree-message) .ant-tree-title {
     font-weight: 500;
+  }
+
+  // The leaf nodes have an invisible button which takes up space; remove that
+  .ant-tree-switcher-noop {
+    display: none;
   }
 }

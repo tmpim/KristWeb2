@@ -12,6 +12,9 @@ import { SetMasterPasswordModal } from "./SetMasterPasswordModal";
 
 import "./AuthorisedAction.less";
 
+import Debug from "debug";
+const debug = Debug("kristweb:authorised-action");
+
 interface Props {
   encrypt?: boolean;
   onAuthed?: () => void;
@@ -31,6 +34,8 @@ export const AuthorisedAction: FC<Props> = ({ encrypt, onAuthed, popoverPlacemen
     // directly:
     return <a href="#" onClick={e => {
       e.preventDefault();
+      debug("authorised action occurred: was already authed");
+
       if (onAuthed) onAuthed();
     }}>
       {children}
@@ -40,6 +45,8 @@ export const AuthorisedAction: FC<Props> = ({ encrypt, onAuthed, popoverPlacemen
     return <>
       <a href="#" onClick={e => {
         e.preventDefault();
+        debug("authorised action postponed: no master password set");
+
         if (!clicked) setClicked(true);
         setModalVisible(true);
       }}>
@@ -49,7 +56,12 @@ export const AuthorisedAction: FC<Props> = ({ encrypt, onAuthed, popoverPlacemen
       {clicked && <SetMasterPasswordModal
         visible={modalVisible}
         onCancel={() => setModalVisible(false)}
-        onSubmit={() => { setModalVisible(false); if (onAuthed) onAuthed(); }}
+        onSubmit={() => {
+          debug("authorised action occurred: master password now set, continuing with action");
+
+          setModalVisible(false);
+          if (onAuthed) onAuthed();
+        }}
       />}
     </>;
   } else {
@@ -57,7 +69,10 @@ export const AuthorisedAction: FC<Props> = ({ encrypt, onAuthed, popoverPlacemen
     // enter it:
     return <AuthMasterPasswordPopover
       encrypt={encrypt}
-      onSubmit={() => { if (onAuthed) onAuthed(); }}
+      onSubmit={() => {
+        debug("authorised action occurred: master password provided");
+        if (onAuthed) onAuthed();
+      }}
       placement={popoverPlacement}
     >
       {children}

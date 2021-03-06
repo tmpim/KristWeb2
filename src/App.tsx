@@ -7,9 +7,6 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
 import { initStore } from "./store/init";
 
-import { HotKeys } from "react-hotkeys";
-import { keyMap } from "./global/AppHotkeys";
-
 // Set up localisation
 import "./utils/i18n";
 
@@ -31,14 +28,12 @@ function App(): JSX.Element {
 
   return <Suspense fallback={<AppLoading />}>
     <Provider store={store}>
-      <HotKeys keyMap={keyMap}>
-        <Router>
-          <CheckStatus />
+      <Router>
+        <CheckStatus />
 
-          {/* Services, etc. */}
-          <AppServices />
-        </Router>
-      </HotKeys>
+        {/* Services, etc. */}
+        <AppServices />
+      </Router>
     </Provider>
   </Suspense>;
 }
