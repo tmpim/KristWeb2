@@ -4,7 +4,7 @@
 import React from "react";
 import { Row, Col } from "antd";
 
-import { Wallet } from "@wallets/Wallet";
+import { Wallet } from "@wallets";
 
 import { KristValue } from "@comp/krist/KristValue";
 

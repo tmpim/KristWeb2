@@ -5,7 +5,7 @@ import { toHex } from "@utils";
 import { aesGcmEncrypt, aesGcmDecrypt } from "@utils/crypto";
 
 import { store } from "@app";
-import * as actions from "@actions/WalletManagerActions";
+import * as actions from "@actions/MasterPasswordActions";
 
 import { TranslatedError } from "@utils/i18n";
 

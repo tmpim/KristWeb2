@@ -13,7 +13,7 @@ import { PageLayout } from "../../layout/PageLayout";
 import { APIErrorResult } from "@comp/results/APIErrorResult";
 import { NamesTable } from "./NamesTable";
 
-import { useWallets } from "@wallets/Wallet";
+import { useWallets } from "@wallets";
 import { useBooleanSetting } from "@utils/settings";
 import { useLinkedPagination } from "@utils/table";
 

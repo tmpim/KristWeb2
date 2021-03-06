@@ -8,7 +8,7 @@ import { useTranslation, Trans } from "react-i18next";
 import { FakeUsernameInput } from "./FakeUsernameInput";
 import { getMasterPasswordInput } from "./MasterPasswordInput";
 
-import { setMasterPassword } from "@wallets/WalletManager";
+import { setMasterPassword } from "@wallets";
 
 interface Props {
   visible: boolean;

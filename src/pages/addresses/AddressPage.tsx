@@ -16,7 +16,7 @@ import { DateTime } from "@comp/DateTime";
 
 import * as api from "@api";
 import { lookupAddress, KristAddressWithNames } from "@api/lookup";
-import { useWallets } from "@wallets/Wallet";
+import { useWallets } from "@wallets";
 
 import { AddressButtonRow } from "./AddressButtonRow";
 import { AddressTransactionsCard } from "./AddressTransactionsCard";

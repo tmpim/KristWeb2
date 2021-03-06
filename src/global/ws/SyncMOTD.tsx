@@ -12,7 +12,7 @@ import { store } from "@app";
 import * as api from "@api";
 import { KristMOTD, KristMOTDBase } from "@api/types";
 
-import { recalculateWallets, useWallets } from "@wallets/Wallet";
+import { recalculateWallets, useWallets } from "@wallets";
 
 import Debug from "debug";
 const debug = Debug("kristweb:sync-motd");
@@ -46,7 +46,7 @@ export function SyncMOTD(): JSX.Element | null {
 
   // All these are used to determine if we need to recalculate the addresses
   const addressPrefix = useSelector((s: RootState) => s.node.currency.address_prefix);
-  const masterPassword = useSelector((s: RootState) => s.walletManager.masterPassword);
+  const masterPassword = useSelector((s: RootState) => s.masterPassword.masterPassword);
   const { wallets } = useWallets();
 
   // Update the MOTD when the sync node changes, and on startup

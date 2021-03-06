@@ -5,8 +5,7 @@ import { createAction } from "typesafe-actions";
 
 import * as constants from "../constants";
 
-import { WalletMap } from "@reducers/WalletsReducer";
-import { Wallet, WalletSyncable, WalletUpdatable } from "@wallets/Wallet";
+import { Wallet, WalletMap, WalletSyncable, WalletUpdatable } from "@wallets";
 
 export interface LoadWalletsPayload { wallets: WalletMap }
 export const loadWallets = createAction(constants.LOAD_WALLETS,

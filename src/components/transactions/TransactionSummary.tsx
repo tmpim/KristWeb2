@@ -7,7 +7,7 @@ import { Row } from "antd";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import { useWallets } from "@wallets/Wallet";
+import { useWallets } from "@wallets";
 
 import { KristTransaction } from "@api/types";
 import { TransactionItem } from "./TransactionItem";

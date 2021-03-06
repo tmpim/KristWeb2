@@ -5,13 +5,11 @@ import { BackupKristWebV1, KristWebV1Wallet } from "./backupFormats";
 import { BackupWalletError, BackupResults, MessageType } from "./backupResults";
 import { backupDecryptValue } from "./backupImport";
 
-import { WalletMap } from "@reducers/WalletsReducer";
 import {
+  ADDRESS_LIST_LIMIT,
   WALLET_FORMATS, ADVANCED_FORMATS, WalletFormatName, formatNeedsUsername,
-  applyWalletFormat
-} from "@wallets/WalletFormat";
-import { ADDRESS_LIST_LIMIT } from "@wallets/Wallet";
-import { makeV2Address } from "@krist/AddressAlgo";
+  WalletMap, calculateAddress
+} from "@wallets";
 
 import { isPlainObject, memoize } from "lodash-es";
 import to from "await-to-js";
@@ -138,8 +136,12 @@ export async function importV1Wallet(
   // WALLET IMPORT PREPARATION/VALIDATION
   // ---------------------------------------------------------------------------
   // Calculate the address in advance, to check for existing wallets
-  const privatekey = await applyWalletFormat(format || "kristwallet", password, username);
-  const address = await makeV2Address(addressPrefix, privatekey);
+  const { privatekey, address } = await calculateAddress(
+    addressPrefix,
+    format || "kristwallet",
+    password,
+    username
+  );
 
   // Check that our calculated privatekey is actually equal to the stored
   // masterkey. In practice these should never be different.

@@ -8,7 +8,7 @@ import { PlusOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 
 import { localeSort } from "@utils";
-import { useWallets } from "@wallets/Wallet";
+import { useWallets } from "@wallets";
 
 const { Text } = Typography;
 

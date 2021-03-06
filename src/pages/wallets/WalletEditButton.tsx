@@ -6,7 +6,7 @@ import React, { useState, FC } from "react";
 import { AuthorisedAction } from "@comp/auth/AuthorisedAction";
 import { AddWalletModal } from "./AddWalletModal";
 
-import { Wallet } from "@wallets/Wallet";
+import { Wallet } from "@wallets";
 
 interface Props {
   wallet: Wallet;

@@ -22,7 +22,7 @@ import { NameARecordLink } from "@comp/names/NameARecordLink";
 import * as api from "@api";
 import { KristName } from "@api/types";
 import { LookupTransactionType as LookupTXType } from "@api/lookup";
-import { useWallets } from "@wallets/Wallet";
+import { useWallets } from "@wallets";
 import { useBooleanSetting } from "@utils/settings";
 
 import { NameButtonRow } from "./NameButtonRow";

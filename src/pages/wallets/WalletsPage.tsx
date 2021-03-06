@@ -12,7 +12,7 @@ import { AuthorisedAction } from "@comp/auth/AuthorisedAction";
 import { AddWalletModal } from "./AddWalletModal";
 import { WalletsTable } from "./WalletsTable";
 
-import { useWallets } from "@wallets/Wallet";
+import { useWallets } from "@wallets";
 
 import "./WalletsPage.less";
 

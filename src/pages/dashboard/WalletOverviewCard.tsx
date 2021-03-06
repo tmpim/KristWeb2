@@ -7,7 +7,7 @@ import { Card, Row, Col, Button } from "antd";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import { Wallet, useWallets } from "@wallets/Wallet";
+import { Wallet, useWallets } from "@wallets";
 
 import { KristValue } from "@comp/krist/KristValue";
 import { Statistic } from "@comp/Statistic";

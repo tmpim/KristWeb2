@@ -8,7 +8,7 @@ import { SendOutlined, SwapOutlined, EditOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 
 import { KristName } from "@api/types";
-import { Wallet } from "@wallets/Wallet";
+import { Wallet } from "@wallets";
 
 interface Props {
   name: KristName;

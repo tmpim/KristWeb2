@@ -20,7 +20,7 @@ interface Props {
 
 export const AuthorisedAction: FC<Props> = ({ encrypt, onAuthed, popoverPlacement, children }) => {
   const { isAuthed, hasMasterPassword }
-    = useSelector((s: RootState) => s.walletManager, shallowEqual);
+    = useSelector((s: RootState) => s.masterPassword, shallowEqual);
 
   // Don't render the modal and popover unless we absolutely have to
   const [clicked, setClicked] = useState(false);

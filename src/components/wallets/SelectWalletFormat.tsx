@@ -6,7 +6,7 @@ import { Select } from "antd";
 
 import { useTranslation } from "react-i18next";
 
-import { WalletFormatName, ADVANCED_FORMATS } from "@wallets/WalletFormat";
+import { WalletFormatName, ADVANCED_FORMATS } from "@wallets";
 import { useBooleanSetting } from "@utils/settings";
 
 interface Props {

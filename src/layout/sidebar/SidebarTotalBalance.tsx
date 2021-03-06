@@ -4,7 +4,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-import { useWallets } from "@wallets/Wallet";
+import { useWallets } from "@wallets";
 import { KristValue } from "@comp/krist/KristValue";
 
 export function SidebarTotalBalance(): JSX.Element {

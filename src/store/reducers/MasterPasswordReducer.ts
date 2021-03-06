@@ -2,7 +2,7 @@
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { createReducer, ActionType } from "typesafe-actions";
-import { authMasterPassword, setMasterPassword } from "@actions/WalletManagerActions";
+import { authMasterPassword, setMasterPassword } from "@actions/MasterPasswordActions";
 
 export interface State {
   /** Whether or not the user has authenticated with the master password,
@@ -24,7 +24,7 @@ export interface State {
   readonly hasMasterPassword?: boolean;
 }
 
-export function getInitialWalletManagerState(): State {
+export function getInitialMasterPasswordState(): State {
   // Salt and tester from local storage (or undefined)
   const salt = localStorage.getItem("salt") || undefined;
   const tester = localStorage.getItem("tester") || undefined;
@@ -42,7 +42,7 @@ export function getInitialWalletManagerState(): State {
   };
 }
 
-export const WalletManagerReducer = createReducer({} as State)
+export const MasterPasswordReducer = createReducer({} as State)
   .handleAction(authMasterPassword, (state: State, action: ActionType<typeof authMasterPassword>) => ({
     ...state,
     isAuthed: true,

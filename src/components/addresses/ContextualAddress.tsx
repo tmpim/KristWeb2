@@ -11,7 +11,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { KristAddress } from "@api/types";
-import { Wallet, useWallets } from "@wallets/Wallet";
+import { Wallet, useWallets } from "@wallets";
 import { parseCommonMeta, CommonMeta } from "@utils/commonmeta";
 import { stripNameSuffix } from "@utils/currency";
 import { useBooleanSetting } from "@utils/settings";

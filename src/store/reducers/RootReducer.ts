@@ -3,14 +3,14 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { combineReducers } from "redux";
 
-import { WalletManagerReducer } from "./WalletManagerReducer";
+import { MasterPasswordReducer } from "./MasterPasswordReducer";
 import { WalletsReducer } from "./WalletsReducer";
 import { SettingsReducer } from "./SettingsReducer";
 import { WebsocketReducer } from "./WebsocketReducer";
 import { NodeReducer } from "./NodeReducer";
 
 export default combineReducers({
-  walletManager: WalletManagerReducer,
+  masterPassword: MasterPasswordReducer,
   wallets: WalletsReducer,
   settings: SettingsReducer,
   websocket: WebsocketReducer,

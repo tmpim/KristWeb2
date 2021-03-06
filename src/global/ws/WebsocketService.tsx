@@ -4,13 +4,12 @@
 import { useState,  useEffect } from "react";
 
 import { store } from "@app";
-import { WalletMap } from "@reducers/WalletsReducer";
 import * as wsActions from "@actions/WebsocketActions";
 import * as nodeActions from "@actions/NodeActions";
 
 import * as api from "@api";
 import { KristAddress, KristBlock, KristTransaction, WSConnectionState, WSIncomingMessage, WSSubscriptionLevel } from "@api/types";
-import { useWallets, findWalletByAddress, syncWallet, syncWalletUpdate, Wallet } from "@wallets/Wallet";
+import { Wallet, WalletMap, useWallets, findWalletByAddress, syncWallet, syncWalletUpdate } from "@wallets";
 import WebSocketAsPromised from "websocket-as-promised";
 
 import { throttle } from "lodash-es";

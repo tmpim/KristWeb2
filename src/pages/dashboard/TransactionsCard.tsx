@@ -11,8 +11,7 @@ import { TransactionSummary } from "@comp/transactions/TransactionSummary";
 import { lookupTransactions, LookupTransactionsResponse } from "@api/lookup";
 
 import { useSyncNode } from "@api";
-import { useWallets } from "@wallets/Wallet";
-import { WalletMap } from "@reducers/WalletsReducer";
+import { WalletMap, useWallets } from "@wallets";
 
 import { SmallResult } from "@comp/results/SmallResult";
 

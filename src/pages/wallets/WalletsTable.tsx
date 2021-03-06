@@ -13,7 +13,7 @@ import { DateTime } from "@comp/DateTime";
 import { WalletEditButton } from "./WalletEditButton";
 import { AddWalletModal } from "./AddWalletModal";
 
-import { Wallet, deleteWallet, useWallets } from "@wallets/Wallet";
+import { Wallet, deleteWallet, useWallets } from "@wallets";
 
 import { keyedNullSort, localeSort } from "@utils";
 

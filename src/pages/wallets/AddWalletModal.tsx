@@ -15,10 +15,11 @@ import { FakeUsernameInput } from "@comp/auth/FakeUsernameInput";
 import { CopyInputButton } from "@comp/CopyInputButton";
 import { SelectWalletCategory } from "@comp/wallets/SelectWalletCategory";
 
-import { WalletFormatName, applyWalletFormat, formatNeedsUsername } from "@wallets/WalletFormat";
 import { SelectWalletFormat } from "@comp/wallets/SelectWalletFormat";
-import { makeV2Address } from "@krist/AddressAlgo";
-import { useWallets, addWallet, decryptWallet, editWallet, Wallet, ADDRESS_LIST_LIMIT } from "@wallets/Wallet";
+import {
+  Wallet, WalletFormatName, calculateAddress, formatNeedsUsername,
+  useWallets, addWallet, decryptWallet, editWallet, ADDRESS_LIST_LIMIT
+} from "@wallets";
 
 const { Text } = Typography;
 const { useBreakpoint } = Grid;
@@ -50,7 +51,7 @@ export function AddWalletModal({ create, editing, visible, setVisible, setAddExi
   const initialFormat = editing?.format || "kristwallet";
 
   // Required to encrypt new wallets
-  const masterPassword = useSelector((s: RootState) => s.walletManager.masterPassword);
+  const masterPassword = useSelector((s: RootState) => s.masterPassword.masterPassword);
   // Required to check for existing wallets
   const { wallets } = useWallets();
   const addressPrefix = useSelector((s: RootState) => s.node.currency.address_prefix);
@@ -148,8 +149,7 @@ export function AddWalletModal({ create, editing, visible, setVisible, setAddExi
 
   /** Update the 'Wallet address' field */
   const updateCalculatedAddress = useCallback(async function(format: WalletFormatName | undefined, password: string, username?: string) {
-    const privatekey = await applyWalletFormat(format || "kristwallet", password, username);
-    const address = await makeV2Address(addressPrefix, privatekey);
+    const { address } = await calculateAddress(addressPrefix, format, password, username);
     setCalculatedAddress(address);
   }, [addressPrefix]);
 

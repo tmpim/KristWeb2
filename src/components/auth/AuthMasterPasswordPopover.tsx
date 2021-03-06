@@ -13,7 +13,7 @@ import { translateError } from "@utils/i18n";
 import { FakeUsernameInput } from "./FakeUsernameInput";
 import { getMasterPasswordInput } from "./MasterPasswordInput";
 
-import { authMasterPassword } from "@wallets/WalletManager";
+import { authMasterPassword } from "@wallets";
 
 interface FormValues {
   masterPassword: string;
@@ -26,7 +26,7 @@ interface Props {
 }
 
 export const AuthMasterPasswordPopover: FC<Props> = ({ encrypt, onSubmit, placement, children }) => {
-  const { salt, tester } = useSelector((s: RootState) => s.walletManager, shallowEqual);
+  const { salt, tester } = useSelector((s: RootState) => s.masterPassword, shallowEqual);
 
   const { t } = useTranslation();
   const [form] = Form.useForm();

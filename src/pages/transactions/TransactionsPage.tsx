@@ -16,7 +16,7 @@ import { PageLayout } from "../../layout/PageLayout";
 import { APIErrorResult } from "@comp/results/APIErrorResult";
 import { TransactionsTable } from "./TransactionsTable";
 
-import { useWallets } from "@wallets/Wallet";
+import { useWallets } from "@wallets";
 import { useBooleanSetting } from "@utils/settings";
 import { useLinkedPagination } from "@utils/table";
 import { KristNameLink } from "@comp/names/KristNameLink";

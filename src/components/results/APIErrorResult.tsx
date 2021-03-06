@@ -48,8 +48,10 @@ export function APIErrorResult({ error, className, ...props }: Props): JSX.Eleme
       return <SmallResult
         {...errorProps}
         icon={<ExclamationCircleOutlined />}
-        title={props.invalidParameterTitleKey}
-        subTitle={props.invalidParameterSubTitleKey}
+        title={t(props.invalidParameterTitleKey)}
+        subTitle={props.invalidParameterSubTitleKey
+          ? t(props.invalidParameterSubTitleKey)
+          : undefined}
       />;
     }
 
@@ -58,8 +60,10 @@ export function APIErrorResult({ error, className, ...props }: Props): JSX.Eleme
       return <SmallResult
         {...errorProps}
         icon={<FrownOutlined />}
-        title={props.notFoundTitleKey}
-        subTitle={props.notFoundSubTitleKey}
+        title={t(props.notFoundTitleKey)}
+        subTitle={props.notFoundSubTitleKey
+          ? t(props.notFoundSubTitleKey)
+          : undefined}
       />;
     }
   }

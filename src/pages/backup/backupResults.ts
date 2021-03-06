@@ -5,7 +5,7 @@ import React from "react";
 
 import { TranslatedError } from "@utils/i18n";
 
-import { Wallet } from "@wallets/Wallet";
+import { Wallet } from "@wallets";
 
 import Debug from "debug";
 const debug = Debug("kristweb:backup-results");

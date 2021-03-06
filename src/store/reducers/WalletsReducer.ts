@@ -4,9 +4,8 @@
 import * as actions from "@actions/WalletsActions";
 import { createReducer, ActionType } from "typesafe-actions";
 
-import { Wallet, loadWallets, WALLET_UPDATABLE_KEYS, WALLET_SYNCABLE_KEYS } from "@wallets/Wallet";
+import { Wallet, WalletMap, loadWallets, WALLET_UPDATABLE_KEYS, WALLET_SYNCABLE_KEYS } from "@wallets";
 
-export interface WalletMap { [key: string]: Wallet }
 export interface State {
   readonly wallets: WalletMap;
 }

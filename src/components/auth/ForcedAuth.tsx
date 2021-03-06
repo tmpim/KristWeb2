@@ -7,7 +7,7 @@ import { useTranslation, TFunction } from "react-i18next";
 import { useSelector, shallowEqual } from "react-redux";
 import { RootState } from "@store";
 
-import { authMasterPassword } from "@wallets/WalletManager";
+import { authMasterPassword } from "@wallets";
 
 import { useMountEffect } from "@utils";
 
@@ -27,7 +27,7 @@ async function forceAuth(t: TFunction, salt: string, tester: string): Promise<vo
  * containing the master password, and automatically authenticate with it. */
 export function ForcedAuth(): JSX.Element | null {
   const { isAuthed, hasMasterPassword, salt, tester }
-    = useSelector((s: RootState) => s.walletManager, shallowEqual);
+    = useSelector((s: RootState) => s.masterPassword, shallowEqual);
 
   const { t } = useTranslation();
 

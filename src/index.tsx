@@ -17,6 +17,10 @@ const debug = Debug("kristweb:index");
 debug("============================ APP STARTING ============================");
 debug("performing initial render");
 ReactDOM.render(
+  // FIXME: ant-design still has a few incompatibilities with StrictMode, most
+  //        notably in rc-menu. Keep an eye on the issue to track progress and
+  //        prepare for React 17:
+  //        https://github.com/ant-design/ant-design/issues/26136
   // <React.StrictMode>
   <App />,
   // </React.StrictMode>,
