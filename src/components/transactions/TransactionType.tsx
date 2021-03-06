@@ -26,7 +26,7 @@ export const TYPES_SHOW_VALUE: KristTransactionType[] = [
 export function getTransactionType(tx: KristTransaction, from?: Wallet, to?: Wallet): InternalTransactionType {
   switch (tx.type) {
   case "transfer":
-    if (from && to && from === to) return "bumped";
+    if (tx.from && tx.to && tx.from === tx.to) return "bumped";
     if (from && to) return "transferred";
     if (from) return "sent";
     if (to) return "received";

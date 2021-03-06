@@ -23,6 +23,9 @@ export type PageLayoutProps = React.HTMLProps<HTMLDivElement> & {
 
   className?: string;
   withoutTopPadding?: boolean;
+
+  onBack?: () => void;
+  backLink?: string;
 }
 
 export const PageLayout: FC<PageLayoutProps> = ({
@@ -34,6 +37,8 @@ export const PageLayout: FC<PageLayoutProps> = ({
 
   className,
   withoutTopPadding,
+
+  onBack, backLink,
 
   children, ...rest
 }) => {
@@ -58,7 +63,11 @@ export const PageLayout: FC<PageLayoutProps> = ({
       subTitle={subTitle || (subTitleKey ? t(subTitleKey) : undefined)}
       extra={extra}
 
-      onBack={() => history.goBack()}
+      onBack={() => {
+        if (onBack) onBack();
+        else if (backLink) history.push(backLink);
+        else history.goBack();
+      }}
     />}
 
     {/* Page contents */}
