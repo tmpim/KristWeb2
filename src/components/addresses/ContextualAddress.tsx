@@ -30,6 +30,7 @@ interface Props {
   hideNameAddress?: boolean;
   allowWrap?: boolean;
   neverCopyable?: boolean;
+  nonExistent?: boolean;
   className?: string;
 }
 
@@ -78,6 +79,7 @@ export function ContextualAddress({
   hideNameAddress,
   allowWrap,
   neverCopyable,
+  nonExistent,
   className
 }: Props): JSX.Element {
   const { t } = useTranslation();
@@ -104,11 +106,25 @@ export function ContextualAddress({
     ? { text: address } : undefined;
 
   const classes = classNames("contextual-address", className, {
-    "contextual-address-allow-wrap": allowWrap
+    "contextual-address-allow-wrap": allowWrap,
+    "contextual-address-non-existent": nonExistent
   });
 
+  /** The label of the wallet, or the address itself (not a metaname) */
+  function AddressContent(): JSX.Element {
+    return wallet && wallet.label
+      ? <span className="address-wallet">{wallet.label}</span>
+      : <span className="address-address">{address}</span>;
+  }
+
   return <Text className={classes} copyable={copyable}>
-    <Tooltip title={address}>
+    {/* If the address definitely doesn't exist, show the 'not yet initialised'
+      * tooltip on hover instead. */}
+    <Tooltip
+      title={nonExistent
+        ? t("contextualAddressNonExistentTooltip")
+        : address}
+    >
       {commonMeta && hasMetaname
         ? (
           // Display the metaname and link to the name if possible
@@ -121,12 +137,13 @@ export function ContextualAddress({
           />
         )
         : (
-          // Display our wallet label if present, but link to the address
-          <Link to={"/network/addresses/" + encodeURIComponent(address)}>
-            {wallet && wallet.label
-              ? <span className="address-wallet">{wallet.label}</span>
-              : <span className="address-address">{address}</span>}
-          </Link>
+          nonExistent
+            ? <a><AddressContent /></a>
+            : (
+              <Link to={"/network/addresses/" + encodeURIComponent(address)}>
+                <AddressContent />
+              </Link>
+            )
         )
       }
     </Tooltip>

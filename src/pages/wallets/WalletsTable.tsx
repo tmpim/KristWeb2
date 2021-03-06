@@ -106,7 +106,13 @@ export function WalletsTable(): JSX.Element {
         title: t("myWallets.columnAddress"),
         dataIndex: "address", key: "address",
 
-        render: address => <ContextualAddress address={address} wallet={false} />,
+        render: (address, wallet) => (
+          <ContextualAddress
+            address={address}
+            wallet={false}
+            nonExistent={!wallet.firstSeen}
+          />
+        ),
         sorter: (a, b) => a.address.localeCompare(b.address)
       },
 

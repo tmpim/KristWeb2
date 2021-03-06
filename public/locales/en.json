@@ -87,6 +87,7 @@
   },
 
   "contextualAddressUnknown": "Unknown",
+  "contextualAddressNonExistentTooltip": "This address has not yet been initialised on the Krist network.",
 
   "typeahead": {
     "emptyLabel": "No matches found.",
@@ -371,7 +372,7 @@
     "resultInvalidTitle": "Invalid address",
     "resultInvalid": "That does not look like a valid Krist address.",
     "resultNotFoundTitle": "Address not found",
-    "resultNotFound": "That address has not yet been initialized on the Krist network."
+    "resultNotFound": "That address has not yet been initialised on the Krist network."
   },
 
   "transactionSummary": {
