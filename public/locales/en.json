@@ -371,7 +371,7 @@
     "resultInvalidTitle": "Invalid address",
     "resultInvalid": "That does not look like a valid Krist address.",
     "resultNotFoundTitle": "Address not found",
-    "resultNotFound": "That address does not exist."
+    "resultNotFound": "That address has not yet been initialized on the Krist network."
   },
 
   "transactionSummary": {
