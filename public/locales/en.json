@@ -429,6 +429,7 @@
       "name_sent": "Sent name",
       "name_received": "Received name",
       "name_purchased": "Purchased name",
+      "bumped": "Bumped",
       "unknown": "Unknown"
     }
   },
