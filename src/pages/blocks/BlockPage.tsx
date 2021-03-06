@@ -124,7 +124,7 @@ function NavButtons({ block }: { block?: KristBlock }): JSX.Element {
       {/* Wrap in a link if the button is enabled */}
       {hasPrevious
         ? (
-          <Link to={`/network/blocks/${encodeURIComponent(previousID)}`}>
+          <Link to={`/network/blocks/${encodeURIComponent(previousID)}`} replace>
             {previousBtn}
           </Link>
         )
@@ -140,7 +140,7 @@ function NavButtons({ block }: { block?: KristBlock }): JSX.Element {
       {/* Wrap in a link if the button is enabled */}
       {hasNext
         ? (
-          <Link to={`/network/blocks/${encodeURIComponent(nextID)}`}>
+          <Link to={`/network/blocks/${encodeURIComponent(nextID)}`} replace>
             {nextBtn}
           </Link>
         )
