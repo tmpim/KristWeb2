@@ -35,7 +35,7 @@ function assignNewWalletProperties(state: State, id: string, partialWallet: Part
 
 export const WalletsReducer = createReducer({ wallets: {} } as State)
   // Load wallets
-  .handleAction(actions.loadWallets, (state: State, { payload }: ActionType<typeof actions.loadWallets>) => ({
+  .handleAction(actions.loadWallets, (state, { payload }) => ({
     ...state,
     wallets: {
       ...state.wallets,
@@ -43,7 +43,7 @@ export const WalletsReducer = createReducer({ wallets: {} } as State)
     }
   }))
   // Add wallet
-  .handleAction(actions.addWallet, (state: State, { payload }: ActionType<typeof actions.addWallet>) => ({
+  .handleAction(actions.addWallet, (state, { payload }) => ({
     ...state,
     wallets: {
       ...state.wallets,
@@ -51,19 +51,19 @@ export const WalletsReducer = createReducer({ wallets: {} } as State)
     }
   }))
   // Remove wallet
-  .handleAction(actions.removeWallet, (state: State, { payload }: ActionType<typeof actions.removeWallet>) => {
+  .handleAction(actions.removeWallet, (state, { payload }) => {
     // Get the wallets without the one we want to remove
     const { [payload.id]: _, ...wallets } = state.wallets;
     return { ...state, wallets };
   })
   // Update wallet
-  .handleAction(actions.updateWallet, (state: State, { payload }: ActionType<typeof actions.updateWallet>) =>
+  .handleAction(actions.updateWallet, (state, { payload }) =>
     assignNewWalletProperties(state, payload.id, payload.wallet, WALLET_UPDATABLE_KEYS))
   // Sync wallet
-  .handleAction(actions.syncWallet, (state: State, { payload }: ActionType<typeof actions.syncWallet>) =>
+  .handleAction(actions.syncWallet, (state, { payload }) =>
     assignNewWalletProperties(state, payload.id, payload.wallet, WALLET_SYNCABLE_KEYS))
   // Sync wallets
-  .handleAction(actions.syncWallets, (state: State, { payload }: ActionType<typeof actions.syncWallets>) => {
+  .handleAction(actions.syncWallets, (state, { payload }) => {
     const updatedWallets = Object.entries(payload.wallets)
       .map(([id, newData]) => ({ // merge in the new data
         ...(state.wallets[id]), // old data
@@ -78,8 +78,22 @@ export const WalletsReducer = createReducer({ wallets: {} } as State)
 
     return { ...state, wallets: { ...state.wallets, ...updatedWallets }};
   })
+  // Unsync wallet (remove its balance etc. as it no longer exists)
+  .handleAction(actions.unsyncWallet, (state, { payload }) => ({
+    ...state,
+    wallets: {
+      ...state.wallets,
+      [payload.id]: {
+        ...state.wallets[payload.id],
+        balance: undefined,
+        names: undefined,
+        firstSeen: undefined,
+        lastSynced: payload.lastSynced
+      }
+    }
+  }))
   // Recalculate wallets
-  .handleAction(actions.recalculateWallets, (state: State, { payload }: ActionType<typeof actions.recalculateWallets>) => {
+  .handleAction(actions.recalculateWallets, (state, { payload }) => {
     const updatedWallets = Object.entries(payload.wallets)
       .map(([id, newData]) => ({ // merge in the new data
         ...(state.wallets[id]), // old data

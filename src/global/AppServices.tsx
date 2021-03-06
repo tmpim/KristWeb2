@@ -9,6 +9,7 @@ import { WebsocketService } from "./ws/WebsocketService";
 import { SyncWork } from "./ws/SyncWork";
 import { SyncMOTD } from "./ws/SyncMOTD";
 import { AppHotkeys } from "./AppHotkeys";
+import { StorageBroadcast } from "./StorageBroadcast";
 
 export function AppServices(): JSX.Element {
   return <>
@@ -18,5 +19,6 @@ export function AppServices(): JSX.Element {
     <ForcedAuth />
     <WebsocketService />
     <AppHotkeys />
+    <StorageBroadcast />
   </>;
 }

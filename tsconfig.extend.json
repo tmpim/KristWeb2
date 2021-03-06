@@ -18,6 +18,7 @@
       "@wallets": ["./krist/wallets"],
       "@wallets/*": ["./krist/wallets/*"],
       "@krist/*": ["./krist/*"],
+      "@global/*": ["./global/*"],
 
       "@utils": ["./utils"],
       "@utils/*": ["./utils/*"]

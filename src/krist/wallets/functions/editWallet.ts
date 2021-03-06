@@ -7,6 +7,7 @@ import * as actions from "@actions/WalletsActions";
 import { aesGcmEncrypt } from "@utils/crypto";
 
 import { Wallet, WalletNew, saveWallet, syncWallet, calculateAddress } from "..";
+import { broadcastEditWallet } from "@global/StorageBroadcast";
 
 /**
  * Edits a new wallet, encrypting its privatekey and password, saving it to
@@ -48,6 +49,7 @@ export async function editWallet(
 
   // Save the updated wallet to local storage
   saveWallet(finalWallet);
+  broadcastEditWallet(wallet.id); // Broadcast changes to other tabs
 
   // Dispatch the changes to the redux store
   store.dispatch(actions.updateWallet(wallet.id, finalWallet));
@@ -83,6 +85,7 @@ export async function editWalletLabel(
 
   // Save the updated wallet to local storage
   saveWallet(finalWallet);
+  broadcastEditWallet(wallet.id); // Broadcast changes to other tabs
 
   // Dispatch the changes to the redux store
   store.dispatch(actions.updateWallet(wallet.id, finalWallet));

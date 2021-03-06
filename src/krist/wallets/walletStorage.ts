@@ -7,6 +7,10 @@ import * as actions from "@actions/WalletsActions";
 import { TranslatedError } from "@utils/i18n";
 
 import { Wallet, WalletMap } from ".";
+import { broadcastDeleteWallet } from "@global/StorageBroadcast";
+
+import Debug from "debug";
+const debug = Debug("kristweb:wallet-storage");
 
 /** The limit provided by the Krist server for a single address lookup. In the
  * future I may implement batching for these, but for now, this seems like a
@@ -15,8 +19,9 @@ import { Wallet, WalletMap } from ".";
 export const ADDRESS_LIST_LIMIT = 128;
 
 /** Get the local storage key for a given wallet. */
-export function getWalletKey(wallet: Wallet): string {
-  return `wallet2-${wallet.id}`;
+export function getWalletKey(wallet: Wallet | string): string {
+  const id = typeof wallet === "string" ? wallet : wallet.id;
+  return `wallet2-${id}`;
 }
 
 /** Extract a wallet ID from a local storage key. */
@@ -26,7 +31,7 @@ export function extractWalletKey(key: string): [string, string] | undefined {
   return id ? [key, id] : undefined;
 }
 
-function loadWallet(id: string, data: string | null) {
+export function parseWallet(id: string, data: string | null): Wallet {
   if (data === null) // localStorage key was missing
     throw new TranslatedError("masterPassword.walletStorageCorrupt");
 
@@ -54,7 +59,7 @@ export function loadWallets(): WalletMap {
     .map(extractWalletKey)
     .filter(k => k !== undefined) as [string, string][];
 
-  const wallets = keysToLoad.map(([key, id]) => loadWallet(id, localStorage.getItem(key)));
+  const wallets = keysToLoad.map(([key, id]) => parseWallet(id, localStorage.getItem(key)));
 
   // Convert to map with wallet IDs
   const walletMap: WalletMap = wallets.reduce((obj, w) => ({ ...obj, [w.id]: w }), {});
@@ -67,6 +72,8 @@ export function saveWallet(wallet: Wallet): void {
   if (wallet.dontSave) return;
 
   const key = getWalletKey(wallet);
+  debug("saving wallet key %s with data %o", key, wallet);
+
   const serialised = JSON.stringify(wallet);
   localStorage.setItem(key, serialised);
 }
@@ -76,6 +83,8 @@ export function saveWallet(wallet: Wallet): void {
 export function deleteWallet(wallet: Wallet): void {
   const key = getWalletKey(wallet);
   localStorage.removeItem(key);
+
+  broadcastDeleteWallet(wallet.id); // Broadcast changes to other tabs
 
   store.dispatch(actions.removeWallet(wallet.id));
 }

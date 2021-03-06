@@ -15,6 +15,7 @@ export const REMOVE_WALLET = "REMOVE_WALLET";
 export const UPDATE_WALLET = "UPDATE_WALLET";
 export const SYNC_WALLET = "SYNC_WALLET";
 export const SYNC_WALLETS = "SYNC_WALLETS";
+export const UNSYNC_WALLET = "UNSYNC_WALLET";
 export const RECALCULATE_WALLETS = "RECALCULATE_WALLETS";
 
 // Settings

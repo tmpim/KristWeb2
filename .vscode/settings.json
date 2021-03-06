@@ -16,6 +16,7 @@
     "Sider",
     "Syncable",
     "Transpiler",
+    "UNSYNC",
     "Voronoi",
     "Websockets",
     "antd",

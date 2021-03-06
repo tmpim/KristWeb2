@@ -13,21 +13,35 @@ const debug = Debug("kristweb:sync-wallets");
 
 function syncWalletProperties(
   wallet: Wallet,
-  address: KristAddressWithNames,
+  address: KristAddressWithNames | null,
   syncTime: Date
 ): Wallet {
-  return {
-    ...wallet,
-    ...(address.balance   !== undefined ? { balance: address.balance } : {}),
-    ...(address.names     !== undefined ? { names: address.names } : {}),
-    ...(address.firstseen !== undefined ? { firstSeen: address.firstseen } : {}),
-    lastSynced: syncTime.toISOString()
-  };
+  if (address) {
+    return {
+      ...wallet,
+      ...(address.balance   !== undefined ? { balance: address.balance } : {}),
+      ...(address.names     !== undefined ? { names: address.names } : {}),
+      ...(address.firstseen !== undefined ? { firstSeen: address.firstseen } : {}),
+      lastSynced: syncTime.toISOString()
+    };
+  } else {
+    // Wallet was unsyncable (address not found), clear its properties
+    return {
+      ...wallet,
+      balance: undefined,
+      names: undefined,
+      firstSeen: undefined,
+      lastSynced: syncTime.toISOString()
+    };
+  }
 }
 
 /** Sync the data for a single wallet from the sync node, save it to local
  * storage, and dispatch the change to the Redux store. */
-export async function syncWallet(wallet: Wallet): Promise<void> {
+export async function syncWallet(
+  wallet: Wallet,
+  dontSave?: boolean
+): Promise<void> {
   // Fetch the data from the sync node (e.g. balance)
   const { address } = wallet;
   const lookupResults = await lookupAddresses([address], true);
@@ -35,25 +49,29 @@ export async function syncWallet(wallet: Wallet): Promise<void> {
   debug("synced individual wallet %s (%s): %o", wallet.id, wallet.address, lookupResults);
 
   const kristAddress = lookupResults[address];
-  if (!kristAddress) return; // Skip unsyncable wallet
-
-  syncWalletUpdate(wallet, kristAddress);
+  syncWalletUpdate(wallet, kristAddress, dontSave);
 }
 
 /** Given an already synced wallet, save it to local storage, and dispatch the
  * change to the Redux store. */
 export function syncWalletUpdate(
   wallet: Wallet,
-  address: KristAddressWithNames
+  address: KristAddressWithNames | null,
+  dontSave?: boolean
 ): void {
   const syncTime = new Date();
   const updatedWallet = syncWalletProperties(wallet, address, syncTime);
 
-  // Save the wallet to local storage (unless dontSave is set)
-  saveWallet(updatedWallet);
+  // Save the wallet to local storage, unless this was an external sync action
+  if (!dontSave) saveWallet(updatedWallet);
 
-  // Dispatch the change to the Redux store
-  store.dispatch(actions.syncWallet(wallet.id, updatedWallet));
+  if (address) {
+    // Wallet synced successfully, dispatch the change to the Redux store
+    store.dispatch(actions.syncWallet(wallet.id, updatedWallet));
+  } else {
+    // Wallet failed to sync, clear its properties
+    store.dispatch(actions.unsyncWallet(wallet.id, syncTime));
+  }
 }
 
 /** Sync the data for all the wallets from the sync node, save it to local
