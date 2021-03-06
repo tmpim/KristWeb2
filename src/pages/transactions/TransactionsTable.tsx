@@ -158,6 +158,7 @@ export function TransactionsTable({
             address={from}
             metadata={tx.metadata}
             allowWrap
+            source
           />
         ),
 
