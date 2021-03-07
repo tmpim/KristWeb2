@@ -18,6 +18,7 @@ import { NoWalletsResult } from "@comp/results/NoWalletsResult";
 import { TransactionsTable } from "./TransactionsTable";
 
 import { useWallets } from "@wallets";
+import { useSubscription } from "@global/ws/WebsocketSubscription";
 import { useBooleanSetting } from "@utils/settings";
 import { useLinkedPagination } from "@utils/table";
 import { KristNameLink } from "@comp/names/KristNameLink";
@@ -118,15 +119,21 @@ function getSubTitle(t: TFunction, listingType: ListingType, params: ParamTypes)
 }
 
 /** Returns the correct auto-refresh ID for the given listing type. */
-function getRefreshID(listingType: ListingType, includeMined: boolean, node: NodeState): number {
+function getRefreshID(
+  listingType: ListingType,
+  includeMined: boolean,
+  node: NodeState,
+  subscribedRefreshID: number
+): number {
   switch (listingType) {
   case ListingType.WALLETS:
     return node.lastOwnTransactionID;
   case ListingType.NAME_HISTORY:
-    return node.lastNameTransactionID;
   case ListingType.NAME_SENT:
+  case ListingType.NETWORK_ADDRESS:
+    // Use the websocket subscription
+    return subscribedRefreshID;
   case ListingType.NETWORK_ALL:
-  case ListingType.NETWORK_ADDRESS: // TODO: subscribe to a single name
     // Prevent annoying refreshes when blocks are mined
     return includeMined
       ? node.lastTransactionID
@@ -188,6 +195,7 @@ export function TransactionsPage({ listingType }: Props): JSX.Element {
   // Used to handle memoisation and auto-refreshing
   const { joinedAddressList } = useWallets();
   const nodeState = useSelector((s: RootState) => s.node, shallowEqual);
+  const subscribedRefreshID = useSubscription({ address, name });
   const shouldAutoRefresh = useBooleanSetting("autoRefreshTables");
 
   // Comma-separated list of addresses, used as an optimisation for
@@ -197,7 +205,8 @@ export function TransactionsPage({ listingType }: Props): JSX.Element {
 
   // If auto-refresh is disabled, use a static refresh ID
   const usedRefreshID = shouldAutoRefresh
-    ? getRefreshID(listingType, includeMined, nodeState) : 0;
+    ? getRefreshID(listingType, includeMined, nodeState, subscribedRefreshID)
+    : 0;
 
   // Memoise the table so that it only updates the props (thus triggering a
   // re-fetch of the transactions) when something relevant changes

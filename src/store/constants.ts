@@ -26,6 +26,9 @@ export const SET_INTEGER_SETTING = "SET_INTEGER_SETTING";
 // Websockets
 // ---
 export const CONNECTION_STATE = "CONNECTION_STATE";
+export const INIT_SUBSCRIPTION = "INIT_SUBSCRIPTION";
+export const UPDATE_SUBSCRIPTION = "UPDATE_SUBSCRIPTION";
+export const REMOVE_SUBSCRIPTION = "REMOVE_SUBSCRIPTION";
 
 // Node state (auto-refreshing)
 // ---

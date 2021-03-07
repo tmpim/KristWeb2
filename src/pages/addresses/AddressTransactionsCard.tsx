@@ -25,7 +25,12 @@ async function fetchTransactions(address: string): Promise<LookupTransactionsRes
   );
 }
 
-export function AddressTransactionsCard({ address }: { address: string }): JSX.Element {
+interface Props {
+  address: string;
+  lastTransactionID: number;
+}
+
+export function AddressTransactionsCard({ address, lastTransactionID }: Props): JSX.Element {
   const { t } = useTranslation();
   const syncNode = useSyncNode();
 
@@ -34,8 +39,6 @@ export function AddressTransactionsCard({ address }: { address: string }): JSX.E
   const [loading, setLoading] = useState(true);
 
   // Fetch transactions on page load or sync node reload
-  // TODO: set up something to temporarily subscribe to an address via the
-  //       websocket service, so this can be updated in realtime
   useEffect(() => {
     if (!syncNode) return;
 
@@ -47,7 +50,7 @@ export function AddressTransactionsCard({ address }: { address: string }): JSX.E
       .then(setRes)
       .catch(setError)
       .finally(() => setLoading(false));
-  }, [syncNode, address]);
+  }, [syncNode, address, lastTransactionID]);
 
   const isEmpty = !loading && (error || !res || res.count === 0);
   const classes = classNames("kw-card", "address-card-transactions", {

@@ -17,6 +17,7 @@ import { DateTime } from "@comp/DateTime";
 import * as api from "@api";
 import { lookupAddress, KristAddressWithNames } from "@api/lookup";
 import { useWallets } from "@wallets";
+import { useSubscription } from "@global/ws/WebsocketSubscription";
 
 import { AddressButtonRow } from "./AddressButtonRow";
 import { AddressTransactionsCard } from "./AddressTransactionsCard";
@@ -30,7 +31,12 @@ interface ParamTypes {
   address: string;
 }
 
-function PageContents({ address }: { address: KristAddressWithNames }): JSX.Element {
+interface PageContentsProps {
+  address: KristAddressWithNames;
+  lastTransactionID: number;
+}
+
+function PageContents({ address, lastTransactionID }: PageContentsProps): JSX.Element {
   const { t } = useTranslation();
   const { wallets } = useWallets();
 
@@ -95,11 +101,15 @@ function PageContents({ address }: { address: KristAddressWithNames }): JSX.Elem
     <Row gutter={16} className="address-card-row">
       {/* Recent transactions */}
       <Col span={24} xl={14} xxl={12}>
-        <AddressTransactionsCard address={address.address} />
+        <AddressTransactionsCard
+          address={address.address}
+          lastTransactionID={lastTransactionID}
+        />
       </Col>
 
       {/* Names */}
       <Col span={24} xl={10} xxl={12}>
+        {/* TODO: Subscription for this card */}
         <AddressNamesCard address={address.address} />
       </Col>
     </Row>
@@ -113,6 +123,9 @@ export function AddressPage(): JSX.Element {
   const { address } = useParams<ParamTypes>();
   const [kristAddress, setKristAddress] = useState<KristAddressWithNames | undefined>();
   const [error, setError] = useState<Error | undefined>();
+
+  // Used to refresh the address data when a transaction is made to it
+  const lastTransactionID = useSubscription({ address });
 
   // Load the address on page load
   // TODO: passthrough router state to pre-load from search
@@ -130,7 +143,7 @@ export function AddressPage(): JSX.Element {
     lookupAddress(address, true)
       .then(setKristAddress)
       .catch(setError);
-  }, [syncNode, address]);
+  }, [syncNode, address, lastTransactionID]);
 
   // Change the page title depending on whether or not the address has loaded
   const title = kristAddress
@@ -156,7 +169,12 @@ export function AddressPage(): JSX.Element {
         />
       )
       : (kristAddress
-        ? <PageContents address={kristAddress} />
+        ? (
+          <PageContents
+            address={kristAddress}
+            lastTransactionID={lastTransactionID}
+          />
+        )
         : <Skeleton active />)}
   </PageLayout>;
 }

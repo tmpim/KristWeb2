@@ -16,6 +16,7 @@ import "./App.less";
 import { AppLoading } from "./global/AppLoading";
 import { CheckStatus } from "./pages/CheckStatus";
 import { AppServices } from "./global/AppServices";
+import { WebsocketProvider } from "./global/ws/WebsocketProvider";
 
 import Debug from "debug";
 const debug = Debug("kristweb:app");
@@ -28,12 +29,14 @@ function App(): JSX.Element {
 
   return <Suspense fallback={<AppLoading />}>
     <Provider store={store}>
-      <Router>
-        <CheckStatus />
+      <WebsocketProvider>
+        <Router>
+          <CheckStatus />
 
-        {/* Services, etc. */}
-        <AppServices />
-      </Router>
+          {/* Services, etc. */}
+          <AppServices />
+        </Router>
+      </WebsocketProvider>
     </Provider>
   </Suspense>;
 }
