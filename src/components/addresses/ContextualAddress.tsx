@@ -17,6 +17,7 @@ import { stripNameSuffix } from "@utils/currency";
 import { useBooleanSetting } from "@utils/settings";
 
 import { KristNameLink } from "../names/KristNameLink";
+import { ConditionalLink } from "@comp/ConditionalLink";
 
 import "./ContextualAddress.less";
 
@@ -111,10 +112,10 @@ export function ContextualAddress({
   });
 
   /** The label of the wallet, or the address itself (not a metaname) */
-  function AddressContent(): JSX.Element {
+  function AddressContent(props: any): JSX.Element {
     return wallet && wallet.label
-      ? <span className="address-wallet">{wallet.label}</span>
-      : <span className="address-address">{address}</span>;
+      ? <span className="address-wallet" {...props}>{wallet.label}</span>
+      : <span className="address-address" {...props}>{address}</span>;
   }
 
   return <Text className={classes} copyable={copyable}>
@@ -137,13 +138,14 @@ export function ContextualAddress({
           />
         )
         : (
-          nonExistent
-            ? <a><AddressContent /></a>
-            : (
-              <Link to={"/network/addresses/" + encodeURIComponent(address)}>
-                <AddressContent />
-              </Link>
-            )
+          <ConditionalLink
+            to={"/network/addresses/" + encodeURIComponent(address)}
+            matchTo
+            matchExact
+            condition={!nonExistent}
+          >
+            <AddressContent />
+          </ConditionalLink>
         )
       }
     </Tooltip>

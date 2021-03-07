@@ -6,11 +6,13 @@ import { Layout, Menu, MenuItemProps } from "antd";
 import { HomeOutlined, WalletOutlined, TeamOutlined, BankOutlined, TagsOutlined, SketchOutlined, BuildOutlined, StockOutlined } from "@ant-design/icons";
 
 import { TFunction, useTranslation } from "react-i18next";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import { ServiceWorkerCheck } from "./ServiceWorkerCheck";
 import { SidebarTotalBalance } from "./SidebarTotalBalance";
 import { SidebarFooter } from "./SidebarFooter";
+
+import { ConditionalLink } from "@comp/ConditionalLink";
 
 const { Sider } = Layout;
 
@@ -42,7 +44,9 @@ function getSidebarItems(t: TFunction<string>, group?: string) {
     .filter(i => i.group === group)
     .map(i => (
       <Menu.Item key={i.to} icon={i.icon} className={i.nyi ? "nyi" : ""}>
-        <Link to={i.to}>{t("sidebar." + i.name)}</Link>
+        <ConditionalLink to={i.to} matchTo matchExact>
+          {t("sidebar." + i.name)}
+        </ConditionalLink>
       </Menu.Item>
     ));
 }

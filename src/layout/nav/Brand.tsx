@@ -2,8 +2,8 @@
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React from "react";
+import { Tag } from "antd";
 
-import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 import semverMajor from "semver/functions/major";
@@ -11,7 +11,7 @@ import semverMinor from "semver/functions/minor";
 import semverPatch from "semver/functions/patch";
 import semverPrerelease from "semver/functions/prerelease";
 
-import { Tag } from "antd";
+import { ConditionalLink } from "@comp/ConditionalLink";
 
 import packageJson from "../../../package.json";
 
@@ -40,10 +40,10 @@ export function Brand(): JSX.Element {
   }
 
   return <div className="site-header-brand">
-    <Link to="/">
+    <ConditionalLink to="/" matchTo matchExact>
       {t("app.name")}
       <span className="site-header-brand-version">v{major}.{minor}.{patch}</span>
       {tag}
-    </Link>
+    </ConditionalLink>
   </div>;
 }

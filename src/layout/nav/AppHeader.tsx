@@ -13,6 +13,8 @@ import { Search } from "./Search";
 import { ConnectionIndicator } from "./ConnectionIndicator";
 import { CymbalIndicator } from "./CymbalIndicator";
 
+import { ConditionalLink } from "@comp/ConditionalLink";
+
 const { useBreakpoint } = Grid;
 
 interface Props {
@@ -58,7 +60,7 @@ export function AppHeader({ sidebarCollapsed, setSidebarCollapsed }: Props): JSX
     {/* Settings button */}
     <Menu theme="dark" mode="horizontal" selectable={false} forceSubMenuRender={true} className="site-header-settings">
       <Menu.Item key="1" icon={<SettingOutlined />} title={t("nav.settings")}>
-        <Link to="/settings" aria-label={t("nav.settings")}></Link>
+        <ConditionalLink to="/settings" matchTo aria-label={t("nav.settings")}></ConditionalLink>
       </Menu.Item>
     </Menu>
   </Layout.Header>;

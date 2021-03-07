@@ -4,10 +4,10 @@
 import React, { useState } from "react";
 import { useTranslation, Trans } from "react-i18next";
 
-import { Link } from "react-router-dom";
-
 import { useMountEffect } from "@utils";
 import { getAuthorInfo } from "@utils/credits";
+
+import { ConditionalLink } from "@comp/ConditionalLink";
 
 export function SidebarFooter(): JSX.Element {
   const { t } = useTranslation();
@@ -41,7 +41,9 @@ export function SidebarFooter(): JSX.Element {
       <div>
         <a href={gitURL} target="_blank" rel="noopener noreferrer">{t("sidebar.github")}</a>
         &nbsp;&ndash;&nbsp;
-        <Link to="/credits">{t("sidebar.credits")}</Link>
+        <ConditionalLink to="/credits" matchTo>
+          {t("sidebar.credits")}
+        </ConditionalLink>
       </div>
     </div>
   );
