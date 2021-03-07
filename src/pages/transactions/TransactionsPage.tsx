@@ -14,6 +14,7 @@ import { State as NodeState } from "@reducers/NodeReducer";
 
 import { PageLayout } from "../../layout/PageLayout";
 import { APIErrorResult } from "@comp/results/APIErrorResult";
+import { NoWalletsResult } from "@comp/results/NoWalletsResult";
 import { TransactionsTable } from "./TransactionsTable";
 
 import { useWallets } from "@wallets";
@@ -227,6 +228,8 @@ export function TransactionsPage({ listingType }: Props): JSX.Element {
   const siteTitle = getSiteTitle(t, listingType, address);
   const subTitle = getSubTitle(t, listingType, { address, name, query });
 
+  const isEmpty = listingType === ListingType.WALLETS && !joinedAddressList;
+
   return <PageLayout
     className="transactions-page"
 
@@ -237,16 +240,16 @@ export function TransactionsPage({ listingType }: Props): JSX.Element {
 
     extra={paginationComponent}
   >
-    {error
-      ? (
-        <APIErrorResult
+    {(() => {
+      if (error)
+        return <APIErrorResult
           error={error}
 
           invalidParameterTitleKey="transactions.resultInvalidTitle"
           invalidParameterSubTitleKey="transactions.resultInvalid"
-        />
-      )
-      : <>
+        />;
+      else if (isEmpty) return <NoWalletsResult type="transactions" />;
+      else return <>
         {memoTable}
 
         {/* "Include mined transactions" switch in the bottom right */}
@@ -259,6 +262,7 @@ export function TransactionsPage({ listingType }: Props): JSX.Element {
             <span>{t("transactions.includeMined")}</span>
           </div>
         )}
-      </>}
+      </>;
+    })()}
   </PageLayout>;
 }

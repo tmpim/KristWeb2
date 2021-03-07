@@ -11,6 +11,7 @@ import { RootState } from "@store";
 
 import { PageLayout } from "../../layout/PageLayout";
 import { APIErrorResult } from "@comp/results/APIErrorResult";
+import { NoWalletsResult } from "@comp/results/NoWalletsResult";
 import { NamesTable } from "./NamesTable";
 
 import { useWallets } from "@wallets";
@@ -101,6 +102,8 @@ export function NamesPage({ listingType, sortNew }: Props): JSX.Element {
   const subTitle = listingType === ListingType.NETWORK_ADDRESS
     ? address : undefined;
 
+  const isEmpty = listingType === ListingType.WALLETS && !joinedAddressList;
+
   return <PageLayout
     className="names-page"
 
@@ -112,15 +115,16 @@ export function NamesPage({ listingType, sortNew }: Props): JSX.Element {
 
     extra={paginationComponent}
   >
-    {error
-      ? (
-        <APIErrorResult
+    {(() => {
+      if (error)
+        return <APIErrorResult
           error={error}
 
           invalidParameterTitleKey="names.resultInvalidTitle"
           invalidParameterSubTitleKey="names.resultInvalid"
-        />
-      )
-      : memoTable}
+        />;
+      else if (isEmpty) return <NoWalletsResult type="names" />;
+      else return memoTable;
+    })()}
   </PageLayout>;
 }

@@ -575,6 +575,14 @@
     "resultUnknown": "See console for details."
   },
 
+  "noWalletsResult": {
+    "title": "No wallets yet",
+    "subTitle": "You currently have no wallets saved in KristWeb, so there is nothing to see here yet. Would you like to add a wallet?",
+    "button": "Add wallets",
+    "buttonNetworkTransactions": "Network transactions",
+    "buttonNetworkNames": "Network names"
+  },
+
   "backups": {
     "importButton": "Import backup",
     "exportButton": "Export backup"
