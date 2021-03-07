@@ -2,11 +2,11 @@
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React, { useState, useEffect } from "react";
-import { Row, Col, Skeleton, Button, Tooltip } from "antd";
+import { Row, Col, Skeleton, Button } from "antd";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 
 import { useTranslation } from "react-i18next";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 import { RootState } from "@store";
@@ -19,6 +19,7 @@ import { ContextualAddress } from "@comp/addresses/ContextualAddress";
 import { BlockHash } from "./BlockHash";
 import { KristValue } from "@comp/krist/KristValue";
 import { DateTime } from "@comp/DateTime";
+import { ConditionalLink } from "@comp/ConditionalLink";
 
 import * as api from "@api";
 import { KristBlock } from "@api/types";
@@ -116,36 +117,22 @@ function NavButtons({ block }: { block?: KristBlock }): JSX.Element {
 
   return <div className="block-nav-buttons">
     {/* Previous block button */}
-    <Tooltip
-      title={hasPrevious
-        ? t("block.previousTooltip", { id: previousID })
-        : t("block.previousTooltipNone")}
+    <ConditionalLink
+      to={`/network/blocks/${encodeURIComponent(previousID)}`}
+      condition={hasPrevious}
+      replace
     >
-      {/* Wrap in a link if the button is enabled */}
-      {hasPrevious
-        ? (
-          <Link to={`/network/blocks/${encodeURIComponent(previousID)}`} replace>
-            {previousBtn}
-          </Link>
-        )
-        : previousBtn}
-    </Tooltip>
+      {previousBtn}
+    </ConditionalLink>
 
     {/* Next block button */}
-    <Tooltip
-      title={hasNext
-        ? t("block.nextTooltip", { id: nextID })
-        : t("block.nextTooltipNone")}
+    <ConditionalLink
+      to={`/network/blocks/${encodeURIComponent(nextID)}`}
+      condition={hasNext}
+      replace
     >
-      {/* Wrap in a link if the button is enabled */}
-      {hasNext
-        ? (
-          <Link to={`/network/blocks/${encodeURIComponent(nextID)}`} replace>
-            {nextBtn}
-          </Link>
-        )
-        : nextBtn}
-    </Tooltip>
+      {nextBtn}
+    </ConditionalLink>
   </div>;
 }
 
