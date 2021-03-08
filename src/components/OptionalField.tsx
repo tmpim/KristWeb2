@@ -16,7 +16,7 @@ interface Props {
   value?: React.ReactNode | null | undefined;
   copyable?: boolean | CopyConfig;
   unsetKey?: string;
-  className?: string
+  className?: string;
 }
 
 export function OptionalField({

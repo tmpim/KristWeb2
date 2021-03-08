@@ -85,5 +85,5 @@ export function DecryptReveal({
     : (encrypted
       ? <AuthorisedAction onAuthed={reveal}>{revealLink}</AuthorisedAction>
       : revealLink
-    )
+    );
 }

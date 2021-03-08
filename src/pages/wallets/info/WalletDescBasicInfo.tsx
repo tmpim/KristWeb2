@@ -24,6 +24,7 @@ export function WalletDescBasicInfo({ wallet, descProps }: WalletDescProps): JSX
     <Descriptions.Item label={t("myWallets.info.label")}>
       <OptionalField copyable value={wallet.label} />
     </Descriptions.Item>
+
     {/* Wallet Category */}
     <Descriptions.Item label={t("myWallets.info.category")}>
       <OptionalField copyable value={wallet.category} />
@@ -33,14 +34,17 @@ export function WalletDescBasicInfo({ wallet, descProps }: WalletDescProps): JSX
     <Descriptions.Item label={t("myWallets.info.username")}>
       <OptionalField copyable value={wallet.username} />
     </Descriptions.Item>
+
     {/* Wallet Password */}
     <Descriptions.Item label={t("myWallets.info.password")}>
-        <DecryptReveal copyable encrypted value={wallet.encPassword} />
+      <DecryptReveal copyable encrypted value={wallet.encPassword} />
     </Descriptions.Item>
+
     {/* Wallet Private Key */}
     <Descriptions.Item label={t("myWallets.info.privatekey")}>
-        <DecryptReveal copyable encrypted value={wallet.encPrivatekey} />
+      <DecryptReveal copyable encrypted value={wallet.encPrivatekey} />
     </Descriptions.Item>
+
     {/* Wallet Format */}
     <Descriptions.Item label={t("myWallets.info.format")}>
       <OptionalField copyable value={wallet.format} />
