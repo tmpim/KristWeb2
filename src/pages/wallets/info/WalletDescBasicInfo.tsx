@@ -47,7 +47,7 @@ export function WalletDescBasicInfo({ wallet, descProps }: WalletDescProps): JSX
 
     {/* Wallet Format */}
     <Descriptions.Item label={t("myWallets.info.format")}>
-      <OptionalField copyable value={wallet.format} />
+      <OptionalField copyable value={wallet.format || "kristwallet"} />
     </Descriptions.Item>
   </Descriptions>;
 }
