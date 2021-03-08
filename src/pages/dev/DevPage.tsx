@@ -7,6 +7,7 @@ import { PageLayout } from "../../layout/PageLayout";
 
 import { ImportBackupModal } from "../backup/ImportBackupModal";
 import { AuthorisedAction } from "@comp/auth/AuthorisedAction";
+import { AddressPicker } from "@comp/addresses/AddressPicker";
 
 import { useWallets, deleteWallet } from "@wallets";
 
@@ -30,6 +31,12 @@ export function DevPage(): JSX.Element {
     </AuthorisedAction>
 
     <ImportBackupModal visible={modalVisible} setVisible={setModalVisible} />
+
+    <br /><br />
+
+    <AddressPicker walletsOnly />
+    <br /><br />
+    <AddressPicker />
 
     <br /><br />
 

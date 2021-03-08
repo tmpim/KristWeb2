@@ -1,0 +1,33 @@
+// Copyright (c) 2020-2021 Drew Lemmy
+// This file is part of KristWeb 2 under GPL-3.0.
+// Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
+@import (reference) "../../App.less";
+
+.address-picker-dropdown {
+  .address-picker-address-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+
+    .krist-value {
+      flex: 0;
+      margin-left: auto;
+      padding-left: @padding-sm;
+    }
+
+    .address-picker-item-content {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .address-picker-wallet-label {
+      white-space: normal;
+      word-break: break-word;
+    }
+
+    .address-picker-wallet-label + .address-picker-wallet-address {
+      color: @text-color-secondary;
+    }
+  }
+}

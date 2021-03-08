@@ -722,5 +722,21 @@
 
   "walletLimitMessage": "You have more wallets stored than KristWeb supports. This was either caused by a bug, or you bypassed it intentionally. Expect issues with syncing.",
 
-  "optionalFieldUnset": "(unset)"
+  "optionalFieldUnset": "(unset)",
+
+  "addressPicker": {
+    "placeholder": "Type an address, or choose a wallet",
+    "placeholderWalletsOnly": "Choose a wallet",
+
+    "hintCurrentBalance": "Current balance: <1 />",
+
+    "errorInvalidAddress": "Invalid address or name.",
+    "errorInvalidRecipient": "Invalid recipient. Must be an address or name.",
+    "errorInvalidWalletsOnly": "Invalid wallet address.",
+
+    "categoryWallets": "Wallets",
+    "categoryOtherWallets": "Other wallets",
+    "categoryAddressBook": "Address book",
+    "categoryExactAddress": "Exact address"
+  }
 }
