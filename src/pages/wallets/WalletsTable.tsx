@@ -1,70 +1,19 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import React, { useState } from "react";
-import { Table, Tooltip, Dropdown, Tag, Menu, Popconfirm } from "antd";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import React from "react";
+import { Table, Tooltip, Tag } from "antd";
 
 import { useTranslation } from "react-i18next";
 
 import { ContextualAddress } from "@comp/addresses/ContextualAddress";
 import { KristValue } from "@comp/krist/KristValue";
 import { DateTime } from "@comp/DateTime";
-import { WalletEditButton } from "./WalletEditButton";
-import { AddWalletModal } from "./AddWalletModal";
 
-import { Wallet, deleteWallet, useWallets } from "@wallets";
+import { useWallets } from "@wallets";
+import { WalletActions } from "./WalletActions";
 
 import { keyedNullSort, localeSort } from "@utils";
-
-function WalletActions({ wallet }: { wallet: Wallet }): JSX.Element {
-  const { t } = useTranslation();
-  const [editWalletVisible, setEditWalletVisible] = useState(false);
-
-  function onDeleteWallet() {
-    deleteWallet(wallet);
-  }
-
-  return <>
-    <Dropdown.Button
-      className="wallet-actions"
-
-      buttonsRender={([leftButton, rightButton]) => [
-        <WalletEditButton key="leftButton" wallet={wallet}>
-          <Tooltip title={t("myWallets.actionsEditTooltip")}>
-            {React.cloneElement(leftButton as React.ReactElement<any>, {
-              className: "ant-btn-left", // force the border-radius
-              disabled: wallet.dontSave
-            })}
-          </Tooltip>
-        </WalletEditButton>,
-        rightButton
-      ]}
-
-      overlay={(
-        <Menu>
-          {/* Delete button */}
-          <Menu.Item key="1" danger>
-            <Popconfirm
-              title={t("myWallets.actionsDeleteConfirm")}
-              placement="left"
-              onConfirm={onDeleteWallet}
-              okText={t("dialog.yes")}
-              cancelText={t("dialog.no")}
-            >
-              <DeleteOutlined /> {t("myWallets.actionsDelete")}
-            </Popconfirm>
-          </Menu.Item>
-        </Menu>
-      )}>
-
-      {/* Edit button */}
-      <EditOutlined />
-    </Dropdown.Button>
-
-    <AddWalletModal editing={wallet} visible={editWalletVisible} setVisible={setEditWalletVisible} />
-  </>;
-}
 
 export function WalletsTable(): JSX.Element {
   const { t } = useTranslation();

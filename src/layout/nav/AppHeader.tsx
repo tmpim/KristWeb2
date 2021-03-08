@@ -6,7 +6,6 @@ import { Layout, Menu, Grid } from "antd";
 import { SendOutlined, DownloadOutlined, MenuOutlined, SettingOutlined } from "@ant-design/icons";
 
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
 
 import { Brand } from "./Brand";
 import { Search } from "./Search";

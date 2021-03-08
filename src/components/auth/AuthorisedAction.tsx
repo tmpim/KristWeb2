@@ -19,6 +19,7 @@ interface Props {
   encrypt?: boolean;
   onAuthed?: () => void;
   popoverPlacement?: TooltipPlacement;
+  children: React.ReactNode;
 }
 
 export const AuthorisedAction: FC<Props> = ({ encrypt, onAuthed, popoverPlacement, children }) => {
@@ -29,29 +30,32 @@ export const AuthorisedAction: FC<Props> = ({ encrypt, onAuthed, popoverPlacemen
   const [clicked, setClicked] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
+  // This is used to pass the 'onClick' prop down to the child. The child MUST
+  // support the onClick prop.
+  // NOTE: If the child is a custom component, make sure it passes `...props`
+  //       down to its child.
+  // TODO: Support multiple children?
+  const child = React.Children.only(children) as React.ReactElement;
+
   if (isAuthed) {
     // The user is authed with their master password, just perform the action
     // directly:
-    return <a href="#" onClick={e => {
+    return React.cloneElement(child, { onClick: (e: MouseEvent) => {
       e.preventDefault();
       debug("authorised action occurred: was already authed");
 
       if (onAuthed) onAuthed();
-    }}>
-      {children}
-    </a>;
+    }});
   } else if (!hasMasterPassword) {
     // The user does not yet have a master password, prompt them to create one:
     return <>
-      <a href="#" onClick={e => {
+      {React.cloneElement(child, { onClick: (e: MouseEvent) => {
         e.preventDefault();
         debug("authorised action postponed: no master password set");
 
         if (!clicked) setClicked(true);
         setModalVisible(true);
-      }}>
-        {children}
-      </a>
+      }})}
 
       {clicked && <SetMasterPasswordModal
         visible={modalVisible}

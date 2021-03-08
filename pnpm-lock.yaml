@@ -18,6 +18,7 @@ dependencies:
   i18next-http-backend: 1.1.1
   lodash-es: 4.17.21
   lru-cache: 6.0.0
+  rc-menu: 8.10.6_react-dom@17.0.1+react@17.0.1
   react: 17.0.1
   react-chartjs-2: 2.11.1_6c446a34f83b2a92e3214f8b711c141a
   react-dom: 17.0.1_react@17.0.1
@@ -56,7 +57,7 @@ devDependencies:
   '@types/semver': 7.3.4
   '@types/uuid': 8.3.0
   '@types/webpack-env': 1.16.0
-  '@typescript-eslint/eslint-plugin': 4.15.3-alpha.17_0c05b3d2e4bc9c73120c3f1c1aed4425
+  '@typescript-eslint/eslint-plugin': 4.15.3-alpha.17_bcfedfa8b2673ad3028fc37ce1448d88
   '@typescript-eslint/parser': 4.15.3-alpha.17_eslint@7.21.0+typescript@4.1.5
   antd-dayjs-webpack-plugin: 1.0.6_dayjs@1.10.4
   babel-plugin-lodash: 3.3.4
@@ -2275,7 +2276,7 @@ packages:
       '@types/yargs-parser': 20.2.0
     resolution:
       integrity: sha512-kQ5JNTrbDv3Rp5X2n/iUu37IJBDU2gsZ5R/g1/KHOOEc5IKfUFjXT6DENPGduh08I/pamwtEq4oul7gUqKTQDQ==
-  /@typescript-eslint/eslint-plugin/4.15.3-alpha.17_0c05b3d2e4bc9c73120c3f1c1aed4425:
+  /@typescript-eslint/eslint-plugin/4.15.3-alpha.17_bcfedfa8b2673ad3028fc37ce1448d88:
     dependencies:
       '@typescript-eslint/experimental-utils': 4.15.3-alpha.17_eslint@7.21.0+typescript@4.1.5
       '@typescript-eslint/parser': 4.15.3-alpha.17_eslint@7.21.0+typescript@4.1.5
@@ -13858,6 +13859,7 @@ specifiers:
   i18next-http-backend: ^1.1.1
   lodash-es: ^4.17.21
   lru-cache: ^6.0.0
+  rc-menu: ^8.10.6
   react: ^17.0.1
   react-chartjs-2: ^2.11.1
   react-dom: ^17.0.1

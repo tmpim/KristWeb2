@@ -18,12 +18,21 @@ interface OwnProps {
   small?: boolean;
   secondary?: boolean;
   neverRelative?: boolean;
+  tooltip?: React.ReactNode | false;
 }
 type Props = React.HTMLProps<HTMLSpanElement> & OwnProps;
 
 const RELATIVE_DATE_THRESHOLD = 1000 * 60 * 60 * 24 * 7;
 
-export function DateTime({ date, timeAgo, small, secondary, neverRelative, ...props }: Props): JSX.Element | null {
+export function DateTime({
+  date,
+  timeAgo,
+  small,
+  secondary,
+  neverRelative,
+  tooltip,
+  ...props
+}: Props): JSX.Element | null {
   const showRelativeDates = useBooleanSetting("showRelativeDates");
 
   if (!date) return null;
@@ -38,11 +47,19 @@ export function DateTime({ date, timeAgo, small, secondary, neverRelative, ...pr
     "date-time-secondary": secondary
   });
 
-  return <Tooltip title={realDate.toISOString()}>
+  const contents = (
     <span className={classes}>
       {isTimeAgo
         ? <TimeAgo date={realDate} />
         : dayjs(realDate).format("YYYY/MM/DD HH:mm:ss")}
     </span>
-  </Tooltip>;
+  );
+
+  return tooltip || tooltip === undefined
+    ? (
+      <Tooltip title={tooltip || realDate.toISOString()}>
+        {contents}
+      </Tooltip>
+    )
+    : contents;
 }

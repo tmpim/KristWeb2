@@ -146,11 +146,45 @@
     "walletCount_plural": "{{count, number}} wallets",
 
     "actionsEditTooltip": "Edit wallet",
+    "actionsWalletInfo": "Wallet info",
     "actionsDelete": "Delete wallet",
     "actionsDeleteConfirm": "Are you sure you want to delete this wallet?",
+    "actionsDeleteConfirmDescription": "If you haven't backed it up or saved its password, it will be lost forever!",
 
     "tagDontSave": "Temp",
-    "tagDontSaveTooltip": "Temporary wallet"
+    "tagDontSaveTooltip": "Temporary wallet",
+
+    "info": {
+      "title": "Wallet info - {{address}}",
+
+      "titleBasicInfo": "Basic info",
+      "id": "ID",
+      "label": "Label",
+      "category": "Category",
+      "username": "Username",
+      "password": "Password",
+      "privatekey": "Private key",
+      "format": "Format",
+
+      "titleSyncedInfo": "Synced info",
+      "address": "Address",
+      "balance": "Balance",
+      "names": "Name count",
+      "firstSeen": "First seen",
+      "existsOnNetwork": "Exists on network",
+      "lastSynced": "Last synced",
+
+      "titleAdvancedInfo": "Advanced info",
+      "encPassword": "Encrypted password",
+      "encPrivatekey": "Encrypted private key",
+      "saved": "Saved",
+
+      "revealLink": "Reveal",
+      "hideLink": "Hide",
+
+      "true": "True",
+      "false": "False"
+    }
   },
 
   "myTransactions": {
@@ -686,5 +720,7 @@
     }
   },
 
-  "walletLimitMessage": "You have more wallets stored than KristWeb supports. This was either caused by a bug, or you bypassed it intentionally. Expect issues with syncing."
+  "walletLimitMessage": "You have more wallets stored than KristWeb supports. This was either caused by a bug, or you bypassed it intentionally. Expect issues with syncing.",
+
+  "optionalFieldUnset": "(unset)"
 }
