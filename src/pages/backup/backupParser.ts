@@ -49,7 +49,7 @@ export function decodeBackup(rawData: string): Backup {
       throw new TranslatedError("import.decodeErrors.atob");
 
     // Invalid json
-    if (err instanceof SyntaxError)
+    if (err?.name === "SyntaxError")
       throw new TranslatedError("import.decodeErrors.json");
 
     throw err;

@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import { PageLayout, PageLayoutProps } from "../../layout/PageLayout";
 import { SettingBoolean } from "./SettingBoolean";
 import { SettingInteger } from "./SettingInteger";
-import { getLanguageItems } from "./LanguageItem";
+import { getLanguageItems } from "./translations/LanguageItem";
 
 import "./SettingsPage.less";
 

@@ -68,6 +68,7 @@ devDependencies:
   eslint-plugin-react-hooks: 4.2.0_eslint@7.21.0
   eslint-plugin-tsdoc: 0.2.11
   git-revision-webpack-plugin: 3.0.6
+  react-file-drop: 3.1.2_react-dom@17.0.1+react@17.0.1
   react-refresh: 0.9.0
   react-scripts: 4.0.3_react@17.0.1+typescript@4.1.5
   redux-devtools-extension: 2.13.8_redux@4.0.5
@@ -10904,6 +10905,17 @@ packages:
     dev: true
     resolution:
       integrity: sha512-nQTTcUu+ATDbrSD1BZHr5kgSD4oF8OFjxun8uAaL8RwPBacGBNPf/yAuVVdx17N8XNzRDMrZ9XcKZHCjPW+9ew==
+  /react-file-drop/3.1.2_react-dom@17.0.1+react@17.0.1:
+    dependencies:
+      prop-types: 15.7.2
+      react: 17.0.1
+      react-dom: 17.0.1_react@17.0.1
+    dev: true
+    peerDependencies:
+      react: ^16.13.1
+      react-dom: ^16.13.1
+    resolution:
+      integrity: sha512-fhujAloK9AIDzu18ltGrYe8Pk9NuXdCc8MrFgLNPJJS22B/GdTwD7Pz4BCCUiX+4sFZr42L4AZM7RsJN2xu1BQ==
   /react-hotkeys/2.0.0_react@17.0.1:
     dependencies:
       prop-types: 15.7.2
@@ -13871,6 +13883,7 @@ specifiers:
   react: ^17.0.1
   react-chartjs-2: ^2.11.1
   react-dom: ^17.0.1
+  react-file-drop: ^3.1.2
   react-hotkeys: ^2.0.0
   react-i18next: ^11.8.8
   react-linkify: ^1.0.0-alpha

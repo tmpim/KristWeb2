@@ -1,0 +1,175 @@
+// Copyright (c) 2020-2021 Drew Lemmy
+// This file is part of KristWeb 2 under GPL-3.0.
+// Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
+@import (reference) "../../App.less";
+
+.site-header + .ant-layout {
+  z-index: 1;
+
+  margin-top: @layout-header-height;
+}
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  display: flex;
+  flex-direction: row;
+
+  border-bottom: 1px solid @kw-border-color-darker;
+  padding: 0;
+
+  z-index: 2;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+
+  .site-header-brand {
+    width: @kw-sidebar-width;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    // Make it full height
+    align-self: stretch;
+    // Force the search bar to shrink instead
+    flex-shrink: 0;
+
+    font-size: 1.25rem;
+    user-select: none;
+
+    border-right: 1px solid @kw-border-color-darker;
+
+    a {
+      color: @text-color;
+      text-align: center;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+    &-version {
+      margin-left: 0.25em;
+
+      color: @text-color-secondary;
+      font-size: 60%;
+    }
+
+    .ant-tag {
+      margin-left: 0.5em;
+      margin-right: 0;
+    }
+  }
+
+  > .ant-menu {
+    background: transparent;
+    flex-shrink: 0;
+
+    .ant-menu-item {
+      height: @layout-header-height;
+
+      // Fix background overlapping border
+      border-bottom: 1px solid @kw-border-color-darker;
+    }
+  }
+
+  .site-header-sidebar-toggle {
+    border-right: 1px solid @kw-border-color-darker;
+  }
+
+  .site-header-search-container {
+    padding: 0 1rem;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .site-header-search {
+      width: 100%;
+      max-width: 400px;
+
+      margin-left: auto;
+
+      background: @kw-header-search-bg;
+      color: @kw-header-search-color;
+      border-radius: @border-radius-base;
+
+      transition: all @animation-duration-base ease;
+
+      &::placeholder {
+        color: @kw-header-search-placeholder-color;
+
+        transition: all @animation-duration-base ease;
+
+        font-size: @kw-header-search-placeholder-font-size;
+        vertical-align: middle;
+      }
+
+      &:hover {
+        background: @kw-header-search-hover-bg;
+        color: @kw-header-search-hover-color;
+      }
+
+      &.ant-select-focused {
+        background: @kw-header-search-focus-bg;
+        color: @kw-header-search-focus-color;
+
+        .ant-input {
+          // Remove the built in focus indicator
+          box-shadow: none;
+        }
+      }
+
+      .ant-input-group, .ant-input {
+        background: transparent;
+        border: none;
+      }
+
+      .ant-input-group-addon {
+        border: none;
+        background: transparent;
+
+        .ant-input-search-button {
+          border: none;
+          background: transparent;
+
+          .anticon {
+            vertical-align: middle;
+          }
+        }
+      }
+
+      // Make the search box full width on mobile
+      @media (max-width: @screen-md) {
+        max-width: 100%;
+      }
+    }
+  }
+
+  .site-header-element {
+    flex: 0;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-right: 16px;
+
+    .site-header-cymbal {
+      color: @text-color-secondary;
+      font-size: 20px;
+    }
+  }
+
+  .site-header-settings {
+    border-left: 1px solid @kw-border-color-darker;
+
+    .anticon {
+      margin-right: 0;
+    }
+  }
+}

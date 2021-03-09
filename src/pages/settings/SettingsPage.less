@@ -30,6 +30,16 @@
     }
   }
 
+  .settings-translations-extra {
+    // Force the fake label button to vertically align correctly
+    display: flex;
+
+    .ant-btn {
+      margin-right: @margin-sm;
+      &:last-child { margin-right: 0; }
+    }
+  }
+
   .menu-item-setting-integer {
     .ant-input-group.ant-input-group-compact {
       display: inline-block;

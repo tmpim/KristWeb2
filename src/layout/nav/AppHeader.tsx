@@ -14,6 +14,8 @@ import { CymbalIndicator } from "./CymbalIndicator";
 
 import { ConditionalLink } from "@comp/ConditionalLink";
 
+import "./AppHeader.less";
+
 const { useBreakpoint } = Grid;
 
 interface Props {

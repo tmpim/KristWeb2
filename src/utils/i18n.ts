@@ -1,6 +1,8 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
+import { notification } from "antd";
+
 import { isLocalhost } from "./";
 
 import i18n from "i18next";
@@ -23,7 +25,8 @@ export interface Contributor {
   url?: string;
 }
 
-export function getLanguages(): { [key: string]: Language } | null {
+export type Languages = { [key: string]: Language } | null;
+export function getLanguages(): Languages {
   return languagesJson;
 }
 
@@ -52,7 +55,7 @@ i18n
   .use(initReactI18next)
   .init({
     fallbackLng: "en",
-    supportedLngs: Object.keys(getLanguages() || { "en": {} }),
+    supportedLngs: [...Object.keys(getLanguages() || { "en": {} }), "und"],
 
     debug: isLocalhost,
 
@@ -73,6 +76,17 @@ i18n
     backend: {
       queryStringParams: { v: packageJson.version },
       loadPath: "/locales/{{lng}}.json"
+    }
+  })
+  .then(() => {
+    // If the language was set to a custom debug language, reset it
+    if (i18n.language === "und") {
+      i18n.changeLanguage("en");
+      // Intentionally untranslated
+      notification.info({
+        message: "Language reverted to English.",
+        description: "You were previously using a custom debug translation."
+      });
     }
   });
 

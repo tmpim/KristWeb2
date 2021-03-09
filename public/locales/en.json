@@ -42,7 +42,6 @@
 
   "sidebar": {
     "totalBalance": "Total Balance",
-    "guestIndicator": "Browsing as guest",
     "dashboard": "Dashboard",
     "myWallets": "My Wallets",
     "addressBook": "Address Book",
@@ -98,14 +97,10 @@
     "dialogTitle": "Master password",
     "passwordPlaceholder": "Master password",
     "passwordConfirmPlaceholder": "Confirm master password",
-    "browseAsGuest": "Browse as guest",
     "createPassword": "Create password",
     "logIn": "Log in",
     "forgotPassword": "Forgot password?",
-    "intro": "Enter a master password to encrypt your wallets, or browse KristWeb as a guest <1></1>.",
     "intro2": "Enter a <1>master password</1> to encrypt your wallet private keys. They will be saved in your browser's local storage, and you will be asked for the master password to decrypt them once per session.",
-    "dontForgetPassword": "Never forget this password. If you forget it, you will have to create a new password and add your wallets all over again.",
-    "loginIntro": "Enter a master password to access your wallets, or browse KristWeb as a guest.",
     "learnMore": "learn more",
     "errorPasswordRequired": "Password is required.",
     "errorPasswordLength": "Must be at least 1 character.",
@@ -116,7 +111,6 @@
     "errorNoPassword": "Master password is required.",
     "errorUnknown": "Unknown error.",
     "helpWalletStorageTitle": "Help: Wallet storage",
-    "helpWalletStorage": "When you add a wallet to KristWeb, the private key for the wallet is saved to your browser's local storage and encrypted with your master password.\nEvery wallet you save is encrypted using the same master password, and you will need to enter it every time you open KristWeb. Your actual Krist wallet is not modified in any way.\nWhen browsing KristWeb as a guest, you do not need to enter a master password, but it also means that you will not be able to add or use any wallets. You will still be able to explore the Krist network.",
     "popoverTitle": "Decrypt wallets",
     "popoverTitleEncrypt": "Encrypt wallets",
     "popoverAuthoriseButton": "Authorise",
@@ -361,6 +355,7 @@
       "columnKey": "Key",
       "columnEnglishString": "English string",
 
+      "importJSON": "Import JSON",
       "exportCSV": "Export CSV"
     }
   },

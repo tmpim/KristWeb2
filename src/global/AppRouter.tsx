@@ -16,7 +16,7 @@ import { NamesPage, ListingType as NamesListing } from "@pages/names/NamesPage";
 import { NamePage } from "@pages/names/NamePage";
 
 import { SettingsPage } from "@pages/settings/SettingsPage";
-import { SettingsTranslations } from "@pages/settings/SettingsTranslations";
+import { SettingsTranslations } from "@pages/settings/translations/SettingsTranslations";
 
 import { CreditsPage } from "@pages/credits/CreditsPage";
 
