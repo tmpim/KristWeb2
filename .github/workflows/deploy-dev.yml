@@ -4,15 +4,21 @@ on: push
 
 jobs:
   deploy-dev:
-    runs-on: ubuntu-latest
-    container: node:15
+    runs-on: ubuntu-20.04
 
     steps:
     - name: Install git
-      run: apt-get install -y git
+      run: |
+        apt-get install -y software-properties-common \
+        && apt-get update \
+        && add-apt-repository -y ppa:git-core/ppa \
+        && apt-get update \
+        && apt-get install -y git
 
     - name: Check out repository code
       uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
 
     - name: Install dependencies
       run: npm install --legacy-peer-deps
