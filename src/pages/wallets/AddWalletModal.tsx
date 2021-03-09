@@ -251,7 +251,9 @@ export function AddWalletModal({ create, editing, visible, setVisible, setAddExi
         {/* Wallet category */}
         <Col span={12}>
           <Form.Item name="category" label={t("addWallet.walletCategory")}>
-            {SelectWalletCategory({ onNewCategory: category => form.setFieldsValue({ category })})}
+            <SelectWalletCategory
+              onNewCategory={category => form.setFieldsValue({ category })}
+            />
           </Form.Item>
         </Col>
       </Row>
