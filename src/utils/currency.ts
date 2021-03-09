@@ -3,6 +3,11 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { memoize, escapeRegExp, truncate, toString } from "lodash-es";
 
+// -----------------------------------------------------------------------------
+// NAMES
+// -----------------------------------------------------------------------------
+// Cheap way to avoid RegExp DoS
+const MAX_NAME_SUFFIX_LENGTH = 6;
 const _cleanNameSuffix = (nameSuffix: string | undefined | null): string => {
   // Ensure the name suffix is safe to put into a RegExp
   const stringSuffix = toString(nameSuffix);
@@ -12,8 +17,6 @@ const _cleanNameSuffix = (nameSuffix: string | undefined | null): string => {
 };
 export const cleanNameSuffix = memoize(_cleanNameSuffix);
 
-// Cheap way to avoid RegExp DoS
-const MAX_NAME_SUFFIX_LENGTH = 6;
 const _getNameRegex = (nameSuffix: string | undefined | null, metadata?: boolean): RegExp =>
   new RegExp(`^(?:([a-z0-9-_]{1,32})@)?([a-z0-9]{1,64}\\.${cleanNameSuffix(nameSuffix)})${metadata ? ";?" : "$"}`);
 export const getNameRegex = memoize(_getNameRegex);
@@ -27,6 +30,58 @@ export const stripNameSuffix = (nameSuffix: string | undefined | null, inp: stri
 
 export const stripNameFromMetadata = (nameSuffix: string | undefined | null, metadata: string): string =>
   metadata.replace(getNameRegex(nameSuffix, true), "");
+
+// -----------------------------------------------------------------------------
+// ADDRESSES
+// -----------------------------------------------------------------------------
+const MAX_ADDRESS_PREFIX_LENGTH = 1;
+const _cleanAddressPrefix = (addressPrefix: string | undefined | null): string => {
+  // This might be slightly cursed when the max prefix length is 1 character,
+  // but let's call it future-proofing.
+  const stringPrefix = toString(addressPrefix);
+  const shortPrefix = truncate(stringPrefix, { length: MAX_ADDRESS_PREFIX_LENGTH, omission: "" });
+  const escaped = escapeRegExp(shortPrefix);
+  return escaped;
+};
+export const cleanAddressPrefix = memoize(_cleanAddressPrefix);
+
+// Supports v1 addresses too
+const _getAddressRegex = (addressPrefix: string | undefined | null): RegExp =>
+  new RegExp(`^(?:${cleanAddressPrefix(addressPrefix)}[a-z0-9]{9}|[a-f0-9]{10})$`);
+export const getAddressRegex = memoize(_getAddressRegex);
+
+// Only supports v2 addresses
+const _getAddressRegexV2 = (addressPrefix: string | undefined | null): RegExp =>
+  new RegExp(`^${cleanAddressPrefix(addressPrefix)}[a-z0-9]{9}$`);
+export const getAddressRegexV2 = memoize(_getAddressRegexV2);
+
+/**
+ * Returns whether or not an address is a valid Krist address for the current
+ * sync node.
+ *
+ * @param addressPrefix - The single-character address prefix provided by the
+ *   sync node.
+ * @param address - The address to check for validity.
+ * @param allowV1 - Whether or not the function should validate v1 addresses.
+ *   Note that as of February 2021, the Krist server no longer accepts
+ *   any kind of transaction to/from a v1 address, so features that are
+ *   validating an address for purpose of a transaction (e.g. the address
+ *   picker) should NOT set this to true.
+ */
+export function isValidAddress(
+  addressPrefix: string | undefined | null,
+  address: string,
+  allowV1?: boolean
+): boolean {
+  return allowV1
+    ? getAddressRegex(addressPrefix).test(address)
+    : getAddressRegexV2(addressPrefix).test(address);
+}
+
+
+// -----------------------------------------------------------------------------
+// MISC
+// -----------------------------------------------------------------------------
 
 /**
  * Estimates the network mining hash-rate, returning it as a formatted string.
