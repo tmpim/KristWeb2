@@ -67,6 +67,7 @@ devDependencies:
   eslint-plugin-react: 7.22.0_eslint@7.21.0
   eslint-plugin-react-hooks: 4.2.0_eslint@7.21.0
   eslint-plugin-tsdoc: 0.2.11
+  git-revision-webpack-plugin: 3.0.6
   react-refresh: 0.9.0
   react-scripts: 4.0.3_react@17.0.1+typescript@4.1.5
   redux-devtools-extension: 2.13.8_redux@4.0.5
@@ -6153,6 +6154,12 @@ packages:
     dev: true
     resolution:
       integrity: sha1-Xv+OPmhNVprkyysSgmBOi6YhSfo=
+  /git-revision-webpack-plugin/3.0.6:
+    dev: true
+    engines:
+      node: '>=6.11.5'
+    resolution:
+      integrity: sha512-vW/9dBahGbpKPcccy3xKkHgdWoH/cAPPc3lQw+3edl7b4j29JfNGVrja0a1d8ZoRe4nTN8GCPrF9aBErDnzx5Q==
   /glob-parent/3.1.0:
     dependencies:
       is-glob: 3.1.0
@@ -13854,6 +13861,7 @@ specifiers:
   eslint-plugin-react-hooks: ^4.2.0
   eslint-plugin-tsdoc: ^0.2.11
   file-saver: ^2.0.5
+  git-revision-webpack-plugin: ^3.0.6
   i18next: ^19.9.1
   i18next-browser-languagedetector: ^6.0.1
   i18next-http-backend: ^1.1.1

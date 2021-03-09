@@ -300,13 +300,20 @@
   "credits": {
     "title": "Credits",
     "madeBy": "Made by <1>{{authorName}}</1>",
+    "hostedBy": "Hosted by <1>{{host}}</1>",
     "supportersTitle": "Supporters",
     "supportersDescription": "This project was made possible by the following amazing supporters:",
     "supportButton": "Support KristWeb",
     "translatorsTitle": "Translators",
     "translatorsDescription": "This project was translated by the following amazing contributors:",
     "translateButton": "Translate KristWeb",
-    "tmpim": "Created by tmpim"
+    "tmpim": "Created by tmpim",
+
+    "versionInfo": {
+      "version": "Version",
+      "commitHash": "Commit",
+      "buildTime": "Build time"
+    }
   },
 
   "settings": {

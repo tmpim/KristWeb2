@@ -1,32 +1,23 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import React, { useState } from "react";
+import React from "react";
 import { useTranslation, Trans } from "react-i18next";
 
-import { useMountEffect } from "@utils";
-import { getAuthorInfo } from "@utils/credits";
+import { getAuthorInfo, useHostInfo } from "@utils/credits";
 
 import { ConditionalLink } from "@comp/ConditionalLink";
 
+declare const __GIT_VERSION__: string;
+
 export function SidebarFooter(): JSX.Element {
   const { t } = useTranslation();
-  const [host, setHost] = useState<{ host: { name: string; url: string } } | undefined>();
-
-  useMountEffect(() => {
-    (async () => {
-      try {
-        // Add the host information if host.json exists
-        const hostFile = "host-attribution"; // Trick webpack into dynamic importing
-        const hostData = await import("../../__data__/" + hostFile + ".json");
-        setHost(hostData);
-      } catch (ignored) {
-        // Ignored
-      }
-    })();
-  });
 
   const { authorName, authorURL, gitURL } = getAuthorInfo();
+  const host = useHostInfo();
+
+  // Replaced by webpack DefinePlugin and git-revision-webpack-plugin
+  const gitVersion: string = __GIT_VERSION__;
 
   return (
     <div className="site-sidebar-footer">
@@ -44,6 +35,11 @@ export function SidebarFooter(): JSX.Element {
         <ConditionalLink to="/credits" matchTo>
           {t("sidebar.credits")}
         </ConditionalLink>
+      </div>
+
+      {/* Git describe version */}
+      <div className="site-sidebar-footer-version">
+        {gitVersion}
       </div>
     </div>
   );

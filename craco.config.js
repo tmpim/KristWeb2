@@ -6,6 +6,14 @@ const CracoLessPlugin = require("craco-less");
 const AntdDayjsWebpackPlugin = require("antd-dayjs-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const WebpackBar = require("webpackbar");
+const GitRevisionPlugin = require("git-revision-webpack-plugin");
+const { DefinePlugin } = require("webpack");
+
+const gitRevisionPlugin = new GitRevisionPlugin({
+  // Include the '-dirty' suffix if the local tree has been modified, and
+  // include non-annotated tags.
+  versionCommand: "describe --always --tags --dirty"
+});
 
 module.exports = {
   style: {
@@ -59,7 +67,13 @@ module.exports = {
       ...(process.env.NODE_ENV === "development" || process.env.FORCE_ANALYZE
         ? [new BundleAnalyzerPlugin({ openAnalyzer: false })]
         : []),
-      new AntdDayjsWebpackPlugin()
+      new AntdDayjsWebpackPlugin(),
+      gitRevisionPlugin,
+      new DefinePlugin({
+        "__GIT_VERSION__": JSON.stringify(gitRevisionPlugin.version()),
+        "__GIT_COMMIT_HASH__": JSON.stringify(gitRevisionPlugin.commithash()),
+        "__BUILD_TIME__": DefinePlugin.runtimeValue(Date.now)
+      })
     ],
 
     optimization: {

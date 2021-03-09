@@ -14,6 +14,8 @@ import { SidebarFooter } from "./SidebarFooter";
 
 import { ConditionalLink } from "@comp/ConditionalLink";
 
+import "./Sidebar.less";
+
 const { Sider } = Layout;
 
 type SidebarItemProps = MenuItemProps & {
