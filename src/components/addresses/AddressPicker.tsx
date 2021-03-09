@@ -25,7 +25,7 @@ interface Props {
 export function AddressPicker({ walletsOnly, className }: Props): JSX.Element {
   const { t } = useTranslation();
 
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState<string | undefined>("");
 
   // Note that the address picker's options are memoised against the wallets
   // (and soon the address book too), but to save on time and expense, the
@@ -37,9 +37,10 @@ export function AddressPicker({ walletsOnly, className }: Props): JSX.Element {
   // to prepend to the list. Note that the 'exact address' item is NOT shown if
   // the picker wants wallets only, or if the exact address already appears as a
   // wallet (or later, an address book entry).
-  const cleanValue = value.toLowerCase().trim();
+  const cleanValue = value?.toLowerCase().trim();
   const addressPrefix = useSelector((s: RootState) => s.node.currency.address_prefix);
-  const hasExactAddress = !walletsOnly
+  const hasExactAddress = cleanValue
+    && !walletsOnly
     && isValidAddress(addressPrefix, cleanValue)
     && !addressList.includes(cleanValue);
   const exactAddressItem = hasExactAddress
@@ -196,6 +197,8 @@ function getWalletOptions(wallets: WalletMap): WalletOptions {
       uncategorised.push(item);
     }
   }
+
+  // TODO: sort the addresses too?
 
   return {
     categorised,

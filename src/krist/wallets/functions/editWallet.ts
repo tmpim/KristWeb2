@@ -37,8 +37,8 @@ export async function editWallet(
   const finalWallet = {
     ...wallet,
 
-    label: updated.label?.trim() || undefined, // clean up empty strings
-    category: updated.category?.trim() || undefined,
+    label: updated.label?.trim() || "",
+    category: updated.category?.trim() || "",
 
     address,
     username: updated.username,
