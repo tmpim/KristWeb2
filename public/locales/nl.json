@@ -29,9 +29,9 @@
       "resultTransactionsName": "Zoeken naar transacties betreffende <1 />",
       "resultTransactionsNameResult": "<0>{{count, number}}</0> transactie verzonden naar <2 />",
       "resultTransactionsNameResult_plural": "<0>{{count, number}}</0> transacties verzonden naar <2 />",
-      "resultTransactionsMetadata": "Zoeken naar metadata betreffende <1 />",
-      "resultTransactionsMetadataResult": "<0>{{count, number}}</0> transactie betreffende metadata <2 />",
-      "resultTransactionsMetadataResult_plural": "<0>{{count, number}}</0> transacties betreffende metadata  <2 />"
+      "resultTransactionsMetadata": "Zoeken naar metagegevens betreffende <1 />",
+      "resultTransactionsMetadataResult": "<0>{{count, number}}</0> transactie betreffende metagegevens <2 />",
+      "resultTransactionsMetadataResult_plural": "<0>{{count, number}}</0> transacties betreffende metagegevens  <2 />"
     },
 
     "send": "Verzenden",
@@ -190,7 +190,7 @@
     "columnTime": "Tijd"
   },
 
-  "status": "KristWeb 2 is still in development. If you are not a donor, then you should not be here. Do not host this website.",
+  "status": "KristWeb 2 is nog in ontwikkeling. Bent u geen donateur, dan zou u hier niet moeten zijn. Host deze website niet.",
 
   "addWallet": {
     "dialogTitle": "Wallet toevoegen",
@@ -254,109 +254,109 @@
   "dashboard": {
     "siteTitle": "Dashboard",
 
-    "inDevBanner": "Welcome to the KristWeb v2 private beta! This site is still in development, so most features are currently missing. Please report all bugs on <1>GitHub</1>. Thanks!",
+    "inDevBanner": "Welkom bij de privé-bèta van KristWeb v2! Deze site is nog in ontwikkeling, dus de meeste features ontbreken momenteel. Rapporteer alstublieft alle bugs op <1>GitHub</1>. Bedankt!",
 
     "walletOverviewCardTitle": "Wallets",
     "walletOverviewTotalBalance": "Totaalbalans",
     "walletOverviewNames": "Namen",
-    "walletOverviewNamesCount": "{{count, number}} name",
-    "walletOverviewNamesCount_plural": "{{count, number}} names",
-    "walletOverviewSeeMore": "See all {{count, number}}...",
-    "walletOverviewAddWallets": "Add wallets...",
+    "walletOverviewNamesCount": "{{count, number}} naam",
+    "walletOverviewNamesCount_plural": "{{count, number}} namen",
+    "walletOverviewSeeMore": "Zie alle {{count, number}}...",
+    "walletOverviewAddWallets": "Wallets toevoegen...",
 
-    "transactionsCardTitle": "Transactions",
+    "transactionsCardTitle": "Transacties",
     "transactionsError": "Er was een fout bij het ophalen van de transacties. Zie de console voor details.",
 
-    "blockValueCardTitle": "Block value",
-    "blockValueBaseValue": "Base value (<1></1>)",
-    "blockValueBaseValueNames": "{{count, number}} name",
-    "blockValueBaseValueNames_plural": "{{count, number}} names",
-    "blockValueNextDecrease": "Decreases by <1></1> in <3>{{count, number}} block</3>",
-    "blockValueNextDecrease_plural": "Decreases by <1></1> in <3>{{count, number}} blocks</3>",
-    "blockValueReset": "Resets in <1>{{count, number}} block</1>",
-    "blockValueReset_plural": "Resets in <1>{{count, number}} blocks</1>",
-    "blockValueEmptyDescription": "The block value increases when <1>names</1> are purchased.",
+    "blockValueCardTitle": "Blokwaarde",
+    "blockValueBaseValue": "Basiswaarde (<1></1>)",
+    "blockValueBaseValueNames": "{{count, number}} naam",
+    "blockValueBaseValueNames_plural": "{{count, number}} namen",
+    "blockValueNextDecrease": "Zal verminderen in <1></1> in <3>{{count, number}} blok</3>",
+    "blockValueNextDecrease_plural": "Zal verminderen in <1></1> in <3>{{count, number}} blokken</3>",
+    "blockValueReset": "Zal resetten in <1>{{count, number}} blok</1>",
+    "blockValueReset_plural": "Zal resetten in <1>{{count, number}} blokken</1>",
+    "blockValueEmptyDescription": "De blokwaarde verhoogt wanneer <1>namen</1> aangeschaft worden",
 
-    "blockDifficultyCardTitle": "Block difficulty",
-    "blockDifficultyError": "There was an error fetching the block difficulty. See the console for details.",
-    "blockDifficultyHashRate": "Approx. <1 />",
-    "blockDifficultyHashRateTooltip": "Estimated combined network mining hash rate, based on the current work.",
-    "blockDifficultyChartWork": "Block Difficulty",
+    "blockDifficultyCardTitle": "Blok moeilijkheidsgraad",
+    "blockDifficultyError": "Er is een fout opgetreden bij het ophalen van de moeilijkheidsgraad van het blok. Zie de console voor details.",
+    "blockDifficultyHashRate": "Ongeveer <1 />",
+    "blockDifficultyHashRateTooltip": "Geschatte hash-snelheid van gecombineerde netwerkmining, gebaseerd op het huidige werk.",
+    "blockDifficultyChartWork": "Blok moeilijkheidsgraad",
     "blockDifficultyChartLinear": "Linear",
-    "blockDifficultyChartLog": "Logarithmic",
+    "blockDifficultyChartLog": "Logaritmisch",
 
     "motdCardTitle": "Server MOTD",
-    "motdDebugMode": "This sync node is an unofficial development server. Balances and transactions can be manipulated. Proceed with caution.",
+    "motdDebugMode": "Dit synchronisatieknooppunt is een niet-officiële ontwikkelserver. Saldi en transacties kunnen worden gemanipuleerd. Ga voorzichtig verder.",
 
-    "whatsNewCardTitle": "What's new"
+    "whatsNewCardTitle": "Wat is er nieuw"
   },
 
   "credits": {
     "title": "Credits",
-    "madeBy": "Made by <1>{{authorName}}</1>",
-    "hostedBy": "Hosted by <1>{{host}}</1>",
+    "madeBy": "Gemaakt door <1>{{authorName}}</1>",
+    "hostedBy": "Gehost by <1>{{host}}</1>",
     "supportersTitle": "Supporters",
-    "supportersDescription": "This project was made possible by the following amazing supporters:",
+    "supportersDescription": "Dit project is mogelijk gemaakt door de volgende geweldige supporters:",
     "supportButton": "Support KristWeb",
-    "translatorsTitle": "Translators",
-    "translatorsDescription": "This project was translated by the following amazing contributors:",
-    "translateButton": "Translate KristWeb",
-    "tmpim": "Created by tmpim",
+    "translatorsTitle": "Vertalers",
+    "translatorsDescription": "Dit project is vertaald door de volgende geweldige bijdragers:",
+    "translateButton": "Vertaal KristWeb",
+    "tmpim": "Gemaakt door tmpim",
 
     "versionInfo": {
-      "version": "Version",
+      "version": "Versie",
       "commitHash": "Commit",
-      "buildTime": "Build time"
+      "buildTime": "Buildtijd"
     }
   },
 
   "settings": {
-    "siteTitle": "Settings",
-    "title": "Settings",
+    "siteTitle": "Instellingen",
+    "title": "Instellingen",
 
-    "messageSuccess": "Setting changed successfully!",
+    "messageSuccess": "Instelling succesvol gewijzigd!",
 
-    "settingIntegerSave": "Save",
+    "settingIntegerSave": "Opslaan",
 
-    "menuLanguage": "Language",
+    "menuLanguage": "Taal",
 
-    "subMenuAutoRefresh": "Auto-refresh",
-    "autoRefreshTables": "Auto-refresh tables",
-    "autoRefreshTablesDescription": "Whether or not large table listings (e.g. transactions, names) should automatically refresh when a change is detected on the network.",
+    "subMenuAutoRefresh": "Automatisch-verversen",
+    "autoRefreshTables": "Automatisch-verversen tabellen",
+    "autoRefreshTablesDescription": "Of grote tafellijsten (bijv. Transacties, namen) al dan niet automatisch moeten worden vernieuwd wanneer er een wijziging op het netwerk wordt gedetecteerd.",
 
-    "subMenuAdvanced": "Advanced settings",
-    "alwaysIncludeMined": "Always include mined transactions in transaction listings (may require refresh)",
-    "copyNameSuffixes": "Include suffix when copying names",
-    "addressCopyButtons": "Show copy buttons next to all addresses",
-    "nameCopyButtons": "Show copy buttons next to all names",
-    "blockHashCopyButtons": "Show copy buttons next to all block hashes",
-    "showRelativeDates": "Show relative dates instead of absolute ones if recent",
-    "showRelativeDatesDescription": "Everywhere on the site, if a date is less than 7 days ago, it will show as a relative date instead.",
-    "transactionDefaultRaw": "Default to the 'Raw' tab instead of 'CommonMeta' on the transaction page",
-    "defaultPageSize": "Default page size for table listings",
+    "subMenuAdvanced": "Geavanceerde instellingen",
+    "alwaysIncludeMined": "Neem altijd gemijnde transacties op in transactielijsten (mogelijk moet er worden vernieuwd)",
+    "copyNameSuffixes": "Voeg het achtervoegsel toe bij het kopiëren van namen",
+    "addressCopyButtons": "Toon kopieerknoppen naast alle adressen",
+    "nameCopyButtons": "Toon kopieerknoppen naast alle namen",
+    "blockHashCopyButtons": "Toon kopieerknoppen naast alle blok-hashes",
+    "showRelativeDates": "Geef relatieve datums weer in plaats van absolute, indien recent",
+    "showRelativeDatesDescription": "Overal op de site, als een datum minder dan 7 dagen geleden is, wordt deze als een relatieve datum weergegeven.",
+    "transactionDefaultRaw": "Standaard het tabblad 'Rauw' weergeven in plaats van 'CommonMeta' op de transactiepagina",
+    "defaultPageSize": "Standaard paginaformaat voor tabelvermeldingen",
 
-    "subMenuDebug": "Debug settings",
-    "advancedWalletFormats": "Advanced wallet formats",
-    "menuTranslations": "Translations",
+    "subMenuDebug": "Debug instellingen",
+    "advancedWalletFormats": "Geavanceerde wallet formaten",
+    "menuTranslations": "Vertalingen",
 
-    "subTitleTranslations": "Translations",
+    "subTitleTranslations": "Vertalingen",
 
     "translations": {
-      "errorMissingLanguages": "The languages.json file seems to be missing. Was KristWeb compiled correctly?",
-      "errorNoKeys": "No translation keys",
+      "errorMissingLanguages": "Het bestand languages.json lijkt te ontbreken. Is KristWeb correct gecompileerd?",
+      "errorNoKeys": "Geen vertalingssleutels",
 
       "columnLanguageCode": "Code",
-      "columnLanguage": "Language",
-      "columnKeys": "Keys",
-      "columnMissingKeys": "Missing keys",
-      "columnProgress": "Progress",
+      "columnLanguage": "Taal",
+      "columnKeys": "Sleutels",
+      "columnMissingKeys": "Missende sleutels",
+      "columnProgress": "Voortgang",
 
-      "tableUntranslatedKeys": "Untranslated keys",
-      "columnKey": "Key",
-      "columnEnglishString": "English string",
+      "tableUntranslatedKeys": "Onvertaalde sleutels",
+      "columnKey": "Sleutel",
+      "columnEnglishString": "Engelse tekst",
 
-      "importJSON": "Import JSON",
-      "exportCSV": "Export CSV"
+      "importJSON": "Importeer JSON",
+      "exportCSV": "Exporteer CSV"
     }
   },
 
@@ -364,18 +364,18 @@
     "dashboard": "Dashboard",
     "wallets": "Wallets",
 
-    "settings": "Settings",
+    "settings": "Instellingen",
     "settingsDebug": "Debug",
-    "settingsTranslations": "Translations"
+    "settingsTranslations": "Vertalingen"
   },
 
   "ws": {
-    "errorToken": "There was an error connecting to the Krist websocket server.",
-    "errorWS": "There was an error connecting to the Krist websocket server (code <1>{{code}}</1>)."
+    "errorToken": "Er is een fout opgetreden bij het verbinden met de Krist websocket-server.",
+    "errorWS": "Er is een fout opgetreden bij het verbinden met de Krist websocket-server (code <1>{{code}}</1>)."
   },
 
-  "rateLimitTitle": "Rate limit hit",
-  "rateLimitDescription": "Too many requests were sent to the Krist server in a short period of time. This is probably caused by a bug!",
+  "rateLimitTitle": "Verzoek-limiet bereikt",
+  "rateLimitDescription": "Er zijn in korte tijd te veel verzoeken naar de Krist-server gestuurd. Dit wordt waarschijnlijk veroorzaakt door een bug!",
 
   "address": {
     "title": "Adres",
@@ -383,27 +383,27 @@
     "walletLabel": "Label:",
     "walletCategory": "Categorie:",
 
-    "balance": "Current balance",
+    "balance": "Huidige balans",
     "names": "Namen",
-    "nameCount": "{{count, number}} name",
-    "nameCount_plural": "{{count, number}} names",
-    "firstSeen": "First seen",
+    "nameCount": "{{count, number}} naam",
+    "nameCount_plural": "{{count, number}} namen",
+    "firstSeen": "Geïntroduceert",
 
-    "buttonSendKrist": "Send Krist to {{address}}",
-    "buttonTransferKrist": "Transfer Krist to {{address}}",
-    "buttonAddFriend": "Add to address book",
-    "buttonEditFriend": "Edit in address book",
-    "buttonEditWallet": "Edit wallet",
+    "buttonSendKrist": "Verzend Krist naar {{address}}",
+    "buttonTransferKrist": "Maak Krist over naar {{address}}",
+    "buttonAddFriend": "Toevoegen aan adresboek",
+    "buttonEditFriend": "Bewerken in adresboek",
+    "buttonEditWallet": "Wallet bewerken",
 
-    "cardRecentTransactionsTitle": "Recente transactoes",
+    "cardRecentTransactionsTitle": "Recente transacties",
     "cardNamesTitle": "Namen",
 
-    "transactionsError": "There was an error fetching the transactions. See the console for details.",
-    "namesError": "There was an error fetching the names. See the console for details.",
+    "transactionsError": "Er is een fout opgetreden bij het ophalen van de transacties. Zie de console voor details.",
+    "namesError": "Er is een fout opgetreden bij het ophalen van de namen. Zie de console voor details.",
 
-    "namePurchased": "Purchased <1 />",
-    "nameReceived": "Received <1 />",
-    "namesSeeMore": "See all {{count, number}}...",
+    "namePurchased": "Aangeschaft <1 />",
+    "nameReceived": "Ontvangen <1 />",
+    "namesSeeMore": "Zie alle {{count, number}}...",
 
     "resultInvalidTitle": "Foutief adres",
     "resultInvalid": "Dat lijkt niet op een correct krist adres.",
@@ -437,7 +437,7 @@
 
     "subTitleSearchAddress": "Betreffende {{address}}",
     "subTitleSearchName": "Betreffende {{name}}",
-    "subTitleSearchMetadata": "Met metadata '{{query}}'",
+    "subTitleSearchMetadata": "Met metagegevens '{{query}}'",
 
     "columnID": "ID",
     "columnType": "Type",
@@ -445,7 +445,7 @@
     "columnTo": "Naar",
     "columnValue": "Waarde",
     "columnName": "Naam",
-    "columnMetadata": "Metadata",
+    "columnMetadata": "Metagegevens",
     "columnTime": "Tijd",
 
     "tableTotal": "{{count, number}} resultaat",
@@ -513,7 +513,7 @@
     "aRecord": "A record",
     "aRecordEditTooltip": "A record bijwerken",
 
-    "cardRecentTransactionsTitle": "Recente transactoes",
+    "cardRecentTransactionsTitle": "Recente transacties",
     "cardHistoryTitle": "Naamgeschiedenis",
     "transactionsError": "Er is een fout opgetreden bij het ophalen van transacties. Zie de console voor details.",
     "historyError": "Er is een fout opgetreden bij het ophalen van de naamgeschiedenis. Zie de console voor details.",
@@ -544,7 +544,7 @@
   "block": {
     "title": "Blok",
     "siteTitle": "Blok",
-    "siteTitleBlock": "Block #{{id, number}}",
+    "siteTitleBlock": "Blok #{{id, number}}",
     "subTitleBlock": "#{{id, number}}",
 
     "height": "Hoogte",
@@ -554,23 +554,23 @@
     "hash": "Hash",
     "difficulty": "Moeilijkheidsgraad",
 
-    "previous": "Prev",
-    "previousTooltip": "Previous block (#{{id, number}})",
-    "previousTooltipNone": "Previous block",
-    "next": "Next",
-    "nextTooltip": "Next block (#{{id, number}})",
-    "nextTooltipNone": "Next block",
+    "previous": "Vorige",
+    "previousTooltip": "Vorige blok (#{{id, number}})",
+    "previousTooltipNone": "Vorige blok ",
+    "next": "Volgende",
+    "nextTooltip": "Volgend blok (#{{id, number}})",
+    "nextTooltipNone": "Volgend blok",
 
-    "resultInvalidTitle": "Invalid block height",
-    "resultInvalid": "That does not look like a valid block height.",
-    "resultNotFoundTitle": "Block not found",
-    "resultNotFound": "That block does not exist."
+    "resultInvalidTitle": "Foutieve blokhoogte",
+    "resultInvalid": "Dit lijkt niet op een correcte blokhoogte.",
+    "resultNotFoundTitle": "Blok niet gevonden",
+    "resultNotFound": "Dit blok is niet gevonden."
   },
 
   "transaction": {
-    "title": "Transaction",
-    "siteTitle": "Transaction",
-    "siteTitleTransaction": "Transaction #{{id, number}}",
+    "title": "Transactie",
+    "siteTitle": "Transactie",
+    "siteTitleTransaction": "Transactie #{{id, number}}",
     "subTitleTransaction": "#{{id, number}}",
 
     "type": "Type",
@@ -582,76 +582,76 @@
     "time": "Tijd",
     "aRecord": "A record",
 
-    "cardMetadataTitle": "Metadata",
+    "cardMetadataTitle": "Metagegevens",
     "tabCommonMeta": "CommonMeta",
     "tabRaw": "Raw",
 
-    "commonMetaError": "CommonMeta parsing failed.",
-    "commonMetaParsed": "Parsed records",
-    "commonMetaParsedHelp": "These values were not directly contained in the transaction metadata, but they were inferred by the CommonMeta parser.",
-    "commonMetaCustom": "Transaction records",
-    "commonMetaCustomHelp": "These values were directly contained in the transaction metadata.",
-    "commonMetaColumnKey": "Key",
+    "commonMetaError": "CommonMeta parseren heeft gefaald.",
+    "commonMetaParsed": "Geparseerde gegevens",
+    "commonMetaParsedHelp": "Deze waarden waren niet rechtstreeks opgenomen in de metagegevens van de transactie, maar werden afgeleid door de CommonMeta-parser.",
+    "commonMetaCustom": "Transactiegegevens",
+    "commonMetaCustomHelp": "Deze waarden waren direct opgenomen in de metagegevens van de transactie.",
+    "commonMetaColumnKey": "Sleutel",
     "commonMetaColumnValue": "Waarde",
 
-    "cardRawDataTitle": "Raw data",
-    "cardRawDataHelp": "The transaction exactly as it was returned by the Krist API.",
+    "cardRawDataTitle": "Rauwe gegevens",
+    "cardRawDataHelp": "De transactie zoals deze is geretourneerd door de Krist API.",
 
-    "rawDataColumnKey": "Key",
+    "rawDataColumnKey": "Sleutel",
     "rawDataColumnValue": "Waarde",
 
-    "resultInvalidTitle": "Invalid transaction ID",
-    "resultInvalid": "That does not look like a valid transaction ID.",
-    "resultNotFoundTitle": "Transaction not found",
-    "resultNotFound": "That transaction does not exist."
+    "resultInvalidTitle": "Foutieve transactie ID",
+    "resultInvalid": "Dat lijkt niet op een geldige transactie-ID.",
+    "resultNotFoundTitle": "Transactie niet gevonden",
+    "resultNotFound": "Die transactie bestaat niet."
   },
 
   "apiErrorResult": {
-    "resultUnknownTitle": "Unknown error",
-    "resultUnknown": "See console for details."
+    "resultUnknownTitle": "Onbekende fout",
+    "resultUnknown": "Zie de console voor details."
   },
 
   "noWalletsResult": {
-    "title": "No wallets yet",
-    "subTitle": "You currently have no wallets saved in KristWeb, so there is nothing to see here yet. Would you like to add a wallet?",
-    "button": "Add wallets",
+    "title": "Nog geen wallets",
+    "subTitle": "Je hebt momenteel geen wallets opgeslagen in KristWeb, dus er is hier nog niets te zien. Wilt u een portemonnee toevoegen?",
+    "button": "Wallets toevoegen",
     "buttonNetworkTransactions": "Netwerktransacties",
-    "buttonNetworkNames": "Network names"
+    "buttonNetworkNames": "Netwerknamen"
   },
 
   "backups": {
-    "importButton": "Import backup",
-    "exportButton": "Export backup"
+    "importButton": "Importeer back-up",
+    "exportButton": "Exporteer back-up"
   },
 
   "import": {
-    "description": "Paste the backup code (or import from a file below) and enter the corresponding master password. Backups from KristWeb v1 are also supported.",
+    "description": "Plak de back-upcode (of importeer uit een bestand hieronder) en voer het bijbehorende hoofdwachtwoord in. Back-ups van KristWeb v1 worden ook ondersteund.",
 
-    "masterPasswordPlaceholder": "Master password",
-    "masterPasswordRequired": "Master password is required.",
-    "masterPasswordIncorrect": "Master password is incorrect.",
+    "masterPasswordPlaceholder": "Hoofdwachtwoord",
+    "masterPasswordRequired": "Hoofdwachtwoord is vereist.",
+    "masterPasswordIncorrect": "Hoofdwachtwoord is incorrect.",
 
-    "appMasterPasswordRequired": "You must be authenticated to import wallets.",
+    "appMasterPasswordRequired": "U moet geauthenticeerd zijn om wallets te importeren.",
 
-    "fromFileButton": "Import from file",
-    "textareaPlaceholder": "Paste backup code here",
-    "textareaRequired": "Backup code is required.",
-    "fileErrorTitle": "Import error",
-    "fileErrorNotText": "The imported file must be a text file.",
+    "fromFileButton": "Importeer uit bestand",
+    "textareaPlaceholder": "Plak back-up code hier.",
+    "textareaRequired": "Back-up code is vereist.",
+    "fileErrorTitle": "Importeerfout",
+    "fileErrorNotText": "Het geïmporteerde bestand moet een tekstbestand zijn.",
 
-    "overwriteCheckboxLabel": "Update existing wallet labels if there are conflicts",
+    "overwriteCheckboxLabel": "Werk bestaande wallet-labels bij als er conflicten zijn",
 
-    "modalTitle": "Import backup",
-    "modalButton": "Import",
+    "modalTitle": "Importeer back-up",
+    "modalButton": "Importeren",
 
-    "detectedFormat": "<0>Detected format:</0> <2 />",
+    "detectedFormat": "<0>Gedetecteerd format:</0> <2 />",
     "detectedFormatKristWebV1": "KristWeb v1",
     "detectedFormatKristWebV2": "KristWeb v2",
-    "detectedFormatInvalid": "Invalid!",
+    "detectedFormatInvalid": "Foutief!",
 
     "decodeErrors": {
-      "atob": "The backup could not be decoded as it is not valid base64!",
-      "json": "The backup could not be decoded as it is not valid JSON!",
+      "atob": "De back-up kon niet worden gedecodeerd omdat het geen geldige base64 is!",
+      "json": "De back-up kon niet worden gedecodeerd omdat het geen geldige JSON is!",
       "missingTester": "The backup could not be decoded as it is missing a tester key!",
       "missingSalt": "The backup could not be decoded as it is missing a salt key!",
       "invalidTester": "The backup could not be decoded as the 'tester' key is the wrong type!",
@@ -688,15 +688,15 @@
       "errorPrivateKeyMismatch": "This wallet's password did not map to its stored private key!",
       "errorMasterKeyMismatch": "This wallet's password did not map to its stored master key!",
       "errorLimitReached": "You reached the wallet limit. You currently cannot add any more wallets.",
-      "errorUnknown": "An unknown error occurred. See console for details."
+      "errorUnknown": "Er heeft een onbekende fout opgetreden. Zie de console voor details."
     },
 
     "friendMessages": {
-      "errorNYI": "The Address Book has not yet been implemented, so it was skipped."
+      "errorNYI": "Het adresboek is nog niet geïmplementeerd, dus het is overgeslagen."
     },
 
     "results": {
-      "noneImported": "No new wallets were imported.",
+      "noneImported": "Er zijn geen nieuwe wallets geïmporteerd.",
 
       "walletsImported": "<0>{{count, number}} new wallet</0> was imported.",
       "walletsImported_plural": "<0>{{count, number}} new wallets</0> were imported.",
@@ -715,30 +715,30 @@
       "errorsAndWarnings": "There were <1>{{errors, number}} error(s)</1> and <3>{{warnings, number}} warning(s)</3> while importing your backup.",
 
       "treeHeaderWallets": "Wallets",
-      "treeHeaderFriends": "Friends (Address Book)",
+      "treeHeaderFriends": "Vrienden (Adresboek)",
 
       "treeWallet": "Wallet {{id}}",
-      "treeFriend": "Friend {{id}}"
+      "treeFriend": "Vriend {{id}}"
     }
   },
 
-  "walletLimitMessage": "You have more wallets stored than KristWeb supports. This was either caused by a bug, or you bypassed it intentionally. Expect issues with syncing.",
+  "walletLimitMessage": "Je hebt meer wallets opgeslagen dan KristWeb ondersteunt. Dit werd veroorzaakt door een bug, of u hebt deze opzettelijk omzeild. Verwacht problemen met synchroniseren.",
 
-  "optionalFieldUnset": "(unset)",
+  "optionalFieldUnset": "(geen waarde)",
 
   "addressPicker": {
-    "placeholder": "Type an address, or choose a wallet",
-    "placeholderWalletsOnly": "Choose a wallet",
+    "placeholder": "Typ een adres of kies een portemonnee",
+    "placeholderWalletsOnly": "Kies een wallet",
 
-    "hintCurrentBalance": "Current balance: <1 />",
+    "hintCurrentBalance": "Huidige balans: <1 />",
 
-    "errorInvalidAddress": "Invalid address or name.",
-    "errorInvalidRecipient": "Invalid recipient. Must be an address or name.",
-    "errorInvalidWalletsOnly": "Invalid wallet address.",
+    "errorInvalidAddress": "Ongeldig adres of naam.",
+    "errorInvalidRecipient": "Ongeldige ontvanger. Moet een adres of naam zijn.",
+    "errorInvalidWalletsOnly": "Ongeldig walletadres.",
 
     "categoryWallets": "Wallets",
-    "categoryOtherWallets": "Other wallets",
-    "categoryAddressBook": "Address book",
-    "categoryExactAddress": "Exact address"
+    "categoryOtherWallets": "Andere wallets",
+    "categoryAddressBook": "Adresboek",
+    "categoryExactAddress": "Exact adres"
   }
 }
