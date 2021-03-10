@@ -9,6 +9,7 @@ import i18n from "i18next";
 import Backend from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
 import { initReactI18next, TFunction } from "react-i18next";
+import JSON5 from "json5";
 
 import languagesJson from "../__data__/languages.json";
 import packageJson from "../../package.json";
@@ -75,7 +76,11 @@ i18n
 
     backend: {
       queryStringParams: { v: packageJson.version },
-      loadPath: "/locales/{{lng}}.json"
+      loadPath: "/locales/{{lng}}.json",
+
+      // Translations now use JSON5 to allow for comments, newlines, and basic
+      // syntax errors like trailing commas
+      parse: JSON5.parse
     }
   })
   .then(() => {

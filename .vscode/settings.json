@@ -65,5 +65,8 @@
     "unsyncable"
   ],
   "i18next.defaultTranslatedLocale": "en",
-  "i18next.i18nPaths": "public/locales"
+  "i18next.i18nPaths": "public/locales",
+  "files.associations": {
+    "public/locales/**.json": "json5"
+  }
 }

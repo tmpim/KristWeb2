@@ -55,8 +55,9 @@ standard for commit messages.
 ### Contributing translations
 
 Translation files are currently created manually in the 
-[i18next JSON format](https://www.i18next.com/misc/json-format). You can find
-existing translations in [`public/locales`](public/locales). The 
+[i18next JSON format](https://www.i18next.com/misc/json-format), with support 
+for [JSON5 syntax](https://spec.json5.org/). You can find existing translations 
+in [`public/locales`](public/locales). The 
 [English (GB) translation](public/locales/en.json) is used as the fallback.
 
 Language files are named with 

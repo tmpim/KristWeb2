@@ -1,6 +1,8 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
+import JSON5 from "json5";
+
 import { Language, getLanguages } from "@utils/i18n";
 
 export interface LangKeys { [key: string]: string }
@@ -19,7 +21,10 @@ export async function getLanguage([code, language]: [string, Language]): Promise
   const res = await fetch(`/locales/${code}.json`);
   if (!res.ok) throw new Error(res.statusText);
 
-  const translation = await res.json();
+  // Translations now use JSON5 to allow for comments, newlines, and basic
+  // syntax errors like trailing commas
+  const data = await res.text();
+  const translation = JSON5.parse(data);
 
   const isObject = (val: any) => typeof val === "object" && !Array.isArray(val);
   const addDelimiter = (a: string, b: string) => a ? `${a}.${b}` : b;

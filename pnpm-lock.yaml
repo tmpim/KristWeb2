@@ -16,12 +16,14 @@ dependencies:
   i18next: 19.9.1
   i18next-browser-languagedetector: 6.0.1
   i18next-http-backend: 1.1.1
+  json5: 2.2.0
   lodash-es: 4.17.21
   lru-cache: 6.0.0
   rc-menu: 8.10.6_react-dom@17.0.1+react@17.0.1
   react: 17.0.1
   react-chartjs-2: 2.11.1_6c446a34f83b2a92e3214f8b711c141a
   react-dom: 17.0.1_react@17.0.1
+  react-file-drop: 3.1.2_react-dom@17.0.1+react@17.0.1
   react-hotkeys: 2.0.0_react@17.0.1
   react-i18next: 11.8.8_i18next@19.9.1+react@17.0.1
   react-linkify: 1.0.0-alpha
@@ -68,7 +70,6 @@ devDependencies:
   eslint-plugin-react-hooks: 4.2.0_eslint@7.21.0
   eslint-plugin-tsdoc: 0.2.11
   git-revision-webpack-plugin: 3.0.6
-  react-file-drop: 3.1.2_react-dom@17.0.1+react@17.0.1
   react-refresh: 0.9.0
   react-scripts: 4.0.3_react@17.0.1+typescript@4.1.5
   redux-devtools-extension: 2.13.8_redux@4.0.5
@@ -7877,7 +7878,6 @@ packages:
   /json5/2.2.0:
     dependencies:
       minimist: 1.2.5
-    dev: true
     engines:
       node: '>=6'
     hasBin: true
@@ -8427,7 +8427,6 @@ packages:
     resolution:
       integrity: sha512-yJHVQEhyqPLUTgt9B83PXu6W3rx4MvvHvSUvToogpwoGDOUQ+yDrR0HRot+yOCdCO7u4hX3pWft6kWBBcqh0UA==
   /minimist/1.2.5:
-    dev: true
     resolution:
       integrity: sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==
   /minipass-collect/1.0.2:
@@ -10910,7 +10909,7 @@ packages:
       prop-types: 15.7.2
       react: 17.0.1
       react-dom: 17.0.1_react@17.0.1
-    dev: true
+    dev: false
     peerDependencies:
       react: ^16.13.1
       react-dom: ^16.13.1
@@ -13877,6 +13876,7 @@ specifiers:
   i18next: ^19.9.1
   i18next-browser-languagedetector: ^6.0.1
   i18next-http-backend: ^1.1.1
+  json5: ^2.2.0
   lodash-es: ^4.17.21
   lru-cache: ^6.0.0
   rc-menu: ^8.10.6

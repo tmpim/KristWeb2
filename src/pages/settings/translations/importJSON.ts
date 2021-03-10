@@ -3,6 +3,7 @@
 import { notification } from "antd";
 
 import i18n from "@utils/i18n";
+import JSON5 from "json5";
 
 import Debug from "debug";
 const debug = Debug("kristweb:settings-import-json");
@@ -10,7 +11,7 @@ const debug = Debug("kristweb:settings-import-json");
 function importLanguage(contents: string) {
   try {
     // Parse the imported language
-    const resources = JSON.parse(contents);
+    const resources = JSON5.parse(contents);
 
     // Update the language
     i18n.addResourceBundle("und", "translation", resources, true, true);
