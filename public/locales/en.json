@@ -739,6 +739,7 @@
     "categoryWallets": "Wallets",
     "categoryOtherWallets": "Other wallets",
     "categoryAddressBook": "Address book",
-    "categoryExactAddress": "Exact address"
+    "categoryExactAddress": "Exact address",
+    "categoryExactName": "Exact name"
   }
 }

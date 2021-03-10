@@ -18,8 +18,40 @@ const _cleanNameSuffix = (nameSuffix: string | undefined | null): string => {
 export const cleanNameSuffix = memoize(_cleanNameSuffix);
 
 const _getNameRegex = (nameSuffix: string | undefined | null, metadata?: boolean): RegExp =>
-  new RegExp(`^(?:([a-z0-9-_]{1,32})@)?([a-z0-9]{1,64}\\.${cleanNameSuffix(nameSuffix)})${metadata ? ";?" : "$"}`);
+  new RegExp(`^(?:([a-z0-9-_]{1,32})@)?([a-z0-9]{1,64})(\\.${cleanNameSuffix(nameSuffix)})${metadata ? ";?" : "$"}`);
 export const getNameRegex = memoize(_getNameRegex);
+
+export interface NameParts {
+  metaname?: string;
+  name?: string;
+  nameSuffix?: string;
+  nameWithSuffix?: string;
+  recipient?: string;
+}
+export function getNameParts(
+  nameSuffix: string | undefined | null,
+  name: string | undefined
+): NameParts | undefined {
+  if (!nameSuffix || !name) return;
+
+  const nameMatches = getNameRegex(nameSuffix).exec(name);
+  if (!nameMatches) return undefined;
+
+  const mMetaname = nameMatches[1] || undefined;
+  const mName = nameMatches[2] || undefined;
+  const nameWithSuffix = mName ? mName + "." + nameSuffix : undefined;
+  const recipient = mMetaname
+    ? mMetaname + "@" + nameWithSuffix
+    : nameWithSuffix;
+
+  return {
+    metaname: mMetaname,
+    name: mName,
+    nameSuffix,
+    nameWithSuffix,
+    recipient
+  };
+}
 
 const _stripNameSuffixRegExp = (nameSuffix: string | undefined | null): RegExp =>
   new RegExp(`\\.${cleanNameSuffix(nameSuffix)}$`);

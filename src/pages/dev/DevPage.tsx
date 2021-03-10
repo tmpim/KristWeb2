@@ -7,7 +7,7 @@ import { PageLayout } from "../../layout/PageLayout";
 
 import { ImportBackupModal } from "../backup/ImportBackupModal";
 import { AuthorisedAction } from "@comp/auth/AuthorisedAction";
-import { AddressPicker } from "@comp/addresses/AddressPicker";
+import { AddressPicker } from "@comp/addresses/picker/AddressPicker";
 
 import { useWallets, deleteWallet } from "@wallets";
 
