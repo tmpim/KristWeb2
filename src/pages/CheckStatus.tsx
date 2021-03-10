@@ -3,7 +3,7 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React from "react";
 
-import { AppLayout } from "../layout/AppLayout";
+import { AppLayout } from "@layout/AppLayout";
 import { StatusPage } from "./StatusPage";
 
 export function CheckStatus(): JSX.Element {

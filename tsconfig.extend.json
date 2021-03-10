@@ -11,6 +11,7 @@
       "@store/*": ["./store/*"],
 
       "@comp/*": ["./components/*"],
+      "@layout/*": ["./layout/*"],
       "@pages/*": ["./pages/*"],
 
       "@api": ["./krist/api"],

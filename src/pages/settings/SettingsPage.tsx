@@ -8,7 +8,7 @@ import { BugOutlined, GlobalOutlined, ReloadOutlined, SettingOutlined } from "@a
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-import { PageLayout, PageLayoutProps } from "../../layout/PageLayout";
+import { PageLayout, PageLayoutProps } from "@layout/PageLayout";
 import { SettingBoolean } from "./SettingBoolean";
 import { SettingInteger } from "./SettingInteger";
 import { getLanguageItems } from "./translations/LanguageItem";
@@ -49,6 +49,11 @@ export function SettingsPage(): JSX.Element {
             titleKey="settings.autoRefreshTables"
             descriptionKey="settings.autoRefreshTablesDescription"
           />
+        </Menu.Item>
+
+        {/* Auto-refresh tables */}
+        <Menu.Item key="autoRefresh/autoRefreshAddressPage">
+          <SettingBoolean setting="autoRefreshAddressPage" titleKey="settings.autoRefreshAddressPage"/>
         </Menu.Item>
       </Menu.SubMenu>
 

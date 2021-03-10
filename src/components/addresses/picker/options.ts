@@ -21,10 +21,13 @@ export interface OptionValue {
   "data-wallet-label"?: string;
   value: string;
 }
+
 export interface OptionChildren {
   label: React.ReactNode;
+  "data-picker-category": string;
   options: OptionValue[];
 }
+
 export type Option = OptionValue | OptionChildren;
 
 // -----------------------------------------------------------------------------

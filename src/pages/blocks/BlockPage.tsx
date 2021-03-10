@@ -11,7 +11,7 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "@store";
 
-import { PageLayout } from "../../layout/PageLayout";
+import { PageLayout } from "@layout/PageLayout";
 import { APIErrorResult } from "@comp/results/APIErrorResult";
 
 import { Statistic } from "@comp/Statistic";

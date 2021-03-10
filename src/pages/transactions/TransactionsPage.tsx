@@ -12,7 +12,7 @@ import { useSelector, shallowEqual } from "react-redux";
 import { RootState } from "@store";
 import { State as NodeState } from "@reducers/NodeReducer";
 
-import { PageLayout } from "../../layout/PageLayout";
+import { PageLayout } from "@layout/PageLayout";
 import { APIErrorResult } from "@comp/results/APIErrorResult";
 import { NoWalletsResult } from "@comp/results/NoWalletsResult";
 import { TransactionsTable } from "./TransactionsTable";

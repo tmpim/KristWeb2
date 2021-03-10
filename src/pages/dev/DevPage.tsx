@@ -3,7 +3,7 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React, { useState } from "react";
 import { Button } from "antd";
-import { PageLayout } from "../../layout/PageLayout";
+import { PageLayout } from "@layout/PageLayout";
 
 import { ImportBackupModal } from "../backup/ImportBackupModal";
 import { AuthorisedAction } from "@comp/auth/AuthorisedAction";

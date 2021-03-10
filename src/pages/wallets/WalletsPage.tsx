@@ -7,7 +7,7 @@ import { DatabaseOutlined, PlusOutlined } from "@ant-design/icons";
 
 import { useTranslation } from "react-i18next";
 
-import { PageLayout } from "../../layout/PageLayout";
+import { PageLayout } from "@layout/PageLayout";
 import { AuthorisedAction } from "@comp/auth/AuthorisedAction";
 import { AddWalletModal } from "./AddWalletModal";
 import { WalletsTable } from "./WalletsTable";

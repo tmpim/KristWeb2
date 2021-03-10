@@ -7,7 +7,7 @@ import { Row, Col, Skeleton } from "antd";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 
-import { PageLayout } from "../../layout/PageLayout";
+import { PageLayout } from "@layout/PageLayout";
 import { APIErrorResult } from "@comp/results/APIErrorResult";
 
 import { Statistic } from "@comp/Statistic";

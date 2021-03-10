@@ -22,6 +22,9 @@ export interface SettingsState {
   /** Whether or not tables (e.g. transactions, names) should auto-refresh
    * when a change is detected on the network. */
   readonly autoRefreshTables: boolean;
+  /** Whether or not the address page should auto-refresh when a change is
+   * detected on the network. */
+  readonly autoRefreshAddressPage: boolean;
 
   // ===========================================================================
   // ADVANCED SETTINGS
@@ -52,6 +55,7 @@ export interface SettingsState {
 
 export const DEFAULT_SETTINGS: SettingsState = {
   autoRefreshTables: true,
+  autoRefreshAddressPage: true,
 
   alwaysIncludeMined: false,
   copyNameSuffixes: true,

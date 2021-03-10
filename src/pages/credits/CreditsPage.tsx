@@ -5,7 +5,7 @@ import React from "react";
 import { Typography, Descriptions, Divider } from "antd";
 import { useTranslation, Trans } from "react-i18next";
 
-import { PageLayout } from "../../layout/PageLayout";
+import { PageLayout } from "@layout/PageLayout";
 import { Supporters } from "./Supporters";
 import { Translators } from "./Translators";
 import { DateTime } from "@comp/DateTime";

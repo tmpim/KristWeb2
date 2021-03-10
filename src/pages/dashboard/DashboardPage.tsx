@@ -4,7 +4,7 @@
 import React from "react";
 import { Row, Col } from "antd";
 
-import { PageLayout } from "../../layout/PageLayout";
+import { PageLayout } from "@layout/PageLayout";
 
 import { InDevBanner } from "./InDevBanner";
 

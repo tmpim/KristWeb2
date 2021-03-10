@@ -3,7 +3,9 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React from "react";
 
-export function getCategoryHeader(category: string) {
+import { OptionChildren } from "./options";
+
+export function getCategoryHeader(category: string): Omit<OptionChildren, "options"> {
   return {
     label: (
       <div className="address-picker-category-header">

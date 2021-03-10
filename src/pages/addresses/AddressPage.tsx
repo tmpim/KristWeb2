@@ -7,7 +7,7 @@ import { Row, Col, Skeleton, Tag, Typography } from "antd";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 
-import { PageLayout } from "../../layout/PageLayout";
+import { PageLayout } from "@layout/PageLayout";
 import { APIErrorResult } from "@comp/results/APIErrorResult";
 
 import { Statistic } from "@comp/Statistic";
@@ -18,6 +18,7 @@ import * as api from "@api";
 import { lookupAddress, KristAddressWithNames } from "@api/lookup";
 import { useWallets } from "@wallets";
 import { useSubscription } from "@global/ws/WebsocketSubscription";
+import { useBooleanSetting } from "@utils/settings";
 
 import { AddressButtonRow } from "./AddressButtonRow";
 import { AddressTransactionsCard } from "./AddressTransactionsCard";
@@ -126,6 +127,8 @@ export function AddressPage(): JSX.Element {
 
   // Used to refresh the address data when a transaction is made to it
   const lastTransactionID = useSubscription({ address });
+  const shouldAutoRefresh = useBooleanSetting("autoRefreshAddressPage");
+  const usedRefreshID = shouldAutoRefresh ? lastTransactionID : 0;
 
   // Load the address on page load
   // TODO: passthrough router state to pre-load from search
@@ -143,7 +146,7 @@ export function AddressPage(): JSX.Element {
     lookupAddress(address, true)
       .then(setKristAddress)
       .catch(setError);
-  }, [syncNode, address, lastTransactionID]);
+  }, [syncNode, address, usedRefreshID]);
 
   // Change the page title depending on whether or not the address has loaded
   const title = kristAddress
@@ -172,7 +175,7 @@ export function AddressPage(): JSX.Element {
         ? (
           <PageContents
             address={kristAddress}
-            lastTransactionID={lastTransactionID}
+            lastTransactionID={usedRefreshID}
           />
         )
         : <Skeleton active />)}
