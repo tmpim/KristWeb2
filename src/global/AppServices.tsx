@@ -6,7 +6,6 @@ import React from "react";
 import { SyncWallets } from "@comp/wallets/SyncWallets";
 import { ForcedAuth } from "./ForcedAuth";
 import { WebsocketService } from "./ws/WebsocketService";
-import { SyncWork } from "./ws/SyncWork";
 import { SyncMOTD } from "./ws/SyncMOTD";
 import { AppHotkeys } from "./AppHotkeys";
 import { StorageBroadcast } from "./StorageBroadcast";
@@ -14,7 +13,6 @@ import { StorageBroadcast } from "./StorageBroadcast";
 export function AppServices(): JSX.Element {
   return <>
     <SyncWallets />
-    <SyncWork />
     <SyncMOTD />
     <ForcedAuth />
     <WebsocketService />

@@ -23,8 +23,8 @@ export async function updateDetailedWork(): Promise<void> {
   store.dispatch(nodeActions.setDetailedWork(data));
 }
 
-/** Sync the work with the Krist node on startup. */
-export function SyncWork(): JSX.Element | null {
+/** Sync the detailed work with the Krist node on startup. */
+export function SyncDetailedWork(): JSX.Element | null {
   const { lastBlockID } = useSelector((s: RootState) => s.node);
 
   useEffect(() => {

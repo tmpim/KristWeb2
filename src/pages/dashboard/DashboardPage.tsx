@@ -15,10 +15,18 @@ import { BlockDifficultyCard } from "./BlockDifficultyCard";
 import { MOTDCard } from "./MOTDCard";
 import { WhatsNewCard } from "./WhatsNewCard";
 
+import { SyncDetailedWork } from "@global/ws/SyncDetailedWork";
+
 import "./DashboardPage.less";
 
 export function DashboardPage(): JSX.Element {
   return <PageLayout siteTitleKey="dashboard.siteTitle" className="dashboard-page">
+    {/* This was moved away from AppServices to here, as the detailed work
+      * data was only used for this page (at least right now). This was, the
+      * work will only be fetched when a block is mined while the Dashboard
+      * page is actually open and active. */}
+    <SyncDetailedWork />
+
     <InDevBanner />
 
     <Row gutter={16} className="dashboard-main-row">
