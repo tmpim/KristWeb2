@@ -38,6 +38,8 @@
 
     "react/display-name": 0,
     "react/prop-types": 0,
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
 
     "tsdoc/syntax": "warn",
     "@typescript-eslint/no-explicit-any": 0,

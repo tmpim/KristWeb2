@@ -3,7 +3,6 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import "./utils/setup";
 
-import React from "react";
 import ReactDOM from "react-dom";
 
 import "./index.css";

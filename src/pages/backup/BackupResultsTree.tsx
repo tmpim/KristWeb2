@@ -1,7 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { Tree } from "antd";
 import { DataNode } from "antd/lib/tree";
 import { CheckCircleOutlined, WarningOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
