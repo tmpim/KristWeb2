@@ -1,7 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import classNames from "classnames";
 import { AutoComplete, Form } from "antd";
 import { Rule } from "antd/lib/form";
@@ -26,23 +26,27 @@ import "./AddressPicker.less";
 interface Props {
   name: string;
   label?: string;
+  value?: string;
 
   walletsOnly?: boolean;
   noNames?: boolean;
+
   className?: string;
 }
 
 export function AddressPicker({
   name,
   label,
+  value,
+
   walletsOnly,
   noNames,
+
   className,
   ...props
 }: Props): JSX.Element {
   const { t } = useTranslation();
 
-  const [value, setValue] = useState<string | undefined>("");
   const cleanValue = value?.toLowerCase().trim();
 
   // Note that the address picker's options are memoised against the wallets
@@ -124,15 +128,23 @@ export function AddressPicker({
 
       // Address/name regexp
       {
-        pattern: walletsOnly || noNames
-          ? getAddressRegexV2(addressPrefix)
-          : getNameRegex(nameSuffix),
+        type: "method",
+        async validator(_, value): Promise<void> {
+          const addressRegexp = getAddressRegexV2(addressPrefix);
 
-        message: walletsOnly
-          ? t("addressPicker.errorInvalidWalletsOnly")
-          : (noNames
-            ? t("addressPicker.errorInvalidAddressOnly")
-            : t("addressPicker.errorInvalidRecipient"))
+          if (walletsOnly || noNames) {
+            // Only validate with addresses
+            if (!addressRegexp.test(value)) {
+              if (walletsOnly) throw t("addressPicker.errorInvalidWalletsOnly");
+              else throw t("addressPicker.errorInvalidAddressOnly");
+            }
+          } else {
+            // Validate addresses and names
+            const nameRegexp = getNameRegex(nameSuffix);
+            if (!addressRegexp.test(value) && !nameRegexp.test(value))
+              throw t("addressPicker.errorInvalidRecipient");
+          }
+        }
       },
 
       // If this is walletsOnly, add an additional rule to enforce that the
@@ -178,11 +190,6 @@ export function AddressPicker({
       }}
 
       options={fullOptions}
-
-      onChange={setValue}
-      value={value}
-
-      {...props}
     />
   </Form.Item>;
 }

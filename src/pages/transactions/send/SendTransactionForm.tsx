@@ -10,7 +10,7 @@ import { useWallets } from "@wallets";
 
 import { AddressPicker } from "@comp/addresses/picker/AddressPicker";
 
-interface FormValues {
+export interface FormValues {
   from: string;
   to: string;
   value: number;
@@ -61,12 +61,14 @@ function SendTransactionForm({
       walletsOnly
       name="from"
       label={t("sendTransaction.labelFrom")}
+      value={form.getFieldValue("from")}
     />
 
     {/* To */}
     <AddressPicker
       name="to"
       label={t("sendTransaction.labelTo")}
+      value={form.getFieldValue("to")}
     />
   </Form>;
 }
@@ -85,7 +87,12 @@ export function useTransactionForm(): TransactionFormHookResponse {
   async function onSubmit() {
     setIsSubmitting(true);
 
-    setTimeout(() => setIsSubmitting(false), 1000);
+    try {
+      const values = await form.validateFields();
+      console.log(values);
+    } finally {
+      setTimeout(() => setIsSubmitting(false), 1000);
+    }
   }
 
   // Create the transaction form instance here to be rendered by the caller
