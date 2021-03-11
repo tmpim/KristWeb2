@@ -5,15 +5,13 @@ import { useState, useRef, FC } from "react";
 import { Popover, Button, Input, Form } from "antd";
 import { TooltipPlacement } from "antd/lib/tooltip";
 
-import { useSelector, shallowEqual } from "react-redux";
-import { RootState } from "@store";
 import { useTranslation } from "react-i18next";
 import { translateError } from "@utils/i18n";
 
 import { FakeUsernameInput } from "./FakeUsernameInput";
 import { getMasterPasswordInput } from "./MasterPasswordInput";
 
-import { authMasterPassword } from "@wallets";
+import { authMasterPassword, useMasterPassword } from "@wallets";
 
 interface FormValues {
   masterPassword: string;
@@ -26,7 +24,7 @@ interface Props {
 }
 
 export const AuthMasterPasswordPopover: FC<Props> = ({ encrypt, onSubmit, placement, children }) => {
-  const { salt, tester } = useSelector((s: RootState) => s.masterPassword, shallowEqual);
+  const { salt, tester } = useMasterPassword();
 
   const { t } = useTranslation();
   const [form] = Form.useForm();

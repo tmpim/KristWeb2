@@ -1,6 +1,9 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
+import { useSelector, shallowEqual } from "react-redux";
+import { RootState } from "@store";
+
 import { toHex } from "@utils";
 import { aesGcmEncrypt, aesGcmDecrypt } from "@utils/crypto";
 
@@ -60,3 +63,22 @@ export async function setMasterPassword(password: string): Promise<void> {
   // Dispatch the auth state changes to the Redux store
   store.dispatch(actions.setMasterPassword(saltHex, tester, password));
 }
+
+interface MasterPasswordHookResponse {
+  isAuthed?: boolean;
+  masterPassword?: string;
+  salt?: string;
+  tester?: string;
+  hasMasterPassword?: boolean;
+}
+
+/** Hook to return the master password state. */
+export const useMasterPassword = (): MasterPasswordHookResponse =>
+  useSelector((s: RootState) => s.masterPassword, shallowEqual);
+
+/**
+ * Hook to return just the master password. Used when the authed state is
+ * already known (e.g. the component was rendered within an AuthorisedAction).
+ */
+export const useMasterPasswordOnly = (): string | undefined =>
+  useSelector((s: RootState) => s.masterPassword.masterPassword);

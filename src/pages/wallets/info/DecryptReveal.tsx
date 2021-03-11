@@ -8,8 +8,7 @@ import { CopyConfig } from "@comp/types";
 
 import { useTranslation } from "react-i18next";
 
-import { useSelector, shallowEqual } from "react-redux";
-import { RootState } from "@store";
+import { useMasterPassword } from "@wallets";
 
 import { aesGcmDecrypt } from "@utils/crypto";
 import { AuthorisedAction } from "@comp/auth/AuthorisedAction";
@@ -33,8 +32,7 @@ export function DecryptReveal({
 }: Props): JSX.Element {
   const { t } = useTranslation();
 
-  const { isAuthed, masterPassword }
-    = useSelector((s: RootState) => s.masterPassword, shallowEqual);
+  const { isAuthed, masterPassword } = useMasterPassword();
 
   const [revealed, setRevealed] = useState(false);
   const [decrypted, setDecrypted] = useState<string>();

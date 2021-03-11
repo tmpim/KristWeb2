@@ -4,8 +4,7 @@
 import React, { FC, useState } from "react";
 import { TooltipPlacement } from "antd/lib/tooltip";
 
-import { useSelector, shallowEqual } from "react-redux";
-import { RootState } from "@store";
+import { useMasterPassword } from "@wallets";
 
 import { AuthMasterPasswordPopover } from "./AuthMasterPasswordPopover";
 import { SetMasterPasswordModal } from "./SetMasterPasswordModal";
@@ -23,8 +22,7 @@ interface Props {
 }
 
 export const AuthorisedAction: FC<Props> = ({ encrypt, onAuthed, popoverPlacement, children }) => {
-  const { isAuthed, hasMasterPassword }
-    = useSelector((s: RootState) => s.masterPassword, shallowEqual);
+  const { isAuthed, hasMasterPassword } = useMasterPassword();
 
   // Don't render the modal and popover unless we absolutely have to
   const [clicked, setClicked] = useState(false);
