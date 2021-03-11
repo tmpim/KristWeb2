@@ -27,6 +27,7 @@ interface Props {
   name: string;
   label?: string;
   value?: string;
+  otherPickerValue?: string;
 
   walletsOnly?: boolean;
   noNames?: boolean;
@@ -38,6 +39,7 @@ export function AddressPicker({
   name,
   label,
   value,
+  otherPickerValue,
 
   walletsOnly,
   noNames,
@@ -153,6 +155,15 @@ export function AddressPicker({
         type: "enum",
         enum: addressList,
         message: t("addressPicker.errorInvalidWalletsOnly")
+      } as Rule] : []),
+
+      // If we have another address picker's value, assert that they are not
+      // equal (e.g. to/from in a transaction can't be equal)
+      ...(otherPickerValue ? [{
+        async validator(_, value): Promise<void> {
+          if (value === otherPickerValue)
+            throw t("addressPicker.errorEqual");
+        }
       } as Rule] : [])
     ]}
 
@@ -174,17 +185,28 @@ export function AddressPicker({
       filterOption={(inputValue, option) => {
         // Returning false if the option contains children will allow the select
         // to run filterOption for each child of that option group.
-        if (option?.options || !inputValue) return false;
+        if (option?.options) return false;
         // TODO: Do we want to filter categories here too?
+
+        const address = option!.value?.toUpperCase();
+        const walletLabel = option!["data-wallet-label"]?.toUpperCase();
+
+        // If we have another address picker's value, hide that option from the
+        // list (it will always be a wallet)
+        // FIXME: filterOption doesn't get called at all when inputValue is
+        //        blank, which means this option will still appear until the
+        //        user actually starts typing.
+        if (otherPickerValue?.toUpperCase() === address)
+          return false;
+
+        // Now that we've filtered out the other picker's value, we can allow
+        // every other option if there's no input
+        if (!inputValue) return true;
 
         const inp = inputValue.toUpperCase();
 
-        const address = option!.value;
-        const walletLabel = option!["data-wallet-label"];
-
-        const matchedAddress = address.toUpperCase().indexOf(inp) !== -1;
-        const matchedLabel = walletLabel
-          && walletLabel.toUpperCase().indexOf(inp) !== -1;
+        const matchedAddress = address.indexOf(inp) !== -1;
+        const matchedLabel = walletLabel?.indexOf(inp) !== -1;
 
         return matchedAddress || matchedLabel;
       }}

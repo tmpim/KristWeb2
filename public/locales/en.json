@@ -740,6 +740,7 @@
     "errorInvalidAddressOnly": "Invalid address.",
     "errorInvalidRecipient": "Invalid recipient. Must be an address or name.",
     "errorInvalidWalletsOnly": "Invalid wallet address.",
+    "errorEqual": "Recipient cannot be the same as the sender.",
 
     "categoryWallets": "Wallets",
     "categoryOtherWallets": "Other wallets",

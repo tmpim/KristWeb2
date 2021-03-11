@@ -36,6 +36,14 @@ function SendTransactionForm({
   //       modal that says "You currently don't have any saved wallets" etc,
   //       and prevents opening the sendTX modal/rendering the page
 
+  const [from, setFrom] = useState(initialFrom);
+  const [to, setTo] = useState("");
+
+  function onValuesChange(changed: Partial<FormValues>) {
+    if (changed.from !== undefined) setFrom(changed.from);
+    if (changed.to !== undefined) setTo(changed.to);
+  }
+
   return <Form
     // The form instance is managed by the parent, so that it has control over
     // the behaviour of resetting. For example, a modal dialog would want to
@@ -53,7 +61,7 @@ function SendTransactionForm({
       metadata: ""
     }}
 
-    // TODO: onValuesChange={onValuesChange}
+    onValuesChange={onValuesChange}
     onFinish={triggerSubmit}
   >
     {/* From */}
@@ -61,14 +69,15 @@ function SendTransactionForm({
       walletsOnly
       name="from"
       label={t("sendTransaction.labelFrom")}
-      value={form.getFieldValue("from")}
+      value={from}
     />
 
     {/* To */}
     <AddressPicker
       name="to"
       label={t("sendTransaction.labelTo")}
-      value={form.getFieldValue("to")}
+      value={to}
+      otherPickerValue={from === undefined ? initialFrom : from}
     />
   </Form>;
 }
