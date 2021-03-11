@@ -3,7 +3,8 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React, { useState, useMemo } from "react";
 import classNames from "classnames";
-import { AutoComplete } from "antd";
+import { AutoComplete, Form } from "antd";
+import { Rule } from "antd/lib/form";
 
 import { useTranslation } from "react-i18next";
 
@@ -11,7 +12,10 @@ import { useSelector } from "react-redux";
 import { RootState } from "@store";
 
 import { useWallets } from "@wallets";
-import { isValidAddress, getNameParts } from "@utils/currency";
+import {
+  isValidAddress, getNameParts,
+  getNameRegex, getAddressRegexV2
+} from "@utils/currency";
 
 import { getCategoryHeader } from "./Header";
 import { getAddressItem } from "./Item";
@@ -20,11 +24,22 @@ import { getOptions } from "./options";
 import "./AddressPicker.less";
 
 interface Props {
+  name: string;
+  label?: string;
+
   walletsOnly?: boolean;
+  noNames?: boolean;
   className?: string;
 }
 
-export function AddressPicker({ walletsOnly, className }: Props): JSX.Element {
+export function AddressPicker({
+  name,
+  label,
+  walletsOnly,
+  noNames,
+  className,
+  ...props
+}: Props): JSX.Element {
   const { t } = useTranslation();
 
   const [value, setValue] = useState<string | undefined>("");
@@ -55,8 +70,12 @@ export function AddressPicker({ walletsOnly, className }: Props): JSX.Element {
   // Check if the input text is an exact name. It may begin with a metaname, but
   // must end with the name suffix.
   const nameSuffix = useSelector((s: RootState) => s.node.currency.name_suffix);
-  const nameParts = !walletsOnly ? getNameParts(nameSuffix, cleanValue) : undefined;
-  const hasExactName = cleanValue && !walletsOnly && !!nameParts?.name;
+  const nameParts = !walletsOnly && !noNames
+    ? getNameParts(nameSuffix, cleanValue) : undefined;
+  const hasExactName = cleanValue
+    && !walletsOnly
+    && !noNames
+    && !!nameParts?.name;
   const exactNameItem = hasExactName
     ? {
       ...getCategoryHeader(t("addressPicker.categoryExactName")),
@@ -77,6 +96,7 @@ export function AddressPicker({ walletsOnly, className }: Props): JSX.Element {
 
   const classes = classNames("address-picker", className, {
     "address-picker-wallets-only": walletsOnly,
+    "address-picker-no-names": noNames,
     "address-picker-has-exact-address": hasExactAddress,
     "address-picker-has-exact-name": hasExactName,
   });
@@ -89,43 +109,81 @@ export function AddressPicker({ walletsOnly, className }: Props): JSX.Element {
   //       - Name Purchase Page (owner) - Form
   //       - Name Transfer Page (to) - Form
   //       - Mining Page (to) - Possibly a form, can get away with making it one
-  return <AutoComplete
-    className={classes}
-    dropdownClassName="address-picker-dropdown"
+  return <Form.Item
+    name={name}
+    label={label}
 
-    // Change the placeholder to 'Choose a wallet' if this is for wallets only
-    placeholder={walletsOnly
-      ? t("addressPicker.placeholderWalletsOnly")
-      : t("addressPicker.placeholder")}
+    // This stops the 'Wallet is invalid' rule from showing twice e.g. for a
+    // blank input
+    validateFirst
 
-    // Show a clear button on the input for convenience
-    allowClear
+    rules={[
+      { required: true, message: walletsOnly
+        ? t("addressPicker.errorWalletRequired")
+        : t("addressPicker.errorRecipientRequired")},
 
-    // Filter the options based on the input text
-    filterOption={(inputValue, option) => {
-      // Returning false if the option contains children will allow the select
-      // to run filterOption for each child of that option group.
-      if (option?.options || !inputValue) return false;
-      // TODO: Do we want to filter categories here too?
+      // Address/name regexp
+      {
+        pattern: walletsOnly || noNames
+          ? getAddressRegexV2(addressPrefix)
+          : getNameRegex(nameSuffix),
 
-      const inp = inputValue.toUpperCase();
+        message: walletsOnly
+          ? t("addressPicker.errorInvalidWalletsOnly")
+          : (noNames
+            ? t("addressPicker.errorInvalidAddressOnly")
+            : t("addressPicker.errorInvalidRecipient"))
+      },
 
-      const address = option!.value;
-      const walletLabel = option!["data-wallet-label"];
+      // If this is walletsOnly, add an additional rule to enforce that the
+      // given address is a wallet we actually own
+      ...(walletsOnly ? [{
+        type: "enum",
+        enum: addressList,
+        message: t("addressPicker.errorInvalidWalletsOnly")
+      } as Rule] : [])
+    ]}
 
-      const matchedAddress = address.toUpperCase().indexOf(inp) !== -1;
-      const matchedLabel = walletLabel && walletLabel.toUpperCase().indexOf(inp) !== -1;
+    {...props}
+  >
+    <AutoComplete
+      className={classes}
+      dropdownClassName="address-picker-dropdown"
 
-      return matchedAddress || matchedLabel;
-    }}
+      // Change the placeholder to 'Choose a wallet' if this is for wallets only
+      placeholder={walletsOnly
+        ? t("addressPicker.placeholderWalletsOnly")
+        : t("addressPicker.placeholder")}
 
-    options={fullOptions}
+      // Show a clear button on the input for convenience
+      allowClear
 
-    onChange={setValue}
-    value={value}
+      // Filter the options based on the input text
+      filterOption={(inputValue, option) => {
+        // Returning false if the option contains children will allow the select
+        // to run filterOption for each child of that option group.
+        if (option?.options || !inputValue) return false;
+        // TODO: Do we want to filter categories here too?
 
-    // TODO: remove this
-    style={{ minWidth: 300 }}
-  />;
+        const inp = inputValue.toUpperCase();
+
+        const address = option!.value;
+        const walletLabel = option!["data-wallet-label"];
+
+        const matchedAddress = address.toUpperCase().indexOf(inp) !== -1;
+        const matchedLabel = walletLabel
+          && walletLabel.toUpperCase().indexOf(inp) !== -1;
+
+        return matchedAddress || matchedLabel;
+      }}
+
+      options={fullOptions}
+
+      onChange={setValue}
+      value={value}
+
+      {...props}
+    />
+  </Form.Item>;
 }
 

@@ -6,8 +6,8 @@ import { Button } from "antd";
 import { PageLayout } from "@layout/PageLayout";
 
 import { ImportBackupModal } from "../backup/ImportBackupModal";
+import { SendTransactionModal } from "../transactions/send/SendTransactionModal";
 import { AuthorisedAction } from "@comp/auth/AuthorisedAction";
-import { AddressPicker } from "@comp/addresses/picker/AddressPicker";
 
 import { useWallets, deleteWallet } from "@wallets";
 
@@ -15,7 +15,8 @@ import Debug from "debug";
 const debug = Debug("kristweb:dev-page");
 
 export function DevPage(): JSX.Element {
-  const [modalVisible, setModalVisible] = useState(false);
+  const [importVisible, setImportVisible] = useState(false);
+  const [sendTXVisible, setSendTXVisible] = useState(false);
   const { wallets } = useWallets();
 
   return <PageLayout
@@ -25,18 +26,17 @@ export function DevPage(): JSX.Element {
     {/* Open import backup modal */}
     <AuthorisedAction
       encrypt
-      onAuthed={() => setModalVisible(true)}
+      onAuthed={() => setImportVisible(true)}
     >
-      <Button>Open</Button>
+      <Button>Open import backup modal</Button>
     </AuthorisedAction>
+    <ImportBackupModal visible={importVisible} setVisible={setImportVisible} />
 
-    <ImportBackupModal visible={modalVisible} setVisible={setModalVisible} />
-
-    <br /><br />
-
-    <AddressPicker walletsOnly />
-    <br /><br />
-    <AddressPicker />
+    {/* Open send tx modal */}
+    <AuthorisedAction onAuthed={() => setSendTXVisible(true)}>
+      <Button>Open send tx modal</Button>
+    </AuthorisedAction>
+    <SendTransactionModal visible={sendTXVisible} setVisible={setSendTXVisible} />
 
     <br /><br />
 

@@ -733,7 +733,11 @@
 
     "hintCurrentBalance": "Current balance: <1 />",
 
+    "errorRecipientRequired": "Recipient is required.",
+    "errorWalletRequired": "Wallet is required.",
+
     "errorInvalidAddress": "Invalid address or name.",
+    "errorInvalidAddressOnly": "Invalid address.",
     "errorInvalidRecipient": "Invalid recipient. Must be an address or name.",
     "errorInvalidWalletsOnly": "Invalid wallet address.",
 
@@ -742,5 +746,23 @@
     "categoryAddressBook": "Address book",
     "categoryExactAddress": "Exact address",
     "categoryExactName": "Exact name"
+  },
+
+  "sendTransaction": {
+    "modalTitle": "Send transaction",
+    "modalSubmit": "Send",
+
+    "buttonSubmit": "Send",
+
+    "labelFrom": "From wallet",
+    "labelTo": "To address/name",
+    "labelValue": "Amount",
+    "labelMetadata": "Metadata",
+    "placeholderMetadata": "Optional metadata",
+
+    "buttonMax": "Max"
+
+    // TODO: modals/warnings for confirmation of sending over 50% of balance,
+    //       whole balance, and form validation messages
   }
 }
