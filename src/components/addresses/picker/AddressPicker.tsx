@@ -8,11 +8,9 @@ import { Rule } from "antd/lib/form";
 
 import { useTranslation } from "react-i18next";
 
-import { useSelector } from "react-redux";
-import { RootState } from "@store";
-
 import { useWallets } from "@wallets";
 import {
+  useAddressPrefix, useNameSuffix,
   isValidAddress, getNameParts,
   getNameRegex, getAddressRegexV2
 } from "@utils/currency";
@@ -20,6 +18,7 @@ import {
 import { getCategoryHeader } from "./Header";
 import { getAddressItem } from "./Item";
 import { getOptions } from "./options";
+import { usePickerHints } from "./PickerHints";
 
 import "./AddressPicker.less";
 
@@ -31,6 +30,7 @@ interface Props {
 
   walletsOnly?: boolean;
   noNames?: boolean;
+  nameHint?: boolean;
 
   className?: string;
 }
@@ -43,6 +43,7 @@ export function AddressPicker({
 
   walletsOnly,
   noNames,
+  nameHint,
 
   className,
   ...props
@@ -61,8 +62,8 @@ export function AddressPicker({
   // to prepend to the list. Note that the 'exact address' item is NOT shown if
   // the picker wants wallets only, or if the exact address already appears as a
   // wallet (or later, an address book entry).
-  const addressPrefix = useSelector((s: RootState) => s.node.currency.address_prefix);
-  const hasExactAddress = cleanValue
+  const addressPrefix = useAddressPrefix();
+  const hasExactAddress = !!cleanValue
     && !walletsOnly
     && isValidAddress(addressPrefix, cleanValue)
     && !addressList.includes(cleanValue);
@@ -75,10 +76,10 @@ export function AddressPicker({
 
   // Check if the input text is an exact name. It may begin with a metaname, but
   // must end with the name suffix.
-  const nameSuffix = useSelector((s: RootState) => s.node.currency.name_suffix);
+  const nameSuffix = useNameSuffix();
   const nameParts = !walletsOnly && !noNames
     ? getNameParts(nameSuffix, cleanValue) : undefined;
-  const hasExactName = cleanValue
+  const hasExactName = !!cleanValue
     && !walletsOnly
     && !noNames
     && !!nameParts?.name;
@@ -100,6 +101,9 @@ export function AddressPicker({
     ]
     : options;
 
+  // Fetch an address or name hint if possible
+  const pickerHints = usePickerHints(nameHint, cleanValue, hasExactName);
+
   const classes = classNames("address-picker", className, {
     "address-picker-wallets-only": walletsOnly,
     "address-picker-no-names": noNames,
@@ -107,112 +111,109 @@ export function AddressPicker({
     "address-picker-has-exact-name": hasExactName,
   });
 
-  // TODO: Wrap this in a Form.Item in advance? Every place I can think of off
-  //       the top of my head will be using this in a form, so it might be good
-  //       to provide some of the validation logic here.
-  //       - Send Transaction Page (to/from) - Form
-  //       - Receive Transaction Page (to) - Form
-  //       - Name Purchase Page (owner) - Form
-  //       - Name Transfer Page (to) - Form
-  //       - Mining Page (to) - Possibly a form, can get away with making it one
-  return <Form.Item
-    name={name}
-    label={label}
+  return <div className={classes}>
+    <Form.Item
+      name={name}
+      label={label}
 
-    // This stops the 'Wallet is invalid' rule from showing twice e.g. for a
-    // blank input
-    validateFirst
+      // This stops the 'Wallet is invalid' rule from showing twice e.g. for a
+      // blank input
+      validateFirst
 
-    rules={[
-      { required: true, message: walletsOnly
-        ? t("addressPicker.errorWalletRequired")
-        : t("addressPicker.errorRecipientRequired")},
+      rules={[
+        { required: true, message: walletsOnly
+          ? t("addressPicker.errorWalletRequired")
+          : t("addressPicker.errorRecipientRequired")},
 
-      // Address/name regexp
-      {
-        type: "method",
-        async validator(_, value): Promise<void> {
-          const addressRegexp = getAddressRegexV2(addressPrefix);
+        // Address/name regexp
+        {
+          type: "method",
+          async validator(_, value): Promise<void> {
+            const addressRegexp = getAddressRegexV2(addressPrefix);
 
-          if (walletsOnly || noNames) {
-            // Only validate with addresses
-            if (!addressRegexp.test(value)) {
-              if (walletsOnly) throw t("addressPicker.errorInvalidWalletsOnly");
-              else throw t("addressPicker.errorInvalidAddressOnly");
+            if (walletsOnly || noNames) {
+              // Only validate with addresses
+              if (!addressRegexp.test(value)) {
+                if (walletsOnly)
+                  throw t("addressPicker.errorInvalidWalletsOnly");
+                else throw t("addressPicker.errorInvalidAddressOnly");
+              }
+            } else {
+              // Validate addresses and names
+              const nameRegexp = getNameRegex(nameSuffix);
+              if (!addressRegexp.test(value) && !nameRegexp.test(value))
+                throw t("addressPicker.errorInvalidRecipient");
             }
-          } else {
-            // Validate addresses and names
-            const nameRegexp = getNameRegex(nameSuffix);
-            if (!addressRegexp.test(value) && !nameRegexp.test(value))
-              throw t("addressPicker.errorInvalidRecipient");
           }
-        }
-      },
+        },
 
-      // If this is walletsOnly, add an additional rule to enforce that the
-      // given address is a wallet we actually own
-      ...(walletsOnly ? [{
-        type: "enum",
-        enum: addressList,
-        message: t("addressPicker.errorInvalidWalletsOnly")
-      } as Rule] : []),
+        // If this is walletsOnly, add an additional rule to enforce that the
+        // given address is a wallet we actually own
+        ...(walletsOnly ? [{
+          type: "enum",
+          enum: addressList,
+          message: t("addressPicker.errorInvalidWalletsOnly")
+        } as Rule] : []),
 
-      // If we have another address picker's value, assert that they are not
-      // equal (e.g. to/from in a transaction can't be equal)
-      ...(otherPickerValue ? [{
-        async validator(_, value): Promise<void> {
-          if (value === otherPickerValue)
-            throw t("addressPicker.errorEqual");
-        }
-      } as Rule] : [])
-    ]}
+        // If we have another address picker's value, assert that they are not
+        // equal (e.g. to/from in a transaction can't be equal)
+        ...(otherPickerValue ? [{
+          async validator(_, value): Promise<void> {
+            if (value === otherPickerValue)
+              throw t("addressPicker.errorEqual");
+          }
+        } as Rule] : [])
+      ]}
 
-    {...props}
-  >
-    <AutoComplete
-      className={classes}
-      dropdownClassName="address-picker-dropdown"
+      {...props}
+    >
+      <AutoComplete
+        dropdownClassName="address-picker-dropdown"
 
-      // Change the placeholder to 'Choose a wallet' if this is for wallets only
-      placeholder={walletsOnly
-        ? t("addressPicker.placeholderWalletsOnly")
-        : t("addressPicker.placeholder")}
+        // Change the placeholder to 'Choose a wallet' if applicable
+        placeholder={walletsOnly
+          ? t("addressPicker.placeholderWalletsOnly")
+          : t("addressPicker.placeholder")}
 
-      // Show a clear button on the input for convenience
-      allowClear
+        // Show a clear button on the input for convenience
+        allowClear
 
-      // Filter the options based on the input text
-      filterOption={(inputValue, option) => {
-        // Returning false if the option contains children will allow the select
-        // to run filterOption for each child of that option group.
-        if (option?.options) return false;
-        // TODO: Do we want to filter categories here too?
+        // Filter the options based on the input text
+        filterOption={(inputValue, option) => {
+          // Returning false if the option contains children will allow the
+          // select to run filterOption for each child of that option group.
+          if (option?.options) return false;
+          // TODO: Do we want to filter categories here too?
 
-        const address = option!.value?.toUpperCase();
-        const walletLabel = option!["data-wallet-label"]?.toUpperCase();
+          const address = option!.value?.toUpperCase();
+          const walletLabel = option!["data-wallet-label"]?.toUpperCase();
 
-        // If we have another address picker's value, hide that option from the
-        // list (it will always be a wallet)
-        // FIXME: filterOption doesn't get called at all when inputValue is
-        //        blank, which means this option will still appear until the
-        //        user actually starts typing.
-        if (otherPickerValue?.toUpperCase() === address)
-          return false;
+          // If we have another address picker's value, hide that option from
+          // the list (it will always be a wallet)
+          // FIXME: filterOption doesn't get called at all when inputValue is
+          //        blank, which means this option will still appear until the
+          //        user actually starts typing.
+          if (otherPickerValue?.toUpperCase() === address)
+            return false;
 
-        // Now that we've filtered out the other picker's value, we can allow
-        // every other option if there's no input
-        if (!inputValue) return true;
+          // Now that we've filtered out the other picker's value, we can allow
+          // every other option if there's no input
+          if (!inputValue) return true;
 
-        const inp = inputValue.toUpperCase();
+          const inp = inputValue.toUpperCase();
 
-        const matchedAddress = address.indexOf(inp) !== -1;
-        const matchedLabel = walletLabel?.indexOf(inp) !== -1;
+          const matchedAddress = address.indexOf(inp) !== -1;
+          const matchedLabel = walletLabel?.indexOf(inp) !== -1;
 
-        return matchedAddress || matchedLabel;
-      }}
+          return matchedAddress || matchedLabel;
+        }}
 
-      options={fullOptions}
-    />
-  </Form.Item>;
+        options={fullOptions}
+      />
+    </Form.Item>
+
+    {/* Show the address/name hints if they are present */}
+    {pickerHints}
+  </div>;
 }
 

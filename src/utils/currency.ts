@@ -1,6 +1,9 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
+import { useSelector } from "react-redux";
+import { RootState } from "@store";
+
 import { memoize, escapeRegExp, truncate, toString } from "lodash-es";
 
 // -----------------------------------------------------------------------------
@@ -134,3 +137,11 @@ export function estimateHashRate(work: number, secondsPerBlock: number): string 
   const i = Math.min(Math.floor(Math.log(rate) / Math.log(1000)), sizes.length);
   return parseFloat((rate / Math.pow(1000, i)).toFixed(2)) + " " + sizes[i] + "/s";
 }
+
+/** Hook to get the address prefix. */
+export const useAddressPrefix = (): string =>
+  useSelector((s: RootState) => s.node.currency.address_prefix);
+
+/** Hook to get the name suffix. */
+export const useNameSuffix = (): string =>
+  useSelector((s: RootState) => s.node.currency.name_suffix);

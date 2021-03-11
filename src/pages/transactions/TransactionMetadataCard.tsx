@@ -6,10 +6,8 @@ import { Card, Table, TableProps, Typography } from "antd";
 
 import { useTranslation } from "react-i18next";
 
-import { useSelector } from "react-redux";
-import { RootState } from "@store";
-
 import { parseCommonMeta } from "@utils/commonmeta";
+import { useNameSuffix } from "@utils/currency";
 
 import { HelpIcon } from "@comp/HelpIcon";
 import { useBooleanSetting } from "@utils/settings";
@@ -93,7 +91,7 @@ export function CommonMetaTable({ metadata, nameSuffix }: CommonMetaTableProps):
 
 export function TransactionMetadataCard({ metadata }: { metadata: string }): JSX.Element {
   const { t } = useTranslation();
-  const nameSuffix = useSelector((s: RootState) => s.node.currency.name_suffix);
+  const nameSuffix = useNameSuffix();
 
   // Default to the 'Raw' tab instead of 'CommonMeta'
   const defaultRaw = useBooleanSetting("transactionDefaultRaw");

@@ -746,7 +746,12 @@
     "categoryOtherWallets": "Other wallets",
     "categoryAddressBook": "Address book",
     "categoryExactAddress": "Exact address",
-    "categoryExactName": "Exact name"
+    "categoryExactName": "Exact name",
+
+    "addressHint": "Balance: <1 />",
+    "addressHintWithNames": "Names: <1>{{names, number}}</1>",
+    "nameHint": "Owner: <1 />",
+    "nameHintNotFound": "Name not found."
   },
 
   "sendTransaction": {

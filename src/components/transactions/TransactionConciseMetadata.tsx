@@ -3,11 +3,8 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import classNames from "classnames";
 
-import { useSelector } from "react-redux";
-import { RootState } from "@store";
-
 import { KristTransaction } from "@api/types";
-import { stripNameFromMetadata } from "@utils/currency";
+import { useNameSuffix, stripNameFromMetadata } from "@utils/currency";
 
 import "./TransactionConciseMetadata.less";
 
@@ -23,7 +20,7 @@ interface Props {
  * to a specified amount of characters.
  */
 export function TransactionConciseMetadata({ transaction, metadata, limit = 30, className }: Props): JSX.Element | null {
-  const nameSuffix = useSelector((s: RootState) => s.node.currency.name_suffix);
+  const nameSuffix = useNameSuffix();
 
   // Don't render anything if there's no metadata (after the hooks)
   const meta = metadata || transaction?.metadata;

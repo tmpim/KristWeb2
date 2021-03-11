@@ -3,9 +3,7 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import classNames from "classnames";
 
-import { useSelector } from "react-redux";
-import { RootState } from "@store";
-import { stripNameSuffix } from "@utils/currency";
+import { useNameSuffix, stripNameSuffix } from "@utils/currency";
 
 import { KristNameLink } from "./KristNameLink";
 
@@ -23,7 +21,7 @@ interface Props {
 }
 
 export function NameARecordLink({ a, className }: Props): JSX.Element | null {
-  const nameSuffix = useSelector((s: RootState) => s.node.currency.name_suffix);
+  const nameSuffix = useNameSuffix();
 
   if (!a) return null;
 

@@ -4,15 +4,13 @@
 import classNames from "classnames";
 import { Tooltip, Typography } from "antd";
 
-import { useSelector } from "react-redux";
-import { RootState } from "@store";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { KristAddress } from "@api/types";
 import { Wallet, useWallets } from "@wallets";
 import { parseCommonMeta, CommonMeta } from "@utils/commonmeta";
-import { stripNameSuffix } from "@utils/currency";
+import { useNameSuffix, stripNameSuffix } from "@utils/currency";
 import { useBooleanSetting } from "@utils/settings";
 
 import { KristNameLink } from "../names/KristNameLink";
@@ -84,7 +82,7 @@ export function ContextualAddress({
 }: Props): JSX.Element {
   const { t } = useTranslation();
   const { walletAddressMap } = useWallets();
-  const nameSuffix = useSelector((s: RootState) => s.node.currency.name_suffix);
+  const nameSuffix = useNameSuffix();
   const addressCopyButtons = useBooleanSetting("addressCopyButtons");
 
   if (!origAddress) return (

@@ -4,11 +4,9 @@
 import classNames from "classnames";
 import { Typography } from "antd";
 
-import { useSelector } from "react-redux";
-import { RootState } from "@store";
-
 import { Link } from "react-router-dom";
 
+import { useNameSuffix } from "@utils/currency";
 import { useBooleanSetting } from "@utils/settings";
 
 const { Text } = Typography;
@@ -22,7 +20,7 @@ interface OwnProps {
 type Props = React.HTMLProps<HTMLSpanElement> & OwnProps;
 
 export function KristNameLink({ name, text, noLink, neverCopyable, ...props }: Props): JSX.Element | null {
-  const nameSuffix = useSelector((s: RootState) => s.node.currency.name_suffix);
+  const nameSuffix = useNameSuffix();
   const nameCopyButtons = useBooleanSetting("nameCopyButtons");
   const copyNameSuffixes = useBooleanSetting("copyNameSuffixes");
 

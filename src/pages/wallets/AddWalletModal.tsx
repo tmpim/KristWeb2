@@ -10,6 +10,7 @@ import { RootState } from "@store";
 import { useTranslation, Trans } from "react-i18next";
 
 import { generatePassword } from "@utils";
+import { useAddressPrefix } from "@utils/currency";
 
 import { FakeUsernameInput } from "@comp/auth/FakeUsernameInput";
 import { CopyInputButton } from "@comp/CopyInputButton";
@@ -54,7 +55,7 @@ export function AddWalletModal({ create, editing, visible, setVisible, setAddExi
   const masterPassword = useSelector((s: RootState) => s.masterPassword.masterPassword);
   // Required to check for existing wallets
   const { wallets } = useWallets();
-  const addressPrefix = useSelector((s: RootState) => s.node.currency.address_prefix);
+  const addressPrefix = useAddressPrefix();
 
   const { t } = useTranslation();
   const bps = useBreakpoint();

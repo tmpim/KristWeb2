@@ -39,9 +39,9 @@ function SendTransactionForm({
   const [from, setFrom] = useState(initialFrom);
   const [to, setTo] = useState("");
 
-  function onValuesChange(changed: Partial<FormValues>) {
-    if (changed.from !== undefined) setFrom(changed.from);
-    if (changed.to !== undefined) setTo(changed.to);
+  function onValuesChange(_: unknown, values: Partial<FormValues>) {
+    setFrom(values.from || "");
+    setTo(values.to || "");
   }
 
   return <Form

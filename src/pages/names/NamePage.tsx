@@ -8,9 +8,6 @@ import { EditOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 
-import { useSelector } from "react-redux";
-import { RootState } from "@store";
-
 import { PageLayout } from "@layout/PageLayout";
 import { APIErrorResult } from "@comp/results/APIErrorResult";
 
@@ -22,7 +19,9 @@ import { NameARecordLink } from "@comp/names/NameARecordLink";
 import * as api from "@api";
 import { KristName } from "@api/types";
 import { LookupTransactionType as LookupTXType } from "@api/lookup";
+
 import { useWallets } from "@wallets";
+import { useNameSuffix } from "@utils/currency";
 import { useBooleanSetting } from "@utils/settings";
 
 import { NameButtonRow } from "./NameButtonRow";
@@ -149,7 +148,7 @@ function PageContents({ name, nameWithSuffix }: { name: KristName; nameWithSuffi
 export function NamePage(): JSX.Element {
   // Used to refresh the name data on syncNode change
   const syncNode = api.useSyncNode();
-  const nameSuffix = useSelector((s: RootState) => s.node.currency.name_suffix);
+  const nameSuffix = useNameSuffix();
 
   const { name } = useParams<ParamTypes>();
   const [kristName, setKristName] = useState<KristName | undefined>();
