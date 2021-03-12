@@ -658,7 +658,7 @@
       "invalidTester": "The backup could not be decoded as the 'tester' key is the wrong type!",
       "invalidSalt": "The backup could not be decoded as the 'salt' key is the wrong type!",
       "invalidWallets": "The backup could not be decoded as the 'wallets' key is the wrong type!",
-      "invalidFriends": "The backup could not be decoded as the 'wallets' key is the wrong type!",
+      "invalidFriends": "The backup could not be decoded as the 'friends' key is the wrong type!",
       "unknown": "The backup could not be decoded due to an unknown error. See console for details."
     },
 
