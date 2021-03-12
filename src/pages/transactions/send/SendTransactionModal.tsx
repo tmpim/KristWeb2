@@ -17,7 +17,8 @@ interface Props {
 }
 
 export function SendTransactionModal({
-  visible, setVisible
+  visible,
+  setVisible
 }: Props): JSX.Element {
   const { t } = useTranslation();
   const { form, isSubmitting, triggerSubmit, txForm } = useTransactionForm();
