@@ -56,7 +56,8 @@
     "websocket-as-promised": "^2.0.1",
     "workbox-core": "^6.1.1",
     "workbox-precaching": "^6.1.1",
-    "workbox-routing": "^6.1.1"
+    "workbox-routing": "^6.1.1",
+    "workbox-strategies": "^6.1.1"
   },
   "scripts": {
     "start": "craco start",

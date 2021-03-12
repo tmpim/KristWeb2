@@ -12,7 +12,10 @@ import { initReactI18next, TFunction } from "react-i18next";
 import JSON5 from "json5";
 
 import languagesJson from "../__data__/languages.json";
-import packageJson from "../../package.json";
+
+// Replaced by webpack DefinePlugin and git-revision-webpack-plugin
+declare const __GIT_VERSION__: string;
+const gitVersion: string = __GIT_VERSION__;
 
 export interface Language {
   name: string;
@@ -75,7 +78,7 @@ export const i18nLoader = i18n
     },
 
     backend: {
-      queryStringParams: { v: packageJson.version },
+      queryStringParams: { v: encodeURIComponent(gitVersion) },
       loadPath: "/locales/{{lng}}.json",
 
       // Translations now use JSON5 to allow for comments, newlines, and basic

@@ -41,6 +41,7 @@ dependencies:
   workbox-core: 6.1.1
   workbox-precaching: 6.1.1
   workbox-routing: 6.1.1
+  workbox-strategies: 6.1.1
 devDependencies:
   '@craco/craco': 6.1.1_react-scripts@4.0.3
   '@types/classnames': 2.2.11
@@ -13909,3 +13910,4 @@ specifiers:
   workbox-core: ^6.1.1
   workbox-precaching: ^6.1.1
   workbox-routing: ^6.1.1
+  workbox-strategies: ^6.1.1
