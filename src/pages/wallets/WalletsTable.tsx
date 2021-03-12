@@ -26,6 +26,7 @@ export function WalletsTable(): JSX.Element {
 
   return <Table
     size="small"
+    scroll={{ x: true }}
 
     dataSource={Object.values(wallets)}
     rowKey="id"
@@ -96,6 +97,9 @@ export function WalletsTable(): JSX.Element {
       {
         title: t("myWallets.columnFirstSeen"),
         dataIndex: "firstSeen", key: "firstSeen",
+
+        // This column isn't too important, hide it on smaller screens
+        responsive: ["lg"],
 
         render: firstSeen => <DateTime date={firstSeen} />,
         sorter: keyedNullSort("firstSeen")
