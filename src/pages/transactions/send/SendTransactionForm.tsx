@@ -1,17 +1,21 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import React, { useState } from "react";
-import { Form, FormInstance, Input, InputNumber, Button } from "antd";
+import { useState } from "react";
+import { Row, Col, Form, FormInstance, Input } from "antd";
 
 import { useTranslation } from "react-i18next";
 
 import { useWallets } from "@wallets";
-import { useCurrency } from "@utils/currency";
 
 import { AddressPicker } from "@comp/addresses/picker/AddressPicker";
+import { AmountInput } from "./AmountInput";
 
-import { KristSymbol } from "@comp/krist/KristSymbol";
+import "./SendTransactionForm.less";
+
+// This is from https://github.com/tmpim/Krist/blob/a924f3f/src/controllers/transactions.js#L102
+// except `+` is changed to `*`.
+const METADATA_REGEXP = /^[\x20-\x7F\n]*$/i;
 
 export interface FormValues {
   from: string;
@@ -33,14 +37,11 @@ function SendTransactionForm({
 
   // Used to get the initial wallet to show for the 'from' field
   // TODO: Remember this value?
-  const { addressList, walletAddressMap } = useWallets();
+  const { addressList } = useWallets();
   const initialFrom = addressList[0] || "";
   // TODO: initialFrom here should never be an empty string, so need to add a
   //       modal that says "You currently don't have any saved wallets" etc,
   //       and prevents opening the sendTX modal/rendering the page
-
-  // Used to format the 'amount' field
-  const { currency_symbol } = useCurrency();
 
   const [from, setFrom] = useState(initialFrom);
   const [to, setTo] = useState("");
@@ -57,6 +58,7 @@ function SendTransactionForm({
     // `useTransactionForm` hook.
     form={form}
     layout="vertical"
+    className="send-transaction-form"
 
     name="sendTransaction"
 
@@ -70,46 +72,49 @@ function SendTransactionForm({
     onValuesChange={onValuesChange}
     onFinish={triggerSubmit}
   >
-    {/* From */}
-    <AddressPicker
-      walletsOnly
-      name="from"
-      label={t("sendTransaction.labelFrom")}
-      value={from}
-    />
+    <Row gutter={16}>
+      {/* From */}
+      <Col span={24} md={12}>
+        <AddressPicker
+          walletsOnly
+          name="from"
+          label={t("sendTransaction.labelFrom")}
+          value={from}
+        />
+      </Col>
 
-    {/* To */}
-    <AddressPicker
-      name="to"
-      label={t("sendTransaction.labelTo")}
-      value={to}
-      otherPickerValue={from === undefined ? initialFrom : from}
-    />
+      {/* To */}
+      <Col span={24} md={12}>
+        <AddressPicker
+          name="to"
+          label={t("sendTransaction.labelTo")}
+          value={to}
+          otherPickerValue={from === undefined ? initialFrom : from}
+        />
+      </Col>
+    </Row>
 
     {/* Amount */}
-    <Form.Item label={t("sendTransaction.labelValue")}>
-      <Input.Group compact style={{ display: "flex" }}>
-        {/* Prepend the Krist symbol if possible. Note that ant's InputNumber
-          * doesn't support addons, so this has to be done manually. */}
-        {(currency_symbol || "KST") === "KST" && (
-          <span className="ant-input-group-addon"><KristSymbol /></span>
-        )}
+    <AmountInput
+      from={from === undefined ? initialFrom : from}
+      setValue={value => form.setFieldsValue({ value })}
+    />
 
-        {/* Value/amount number input */}
-        <Form.Item
-          name="value"
-          style={{ flex: 1, marginBottom: 0 }}
-        >
-          <InputNumber
-            type="number"
-            min={1}
-            style={{ width: "100%", height: 32 }}
-          />
-        </Form.Item>
-
-        {/* Max value button */}
-        <Button>{t("sendTransaction.buttonMax")}</Button>
-      </Input.Group>
+    {/* Metadata */}
+    <Form.Item
+      name="metadata"
+      label={t("sendTransaction.labelMetadata")}
+      rules={[
+        { max: 255, message: t("sendTransaction.errorMetadataTooLong") },
+        { pattern: METADATA_REGEXP,
+          message: t("sendTransaction.errorMetadataInvalid") },
+      ]}
+    >
+      <Input.TextArea
+        className="input-monospace"
+        rows={3}
+        placeholder={t("sendTransaction.placeholderMetadata")}
+      />
     </Form.Item>
   </Form>;
 }

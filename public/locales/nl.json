@@ -727,7 +727,7 @@
   "optionalFieldUnset": "(geen waarde)",
 
   "addressPicker": {
-    "placeholder": "Typ een adres of kies een wallet",
+    "placeholder": "Kies een ontvanger",
     "placeholderWalletsOnly": "Kies een wallet",
 
     "hintCurrentBalance": "Huidige balans: <1 />",

@@ -728,7 +728,7 @@
   "optionalFieldUnset": "(unset)",
 
   "addressPicker": {
-    "placeholder": "Type an address, or choose a wallet",
+    "placeholder": "Choose a recipient",
     "placeholderWalletsOnly": "Choose a wallet",
 
     "hintCurrentBalance": "Current balance: <1 />",
@@ -766,7 +766,15 @@
     "labelMetadata": "Metadata",
     "placeholderMetadata": "Optional metadata",
 
-    "buttonMax": "Max"
+    "buttonMax": "Max",
+
+    "errorAmountRequired": "Amount is required.",
+    "errorAmountNumber": "Amount must be a number.",
+    "errorAmountTooLow": "Amount must be at least 1.",
+    "errorAmountTooHigh": "Insufficient funds in wallet.",
+
+    "errorMetadataTooLong": "Metadata must be less than 256 characters.",
+    "errorMetadataInvalid": "Metadata contains invalid characters."
 
     // TODO: modals/warnings for confirmation of sending over 50% of balance,
     //       whole balance, and form validation messages

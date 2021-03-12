@@ -169,6 +169,7 @@ export function AddressPicker({
     >
       <AutoComplete
         dropdownClassName="address-picker-dropdown"
+        dropdownMatchSelectWidth={false}
 
         // Change the placeholder to 'Choose a wallet' if applicable
         placeholder={walletsOnly
