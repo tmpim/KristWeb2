@@ -1,12 +1,14 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Row, Col, Form, FormInstance, Input } from "antd";
+import { RefSelectProps } from "antd/lib/select";
 
 import { useTranslation } from "react-i18next";
 
 import { useWallets } from "@wallets";
+import { useMountEffect } from "@utils";
 
 import { AddressPicker } from "@comp/addresses/picker/AddressPicker";
 import { AmountInput } from "./AmountInput";
@@ -46,6 +48,12 @@ function SendTransactionForm({
   const [from, setFrom] = useState(initialFrom);
   const [to, setTo] = useState("");
 
+  // Focus the 'to' input on initial render
+  const toRef = useRef<RefSelectProps>(null);
+  useMountEffect(() => {
+    toRef?.current?.focus();
+  });
+
   function onValuesChange(_: unknown, values: Partial<FormValues>) {
     setFrom(values.from || "");
     setTo(values.to || "");
@@ -80,6 +88,7 @@ function SendTransactionForm({
           name="from"
           label={t("sendTransaction.labelFrom")}
           value={from}
+          tabIndex={1}
         />
       </Col>
 
@@ -90,6 +99,8 @@ function SendTransactionForm({
           label={t("sendTransaction.labelTo")}
           value={to}
           otherPickerValue={from === undefined ? initialFrom : from}
+          tabIndex={2}
+          inputRef={toRef}
         />
       </Col>
     </Row>
@@ -98,6 +109,7 @@ function SendTransactionForm({
     <AmountInput
       from={from === undefined ? initialFrom : from}
       setValue={value => form.setFieldsValue({ value })}
+      tabIndex={3}
     />
 
     {/* Metadata */}
@@ -114,6 +126,7 @@ function SendTransactionForm({
         className="input-monospace"
         rows={3}
         placeholder={t("sendTransaction.placeholderMetadata")}
+        tabIndex={4}
       />
     </Form.Item>
   </Form>;

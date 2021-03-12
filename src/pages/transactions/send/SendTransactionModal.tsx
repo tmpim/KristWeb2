@@ -6,6 +6,9 @@ import { Modal } from "antd";
 
 import { useTranslation } from "react-i18next";
 
+import { useWallets } from "@wallets";
+import { NoWalletsModal } from "@comp/results/NoWalletsResult";
+
 import { useTransactionForm } from "./SendTransactionForm";
 
 interface Props {
@@ -19,24 +22,38 @@ export function SendTransactionModal({
   const { t } = useTranslation();
   const { form, isSubmitting, triggerSubmit, txForm } = useTransactionForm();
 
+  // Don't open the modal if there are no wallets.
+  const { addressList } = useWallets();
+  const hasWallets = addressList?.length > 0;
+
   function closeModal() {
     form.resetFields();
     setVisible(false);
   }
 
-  return <Modal
-    visible={visible}
+  return hasWallets
+    ? (
+      <Modal
+        visible={visible}
 
-    title={t("sendTransaction.modalTitle")}
+        title={t("sendTransaction.modalTitle")}
 
-    onOk={triggerSubmit}
-    okText={t("sendTransaction.modalSubmit")}
-    okButtonProps={isSubmitting ? { loading: true } : undefined}
+        onOk={triggerSubmit}
+        okText={t("sendTransaction.modalSubmit")}
+        okButtonProps={isSubmitting ? { loading: true } : undefined}
 
-    onCancel={closeModal}
-    cancelText={t("dialog.cancel")}
-    destroyOnClose
-  >
-    {txForm}
-  </Modal>;
+        onCancel={closeModal}
+        cancelText={t("dialog.cancel")}
+        destroyOnClose
+      >
+        {txForm}
+      </Modal>
+    )
+    : (
+      <NoWalletsModal
+        type="sendTransaction"
+        visible={visible}
+        setVisible={setVisible}
+      />
+    );
 }

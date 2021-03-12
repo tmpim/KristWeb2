@@ -13,9 +13,15 @@ import { KristSymbol } from "@comp/krist/KristSymbol";
 interface Props {
   from: string;
   setValue: (value: number) => void;
+  tabIndex?: number;
 }
 
-export function AmountInput({ from, setValue, ...props }: Props): JSX.Element {
+export function AmountInput({
+  from,
+  setValue,
+  tabIndex,
+  ...props
+}: Props): JSX.Element {
   const { t } = useTranslation();
 
   // Used to populate 'Max'
@@ -72,6 +78,7 @@ export function AmountInput({ from, setValue, ...props }: Props): JSX.Element {
           type="number"
           min={1}
           style={{ width: "100%", height: 32 }}
+          tabIndex={tabIndex}
         />
       </Form.Item>
 

@@ -1,10 +1,11 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { useMemo } from "react";
+import { useMemo, Ref } from "react";
 import classNames from "classnames";
 import { AutoComplete, Form } from "antd";
 import { Rule } from "antd/lib/form";
+import { RefSelectProps } from "antd/lib/select";
 
 import { useTranslation } from "react-i18next";
 
@@ -33,6 +34,8 @@ interface Props {
   nameHint?: boolean;
 
   className?: string;
+  tabIndex?: number;
+  inputRef?: Ref<RefSelectProps>;
 }
 
 export function AddressPicker({
@@ -46,6 +49,8 @@ export function AddressPicker({
   nameHint,
 
   className,
+  tabIndex,
+  inputRef,
   ...props
 }: Props): JSX.Element {
   const { t } = useTranslation();
@@ -168,6 +173,8 @@ export function AddressPicker({
       {...props}
     >
       <AutoComplete
+        ref={inputRef}
+
         dropdownClassName="address-picker-dropdown"
         dropdownMatchSelectWidth={false}
 
@@ -210,6 +217,8 @@ export function AddressPicker({
         }}
 
         options={fullOptions}
+
+        tabIndex={tabIndex}
       />
     </Form.Item>
 
