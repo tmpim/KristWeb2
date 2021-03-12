@@ -4,6 +4,8 @@
 import { useSelector } from "react-redux";
 import { RootState } from "@store";
 
+import { KristCurrency } from "@api/types";
+
 import { memoize, escapeRegExp, truncate, toString } from "lodash-es";
 
 // -----------------------------------------------------------------------------
@@ -145,3 +147,7 @@ export const useAddressPrefix = (): string =>
 /** Hook to get the name suffix. */
 export const useNameSuffix = (): string =>
   useSelector((s: RootState) => s.node.currency.name_suffix);
+
+/** Hook to get all the currency values. */
+export const useCurrency = (): KristCurrency =>
+  useSelector((s: RootState) => s.node.currency);

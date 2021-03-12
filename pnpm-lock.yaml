@@ -44,6 +44,7 @@ dependencies:
   workbox-strategies: 6.1.1
 devDependencies:
   '@craco/craco': 6.1.1_react-scripts@4.0.3
+  '@lemmmy/craco-less': 1.18.0_077094f002a207b28261f7f7ea13418e
   '@types/classnames': 2.2.11
   '@types/debug': 4.1.5
   '@types/file-saver': 2.0.1
@@ -65,12 +66,13 @@ devDependencies:
   antd-dayjs-webpack-plugin: 1.0.6_dayjs@1.10.4
   babel-plugin-lodash: 3.3.4
   craco-alias: 2.2.0
-  craco-less: 1.17.1_077094f002a207b28261f7f7ea13418e
   eslint: 7.21.0
   eslint-plugin-react: 7.22.0_eslint@7.21.0
   eslint-plugin-react-hooks: 4.2.0_eslint@7.21.0
   eslint-plugin-tsdoc: 0.2.11
   git-revision-webpack-plugin: 3.0.6
+  less: 4.1.1
+  less-loader: 7.3.0_less@4.1.1
   react-refresh: 0.9.0
   react-scripts: 4.0.3_react@17.0.1+typescript@4.1.5
   redux-devtools-extension: 2.13.8_redux@4.0.5
@@ -1683,6 +1685,18 @@ packages:
       node: '>= 10.14.2'
     resolution:
       integrity: sha512-fC6QCp7Sc5sX6g8Tvbmj4XUTbyrik0akgRy03yjXbQaBWWNWGE7SGtJk98m0N8nzegD/7SggrUlivxo5ax4KWQ==
+  /@lemmmy/craco-less/1.18.0_077094f002a207b28261f7f7ea13418e:
+    dependencies:
+      '@craco/craco': 6.1.1_react-scripts@4.0.3
+      less: 4.1.1
+      less-loader: 7.3.0_less@4.1.1
+      react-scripts: 4.0.3_react@17.0.1+typescript@4.1.5
+    dev: true
+    peerDependencies:
+      '@craco/craco': ^5.5.0
+      react-scripts: ^3.3.0 || ^4.0.0
+    resolution:
+      integrity: sha512-ZHc+NXqvul3J55YcnTPWs7NbZoHHhW7BKc+4krUE9VG96RyvWu7UgRdJODFGi9QulrdQRlsjavPYnvyZ0wan/A==
   /@microsoft/tsdoc-config/0.14.0:
     dependencies:
       '@microsoft/tsdoc': 0.13.0
@@ -4007,12 +4021,6 @@ packages:
     dev: true
     resolution:
       integrity: sha512-t6wbgtoCXvAzst7QgXxJYqPt0usEfbgQdftEPbLL/cvv6HPE5VgvqCuAIDR0NgU52ds6rFwqrgakNLrHEjCbrQ==
-  /clone/2.1.2:
-    dev: true
-    engines:
-      node: '>=0.8'
-    resolution:
-      integrity: sha1-G39Ln1kfHo+DZwQBYANFoCiHQ18=
   /co/4.6.0:
     dev: true
     engines:
@@ -4320,18 +4328,6 @@ packages:
     dev: true
     resolution:
       integrity: sha512-FLSRaCWI/CKLUO+Cb/GH9ljSYWdrlzkYf3N373Kuof0hckJ1tj+wPN0XyToR8KPUggoIB5+IDkGs1uKUBuGUiA==
-  /craco-less/1.17.1_077094f002a207b28261f7f7ea13418e:
-    dependencies:
-      '@craco/craco': 6.1.1_react-scripts@4.0.3
-      less: 3.13.1
-      less-loader: 6.2.0
-      react-scripts: 4.0.3_react@17.0.1+typescript@4.1.5
-    dev: true
-    peerDependencies:
-      '@craco/craco': ^5.5.0
-      react-scripts: ^3.3.0 || ^4.0.0
-    resolution:
-      integrity: sha512-T6V1aF3+eQZ22gUigHInX/i+ExPbWrnmdAhtuEXc4mOyhneDifmEzZFseq/BdRy1aUEs9s4z26jTxP+1I6P//g==
   /create-ecdh/4.0.4:
     dependencies:
       bn.js: 4.12.0
@@ -7979,22 +7975,24 @@ packages:
     dev: true
     resolution:
       integrity: sha512-7KI2l2GIZa9p2spzPIVZBYyNKkN+e/SQPpnjlTiPhdbDW3F86tdKKELxKpzJ5sgU19wQWsACULZmpTPYHeWO5w==
-  /less-loader/6.2.0:
+  /less-loader/7.3.0_less@4.1.1:
     dependencies:
-      clone: 2.1.2
-      less: 3.13.1
+      klona: 2.0.4
+      less: 4.1.1
       loader-utils: 2.0.0
-      schema-utils: 2.7.1
+      schema-utils: 3.0.0
     dev: true
     engines:
       node: '>= 10.13.0'
     peerDependencies:
+      less: ^3.5.0 || ^4.0.0
       webpack: ^4.0.0 || ^5.0.0
     resolution:
-      integrity: sha512-Cl5h95/Pz/PWub/tCBgT1oNMFeH1WTD33piG80jn5jr12T4XbxZcjThwNXDQ7AG649WEynuIzO4b0+2Tn9Qolg==
-  /less/3.13.1:
+      integrity: sha512-Mi8915g7NMaLlgi77mgTTQvK022xKRQBIVDSyfl3ErTuBhmZBQab0mjeJjNNqGbdR+qrfTleKXqbGI4uEFavxg==
+  /less/4.1.1:
     dependencies:
       copy-anything: 2.0.3
+      parse-node-version: 1.0.1
       tslib: 1.14.1
     dev: true
     engines:
@@ -8006,10 +8004,10 @@ packages:
       image-size: 0.5.5
       make-dir: 2.1.0
       mime: 1.6.0
-      native-request: 1.0.8
+      needle: 2.6.0
       source-map: 0.6.1
     resolution:
-      integrity: sha512-SwA1aQXGUvp+P5XdZslUOhhLnClSLIjWvJhmd+Vgib5BFIr9lMNlQwmwUNOjXThF/A0x+MCYYPeWEfeWiLRnTw==
+      integrity: sha512-w09o8tZFPThBscl5d0Ggp3RcrKIouBoQscnOMgFH3n5V3kN/CXGHNfCkRPtxJk6nKryDXaV9aHLK55RXuH4sAw==
   /leven/3.1.0:
     dev: true
     engines:
@@ -8583,11 +8581,6 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-fpoe2T0RbHwBTBUOftAfBPaDEi06ufaUai0mE6Yn1kacc3SnTErfb/h+X94VXzI64rKFHYImXSvdwGGCmwOqCA==
-  /native-request/1.0.8:
-    dev: true
-    optional: true
-    resolution:
-      integrity: sha512-vU2JojJVelUGp6jRcLwToPoWGxSx23z/0iX+I77J3Ht17rf2INGjrhOoQnjVo60nQd8wVsgzKkPfRXBiVdD2ag==
   /native-url/0.2.6:
     dependencies:
       querystring: 0.2.1
@@ -8598,6 +8591,18 @@ packages:
     dev: true
     resolution:
       integrity: sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=
+  /needle/2.6.0:
+    dependencies:
+      debug: 3.2.7
+      iconv-lite: 0.4.24
+      sax: 1.2.4
+    dev: true
+    engines:
+      node: '>= 4.4.x'
+    hasBin: true
+    optional: true
+    resolution:
+      integrity: sha512-KKYdza4heMsEfSWD7VPUIz3zX2XDwOyX2d+geb4vrERZMT5RMU6ujjaD+I5Yr54uZxQ2w6XRTAhHBbSCyovZBg==
   /negotiator/0.6.2:
     dev: true
     engines:
@@ -9129,6 +9134,12 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-ayCKvm/phCGxOkYRSCM82iDwct8/EonSEgCSxWxD7ve6jHggsFl4fZVQBPRNgQoKiuV/odhFrGzQXZwbifC8Rg==
+  /parse-node-version/1.0.1:
+    dev: true
+    engines:
+      node: '>= 0.10'
+    resolution:
+      integrity: sha512-3YHlOa/JgH6Mnpr05jP9eDG254US9ek25LyIxZlDItp2iJtwyaXQb57lBYLdT3MowkUFYEV2XXNAYIPlESvJlA==
   /parse5/5.1.1:
     dev: true
     resolution:
@@ -13834,6 +13845,7 @@ packages:
 specifiers:
   '@ant-design/icons': ^4.5.0
   '@craco/craco': ^6.1.1
+  '@lemmmy/craco-less': 1.18.0
   '@testing-library/jest-dom': ^5.11.9
   '@testing-library/react': ^11.2.5
   '@testing-library/user-event': ^12.8.1
@@ -13864,7 +13876,6 @@ specifiers:
   chart.js: ^2.9.4
   classnames: ^2.2.6
   craco-alias: ^2.2.0
-  craco-less: ^1.17.1
   csv-stringify: ^5.6.2
   dayjs: ^1.10.4
   debug: ^4.3.1
@@ -13878,6 +13889,8 @@ specifiers:
   i18next-browser-languagedetector: ^6.0.1
   i18next-http-backend: ^1.1.1
   json5: ^2.2.0
+  less: 4.1.1
+  less-loader: 7.3.0
   lodash-es: ^4.17.21
   lru-cache: ^6.0.0
   rc-menu: ^8.10.6

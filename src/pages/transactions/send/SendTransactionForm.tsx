@@ -1,14 +1,17 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { useState } from "react";
-import { Form, FormInstance } from "antd";
+import React, { useState } from "react";
+import { Form, FormInstance, Input, InputNumber, Button } from "antd";
 
 import { useTranslation } from "react-i18next";
 
 import { useWallets } from "@wallets";
+import { useCurrency } from "@utils/currency";
 
 import { AddressPicker } from "@comp/addresses/picker/AddressPicker";
+
+import { KristSymbol } from "@comp/krist/KristSymbol";
 
 export interface FormValues {
   from: string;
@@ -30,11 +33,14 @@ function SendTransactionForm({
 
   // Used to get the initial wallet to show for the 'from' field
   // TODO: Remember this value?
-  const { addressList } = useWallets();
+  const { addressList, walletAddressMap } = useWallets();
   const initialFrom = addressList[0] || "";
   // TODO: initialFrom here should never be an empty string, so need to add a
   //       modal that says "You currently don't have any saved wallets" etc,
   //       and prevents opening the sendTX modal/rendering the page
+
+  // Used to format the 'amount' field
+  const { currency_symbol } = useCurrency();
 
   const [from, setFrom] = useState(initialFrom);
   const [to, setTo] = useState("");
@@ -79,6 +85,32 @@ function SendTransactionForm({
       value={to}
       otherPickerValue={from === undefined ? initialFrom : from}
     />
+
+    {/* Amount */}
+    <Form.Item label={t("sendTransaction.labelValue")}>
+      <Input.Group compact style={{ display: "flex" }}>
+        {/* Prepend the Krist symbol if possible. Note that ant's InputNumber
+          * doesn't support addons, so this has to be done manually. */}
+        {(currency_symbol || "KST") === "KST" && (
+          <span className="ant-input-group-addon"><KristSymbol /></span>
+        )}
+
+        {/* Value/amount number input */}
+        <Form.Item
+          name="value"
+          style={{ flex: 1, marginBottom: 0 }}
+        >
+          <InputNumber
+            type="number"
+            min={1}
+            style={{ width: "100%", height: 32 }}
+          />
+        </Form.Item>
+
+        {/* Max value button */}
+        <Button>{t("sendTransaction.buttonMax")}</Button>
+      </Input.Group>
+    </Form.Item>
   </Form>;
 }
 

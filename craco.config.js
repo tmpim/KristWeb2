@@ -1,8 +1,9 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
+const path = require("path");
 const CracoAlias = require("craco-alias");
-const CracoLessPlugin = require("craco-less");
+const CracoLessPlugin = require("@lemmmy/craco-less");
 const AntdDayjsWebpackPlugin = require("antd-dayjs-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const WebpackBar = require("webpackbar");
@@ -10,7 +11,7 @@ const GitRevisionPlugin = require("git-revision-webpack-plugin");
 const { DefinePlugin } = require("webpack");
 
 const gitRevisionPlugin = new GitRevisionPlugin({
-  // Include the '-dirty' suffix if the local tree has been modified, and
+  // Include the "-dirty" suffix if the local tree has been modified, and
   // include non-annotated tags.
   versionCommand: "describe --always --tags --dirty"
 });
@@ -45,9 +46,13 @@ module.exports = {
         },
 
         lessLoaderOptions: {
+          webpackImporter: false,
+          implementation: require("less"),
+
           lessOptions: {
             relativeUrls: false,
-            javascriptEnabled: true
+            javascriptEnabled: true,
+            paths: [path.resolve(__dirname, "node_modules")]
           }
         }
       }
