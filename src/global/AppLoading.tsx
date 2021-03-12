@@ -10,6 +10,6 @@ export function AppLoading(): JSX.Element {
     {/* Loading hint */}
     {/* NOTE: This is not translated, as usually this component is shown when
               the translations are being loaded! */}
-    <span>Loading KristWeb...</span>
+    <span>setsetstsetsetestLoading KristWeb...</span>
   </div>;
 }

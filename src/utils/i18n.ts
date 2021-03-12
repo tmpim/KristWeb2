@@ -50,7 +50,7 @@ export function translateError(t: TFunction, error: Error, unknownErrorKey?: str
   "contributors": []
 }};*/
 
-i18n
+export const i18nLoader = i18n
   .use(Backend)
   .use(LanguageDetector)
   .use(initReactI18next)
