@@ -28,7 +28,7 @@ precacheAndRoute(self.__WB_MANIFEST);
 
 // Cache the locale files (currently the only preloading step)
 registerRoute(
-  ({ url }) => url.pathname.startsWith("/locale/"),
+  ({ url }) => url.pathname.startsWith("/locales/"),
   new StaleWhileRevalidate({})
 );
 
