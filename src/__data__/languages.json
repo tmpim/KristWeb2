@@ -26,6 +26,17 @@
       }
     ]
   },
+  "nl": {
+    "name": "Dutch",
+    "nativeName": "Nederlands",
+    "country": "nl",
+    "contributors": [
+      {
+        "name": "HydroNitrogen",
+        "url": "https://github.com/Wendelstein7"
+      }
+    ]
+  },
   "vi": {
     "name": "Vietnamese",
     "nativeName": "Tiếng Việt",
