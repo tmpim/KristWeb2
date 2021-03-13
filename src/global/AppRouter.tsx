@@ -6,6 +6,8 @@ import { Switch, Route } from "react-router-dom";
 import { DashboardPage } from "@pages/dashboard/DashboardPage";
 import { WalletsPage } from "@pages/wallets/WalletsPage";
 
+import { SendTransactionPage } from "@pages/transactions/send/SendTransactionPage";
+
 import { AddressPage } from "@pages/addresses/AddressPage";
 import { BlocksPage } from "@pages/blocks/BlocksPage";
 import { BlockPage } from "@pages/blocks/BlockPage";
@@ -38,6 +40,9 @@ export const APP_ROUTES: AppRoute[] = [
     component: <TransactionsPage listingType={TXListing.WALLETS} /> },
   { path: "/me/names", name: "myNames",
     component: <NamesPage listingType={NamesListing.WALLETS} /> },
+
+  // Payments
+  { path: "/send", name: "sendTransaction", component: <SendTransactionPage /> },
 
   // Network explorer
   { path: "/network/addresses/:address", name: "address", component: <AddressPage /> },

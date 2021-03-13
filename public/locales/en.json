@@ -757,6 +757,9 @@
   },
 
   "sendTransaction": {
+    "title": "Send transaction",
+    "siteTitle": "Send transaction",
+
     "modalTitle": "Send transaction",
     "modalSubmit": "Send",
 
@@ -792,6 +795,7 @@
     "payLargeConfirmHalf": "Are you sure you want to send <1 />? This is over half your balance!",
     "payLargeConfirmAll": "Are you sure you want to send <1 />? This is your entire balance!",
 
+    "errorNotificationTitle": "Transaction failed",
     "successNotificationTitle": "Transaction successful",
     "successNotificationContent": "You sent <1 /> from <3 /> to <5 />.",
     "successNotificationButton": "View transaction"

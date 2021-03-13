@@ -1,22 +1,19 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import React, { Dispatch, SetStateAction } from "react";
-import { Modal, Button, notification } from "antd";
+import { Dispatch, SetStateAction } from "react";
+import { Modal, notification } from "antd";
 
-import { useTranslation, Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { translateError } from "@utils/i18n";
-
-import { Link } from "react-router-dom";
 
 import { useWallets, Wallet } from "@wallets";
 import { NoWalletsModal } from "@comp/results/NoWalletsResult";
 
 import { KristTransaction } from "@api/types";
-import { KristValue } from "@comp/krist/KristValue";
-import { ContextualAddress } from "@comp/addresses/ContextualAddress";
 
 import { useTransactionForm } from "./SendTransactionForm";
+import { NotifSuccessContents, NotifSuccessButton } from "./Success";
 
 interface Props {
   visible: boolean;
@@ -56,7 +53,7 @@ export function SendTransactionModal({
 
     // Display errors as notifications in the modal
     onError: err => notification.error({
-      message: t("error"),
+      message: t("sendTransaction.errorNotificationTitle"),
       description: translateError(t, err, "sendTransaction.errorUnknown")
     })
   });
@@ -101,36 +98,4 @@ export function SendTransactionModal({
     {/* Context for success notification */}
     {contextHolder}
   </>;
-}
-
-function NotifSuccessContents({ tx }: { tx: KristTransaction }): JSX.Element {
-  const { t } = useTranslation();
-
-  return <Trans t={t} i18nKey="sendTransaction.successNotificationContent">
-    You sent
-    <KristValue value={tx.value} />
-    from
-    <ContextualAddress
-      address={tx.from}
-      metadata={tx.metadata}
-      source
-      neverCopyable
-    />
-    to
-    <ContextualAddress
-      address={tx.to}
-      metadata={tx.metadata}
-      neverCopyable
-    />
-  </Trans>;
-}
-
-function NotifSuccessButton({ tx }: { tx: KristTransaction }): JSX.Element {
-  const { t } = useTranslation();
-
-  return <Link to={"/network/transactions/" + encodeURIComponent(tx.id)}>
-    <Button type="primary">
-      {t("sendTransaction.successNotificationButton")}
-    </Button>
-  </Link>;
 }
