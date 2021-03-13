@@ -51,9 +51,14 @@ export function SettingsPage(): JSX.Element {
           />
         </Menu.Item>
 
-        {/* Auto-refresh tables */}
+        {/* Auto-refresh address page */}
         <Menu.Item key="autoRefresh/autoRefreshAddressPage">
           <SettingBoolean setting="autoRefreshAddressPage" titleKey="settings.autoRefreshAddressPage"/>
+        </Menu.Item>
+
+        {/* Auto-refresh name page */}
+        <Menu.Item key="autoRefresh/autoRefreshNamePage">
+          <SettingBoolean setting="autoRefreshNamePage" titleKey="settings.autoRefreshNamePage"/>
         </Menu.Item>
       </Menu.SubMenu>
 

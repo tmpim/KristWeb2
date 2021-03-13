@@ -28,9 +28,14 @@ async function fetchTransactions(name: string, type: LookupTXType): Promise<Look
 interface Props {
   name: string;
   type: LookupTXType;
+  lastTransactionID: number;
 }
 
-export function NameTransactionsCard({ name, type }: Props): JSX.Element {
+export function NameTransactionsCard({
+  name,
+  type,
+  lastTransactionID
+}: Props): JSX.Element {
   const { t } = useTranslation();
   const syncNode = useSyncNode();
 
@@ -39,8 +44,6 @@ export function NameTransactionsCard({ name, type }: Props): JSX.Element {
   const [loading, setLoading] = useState(true);
 
   // Fetch transactions on page load or sync node reload
-  // TODO: set up something to temporarily subscribe to an address via the
-  //       websocket service, so this can be updated in realtime
   useEffect(() => {
     if (!syncNode) return;
 
@@ -52,7 +55,7 @@ export function NameTransactionsCard({ name, type }: Props): JSX.Element {
       .then(setRes)
       .catch(setError)
       .finally(() => setLoading(false));
-  }, [syncNode, name, type]);
+  }, [syncNode, name, type, lastTransactionID]);
 
   const isEmpty = !loading && (error || !res || res.count === 0);
   const classes = classNames("kw-card", "name-card-transactions", {

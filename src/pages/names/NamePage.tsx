@@ -22,6 +22,7 @@ import { LookupTransactionType as LookupTXType } from "@api/lookup";
 
 import { useWallets } from "@wallets";
 import { useNameSuffix } from "@utils/currency";
+import { useSubscription } from "@global/ws/WebsocketSubscription";
 import { useBooleanSetting } from "@utils/settings";
 
 import { NameButtonRow } from "./NameButtonRow";
@@ -35,7 +36,17 @@ interface ParamTypes {
   name: string;
 }
 
-function PageContents({ name, nameWithSuffix }: { name: KristName; nameWithSuffix: string }): JSX.Element {
+interface PageContentsProps {
+  name: KristName;
+  nameWithSuffix: string;
+  lastTransactionID: number;
+}
+
+function PageContents({
+  name,
+  nameWithSuffix,
+  lastTransactionID
+}: PageContentsProps): JSX.Element {
   const { t } = useTranslation();
   const { wallets } = useWallets();
   const copyNameSuffixes = useBooleanSetting("copyNameSuffixes");
@@ -134,12 +145,20 @@ function PageContents({ name, nameWithSuffix }: { name: KristName; nameWithSuffi
     <Row gutter={16} className="name-card-row">
       {/* Recent transactions */}
       <Col span={24} xl={14} xxl={12}>
-        <NameTransactionsCard name={name.name} type={LookupTXType.NAME_TRANSACTIONS} />
+        <NameTransactionsCard
+          name={name.name}
+          type={LookupTXType.NAME_TRANSACTIONS}
+          lastTransactionID={lastTransactionID}
+        />
       </Col>
 
       {/* Name history */}
       <Col span={24} xl={10} xxl={12}>
-        <NameTransactionsCard name={name.name} type={LookupTXType.NAME_HISTORY} />
+        <NameTransactionsCard
+          name={name.name}
+          type={LookupTXType.NAME_HISTORY}
+          lastTransactionID={lastTransactionID}
+        />
       </Col>
     </Row>
   </>;
@@ -154,14 +173,21 @@ export function NamePage(): JSX.Element {
   const [kristName, setKristName] = useState<KristName | undefined>();
   const [error, setError] = useState<Error | undefined>();
 
+  // Used to refresh the cards when a transaction is made to the name
+  const lastTransactionID = useSubscription({ name });
+  const shouldAutoRefresh = useBooleanSetting("autoRefreshNamePage");
+  const usedRefreshID = shouldAutoRefresh ? lastTransactionID : 0;
+
   // Load the name on page load
   useEffect(() => {
     api.get<{ name: KristName }>("names/" + encodeURIComponent(name))
       .then(res => setKristName(res.name))
       .catch(err => { console.error(err); setError(err); });
-  }, [syncNode, name]);
+  }, [syncNode, name, usedRefreshID]);
 
-  const nameWithSuffix = kristName ? `${kristName.name}.${nameSuffix}` : undefined;
+  const nameWithSuffix = kristName
+    ? `${kristName.name}.${nameSuffix}`
+    : undefined;
 
   // Change the page title depending on whether or not the name has loaded
   const title = kristName
@@ -187,7 +213,13 @@ export function NamePage(): JSX.Element {
         />
       )
       : (kristName
-        ? <PageContents name={kristName} nameWithSuffix={nameWithSuffix!} />
+        ? (
+          <PageContents
+            name={kristName}
+            nameWithSuffix={nameWithSuffix!}
+            lastTransactionID={usedRefreshID}
+          />
+        )
         : <Skeleton active />)}
   </PageLayout>;
 }

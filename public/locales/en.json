@@ -325,6 +325,7 @@
     "autoRefreshTables": "Auto-refresh tables",
     "autoRefreshTablesDescription": "Whether or not large table listings (e.g. transactions, names) should automatically refresh when a change is detected on the network.",
     "autoRefreshAddressPage": "Auto-refresh address page",
+    "autoRefreshNamePage": "Auto-refresh name page",
 
     "subMenuAdvanced": "Advanced settings",
     "alwaysIncludeMined": "Always include mined transactions in transaction listings (may require refresh)",
