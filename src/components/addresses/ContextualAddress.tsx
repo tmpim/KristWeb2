@@ -42,15 +42,17 @@ interface AddressMetanameProps {
 
 export function AddressMetaname({ nameSuffix, address, commonMeta, source, hideNameAddress }: AddressMetanameProps): JSX.Element {
   const rawMetaname = (source ? commonMeta?.return : commonMeta?.recipient) || undefined;
-  const metaname = (source ? commonMeta?.returnMetaname : commonMeta?.metaname) || undefined;
   const name = (source ? commonMeta?.returnName : commonMeta?.name) || undefined;
   const nameWithoutSuffix = name ? stripNameSuffix(nameSuffix, name) : undefined;
 
   return name
     ? <>
       {/* Display the name/metaname (e.g. foo@bar.kst) */}
-      {metaname && <><span className="address-metaname">{metaname}@</span></>}
-      <KristNameLink name={nameWithoutSuffix!} className="address-name" />
+      <KristNameLink
+        className="address-name"
+        name={nameWithoutSuffix!}
+        text={rawMetaname}
+      />
 
       {/* Display the original address too */}
       {!hideNameAddress && <>
