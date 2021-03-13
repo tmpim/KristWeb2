@@ -2,7 +2,7 @@
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { useState } from "react";
-import { Button } from "antd";
+import { Button, Alert } from "antd";
 import { PageLayout } from "@layout/PageLayout";
 
 import { ImportBackupModal } from "../backup/ImportBackupModal";
@@ -23,6 +23,15 @@ export function DevPage(): JSX.Element {
     title="Dev page"
     siteTitle="Dev page"
   >
+    <Alert type="success" message="test" />
+    <Alert type="success" message="test" showIcon />
+    <Alert type="warning" message="test" />
+    <Alert type="warning" message="test" showIcon />
+    <Alert type="error" message="test" />
+    <Alert type="error" message="test" showIcon />
+
+    <br />
+
     {/* Open import backup modal */}
     <AuthorisedAction
       encrypt
