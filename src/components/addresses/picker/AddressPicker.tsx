@@ -107,7 +107,6 @@ export function AddressPicker({
     : options;
 
   // Fetch an address or name hint if possible
-  // TODO: Make sure these auto-refresh when the balances change
   const pickerHints = usePickerHints(nameHint, cleanValue, hasExactName);
 
   const classes = classNames("address-picker", className, {
