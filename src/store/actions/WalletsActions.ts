@@ -38,3 +38,5 @@ export const unsyncWallet = createAction(constants.UNSYNC_WALLET,
 export interface RecalculateWalletsPayload { wallets: Record<string, string> }
 export const recalculateWallets = createAction(constants.RECALCULATE_WALLETS,
   (wallets): RecalculateWalletsPayload => ({ wallets }))<RecalculateWalletsPayload>();
+
+export const setLastTxFrom = createAction(constants.SET_LAST_TX_FROM)<Wallet>();

@@ -8,6 +8,10 @@ import { RefSelectProps } from "antd/lib/select";
 import { useTranslation, Trans } from "react-i18next";
 import { TranslatedError } from "@utils/i18n";
 
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@store";
+import { setLastTxFrom } from "@actions/WalletsActions";
+
 import { useWallets, useMasterPasswordOnly, Wallet } from "@wallets";
 import { useMountEffect } from "@utils";
 
@@ -24,6 +28,9 @@ import awaitTo from "await-to-js";
 
 import "./SendTransactionForm.less";
 
+import Debug from "debug";
+const debug = Debug("kristweb:send-transaction-form");
+
 // This is from https://github.com/tmpim/Krist/blob/a924f3f/src/controllers/transactions.js#L102
 // except `+` is changed to `*`.
 const METADATA_REGEXP = /^[\x20-\x7F\n]*$/i;
@@ -36,23 +43,39 @@ export interface FormValues {
 }
 
 interface Props {
+  from?: Wallet | string;
+  to?: string;
   form: FormInstance<FormValues>;
   triggerSubmit: () => Promise<void>;
 }
 
 function SendTransactionForm({
+  from: rawInitialFrom,
+  to: initialTo,
   form,
   triggerSubmit
 }: Props): JSX.Element {
   const { t } = useTranslation();
 
-  // Used to get the initial wallet to show for the 'from' field
-  // TODO: Remember this value?
-  const { addressList } = useWallets();
-  const initialFrom = addressList[0] || "";
+  // Get the initial wallet to show for the 'from' field. Use the provided
+  // wallet if we were given one, otherwise use the saved 'last wallet',
+  // or the first wallet we can find.
+  const initialFromAddress = typeof rawInitialFrom === "string"
+    ? rawInitialFrom : rawInitialFrom?.address;
+
+  const { addressList, walletAddressMap } = useWallets();
+  const firstWallet = addressList[0];
+
+  // Validate the lastTxFrom wallet still exists
+  const dispatch = useDispatch();
+  const lastTxFrom = useSelector((s: RootState) => s.wallets.lastTxFrom);
+  const lastTxFromAddress = lastTxFrom && addressList.includes(lastTxFrom)
+    ? lastTxFrom : undefined;
+
+  const initialFrom = initialFromAddress || lastTxFromAddress || firstWallet;
 
   const [from, setFrom] = useState(initialFrom);
-  const [to, setTo] = useState("");
+  const [to, setTo] = useState(initialTo);
 
   // Focus the 'to' input on initial render
   const toRef = useRef<RefSelectProps>(null);
@@ -60,9 +83,23 @@ function SendTransactionForm({
     toRef?.current?.focus();
   });
 
-  function onValuesChange(_: unknown, values: Partial<FormValues>) {
+  function onValuesChange(
+    changed: Partial<FormValues>,
+    values: Partial<FormValues>
+  ) {
     setFrom(values.from || "");
     setTo(values.to || "");
+
+    // Update and save the lastTxFrom so the next time the modal is opened
+    // it will remain on this address
+    if (changed.from) {
+      const currentWallet = walletAddressMap[changed.from];
+      if (currentWallet && currentWallet.address !== lastTxFromAddress) {
+        debug("updating lastTxFrom to %s", currentWallet.address);
+        dispatch(setLastTxFrom(currentWallet));
+        localStorage.setItem("lastTxFrom", currentWallet.address);
+      }
+    }
   }
 
   return <Form
@@ -78,7 +115,7 @@ function SendTransactionForm({
 
     initialValues={{
       from: initialFrom,
-      to: "",
+      to: initialTo,
       amount: 1,
       metadata: ""
     }}
@@ -139,6 +176,8 @@ function SendTransactionForm({
 }
 
 interface TransactionFormHookProps {
+  from?: Wallet | string;
+  to?: string;
   onError?: (err: Error) => void;
   onSuccess?: (transaction: KristTransaction) => void;
 }
@@ -152,6 +191,8 @@ interface TransactionFormHookResponse {
 }
 
 export function useTransactionForm({
+  from: initialFrom,
+  to: initialTo,
   onError,
   onSuccess
 }: TransactionFormHookProps = {}): TransactionFormHookResponse {
@@ -287,6 +328,8 @@ export function useTransactionForm({
   // Create the transaction form instance here to be rendered by the caller
   const txForm = <>
     <SendTransactionForm
+      from={initialFrom}
+      to={initialTo}
       form={form}
       triggerSubmit={onSubmit}
     />

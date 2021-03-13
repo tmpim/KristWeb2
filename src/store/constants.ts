@@ -17,6 +17,7 @@ export const SYNC_WALLET = "SYNC_WALLET";
 export const SYNC_WALLETS = "SYNC_WALLETS";
 export const UNSYNC_WALLET = "UNSYNC_WALLET";
 export const RECALCULATE_WALLETS = "RECALCULATE_WALLETS";
+export const SET_LAST_TX_FROM = "SET_LAST_TX_FROM";
 
 // Settings
 // ---

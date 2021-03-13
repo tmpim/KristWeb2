@@ -8,11 +8,15 @@ import { Wallet, WalletMap, loadWallets, WALLET_UPDATABLE_KEYS, WALLET_SYNCABLE_
 
 export interface State {
   readonly wallets: WalletMap;
+  readonly lastTxFrom: string;
 }
 
 export function getInitialWalletsState(): State {
   const wallets = loadWallets();
-  return { wallets };
+  return {
+    wallets,
+    lastTxFrom: localStorage.getItem("lastTxFrom") || ""
+  };
 }
 
 function assignNewWalletProperties(state: State, id: string, partialWallet: Partial<Wallet>, allowedKeys?: (keyof Wallet)[]) {
@@ -102,5 +106,8 @@ export const WalletsReducer = createReducer({ wallets: {} } as State)
       .reduce((o, wallet) => ({ ...o, [wallet.id]: wallet }), {});
 
     return { ...state, wallets: { ...state.wallets, ...updatedWallets }};
-  });
+  })
+  // Set last transaction from
+  .handleAction(actions.setLastTxFrom, (state, { payload }) =>
+    ({ ...state, lastTxFrom: payload.address }));
 

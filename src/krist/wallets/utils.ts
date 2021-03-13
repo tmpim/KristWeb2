@@ -33,7 +33,7 @@ export function findWalletByAddress(
 
 /** Hook that fetches the wallets from the Redux store. */
 export function useWallets(): WalletsHookResponse {
-  const { wallets } = useSelector((s: RootState) => s.wallets, shallowEqual);
+  const wallets = useSelector((s: RootState) => s.wallets.wallets, shallowEqual);
   const walletAddressMap = Object.values(wallets)
     .reduce((o, wallet) => ({ ...o, [wallet.address]: wallet }), {});
 
