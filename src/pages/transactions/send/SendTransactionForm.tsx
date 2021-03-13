@@ -9,10 +9,11 @@ import { useTranslation, Trans } from "react-i18next";
 import { TranslatedError } from "@utils/i18n";
 
 import { useSelector, useDispatch } from "react-redux";
+import { store } from "@app";
 import { RootState } from "@store";
 import { setLastTxFrom } from "@actions/WalletsActions";
 
-import { useWallets, useMasterPasswordOnly, Wallet } from "@wallets";
+import { useWallets, Wallet } from "@wallets";
 import { useMountEffect } from "@utils";
 
 import { APIError } from "@api";
@@ -203,8 +204,6 @@ export function useTransactionForm({
 
   // Used to check for warning on large transactions
   const { walletAddressMap } = useWallets();
-  // Used to decrypt the wallet to make the transaction
-  const masterPassword = useMasterPasswordOnly();
 
   // Confirmation modal used for when the transaction amount is very large.
   // This is created here to provide a translation context for the modal.
@@ -223,6 +222,11 @@ export function useTransactionForm({
     { to, amount, metadata }: FormValues,
     wallet: Wallet
   ): Promise<void> {
+    // Manually get the master password from the store state, because this might
+    // get called immediately after an auth, which doesn't give the hook time to
+    // update this submitTransaction function. The password here is used to
+    // decrypt the wallet to make the transaction.
+    const masterPassword = store.getState().masterPassword.masterPassword;
     if (!masterPassword)
       throw new TranslatedError("sendTransaction.errorWalletDecrypt");
 
