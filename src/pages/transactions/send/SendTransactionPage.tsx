@@ -12,6 +12,7 @@ import { PageLayout } from "@layout/PageLayout";
 
 import { useWallets } from "@wallets";
 import { NoWalletsResult } from "@comp/results/NoWalletsResult";
+import { AuthorisedAction } from "@comp/auth/AuthorisedAction";
 
 import { KristTransaction } from "@api/types";
 
@@ -51,15 +52,16 @@ export function SendTransactionPage(): JSX.Element {
           {txForm}
 
           {/* Send submit button */}
-          <Button
-            type="primary"
-            className="send-transaction-submit"
-            icon={<SendOutlined />}
-            onClick={triggerSubmit}
-            loading={isSubmitting}
-          >
-            {t("sendTransaction.buttonSubmit")}
-          </Button>
+          <AuthorisedAction onAuthed={triggerSubmit}>
+            <Button
+              type="primary"
+              className="send-transaction-submit"
+              icon={<SendOutlined />}
+              loading={isSubmitting}
+            >
+              {t("sendTransaction.buttonSubmit")}
+            </Button>
+          </AuthorisedAction>
 
           {/* Clearfix for submit button floated right */}
           <div style={{ clear: "both"}} />
