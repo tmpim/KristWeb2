@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 
 import { KristName } from "@api/types";
 import { Wallet } from "@wallets";
+import { SendTransactionModalLink } from "@comp/transactions/SendTransactionModalLink";
 
 interface Props {
   name: KristName;
@@ -22,17 +23,21 @@ export function NameButtonRow({ name: _name, nameWithSuffix, myWallet }: Props):
 
   return <>
     {/* Send/transfer Krist button */}
-    {myWallet
-      ? (
-        <Button type="primary" icon={<SwapOutlined />} className="nyi">
-          {t("name.buttonTransferKrist", { name: nameWithSuffix })}
-        </Button>
-      )
-      : (
-        <Button type="primary" icon={<SendOutlined />} className="nyi">
-          {t("name.buttonSendKrist", { name: nameWithSuffix })}
-        </Button>
-      )}
+    <SendTransactionModalLink to={nameWithSuffix}>
+      <Button
+        type="primary"
+        icon={myWallet
+          ? <SwapOutlined />
+          : <SendOutlined />}
+      >
+        {t(
+          myWallet
+            ? "name.buttonTransferKrist"
+            : "name.buttonSendKrist",
+          { name: nameWithSuffix }
+        )}
+      </Button>
+    </SendTransactionModalLink>
 
     {/* If we're the name owner, show the management buttons */}
     {/* Update A record button */}
