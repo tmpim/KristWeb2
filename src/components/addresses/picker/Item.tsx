@@ -66,6 +66,9 @@ export function getAddressItem(props: AddressItemProps): OptionValue {
 
     // The wallet label is used for filtering the options
     "data-wallet-label": wallet?.label,
+    // The wallet itself is used for sorting the options
+    "data-wallet": wallet,
+
     value: plainAddress
   };
 }

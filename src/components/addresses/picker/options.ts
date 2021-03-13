@@ -3,10 +3,12 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { TFunction } from "react-i18next";
 
-import { WalletMap } from "@wallets";
+import { WalletMap, Wallet } from "@wallets";
 
 import { getCategoryHeader } from "./Header";
 import { getAddressItem } from "./Item";
+
+import { keyedNullSort } from "@utils";
 
 // Ant design's autocomplete/select/rc-select components don't seem to return
 // the proper types for these, so just provide our own types that are 'good
@@ -19,6 +21,7 @@ export interface OptionValue {
   // For some reason, all these props get passed all the way to the DOM element!
   // Make this a 'valid' DOM prop
   "data-wallet-label"?: string;
+  "data-wallet"?: Wallet;
   value: string;
 }
 
@@ -39,12 +42,24 @@ interface WalletOptions {
   categoryCount: number;
 }
 
+// Sort by balance descending, address ascending. Undefined values are pushed to
+// the bottom by using keyedNullSort. Addresses are sorted ascending, though
+// because of the implicit reversing behaviour of keyedNullSort, they need to
+// be swapped here (i.e. sort with `b`, `a`).
+const sortBalance = keyedNullSort<Wallet>("balance");
+const sortAddress = keyedNullSort<Wallet>("address", true);
+const sortFn = (a: Wallet, b: Wallet): number =>
+  sortBalance(a, b, "descend") || sortAddress(b, a);
+const optionSortFn = (a: OptionValue, b: OptionValue): number =>
+  sortFn(a["data-wallet"]!, b["data-wallet"]!);
+
 /** Groups the wallets by category for autocompletion and generates their select
  * options. */
 function getWalletOptions(wallets: WalletMap): WalletOptions {
   const categorised: Record<string, OptionValue[]> = {};
   const uncategorised: OptionValue[] = [];
 
+  // Go through all wallets and group them
   for (const id in wallets) {
     const wallet = wallets[id];
     const { category } = wallet;
@@ -61,7 +76,16 @@ function getWalletOptions(wallets: WalletMap): WalletOptions {
     }
   }
 
-  // TODO: sort the addresses too?
+  // Sort the wallets by balance descending, and then by address ascending.
+  // Since this uses keyedNullSort, which depends on ant-design's implicit
+  // reversing behaviour, the array is reversed after sorting here. As such,
+  // undefined balances will be pushed to the bottom.
+  for (const category in categorised) {
+    categorised[category].sort(optionSortFn);
+    categorised[category].reverse();
+  }
+  uncategorised.sort(optionSortFn);
+  uncategorised.reverse();
 
   return {
     categorised,
