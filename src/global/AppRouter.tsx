@@ -1,6 +1,8 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
+import { Alert } from "antd";
+
 import { Switch, Route } from "react-router-dom";
 
 import { DashboardPage } from "@pages/dashboard/DashboardPage";
@@ -89,8 +91,16 @@ export const APP_ROUTES: AppRoute[] = [
 
 export function AppRouter(): JSX.Element {
   return <Switch>
+    {/* Render the matched route's page component */}
     {APP_ROUTES.map(({ path, component }, key) => (
-      component && <Route exact path={path} key={key}>{component}</Route>
+      component && (
+        <Route exact path={path} key={key}>
+          {/* Try to catch errors on a route without crashing everything */}
+          <Alert.ErrorBoundary>
+            {component}
+          </Alert.ErrorBoundary>
+        </Route>
+      )
     ))}
 
     <Route path="*"><NotFoundPage /></Route>
