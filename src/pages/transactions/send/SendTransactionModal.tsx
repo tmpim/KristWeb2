@@ -9,7 +9,7 @@ import { translateError } from "@utils/i18n";
 
 import { Link } from "react-router-dom";
 
-import { useWallets } from "@wallets";
+import { useWallets, Wallet } from "@wallets";
 import { NoWalletsModal } from "@comp/results/NoWalletsResult";
 
 import { KristTransaction } from "@api/types";
@@ -21,11 +21,16 @@ import { useTransactionForm } from "./SendTransactionForm";
 interface Props {
   visible: boolean;
   setVisible: Dispatch<SetStateAction<boolean>>;
+
+  from?: Wallet | string;
+  to?: string;
 }
 
 export function SendTransactionModal({
   visible,
-  setVisible
+  setVisible,
+  from,
+  to
 }: Props): JSX.Element {
   const { t } = useTranslation();
 
@@ -34,6 +39,9 @@ export function SendTransactionModal({
 
   // Create the transaction form
   const { isSubmitting, triggerSubmit, triggerReset, txForm } = useTransactionForm({
+    from,
+    to,
+
     // Display a success notification when the transaction is made
     onSuccess(tx: KristTransaction) {
       notif.success({

@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import { KristAddressWithNames } from "@api/lookup";
 import { Wallet } from "@wallets";
 import { WalletEditButton } from "../wallets/WalletEditButton";
+import { SendTransactionModalLink } from "@comp/transactions/SendTransactionModalLink";
 
 interface Props {
   address: KristAddressWithNames;
@@ -20,17 +21,21 @@ export function AddressButtonRow({ address, myWallet }: Props): JSX.Element {
 
   return <>
     {/* Send/transfer Krist button */}
-    {myWallet
-      ? (
-        <Button type="primary" icon={<SwapOutlined />} className="nyi">
-          {t("address.buttonTransferKrist", { address: address.address })}
-        </Button>
-      )
-      : (
-        <Button type="primary" icon={<SendOutlined />} className="nyi">
-          {t("address.buttonSendKrist", { address: address.address })}
-        </Button>
-      )}
+    <SendTransactionModalLink to={address.address}>
+      <Button
+        type="primary"
+        icon={myWallet
+          ? <SwapOutlined />
+          : <SendOutlined />}
+      >
+        {t(
+          myWallet
+            ? "address.buttonTransferKrist"
+            : "address.buttonSendKrist",
+          { address: address.address }
+        )}
+      </Button>
+    </SendTransactionModalLink>
 
     {/* Add friend/edit wallet button */}
     {/* TODO: Change this to edit if they're already a friend */}
