@@ -88,10 +88,14 @@ export function ContextualAddress({
   const addressCopyButtons = useBooleanSetting("addressCopyButtons");
 
   if (!origAddress) return (
-    <span className="contextual-address address-unknown">{t("contextualAddressUnknown")}</span>
+    <span className="contextual-address address-unknown">
+      {t("contextualAddressUnknown")}
+    </span>
   );
 
-  const address = typeof origAddress === "object" ? origAddress.address : origAddress;
+  const address = typeof origAddress === "object"
+    ? origAddress.address
+    : origAddress;
 
   // If we were given a wallet, use it. Otherwise, look it up, unless it was
   // explicitly excluded (e.g. the Wallets table)
@@ -100,7 +104,11 @@ export function ContextualAddress({
     : undefined;
 
   const commonMeta = parseCommonMeta(nameSuffix, metadata);
-  const hasMetaname = source ? !!commonMeta?.returnRecipient : !!commonMeta?.recipient;
+  const hasMetaname = source
+    ? !!commonMeta?.returnRecipient
+    : !!commonMeta?.recipient;
+
+  const showTooltip = (hideNameAddress && !!hasMetaname) || !!wallet?.label;
 
   const copyable = !neverCopyable && addressCopyButtons
     ? { text: address } : undefined;
@@ -123,7 +131,7 @@ export function ContextualAddress({
     <Tooltip
       title={nonExistent
         ? t("contextualAddressNonExistentTooltip")
-        : address}
+        : (showTooltip ? address : undefined)}
     >
       {commonMeta && hasMetaname
         ? (
@@ -147,6 +155,10 @@ export function ContextualAddress({
           </ConditionalLink>
         )
       }
+
+      {/* This empty child here forces the Tooltip to change its hover
+        * behaviour. Pretty funky, needs investigating. */}
+      <></>
     </Tooltip>
   </Text>;
 }
