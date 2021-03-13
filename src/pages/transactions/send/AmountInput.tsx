@@ -12,13 +12,13 @@ import { KristSymbol } from "@comp/krist/KristSymbol";
 
 interface Props {
   from: string;
-  setValue: (value: number) => void;
+  setAmount: (amount: number) => void;
   tabIndex?: number;
 }
 
 export function AmountInput({
   from,
-  setValue,
+  setAmount,
   tabIndex,
   ...props
 }: Props): JSX.Element {
@@ -32,11 +32,11 @@ export function AmountInput({
 
   function onClickMax() {
     const currentWallet = walletAddressMap[from];
-    setValue(currentWallet?.balance || 0);
+    setAmount(currentWallet?.balance || 0);
   }
 
   return <Form.Item
-    label={t("sendTransaction.labelValue")}
+    label={t("sendTransaction.labelAmount")}
     required
     {...props}
   >
@@ -49,9 +49,9 @@ export function AmountInput({
         </span>
       )}
 
-      {/* Value/amount number input */}
+      {/* Amount number input */}
       <Form.Item
-        name="value"
+        name="amount"
         style={{ flex: 1, marginBottom: 0 }}
 
         validateFirst

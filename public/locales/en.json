@@ -763,7 +763,7 @@
 
     "labelFrom": "From wallet",
     "labelTo": "To address/name",
-    "labelValue": "Amount",
+    "labelAmount": "Amount",
     "labelMetadata": "Metadata",
     "placeholderMetadata": "Optional metadata",
 
@@ -775,9 +775,31 @@
     "errorAmountTooHigh": "Insufficient funds in wallet.",
 
     "errorMetadataTooLong": "Metadata must be less than 256 characters.",
-    "errorMetadataInvalid": "Metadata contains invalid characters."
+    "errorMetadataInvalid": "Metadata contains invalid characters.",
 
-    // TODO: modals/warnings for confirmation of sending over 50% of balance,
-    //       whole balance, and form validation messages
+    "errorWalletGone": "That wallet no longer exists.",
+    "errorWalletDecrypt": "Your wallet could not be decrypted.",
+
+    "errorParameterTo": "Invalid recipient.",
+    "errorParameterAmount": "Invalid amount.",
+    "errorParameterMetadata": "Invalid metadata.",
+    "errorInsufficientFunds": "Insufficient funds in wallet.",
+    "errorNameNotFound": "The recipient name could not be found.",
+
+    "errorUnknown": "Unknown error sending transaction. See console for details.",
+
+    "payLargeConfirmHalf": "Are you sure you want to send <1 />? This is over half your balance!",
+    "payLargeConfirmAll": "Are you sure you want to send <1 />? This is your entire balance!",
+
+    "successNotificationTitle": "Transaction successful",
+    "successNotificationContent": "You sent <1 /> from <3 /> to <5 />.",
+    "successNotificationButton": "View transaction"
+  },
+
+  "authFailed": {
+    "title": "Auth failed",
+    "message": "You do not own this address.",
+    "messageLocked": "This address was locked.",
+    "alert": "Message from the sync node:"
   }
 }
