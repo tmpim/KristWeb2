@@ -19,6 +19,7 @@ import { NamePage } from "@pages/names/NamePage";
 import { SettingsPage } from "@pages/settings/SettingsPage";
 import { SettingsTranslations } from "@pages/settings/translations/SettingsTranslations";
 
+import { WhatsNewPage } from "@pages/whatsnew/WhatsNewPage";
 import { CreditsPage } from "@pages/credits/CreditsPage";
 
 import { DevPage } from "@pages/dev/DevPage";
@@ -79,6 +80,7 @@ export const APP_ROUTES: AppRoute[] = [
   { path: "/settings/debug", name: "settingsDebug" },
   { path: "/settings/debug/translations", name: "settings", component: <SettingsTranslations /> },
 
+  { path: "/whatsnew", name: "whatsNew", component: <WhatsNewPage /> },
   { path: "/credits", name: "credits", component: <CreditsPage /> },
 
   // TODO: remove this

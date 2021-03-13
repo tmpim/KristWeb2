@@ -807,5 +807,18 @@
     "message": "You do not own this address.",
     "messageLocked": "This address was locked.",
     "alert": "Message from the sync node:"
+  },
+
+  "whatsNew": {
+    "title": "What's new",
+    "siteTitle": "What's new",
+
+    "titleKrist": "Krist",
+    "titleKristWeb": "KristWeb",
+
+    "tooltipGitHub": "View on GitHub",
+
+    "cardWhatsNewTitle": "What's New",
+    "cardCommitsTitle": "Commits"
   }
 }
