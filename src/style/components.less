@@ -214,3 +214,12 @@
 
   height: 100%;
 }
+
+// Make all icons in menu consistent (sometimes the icon may not be a direct
+// descendent of the menu item)
+.ant-dropdown-menu-item .anticon:first-child {
+  min-width: 12px;
+  margin-right: 8px;
+  font-size: @font-size-sm;
+  vertical-align: -0.1em;
+}

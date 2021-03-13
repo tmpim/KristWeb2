@@ -140,6 +140,7 @@
     "walletCount_plural": "{{count, number}} wallets",
 
     "actionsEditTooltip": "Edit wallet",
+    "actionsSendTransaction": "Send Krist",
     "actionsWalletInfo": "Wallet info",
     "actionsDelete": "Delete wallet",
     "actionsDeleteConfirm": "Are you sure you want to delete this wallet?",

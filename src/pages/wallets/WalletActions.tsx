@@ -5,7 +5,8 @@ import React, { useState } from "react";
 import { Modal, Tooltip, Dropdown, Menu } from "antd";
 import { MenuClickEventHandler } from "rc-menu/lib/interface";
 import {
-  EditOutlined, DeleteOutlined, InfoCircleOutlined, ExclamationCircleOutlined
+  EditOutlined, DeleteOutlined, InfoCircleOutlined, ExclamationCircleOutlined,
+  SendOutlined
 } from "@ant-design/icons";
 
 import { useTranslation } from "react-i18next";
@@ -13,6 +14,7 @@ import { useTranslation } from "react-i18next";
 import { WalletEditButton } from "./WalletEditButton";
 import { AddWalletModal } from "./AddWalletModal";
 import { WalletInfoModal } from "./info/WalletInfoModal";
+import { SendTransactionModalLink } from "@comp/transactions/SendTransactionModalLink";
 
 import { Wallet, deleteWallet } from "@wallets";
 
@@ -35,17 +37,15 @@ export function WalletActions({ wallet }: { wallet: Wallet }): JSX.Element {
     });
   }
 
-  const onMenuClick: MenuClickEventHandler = (e) => {
+  const onMenuClick: MenuClickEventHandler = e => {
     switch (e.key) {
     // "Wallet info" button
-    case "1":
-      setWalletInfoVisible(true);
-      break;
+    case "2":
+      return setWalletInfoVisible(true);
 
     // "Delete wallet" button
-    case "2":
-      showWalletDeleteConfirm();
-      break;
+    case "3":
+      return showWalletDeleteConfirm();
     }
   };
 
@@ -69,15 +69,22 @@ export function WalletActions({ wallet }: { wallet: Wallet }): JSX.Element {
 
       overlay={(
         <Menu onClick={onMenuClick}>
-          {/* Wallet info button */}
+          {/* Send tx button */}
           <Menu.Item key="1">
+            <SendTransactionModalLink from={wallet}>
+              <div><SendOutlined /> {t("myWallets.actionsSendTransaction")}</div>
+            </SendTransactionModalLink>
+          </Menu.Item>
+
+          {/* Wallet info button */}
+          <Menu.Item key="2">
             <InfoCircleOutlined /> {t("myWallets.actionsWalletInfo")}
           </Menu.Item>
 
           <Menu.Divider />
 
           {/* Delete button */}
-          <Menu.Item key="2" danger>
+          <Menu.Item key="3" danger>
             <DeleteOutlined /> {t("myWallets.actionsDelete")}
           </Menu.Item>
         </Menu>
