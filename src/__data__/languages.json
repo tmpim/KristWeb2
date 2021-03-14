@@ -9,6 +9,7 @@
     "nativeName": "Deutsch",
     "country": "de",
     "dayjsLocale": "de",
+    "timeagoLocale": "de",
     "contributors": [
       {
         "name": "Lignum",
@@ -21,6 +22,7 @@
     "nativeName": "Français",
     "country": "fr",
     "dayjsLocale": "fr",
+    "timeagoLocale": "fr",
     "contributors": [
       {
         "name": "Anavrins",
@@ -33,6 +35,7 @@
     "nativeName": "Nederlands",
     "country": "nl",
     "dayjsLocale": "nl",
+    "timeagoLocale": "nl",
     "contributors": [
       {
         "name": "HydroNitrogen",
@@ -45,6 +48,7 @@
     "nativeName": "Polski",
     "country": "pl",
     "dayjsLocale": "pl",
+    "timeagoLocale": "pl",
     "contributors": [
       {
         "name": "Wojbie",
@@ -57,6 +61,7 @@
     "nativeName": "Tiếng Việt",
     "country": "vn",
     "dayjsLocale": "vi",
+    "timeagoLocale": "vi",
     "contributors": [
       {
         "name": "Boom",

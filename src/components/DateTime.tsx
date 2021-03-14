@@ -1,9 +1,11 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
+import { useContext } from "react";
 import classNames from "classnames";
 import { Tooltip } from "antd";
 
+import { TimeagoFormatterContext } from "@global/LocaleContext";
 import { useBooleanSetting } from "@utils/settings";
 
 import dayjs from "dayjs";
@@ -32,6 +34,9 @@ export function DateTime({
   tooltip,
   ...props
 }: Props): JSX.Element | null {
+  // Get the locale's formatter
+  const formatter = useContext(TimeagoFormatterContext);
+
   const showRelativeDates = useBooleanSetting("showRelativeDates");
 
   if (!date) return null;
@@ -49,7 +54,7 @@ export function DateTime({
   const contents = (
     <span className={classes}>
       {isTimeAgo
-        ? <TimeAgo date={realDate} />
+        ? <TimeAgo date={realDate} formatter={formatter} />
         : dayjs(realDate).format("YYYY/MM/DD HH:mm:ss")}
     </span>
   );

@@ -21,9 +21,14 @@
     "isolatedModules": true,
     "noEmit": true,
     "noImplicitAny": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "typeRoots": [
+      "./node_modules/@types",
+      "./typings"
+    ]
   },
   "include": [
-    "src"
+    "src",
+    "typings"
   ]
 }
