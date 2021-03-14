@@ -20,8 +20,8 @@ export async function generateLanguageCSV(languages: AnalysedLanguage[]): Promis
     // Merge all the languages and their keys together into one array
     const data = languages.reduce((out, lang) => {
       const { code, language, keys } = lang;
+      if (code === "und" || !keys || !language) return out;
       const languageName = language.name;
-      if (!keys) return out;
 
       // Keys from both en and this language
       const combinedKeys = [...new Set([...enKeyNames, ...Object.keys(keys)])];

@@ -5,29 +5,34 @@ import { notification } from "antd";
 import i18n from "@utils/i18n";
 import JSON5 from "json5";
 
+import { store } from "@app";
+import { setImportedLang } from "@store/actions/SettingsActions";
+
+import { getEnglishData, analyseLanguage } from "./analyseLangs";
+
 import Debug from "debug";
 const debug = Debug("kristweb:settings-import-json");
 
-function importLanguage(contents: string) {
-  try {
-    // Parse the imported language
-    const resources = JSON5.parse(contents);
+async function importLanguage(contents: string) {
+  // Parse the imported language
+  const resources = JSON5.parse(contents);
 
-    // Update the language
-    i18n.addResourceBundle("und", "translation", resources, true, true);
-    i18n.changeLanguage("und");
+  // Update the language
+  i18n.addResourceBundle("und", "translation", resources, true, true);
+  i18n.changeLanguage("und");
 
-    notification.success({
-      message: "Translation successfully imported.",
-      description: "Language will be reset to English on next reload."
-    });
-  } catch (err) {
-    console.error(err);
-    if (err.name === "SyntaxError")
-      return notification.error({ message: "Invalid JSON." });
-    else
-      return notification.error({ message: "Unknown error importing custom language." });
-  }
+  // Analyse the language to show on the settings page
+  const en = await getEnglishData();
+  const analysed = analyseLanguage("und", undefined, en.keys, resources);
+  store.dispatch(setImportedLang({
+    enKeyCount: en.keyCount,
+    languages: [analysed]
+  }));
+
+  notification.success({
+    message: "Translation successfully imported.",
+    description: "Language will be reset to English on next reload."
+  });
 }
 
 export function importJSON(files?: FileList | null): void {
@@ -53,6 +58,13 @@ export function importJSON(files?: FileList | null): void {
     const contents = e.target.result.toString();
     debug("got file contents: %s", contents);
 
-    importLanguage(contents);
+    importLanguage(contents)
+      .catch(err => {
+        console.error(err);
+        if (err.name === "SyntaxError")
+          return notification.error({ message: "Invalid JSON." });
+        else
+          return notification.error({ message: "Unknown error importing custom language." });
+      });
   };
 }

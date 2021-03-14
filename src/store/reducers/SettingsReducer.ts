@@ -3,12 +3,22 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { createReducer } from "typesafe-actions";
 import { loadSettings, SettingsState } from "@utils/settings";
-import { setBooleanSetting, setIntegerSetting } from "@actions/SettingsActions";
+import {
+  setBooleanSetting, setIntegerSetting, setImportedLang
+} from "@actions/SettingsActions";
 
-export type State = SettingsState;
+import { AnalysedLanguages } from "@pages/settings/translations/analyseLangs";
+
+export type State = SettingsState & {
+  /** Language imported by JSON in the translations debug page. */
+  readonly importedLang?: AnalysedLanguages;
+};
 
 export function getInitialSettingsState(): State {
-  return loadSettings();
+  return {
+    ...loadSettings(),
+    importedLang: undefined
+  };
 }
 
 export const SettingsReducer = createReducer({} as State)
@@ -19,4 +29,8 @@ export const SettingsReducer = createReducer({} as State)
   .handleAction(setIntegerSetting, (state, action) => ({
     ...state,
     [action.payload.settingName]: action.payload.value
+  }))
+  .handleAction(setImportedLang, (state, { payload }) => ({
+    ...state,
+    importedLang: payload
   }));

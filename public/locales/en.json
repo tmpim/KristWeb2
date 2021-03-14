@@ -365,7 +365,9 @@
       "columnEnglishString": "English string",
 
       "importJSON": "Import JSON",
-      "exportCSV": "Export CSV"
+      "exportCSV": "Export CSV",
+
+      "importedLanguageTitle": "Imported language"
     }
   },
 

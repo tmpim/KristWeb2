@@ -8,6 +8,8 @@ import * as constants from "../constants";
 
 import { State } from "@reducers/SettingsReducer";
 
+import { AnalysedLanguages } from "@pages/settings/translations/analyseLangs";
+
 // Boolean settings
 export interface SetBooleanSettingPayload {
   settingName: keyof PickByValue<State, boolean>;
@@ -25,3 +27,6 @@ export interface SetIntegerSettingPayload {
 export const setIntegerSetting = createAction(constants.SET_INTEGER_SETTING,
   (settingName, value): SetIntegerSettingPayload =>
     ({ settingName, value }))<SetIntegerSettingPayload>();
+
+// Set imported language
+export const setImportedLang = createAction(constants.SET_IMPORTED_LANG)<AnalysedLanguages>();

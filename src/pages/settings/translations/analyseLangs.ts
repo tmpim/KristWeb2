@@ -8,7 +8,7 @@ import { Language, getLanguages } from "@utils/i18n";
 export interface LangKeys { [key: string]: string }
 export interface AnalysedLanguage {
   code: string;
-  language: Language;
+  language?: Language;
 
   error?: string;
   keys?: LangKeys;
@@ -16,20 +16,13 @@ export interface AnalysedLanguage {
   missingKeys?: { k: string; v: string }[];
 }
 
-// Replaced by webpack DefinePlugin and git-revision-webpack-plugin
-declare const __GIT_VERSION__: string;
-const gitVersion: string = __GIT_VERSION__;
-
 const IGNORE_KEYS = /_(?:plural|interval|male|female|\d+)$/;
-export async function getLanguage([code, language]: [string, Language]): Promise<AnalysedLanguage> {
-  const res = await fetch(`/locales/${code}.json?v=${encodeURIComponent(gitVersion)}`);
-  if (!res.ok) throw new Error(res.statusText);
-
-  // Translations now use JSON5 to allow for comments, newlines, and basic
-  // syntax errors like trailing commas
-  const data = await res.text();
-  const translation = JSON5.parse(data);
-
+export function analyseLanguage(
+  code: string,
+  language: Language | undefined,
+  enKeys: Record<string, string> | undefined,
+  translation: any
+): AnalysedLanguage {
   const isObject = (val: any) => typeof val === "object" && !Array.isArray(val);
   const addDelimiter = (a: string, b: string) => a ? `${a}.${b}` : b;
 
@@ -48,7 +41,26 @@ export async function getLanguage([code, language]: [string, Language]): Promise
 
   const langKeys = keys(translation);
 
-  return { code, language, keys: langKeys, keyCount: Object.keys(langKeys).length };
+  return {
+    code,
+    language,
+    keys: langKeys,
+    keyCount: Object.keys(langKeys).length,
+    missingKeys: enKeys
+      ? Object.entries(enKeys)
+        .filter(([k]) => !langKeys[k])
+        .map(([k, v]) => ({ k, v }))
+      : []
+  };
+}
+
+export async function getEnglishData(): Promise<AnalysedLanguage> {
+  const languages = getLanguages();
+  // Fetch and analyse the data for English first
+  const enLang = languages!["en"];
+  const enData = await getLanguageData("en");
+  const en = analyseLanguage("en", enLang, undefined, enData);
+  return en;
 }
 
 export interface AnalysedLanguages {
@@ -60,28 +72,43 @@ export async function analyseLanguages(): Promise<AnalysedLanguages | false> {
   const languages = getLanguages();
   if (!languages) return false;
 
-  // Fetch the locale file for each language code
-  const codes = Object.entries(languages);
-  const languageData = await Promise.allSettled(codes.map(getLanguage));
+  // Fetch and analyse the data for English first
+  const en = await getEnglishData();
 
-  const en = languageData.find(l => l.status === "fulfilled" && l.value.code === "en");
-  const enKeys = en?.status === "fulfilled" ? en?.value.keys || {} : {};
-  const enKeyCount = enKeys ? Object.keys(enKeys).length : 1;
+  // Fetch the locale file for each language code
+  const langEntries = Object.entries(languages);
+  const languageData = await Promise.allSettled(
+    langEntries.map(e => getLanguageData(e[0]))
+  );
 
   return {
-    enKeyCount,
+    enKeyCount: en.keyCount,
+    // If a language couldn't be fetched, show an error for it instead
     languages: languageData.map((result, i) => result.status === "fulfilled"
-      ? {
-        code: codes[i][0],
-        language: codes[i][1],
-        keys: result.value.keys,
-        keyCount: result.value.keyCount,
-        missingKeys: result.value.keys
-          ? Object.entries(enKeys)
-            .filter(([k]) => result.value.keys && !result.value.keys[k])
-            .map(([k, v]) => ({ k, v }))
-          : []
-      }
-      : { code: codes[i][0], language: codes[i][1], keyCount: 0, error: result.reason.toString() })
+      ? analyseLanguage(
+        langEntries[i][0],
+        langEntries[i][1],
+        en.keys,
+        result.value
+      )
+      : {
+        code: langEntries[i][0],
+        language: langEntries[i][1],
+        keyCount: 0,
+        error: result.reason.toString()
+      })
   };
+}
+
+// Replaced by webpack DefinePlugin and git-revision-webpack-plugin
+declare const __GIT_VERSION__: string;
+const gitVersion: string = __GIT_VERSION__;
+async function getLanguageData(code: string): Promise<any> {
+  const res = await fetch(`/locales/${code}.json?v=${encodeURIComponent(gitVersion)}`);
+  if (!res.ok) throw new Error(res.statusText);
+
+  // Translations now use JSON5 to allow for comments, newlines, and basic
+  // syntax errors like trailing commas
+  const data = await res.text();
+  return JSON5.parse(data);
 }

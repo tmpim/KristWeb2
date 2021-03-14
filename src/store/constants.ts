@@ -23,6 +23,7 @@ export const SET_LAST_TX_FROM = "SET_LAST_TX_FROM";
 // ---
 export const SET_BOOLEAN_SETTING = "SET_BOOLEAN_SETTING";
 export const SET_INTEGER_SETTING = "SET_INTEGER_SETTING";
+export const SET_IMPORTED_LANG = "SET_IMPORTED_LANG";
 
 // Websockets
 // ---
