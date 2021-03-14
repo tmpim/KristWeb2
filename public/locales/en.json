@@ -820,6 +820,8 @@
 
     "cardWhatsNewTitle": "What's New",
     "cardCommitsTitle": "Commits",
-    "cardCommitsSeeMore": "See more"
+    "cardCommitsSeeMore": "See more",
+
+    "new": "New!"
   }
 }

@@ -11,16 +11,20 @@ import { useSelector } from "react-redux";
 import { RootState } from "@store";
 
 import * as api from "@api";
-import { WhatsNewResponse } from "./types";
+import { WhatsNewResponse, Commit } from "./types";
 import { getAuthorInfo } from "@utils/credits";
 
 import { PageLayout } from "@layout/PageLayout";
 
+import { WhatsNewCard } from "./WhatsNewCard";
 import { CommitsCard } from "./CommitsCard";
 
 import "./WhatsNewPage.less";
 
 const { Title } = Typography;
+
+declare const __GIT_COMMITS__: Commit[];
+const kristWebCommits: Commit[] = __GIT_COMMITS__;
 
 export function WhatsNewPage(): JSX.Element {
   const { t } = useTranslation();
@@ -60,7 +64,13 @@ export function WhatsNewPage(): JSX.Element {
       <Col span={24} lg={12}></Col>
 
       {/* KristWeb commits */}
-      <Col span={24} lg={12}></Col>
+      <Col span={24} lg={12}>
+        <CommitsCard
+          loading={loading}
+          commits={kristWebCommits}
+          repoURL={kristWebRepo}
+        />
+      </Col>
     </Row>
 
     {/* Krist */}
@@ -71,7 +81,14 @@ export function WhatsNewPage(): JSX.Element {
 
     <Row gutter={16}>
       {/* Krist What's new */}
-      <Col span={24} lg={12}></Col>
+      <Col span={24} lg={12}>
+        <WhatsNewCard
+          loading={loading}
+          whatsNew={kristData?.whatsNew}
+          baseURL={syncNode}
+          repoURL={kristPackage.repository}
+        />
+      </Col>
 
       {/* Krist commits */}
       <Col span={24} lg={12}>

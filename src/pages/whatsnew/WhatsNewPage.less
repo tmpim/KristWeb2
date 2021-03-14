@@ -22,21 +22,24 @@
     }
   }
 
-  .whats-new-card-commits {
-    .commit {
+  .whats-new-card-commits, .whats-new-card-whats-new {
+    .commit, .whats-new-item {
       display: block;
       color: @text-color;
 
-      .commit-type-tag {
+      .commit-type-tag, .whats-new-new-tag {
         border: none;
         background: @kw-light;
         color: @text-color;
 
         &.commit-type-fix { background: @kw-primary; }
-        &.commit-type-feat { background: desaturate(@kw-green, 10%); }
+        &.commit-type-feat, &.whats-new-new-tag {
+          background: desaturate(@kw-green, 10%);
+        }
+        &.commit-type-i18n { background: @kw-purple; }
       }
 
-      .commit-author {
+      .commit-author, .whats-new-footer {
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -46,7 +49,11 @@
         color: @text-color-secondary;
         font-size: @font-size-sm;
 
-        .commit-avatar {
+        a {
+          color: @text-color-secondary;
+        }
+
+        .commit-avatar, .whats-new-avatar {
           display: inline-block;
           border-radius: @border-radius-base;
           margin-right: @padding-xs;

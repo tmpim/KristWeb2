@@ -9,6 +9,7 @@ const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const WebpackBar = require("webpackbar");
 const GitRevisionPlugin = require("git-revision-webpack-plugin");
 const { DefinePlugin } = require("webpack");
+const { commits } = require("./tools/commitLog");
 
 const gitRevisionPlugin = new GitRevisionPlugin({
   // Include the "-dirty" suffix if the local tree has been modified, and
@@ -77,7 +78,8 @@ module.exports = {
       new DefinePlugin({
         "__GIT_VERSION__": JSON.stringify(gitRevisionPlugin.version()),
         "__GIT_COMMIT_HASH__": JSON.stringify(gitRevisionPlugin.commithash()),
-        "__BUILD_TIME__": DefinePlugin.runtimeValue(Date.now)
+        "__BUILD_TIME__": DefinePlugin.runtimeValue(Date.now),
+        "__GIT_COMMITS__": JSON.stringify(commits)
       })
     ],
 
