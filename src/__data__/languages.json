@@ -51,5 +51,16 @@
         "url": "https://github.com/signalhunter"
       }
     ]
+  },
+  "pl": {
+    "name": "Polish",
+    "nativeName": "Polski",
+    "country": "pl",
+    "contributors": [
+      {
+        "name": "Wojbie",
+        "url": "https://github.com/Wojbie"
+      }
+    ]
   }
 }
