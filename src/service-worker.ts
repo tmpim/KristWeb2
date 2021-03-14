@@ -33,7 +33,10 @@ precacheAndRoute(filteredManifest);
 
 // Cache the locale files (currently the only preloading step)
 registerRoute(
-  ({ url }) => url.pathname.startsWith("/locales/"),
+  ({ url }) => (
+    url.pathname.startsWith("/locales/")
+    || url.pathname.startsWith("/static/js/locale-")
+  ),
   new StaleWhileRevalidate({})
 );
 
