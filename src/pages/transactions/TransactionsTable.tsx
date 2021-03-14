@@ -8,9 +8,11 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { KristTransaction } from "@api/types";
-import { lookupTransactions, LookupTransactionsOptions, LookupTransactionsResponse, LookupTransactionType } from "@api/lookup";
-import { useMalleablePagination } from "@utils/table";
-import { useIntegerSetting } from "@utils/settings";
+import {
+  lookupTransactions, LookupTransactionsOptions, LookupTransactionsResponse,
+  LookupTransactionType
+} from "@api/lookup";
+import { useMalleablePagination, useTableHistory } from "@utils/table";
 
 import { ListingType } from "./TransactionsPage";
 
@@ -75,13 +77,9 @@ export function TransactionsTable({
 }: Props): JSX.Element {
   const { t } = useTranslation();
 
-  const defaultPageSize = useIntegerSetting("defaultPageSize");
-
   const [loading, setLoading] = useState(true);
   const [res, setRes] = useState<LookupTransactionsResponse>();
-  const [options, setOptions] = useState<LookupTransactionsOptions>({
-    limit: defaultPageSize,
-    offset: 0,
+  const { options, setOptions } = useTableHistory<LookupTransactionsOptions>({
     orderBy: "time", // Equivalent to sorting by ID
     order: "DESC"
   });

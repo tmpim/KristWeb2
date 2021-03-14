@@ -9,6 +9,8 @@ import usePagination from "antd/lib/table/hooks/usePagination";
 import { useTranslation, TFunction } from "react-i18next";
 import { useIntegerSetting } from "./settings";
 
+import { useHistory, useLocation } from "react-router-dom";
+
 import Debug from "debug";
 const debug = Debug("kristweb:table");
 
@@ -26,7 +28,7 @@ export interface LookupResponseBase {
 
 export const handleLookupTableChange = <ResultT, FieldsT extends string>(
   defaultPageSize: number,
-  setOptions: Dispatch<SetStateAction<LookupFilterOptionsBase<FieldsT>>>,
+  setOptions: (opts: LookupFilterOptionsBase<FieldsT>) => void,
   setPaginationPos?: Dispatch<SetStateAction<TablePaginationConfig>>
 ) =>
     (pagination: TablePaginationConfig, _: unknown, sorter: SorterResult<ResultT> | SorterResult<ResultT>[]): void => {
@@ -91,7 +93,7 @@ export function useMalleablePagination<
   results: ResultT[] | undefined, // Only really used for type inference
   totalKey: string,
   options: LookupFilterOptionsBase<FieldsT>,
-  setOptions: Dispatch<SetStateAction<LookupFilterOptionsBase<FieldsT>>>,
+  setOptions: (opts: LookupFilterOptionsBase<FieldsT>) => void,
   setPagination?: Dispatch<SetStateAction<TablePaginationConfig>>
 ): {
   paginationTableProps: Pick<TableProps<ResultT>, "onChange" | "pagination">;
@@ -170,4 +172,33 @@ export function getFilterOptionsQuery(opts: LookupFilterOptionsBase<string>): UR
   if (opts.orderBy) qs.append("orderBy", opts.orderBy);
   if (opts.order) qs.append("order", opts.order);
   return qs;
+}
+
+export function useTableHistory<
+  OptionsT extends LookupFilterOptionsBase<string>
+>(
+  defaults: Partial<OptionsT> & Pick<OptionsT, "orderBy" | "order">
+): {
+  options: OptionsT;
+  setOptions: (opts: OptionsT) => void;
+} {
+  // Used to get/set the browser history state
+  const history = useHistory();
+  const location = useLocation();
+
+  const defaultPageSize = useIntegerSetting("defaultPageSize");
+
+  const [options, setOptions] = useState<OptionsT>({
+    limit: defaults.limit ?? defaultPageSize,
+    offset: defaults.offset ?? 0,
+    orderBy: defaults.orderBy,
+    order: defaults.order
+  } as OptionsT);
+
+  function wrappedSetOptions(opts: OptionsT) {
+    debug("table calling setOptions:", opts);
+    return setOptions(opts);
+  }
+
+  return { options, setOptions: wrappedSetOptions };
 }
