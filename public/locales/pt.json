@@ -26,12 +26,15 @@
       "resultTransactionsAddress": "Pesquisa por transações involvendo <1 />",
       "resultTransactionsAddressResult": "<0>{{count, number}}</0> transação envolvendo <2 />",
       "resultTransactionsAddressResult_plural": "<0>{{count, number}}</0> transações envolvendo <2 />",
+      "resultTransactionsAddressResultEmpty": "Nenhuma transação envolve <1 />",
       "resultTransactionsName": "Pesquisa por transações envolvendo <1 />",
       "resultTransactionsNameResult": "<0>{{count, number}}</0> transação enviada para <2 />",
       "resultTransactionsNameResult_plural": "<0>{{count, number}}</0> transações enviadas para <2 />",
+      "resultTransactionsNameResultEmpty": "Nenhuma transação foi enviada para <1 />",
       "resultTransactionsMetadata": "Busca por metadados contendo <1 />",
       "resultTransactionsMetadataResult": "<0>{{count, number}}</0> transação com metadados contendo <2 />",
-      "resultTransactionsMetadataResult_plural": "<0>{{count, number}}</0> transações com metadados contendo <2 />"
+      "resultTransactionsMetadataResult_plural": "<0>{{count, number}}</0> transações com metadados contendo <2 />",
+      "resultTransactionsMetadataResultEmpty": "Nenhuma transação foi feita com metadados contendo <2 />."
     },
 
     "send": "Enviar",
@@ -134,10 +137,12 @@
     "columnFirstSeen": "Apareceu",
     "nameCount": "{{count, number}} nome",
     "nameCount_plural": "{{count, number}} nomes",
+    "nameCountEmpty": "Nenhum nome",
     "firstSeen": "Apareceu em {{date}}",
 
     "walletCount": "{{count, number}} carteira",
     "walletCount_plural": "{{count, number}} carteiras",
+    "walletCountEmpty": "Nenhuma carteira",
 
     "actionsEditTooltip": "Editar carteira",
     "actionsSendTransaction": "Enviar Krist",
@@ -262,6 +267,7 @@
     "walletOverviewNames": "Nomes",
     "walletOverviewNamesCount": "{{count, number}} nome",
     "walletOverviewNamesCount_plural": "{{count, number}} nomes",
+    "walletOverviewNamesCountEmpty": "Nenhum nome",
     "walletOverviewSeeMore": "Ver todos os {{count, number}}...",
     "walletOverviewAddWallets": "Adicionar carteiras...",
 
@@ -390,6 +396,7 @@
     "names": "Nomes",
     "nameCount": "{{count, number}} nome",
     "nameCount_plural": "{{count, number}} nomes",
+    "nameCountEmpty": "Nenhum nome",
     "firstSeen": "Apareceu",
 
     "buttonSendKrist": "Enviar Krist para {{address}}",
@@ -453,6 +460,7 @@
 
     "tableTotal": "{{count, number}} item",
     "tableTotal_plural": "{{count, number}} itens",
+    "tableTotalEmpty": "Nenhum item",
 
     "includeMined": "Incluir transações de mineração",
 
@@ -493,6 +501,7 @@
 
     "tableTotal": "{{count, number}} nome",
     "tableTotal_plural": "{{count, number}} nomes",
+    "tableTotalEmpty": "Nenhum nome",
 
     "resultInvalidTitle": "Endereço inválido",
     "resultInvalid": "Isso não parece um endereço Krist válido."
@@ -541,7 +550,8 @@
     "columnTime": "Data",
 
     "tableTotal": "{{count, number}} bloco",
-    "tableTotal_plural": "{{count, number}} blocos"
+    "tableTotal_plural": "{{count, number}} blocos",
+    "tableTotalEmpty": "Nenhum bloco"
   },
 
   "block": {
@@ -819,6 +829,8 @@
     "tooltipGitHub": "Ver no GitHub",
 
     "cardWhatsNewTitle": "Novidades",
-    "cardCommitsTitle": "Commits"
+    "cardCommitsTitle": "Commits",
+    "cardCommitsSeeMore": "Ver mais",
+    "new": "Novidade!"
   }
 }
