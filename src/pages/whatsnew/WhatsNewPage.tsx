@@ -2,7 +2,7 @@
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { useState, useEffect } from "react";
-import { Row, Col, Typography, Tooltip } from "antd";
+import { Row, Col, Typography, Tooltip, Card } from "antd";
 import { GithubOutlined } from "@ant-design/icons";
 
 import { useTranslation } from "react-i18next";
@@ -61,7 +61,23 @@ export function WhatsNewPage(): JSX.Element {
 
     <Row gutter={16}>
       {/* KristWeb What's new */}
-      <Col span={24} lg={12}></Col>
+      <Col span={24} lg={12}>
+        {/* Temporary card */}
+        <Card
+          title={t("whatsNew.cardWhatsNewTitle")}
+          className="kw-card whats-new-card-whats-new"
+        >
+          <h1 style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: 96,
+            height: "100%"
+          }}>
+            This
+          </h1>
+        </Card>
+      </Col>
 
       {/* KristWeb commits */}
       <Col span={24} lg={12}>
