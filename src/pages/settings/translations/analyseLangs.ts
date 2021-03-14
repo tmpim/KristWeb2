@@ -16,9 +16,13 @@ export interface AnalysedLanguage {
   missingKeys?: { k: string; v: string }[];
 }
 
+// Replaced by webpack DefinePlugin and git-revision-webpack-plugin
+declare const __GIT_VERSION__: string;
+const gitVersion: string = __GIT_VERSION__;
+
 const IGNORE_KEYS = /_(?:plural|interval|male|female|\d+)$/;
 export async function getLanguage([code, language]: [string, Language]): Promise<AnalysedLanguage> {
-  const res = await fetch(`/locales/${code}.json`);
+  const res = await fetch(`/locales/${code}.json?v=${encodeURIComponent(gitVersion)}`);
   if (!res.ok) throw new Error(res.statusText);
 
   // Translations now use JSON5 to allow for comments, newlines, and basic
