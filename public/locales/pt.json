@@ -353,6 +353,7 @@
     "translations": {
       "errorMissingLanguages": "O arquivo languages.json está faltando. Você compilou a KristWeb corretamente?",
       "errorNoKeys": "Sem chaves de tradução",
+      "importedLanguageTitle": "Língua importada",
 
       "columnLanguageCode": "Código",
       "columnLanguage": "Linguagem",
