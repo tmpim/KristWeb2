@@ -29,14 +29,14 @@ export function analyseLanguage(
   // Find all translation keys recursively
   const keys = (obj: any = {}, head = ""): LangKeys =>
     Object.entries(obj)
-      .reduce((product, [key, value]) => {
-        // Ignore plurals, etc.
-        if (IGNORE_KEYS.test(key)) return product;
+      .reduce((out, [key, value]) => {
+        // Remove plural suffixes etc. These will be de-duplicated afterwards.
+        const bareKey = key.replace(IGNORE_KEYS, "");
 
-        const fullPath = addDelimiter(head, key);
+        const fullPath = addDelimiter(head, bareKey);
         return isObject(value as any)
-          ? { ...product, ...keys(value, fullPath) }
-          : {...product, [fullPath]: value };
+          ? { ...out, ...keys(value, fullPath) }
+          : {...out, [fullPath]: value };
       }, {});
 
   const langKeys = keys(translation);
