@@ -69,6 +69,19 @@ the language with the English name, native name, a country code (for the flag)
 and the contributors list to 
 [`src/__data__/languages.json`](src/__data__/languages.json).
 
+The keys `antLocale`, `dayjsLocale` and `timeagoLocale` are all optional keys
+that refer to the locale names from the respective libraries. If the library
+does not support your language, create an issue on this repo or mention it in
+your PR, because I can add a simple system to support custom translations for
+these libraries if it is needed, though you should also PR to the libraries 
+themselves.
+
+List of supported locale codes for each library:
+
+- `ant-design` - https://ant.design/docs/react/i18n
+- `dayjs` - https://github.com/iamkun/dayjs/tree/dev/src/locale
+- `react-timeago` - https://github.com/nmn/react-timeago/tree/master/src/language-strings
+
 The library will automatically detect the language from your browser to use, but
 for the sake of testing, you can override it by running the following command in
 the developer console (<kbd>Ctrl+Shift+I</kbd>):
