@@ -148,9 +148,17 @@ export function ExtendedMatchBase({ loading, count, query, loadingKey, resultKey
             Placeholder <Query />
           </Trans>
         </>
-        : <Trans t={t} i18nKey={resultKey} count={count}>
-          <b>{{ count }}</b> placeholder <Query />
-        </Trans>}
+        : (count > 0
+          ? (
+            <Trans t={t} i18nKey={resultKey} count={count}>
+              <b>{{ count }}</b> placeholder <Query />
+            </Trans>
+          )
+          : (
+            <Trans t={t} i18nKey={resultKey + "Empty"}>
+              No placeholder <Query />
+            </Trans>
+          ))}
 
     </span>
   </div>;

@@ -26,12 +26,16 @@ export function BackupResultsSummary({ results }: { results: BackupResults }): J
   return <Paragraph className="backup-results-summary">
     {/* New wallets imported count */}
     <div className="summary-wallets-imported">
-      <Trans t={t} i18nKey="import.results.walletsImported" count={newWallets}>
-        <span className={newWallets > 0 ? "positive" : ""}>
-          {{ count: newWallets }} new wallet
-        </span>
-        was imported.
-      </Trans>
+      {newWallets > 0
+        ? (
+          <Trans t={t} i18nKey="import.results.walletsImported" count={newWallets}>
+            <span className="positive">
+              {{ count: newWallets }} new wallet
+            </span>
+            was imported.
+          </Trans>
+        )
+        : t("import.results.noneImported")}
     </div>
 
     {/* Skipped wallets count */}

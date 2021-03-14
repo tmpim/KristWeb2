@@ -20,9 +20,14 @@ import "./WalletsPage.less";
  * entire page when a wallet is added. */
 function WalletsPageSubtitle(): JSX.Element {
   const { t } = useTranslation();
-  const { wallets } = useWallets();
+  const { addressList } = useWallets();
 
-  return <>{t("myWallets.walletCount", { count: Object.keys(wallets).length })}</>;
+  const count = addressList.length;
+
+  return <>{count > 0
+    ? t("myWallets.walletCount", { count })
+    : t("myWallets.walletCountEmpty")
+  }</>;
 }
 
 function WalletsPageExtraButtons(): JSX.Element {

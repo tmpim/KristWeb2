@@ -85,7 +85,9 @@ function PageContents({ address, lastTransactionID }: PageContentsProps): JSX.El
       <Col span={24} md={12} lg={8}>
         <Statistic
           titleKey="address.names"
-          value={t("address.nameCount", { count: address.names })}
+          value={(address.names || 0) > 0
+            ? t("address.nameCount", { count: address.names })
+            : t("address.nameCountEmpty")}
         />
       </Col>
 

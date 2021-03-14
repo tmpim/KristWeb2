@@ -50,7 +50,9 @@ export function WalletOverviewCard(): JSX.Element {
       <Col span={24} xl={12} className="dashboard-wallets-names">
         <Statistic
           titleKey="dashboard.walletOverviewNames"
-          value={t("dashboard.walletOverviewNamesCount", { count: names })}
+          value={names > 0
+            ? t("dashboard.walletOverviewNamesCount", { count: names })
+            : t("dashboard.walletOverviewNamesCountEmpty")}
         />
       </Col>
     </Row>
