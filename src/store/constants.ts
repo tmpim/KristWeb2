@@ -44,6 +44,7 @@ export const LAST_OWN_NAME_TRANSACTION_ID = "LAST_OWN_NAME_TRANSACTION_ID";
 // ---
 export const SYNC_NODE = "SYNC_NODE";
 export const DETAILED_WORK = "DETAILED_WORK";
+export const PACKAGE = "PACKAGE";
 export const CURRENCY = "CURRENCY";
 export const CONSTANTS = "CONSTANTS";
 export const MOTD = "MOTD";

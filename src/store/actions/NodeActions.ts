@@ -2,7 +2,10 @@
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { createAction } from "typesafe-actions";
-import { KristWorkDetailed, KristCurrency, KristConstants, KristMOTDBase } from "@api/types";
+import {
+  KristWorkDetailed, KristCurrency, KristConstants, KristMOTDBase,
+  KristMOTDPackage
+} from "@api/types";
 
 import * as constants from "../constants";
 
@@ -15,6 +18,7 @@ export const setLastOwnNameTransactionID = createAction(constants.LAST_OWN_NAME_
 
 export const setSyncNode = createAction(constants.SYNC_NODE)<string>();
 export const setDetailedWork = createAction(constants.DETAILED_WORK)<KristWorkDetailed>();
+export const setPackage = createAction(constants.PACKAGE)<KristMOTDPackage>();
 export const setCurrency = createAction(constants.CURRENCY)<KristCurrency>();
 export const setConstants = createAction(constants.CONSTANTS)<KristConstants>();
 export const setMOTD = createAction(constants.MOTD)<KristMOTDBase>();

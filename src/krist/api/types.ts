@@ -113,10 +113,26 @@ export interface KristMOTD {
   debug_mode: boolean;
 
   last_block?: KristBlock;
-
+  package: KristMOTDPackage;
   constants: KristConstants;
   currency: KristCurrency;
 }
+
+export interface KristMOTDPackage {
+  name: string;
+  version: string;
+  author: string;
+  licence: string;
+  repository: string;
+}
+
+export const DEFAULT_PACKAGE = {
+  "name": "krist",
+  "version": "0.0.0",
+  "author": "Lemmmy",
+  "licence": "GPL-3.0",
+  "repository": "https://github.com/tmpim/Krist"
+};
 
 export type APIResponse<T extends Record<string, any>> = T & {
   ok: boolean;

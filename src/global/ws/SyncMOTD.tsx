@@ -25,6 +25,7 @@ export async function updateMOTD(): Promise<void> {
   const data = await api.get<KristMOTD>("motd");
 
   debug("motd: %s", data.motd);
+  store.dispatch(nodeActions.setPackage(data.package));
   store.dispatch(nodeActions.setCurrency(data.currency));
   store.dispatch(nodeActions.setConstants(data.constants));
 

@@ -819,6 +819,7 @@
     "tooltipGitHub": "View on GitHub",
 
     "cardWhatsNewTitle": "What's New",
-    "cardCommitsTitle": "Commits"
+    "cardCommitsTitle": "Commits",
+    "cardCommitsSeeMore": "See more"
   }
 }

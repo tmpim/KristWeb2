@@ -3,13 +3,16 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { createReducer } from "typesafe-actions";
 import {
-  KristWorkDetailed, KristCurrency, DEFAULT_CURRENCY, KristConstants,
-  DEFAULT_CONSTANTS, KristMOTDBase, DEFAULT_MOTD_BASE
+  KristWorkDetailed,
+  KristCurrency, DEFAULT_CURRENCY,
+  KristConstants, DEFAULT_CONSTANTS,
+  KristMOTDBase, DEFAULT_MOTD_BASE,
+  KristMOTDPackage, DEFAULT_PACKAGE
 } from "@api/types";
 import {
   setLastBlockID, setLastTransactionID, setLastNonMinedTransactionID,
   setLastOwnTransactionID, setLastNameTransactionID, setLastOwnNameTransactionID,
-  setSyncNode, setDetailedWork, setCurrency, setConstants, setMOTD
+  setSyncNode, setDetailedWork, setPackage, setCurrency, setConstants, setMOTD
 } from "@actions/NodeActions";
 
 import packageJson from "../../../package.json";
@@ -26,6 +29,7 @@ export interface State {
     // Info from the MOTD
   readonly syncNode: string;
   readonly detailedWork?: KristWorkDetailed;
+  readonly package: KristMOTDPackage;
   readonly currency: KristCurrency;
   readonly constants: KristConstants;
   readonly motd: KristMOTDBase;
@@ -43,6 +47,7 @@ export function getInitialNodeState(): State {
 
     // Info from the MOTD
     syncNode: localStorage.getItem("syncNode") || packageJson.defaultSyncNode,
+    package: DEFAULT_PACKAGE,
     currency: DEFAULT_CURRENCY,
     constants: DEFAULT_CONSTANTS,
     motd: DEFAULT_MOTD_BASE
@@ -61,6 +66,7 @@ export const NodeReducer = createReducer({} as State)
   // Info from the MOTD
   .handleAction(setSyncNode, (state, action) => ({ ...state, syncNode: action.payload }))
   .handleAction(setDetailedWork, (state, action) => ({ ...state, detailedWork: action.payload }))
+  .handleAction(setPackage, (state, action) => ({ ...state, package: action.payload }))
   .handleAction(setCurrency, (state, action) => ({ ...state, currency: action.payload }))
   .handleAction(setConstants, (state, action) => ({ ...state, constants: action.payload }))
   .handleAction(setMOTD, (state, action) => ({ ...state, motd: action.payload }));

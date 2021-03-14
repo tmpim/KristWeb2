@@ -1,0 +1,65 @@
+// Copyright (c) 2020-2021 Drew Lemmy
+// This file is part of KristWeb 2 under GPL-3.0.
+// Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
+@import (reference) "../../App.less";
+
+.whats-new-page {
+  .whats-new-github-link {
+    display: inline-flex;
+    margin-left: @margin-sm;
+
+    color: @text-color;
+
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      color: @text-color-secondary;
+    }
+
+    .anticon.anticon-github {
+      font-size: 1.5rem;
+    }
+  }
+
+  .whats-new-card-commits {
+    .commit {
+      display: block;
+      color: @text-color;
+
+      .commit-type-tag {
+        border: none;
+        background: @kw-light;
+        color: @text-color;
+
+        &.commit-type-fix { background: @kw-primary; }
+        &.commit-type-feat { background: desaturate(@kw-green, 10%); }
+      }
+
+      .commit-author {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        margin-top: @padding-xss;
+
+        color: @text-color-secondary;
+        font-size: @font-size-sm;
+
+        .commit-avatar {
+          display: inline-block;
+          border-radius: @border-radius-base;
+          margin-right: @padding-xs;
+          width: 16px;
+          height: 16px;
+        }
+      }
+
+      .sep {
+        display: inline-block;
+        margin: 0 @padding-xs;
+        color: fade(@text-color-secondary, 50%);
+      }
+    }
+  }
+}
