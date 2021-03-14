@@ -67,7 +67,9 @@ tags (e.g. `en` instead of `en-GB`) are preferred.
 **IMPORTANT:** If you are adding a new language, you **must** add a listing for 
 the language with the English name, native name, a country code (for the flag) 
 and the contributors list to 
-[`src/__data__/languages.json`](src/__data__/languages.json).
+[`src/__data__/languages.json`](src/__data__/languages.json). It's not terribly
+important, but the list should be kept in alphabetical order **by language 
+code**.
 
 The keys `antLocale`, `dayjsLocale` and `timeagoLocale` are all optional keys
 that refer to the locale names from the respective libraries. If the library
