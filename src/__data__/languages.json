@@ -73,5 +73,19 @@
         "url": "https://github.com/signalhunter"
       }
     ]
+  },
+  "zh_CN": {
+    "name": "Chinese (Simplified)",
+    "nativeName": "简体中文",
+    "country": "cn",
+    "antLocale": "zh_CN",
+    "dayjsLocale": "zh",
+    "timeagoLocale": "zh",
+    "contributors": [
+      {
+        "name": "1lann",
+        "url": "https://github.com/1lann"
+      }
+    ]
   }
 }
