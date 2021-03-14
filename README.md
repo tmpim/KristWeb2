@@ -1,4 +1,4 @@
-# KristWeb v2 [![Deploy dev build](https://github.com/tmpim/KristWeb2/actions/workflows/deploy-dev.yml/badge.svg)](https://github.com/tmpim/KristWeb2/actions/workflows/deploy-dev.yml)
+# KristWeb v2 [![Donate on PayPal](https://img.shields.io/badge/PayPal-donate-0079C1?logo=paypal&style=flat-square)](https://paypal.me/lemmmy) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/tmpim/KristWeb2/Deploy%20dev%20build?label=dev%20deploy&style=flat-square) ![Codacy grade](https://img.shields.io/codacy/grade/8b0ee8f672554cf39324d31f559ce086?style=flat-square) ![Lines of code](https://img.shields.io/tokei/lines/github/tmpim/KristWeb2?style=flat-square) ![GitHub issues](https://img.shields.io/github/issues/tmpim/KristWeb2?style=flat-square) ![GitHub pull requests](https://img.shields.io/github/issues-pr/tmpim/KristWeb2?style=flat-square) ![GitHub package.json version](https://img.shields.io/github/package-json/v/tmpim/KristWeb2?style=flat-square) ![GitHub](https://img.shields.io/github/license/tmpim/KristWeb2?style=flat-square) 
 
 <table align="center">
   <tr>
