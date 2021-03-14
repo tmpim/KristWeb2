@@ -27,14 +27,17 @@
       "resultTransactionsAddressResult_0": "<0>{{count, number}}</0> transakcja z udziałem <2 />",
       "resultTransactionsAddressResult_1": "<0>{{count, number}}</0> transakcje z udziałem <2 />",
 	  "resultTransactionsAddressResult_2": "<0>{{count, number}}</0> transakcji z udziałem <2 />",
+      "resultTransactionsAddressResultEmpty": "Brak transakcji z udziałem <1 />",
       "resultTransactionsName": "Wyszukaj transakcje z udziałem <1 />",
       "resultTransactionsNameResult_0": "<0>{{count, number}}</0> transakcja wysłana do <2 />",
       "resultTransactionsNameResult_1": "<0>{{count, number}}</0> transakcje wysłano do <2 />",
 	  "resultTransactionsNameResult_2": "<0>{{count, number}}</0> transakcji wysłanych do <2 />",
+	  "resultTransactionsNameResultEmpty": "Brak transakcji wysłanych do <1 />",
       "resultTransactionsMetadata": "Wyszukiwanie metadanych zawierających <1 />",
       "resultTransactionsMetadataResult_0": "<0>{{count, number}}</0> transakcja zawierająca metadane <2 />",
       "resultTransactionsMetadataResult_1": "<0>{{count, number}}</0> transakcje zawierające metadane <2 />",
-	  "resultTransactionsMetadataResult_2": "<0>{{count, number}}</0> transakcji zawierających metadane <2 />"
+	  "resultTransactionsMetadataResult_2": "<0>{{count, number}}</0> transakcji zawierających metadane <2 />",
+	  "resultTransactionsMetadataResultEmpty": "Brak transakcji zawierających metadane <1 />"
     },
 
     "send": "Wyślij",
@@ -138,11 +141,13 @@
     "nameCount_0": "{{count, number}} nazwa",
     "nameCount_1": "{{count, number}} nazwy",
 	"nameCount_2": "{{count, number}} nazw",
+	"nameCountEmpty": "Brak nazw",
     "firstSeen": "Pierwszy raz widziany {{date}}",
 
     "walletCount_0": "{{count, number}} portfel",
     "walletCount_1": "{{count, number}} portfele",
 	"walletCount_2": "{{count, number}} portfeli",
+	"walletCountEmpty": "Brak portfeli",
 
     "actionsEditTooltip": "Edytuj portfel",
     "actionsSendTransaction": "Wyślij Krist",
@@ -268,6 +273,7 @@
     "walletOverviewNamesCount_0": "{{count, number}} nazwa",
     "walletOverviewNamesCount_1": "{{count, number}} nazwy",
 	"walletOverviewNamesCount_2": "{{count, number}} nazw",
+	"walletOverviewNamesCountEmpty": "Brak nazw",
     "walletOverviewSeeMore": "Zobacz wszystkie {{count, number}}...",
     "walletOverviewAddWallets": "Dodaj portfele...",
 
@@ -298,7 +304,7 @@
     "motdCardTitle": "MOTD serwera",
     "motdDebugMode": "Ten węzeł synchronizacji jest nieoficjalnym serwerem developerskim. Można manipulować saldami i transakcjami. Postępuj ostrożnie.",
 
-    "whatsNewCardTitle": "Co nowego"
+    "whatsNewCardTitle": "Nowości"
   },
 
   "credits": {
@@ -368,8 +374,10 @@
       "columnEnglishString": "Angielska wersja",
 
       "importJSON": "Importuj JSON",
-      "exportCSV": "Eksportuj CSV"
-    }
+      "exportCSV": "Eksportuj CSV",
+
+      "importedLanguageTitle": "Zaimportowany Język"
+	}
   },
 
   "breadcrumb": {
@@ -400,6 +408,7 @@
     "nameCount_0": "{{count, number}} nazwa",
     "nameCount_1": "{{count, number}} nazwy",
 	"nameCount_2": "{{count, number}} nazw",
+	"nameCountEmpty": "Brak nazw",
     "firstSeen": "Pierwszy raz widziany",
 
     "buttonSendKrist": "Wyślij Krist do {{address}}",
@@ -443,7 +452,7 @@
 
     "siteTitleWallets": "Moje Transakcje",
     "siteTitleNetworkAll": "Wszystkie Transakcje",
-    "siteTitleNetworkAddress": "Transakcje {{address}}",
+    "siteTitleNetworkAddress": "{{address}} - Transakcje",
     "siteTitleNameHistory": "Historia Nazw",
     "siteTitleNameSent": "Transakcje Nazw",
     "siteTitleSearch": "Wyszukiwanie Transakcji",
@@ -464,6 +473,7 @@
     "tableTotal_0": "{{count, number}} pozycja",
 	"tableTotal_1": "{{count, number}} pozycje",
     "tableTotal_2": "{{count, number}} pozycji",
+	"tableTotalEmpty": "Brak pozycji",
 
     "includeMined": "Uwzględnij transakcje wydobycia",
 
@@ -492,7 +502,7 @@
 
     "siteTitleWallets": "Moje Nazwy",
     "siteTitleNetworkAll": "Wszystkie Nazwy",
-    "siteTitleNetworkAddress": "Nazwy {{address}}",
+    "siteTitleNetworkAddress": "{{address}} - Nazwy",
 
     "columnName": "Nazwa",
     "columnOwner": "Właściciel",
@@ -505,6 +515,7 @@
     "tableTotal_0": "{{count, number}} nazwa",
     "tableTotal_1": "{{count, number}} nazwy",
 	"tableTotal_2": "{{count, number}} nazw",
+	"tableTotalEmpty": "Brak nazw",
 
     "resultInvalidTitle": "Nieprawidłowy adres.",
     "resultInvalid": "To nie wygląda na prawidłowy adres Krist."
@@ -555,13 +566,14 @@
 
     "tableTotal_0": "{{count, number}} blok",
     "tableTotal_1": "{{count, number}} bloki",
-	"tableTotal_2": "{{count, number}} bloków"
+	"tableTotal_2": "{{count, number}} bloków",
+	"tableTotalEmpty": "Brak bloków"
   },
 
   "block": {
     "title": "Blok",
     "siteTitle": "Blok",
-    "siteTitleBlock": "Blok #{{id, number}}",
+    "siteTitleBlock": "#{{id, number}} - Blok",
     "subTitleBlock": "#{{id, number}}",
 
     "height": "Wysokość",
@@ -587,7 +599,7 @@
   "transaction": {
     "title": "Transakcja",
     "siteTitle": "Transakcja",
-    "siteTitleTransaction": "Transakcja #{{id, number}}",
+    "siteTitleTransaction": "#{{id, number}} - Transakcja",
     "subTitleTransaction": "#{{id, number}}",
 
     "type": "Typ",
@@ -748,7 +760,7 @@
 
   "walletLimitMessage": "Masz więcej portfeli niż obsługuje KristWeb. Było to spowodowane przez błąd lub celowo pominąłeś ten limit. Spodziewaj się problemów z synchronizacją.",
 
-  "optionalFieldUnset": "(nieustawiona)",
+  "optionalFieldUnset": "(nieustawione)",
 
   "addressPicker": {
     "placeholder": "Wybierz odbiorcę",
@@ -827,5 +839,21 @@
     "message": "Nie jesteś właścicielem tego adresu.",
     "messageLocked": "Ten adres był zablokowany.",
     "alert": "Wiadomość z węzła synchronizacji:"
+  },
+
+  "whatsNew": {
+    "title": "Nowości",
+    "siteTitle": "Nowości",
+
+    "titleKrist": "Krist",
+    "titleKristWeb": "KristWeb",
+
+    "tooltipGitHub": "Wyświetl w GitHub",
+
+    "cardWhatsNewTitle": "Nowości",
+    "cardCommitsTitle": "Commits",
+    "cardCommitsSeeMore": "Zobacz więcej",
+
+    "new": "Nowe!"
   }
 }
