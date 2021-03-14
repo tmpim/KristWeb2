@@ -8,6 +8,7 @@ import { PageLayout } from "@layout/PageLayout";
 import { ImportBackupModal } from "../backup/ImportBackupModal";
 import { SendTransactionModal } from "../transactions/send/SendTransactionModal";
 import { AuthorisedAction } from "@comp/auth/AuthorisedAction";
+import { DateTime } from "@comp/DateTime";
 
 import { useWallets, deleteWallet } from "@wallets";
 

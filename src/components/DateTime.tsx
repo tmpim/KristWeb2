@@ -13,6 +13,9 @@ import TimeAgo from "react-timeago";
 
 import "./DateTime.less";
 
+import Debug from "debug";
+const debug = Debug("kristweb:date-time");
+
 interface OwnProps {
   date?: Date | string | null;
   timeAgo?: boolean;
@@ -40,9 +43,20 @@ export function DateTime({
   const showRelativeDates = useBooleanSetting("showRelativeDates");
 
   if (!date) return null;
-  const realDate = typeof date === "string" ? new Date(date) : date;
-  const relative = Date.now() - realDate.getTime();
 
+  // Attempt to convert the date, failing safely
+  let realDate: Date;
+  try {
+    realDate = typeof date === "string" ? new Date(date) : date;
+    // Some browsers don't throw until the date is actually used
+    realDate.toISOString();
+  } catch (err) {
+    debug("error parsing date %s", date);
+    console.error(err);
+    return <>INVALID DATE</>;
+  }
+
+  const relative = Date.now() - realDate.getTime();
   const isTimeAgo = timeAgo || (showRelativeDates && !neverRelative && relative < RELATIVE_DATE_THRESHOLD);
 
   const classes = classNames("date-time", props.className, {

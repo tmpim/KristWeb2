@@ -65,7 +65,7 @@
     "clean": "rimraf build",
     "build": "craco build",
     "optimise": "gzip -kr build/static",
-    "full-build": "npm run clean; NODE_ENV=production GENERATE_SOURCEMAP=false npm run build; npm run optimise",
+    "full-build": "npm run clean; NODE_ENV=production npm run build; npm run optimise",
     "analyze-build": "FORCE_ANALYZE=true npm run build",
     "test": "craco test"
   },
