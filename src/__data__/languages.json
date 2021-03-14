@@ -8,6 +8,7 @@
     "name": "German",
     "nativeName": "Deutsch",
     "country": "de",
+    "antLocale": "de_DE",
     "dayjsLocale": "de",
     "timeagoLocale": "de",
     "contributors": [
@@ -21,6 +22,7 @@
     "name": "French",
     "nativeName": "Français",
     "country": "fr",
+    "antLocale": "fr_FR",
     "dayjsLocale": "fr",
     "timeagoLocale": "fr",
     "contributors": [
@@ -34,6 +36,7 @@
     "name": "Dutch",
     "nativeName": "Nederlands",
     "country": "nl",
+    "antLocale": "nl_NL",
     "dayjsLocale": "nl",
     "timeagoLocale": "nl",
     "contributors": [
@@ -47,6 +50,7 @@
     "name": "Polish",
     "nativeName": "Polski",
     "country": "pl",
+    "antLocale": "pl_PL",
     "dayjsLocale": "pl",
     "timeagoLocale": "pl",
     "contributors": [
@@ -60,6 +64,7 @@
     "name": "Vietnamese",
     "nativeName": "Tiếng Việt",
     "country": "vn",
+    "antLocale": "vi_VN",
     "dayjsLocale": "vi",
     "timeagoLocale": "vi",
     "contributors": [

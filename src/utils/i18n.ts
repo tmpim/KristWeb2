@@ -23,6 +23,7 @@ export interface Language {
   country?: string;
   dayjsLocale?: string;
   timeagoLocale?: string;
+  antLocale?: string;
   contributors: Contributor[];
 }
 
