@@ -1,4 +1,4 @@
-# KristWeb v2
+# KristWeb v2 [![Deploy dev build](https://github.com/tmpim/KristWeb2/actions/workflows/deploy-dev.yml/badge.svg)](https://github.com/tmpim/KristWeb2/actions/workflows/deploy-dev.yml)
 
 <table align="center">
   <tr>
