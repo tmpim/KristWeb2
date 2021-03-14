@@ -60,6 +60,20 @@
       }
     ]
   },
+  "pt": {
+    "name": "Portuguese",
+    "nativeName": "Português",
+    "country": "br",
+    "antLocale": "pt_BR",
+    "dayjsLocale": "br",
+    "timeagoLocale": "pt-br",
+    "contributors": [
+      {
+        "name": "Abigail",
+        "url": "https://abby.how"
+      }
+    ]
+  },
   "vi": {
     "name": "Vietnamese",
     "nativeName": "Tiếng Việt",
