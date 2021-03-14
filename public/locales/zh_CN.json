@@ -1,0 +1,214 @@
+{
+  "app": {
+    "name": "KristWeb"
+  },
+
+  "nav": {
+    "connection": {
+      "online": "线上",
+      "offline": "离线",
+      "connecting": "正在连接"
+    },
+
+    "search": {
+      "placeholder": "搜索Krist网络",
+      "placeholderShortcut": "搜索Krist网络 ({{shortcut}})",
+      "rateLimitHit": "请慢点。",
+      "noResults": "无结果。",
+
+      "resultAddress": "地址",
+      "resultName": "别名",
+      "resultNameOwner": "<1 />拥有的",
+      "resultBlockID": "区块ID",
+      "resultBlockIDMinedBy": "<1 />开采的",
+      "resultTransactionID": "交易ID",
+      "resultTransactions": "交易",
+      "resultTransactionsAddress": "找涉及<1 />的交易",
+      "resultTransactionsAddressResult": "<0>{{count, number}}</0>个交易涉及<2 />",
+      "resultTransactionsAddressResult_plural": "<0>{{count, number}}</0>个交易涉及<2 />",
+      "resultTransactionsName": "找涉及<1 />的交易",
+      "resultTransactionsNameResult": "<0>{{count, number}}</0>个交易寄给<2 />",
+      "resultTransactionsNameResult_plural": "<0>{{count, number}}</0>个交易寄给<2 />",
+      "resultTransactionsMetadata": "搜索包含“<1 />”的元数据",
+      "resultTransactionsMetadataResult": "<0>{{count, number}}</0>个交易的元数据包含“<2 />”",
+      "resultTransactionsMetadataResult_plural": "<0>{{count, number}}</0>个交易的元数据包含“<2 />”"
+    },
+
+    "send": "发送",
+    "request": "申请",
+
+    "settings": "设置"
+  },
+
+  "sidebar": {
+    "totalBalance": "总余额",
+    "dashboard": "仪表板",
+    "myWallets": "我的钱包",
+    "addressBook": "地址簿",
+    "transactions": "交易",
+    "names": "别名",
+    "mining": "开采",
+    "network": "Krist网络",
+    "blocks": "区块",
+    "statistics": "统计",
+    "madeBy": "由: <1>{{authorName}}</1>",
+    "hostedBy": "由主办: <1>{{host}}</1>",
+    "github": "GitHub",
+    "credits": "关于",
+
+    "updateTitle": "有可用的更新!",
+    "updateDescription": "KristWeb有一个新的版本。请重新加载。",
+    "updateReload": "重新加载"
+  },
+
+  "dialog": {
+    "close": "关",
+    "yes": "是",
+    "no": "否",
+    "ok": "OK",
+    "cancel": "取消"
+  },
+
+  "pagination": {
+    "justPage": "第{{page}}页",
+    "pageWithTotal": "第{{page}}/{{total}}页"
+  },
+
+  "error": "错误",
+  "loading": "正在加载...",
+
+  "copy": "复制到剪贴板",
+  "copied": "复制的!",
+
+  "pageNotFound": {
+    "resultTitle": "网页未找到",
+    "buttonGoBack": "回去"
+  },
+
+  "masterPassword": {
+    "dialogTitle": "主密码",
+    "passwordPlaceholder": "主密码",
+    "passwordConfirmPlaceholder": "确认主密码",
+    "createPassword": "创建密码",
+    "logIn": "登录",
+    "forgotPassword": "忘记了密码?",
+    "intro2": "输入一个<1>主密码</1>以加密你的钱包的私钥。私钥将被保存在您的浏览器的本地存储中，每次会话都会要求你输入主密码来解密。",
+    "learnMore": "了解更多",
+    "errorPasswordRequired": "需要密码。",
+    "errorPasswordLength": "必须至少有一个字符。",
+    "errorPasswordUnset": "没有设置主密码。",
+    "errorPasswordIncorrect": "密码错误。",
+    "errorPasswordInequal": "密码必须匹配。",
+    "errorStorageCorrupt": "钱包存储已损坏。",
+    "errorNoPassword": "需要主密码。",
+    "errorUnknown": "未知错误。",
+    "helpWalletStorageTitle": "帮助：钱包存放",
+    "popoverTitle": "解密钱包",
+    "popoverTitleEncrypt": "加密钱包",
+    "popoverAuthoriseButton": "授权",
+    "popoverDescription": "输入您的主密码来解密您的钱包。",
+    "popoverDescriptionEncrypt": "输入您的主密码来加密和解密您的钱包。",
+    "forcedAuthWarning": "你是通过不安全的调试设置自动登录的。"
+  },
+
+  "myWallets": {
+    "title": "钱包",
+    "manageBackups": "管理备份",
+    "createWallet": "创建钱包",
+    "addExistingWallet": "添加现有钱包",
+    "searchPlaceholder": "搜索钱包...",
+    "categoryDropdownAll": "所有类别",
+    "columnLabel": "标签",
+    "columnAddress": "地址",
+    "columnBalance": "余额",
+    "columnNames": "别名",
+    "columnCategory": "类别",
+    "columnFirstSeen": "第一次见",
+    "nameCount": "{{count, number}}个别名",
+    "nameCount_plural": "{{count, number}}个别名",
+    "firstSeen": "第一次见于{{date}}",
+
+    "walletCount": "{{count, number}}个钱包",
+    "walletCount_plural": "{{count, number}}个钱包",
+
+    "actionsEditTooltip": "编辑钱包",
+    "actionsSendTransaction": "发送Krist",
+    "actionsWalletInfo": "钱包信息",
+    "actionsDelete": "删除钱包",
+    "actionsDeleteConfirm": "您确定要删除此钱包吗？",
+    "actionsDeleteConfirmDescription": "如果您没有备份或保存它的密码，它将永远失去!",
+
+    "tagDontSave": "临时",
+    "tagDontSaveTooltip": "临时钱包",
+
+    "info": {
+      "title": "钱包信息 - {{address}}",
+
+      "titleBasicInfo": "基本信息",
+      "id": "ID",
+      "label": "标签",
+      "category": "标签",
+      "username": "用户名",
+      "password": "密码",
+      "privatekey": "私钥",
+      "format": "格式",
+
+      "titleSyncedInfo": "同步信息",
+      "address": "地址",
+      "balance": "余额",
+      "names": "别名称数",
+      "firstSeen": "第一次见",
+      "existsOnNetwork": "存在于Krist网络上",
+      "lastSynced": "上次同步",
+
+      "titleAdvancedInfo": "进阶信息",
+      "encPassword": "加密密码",
+      "encPrivatekey": "加密私钥",
+      "saved": "保存了",
+
+      "revealLink": "揭示",
+      "hideLink": "隐藏",
+
+      "true": "是",
+      "false": "不是"
+    }
+  },
+
+  "myTransactions": {
+    "title": "交易",
+    "searchPlaceholder": "搜索交易...",
+    "columnFrom": "从",
+    "columnTo": "到",
+    "columnValue": "数额",
+    "columnTime": "时间"
+  },
+
+  "addWallet": {
+    "dialogTitle": "添加钱包",
+    "dialogTitleCreate": "创建钱包",
+    "dialogTitleEdit": "编辑钱包",
+    "dialogOkAdd": "添加",
+    "dialogOkCreate": "创建",
+    "dialogOkEdit": "保存",
+    "dialogAddExisting": "添加现有钱包"
+  },
+
+  "credits": {
+    "title": "作家",
+    "madeBy": "由: <1>{{authorName}}</1>",
+    "hostedBy": "由主办: <1>{{host}}</1>",
+    "supportersTitle": "支持者",
+    "supportersDescription": "这个项目是由以下惊人的支持者促成的:",
+    "supportButton": "支持KristWeb",
+    "translatorsTitle": "翻译人员",
+    "translatorsDescription": "这个项目由以下惊人的贡献者翻译的:",
+    "translateButton": "翻译KristWeb",
+    "tmpim": "由tmpim制作",
+
+    "versionInfo": {
+      "version": "版本",
+      "commitHash": "提交 (commit)",
+      "buildTime": "建立时间"
+    }
+  }
+}
