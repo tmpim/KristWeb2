@@ -90,10 +90,11 @@ function NavButtons({ block }: { block?: KristBlock }): JSX.Element {
   const { t } = useTranslation();
   const lastBlockID = useSelector((s: RootState) => s.node.lastBlockID);
 
-  // TODO: The Krist network's genesis block actually starts at ID 7 due to
-  //       a migration issue, so this hasPrevious check is never going to be
-  //       used.
-  const hasPrevious = block && block.height > 1;
+  // The Krist network's genesis block actually starts at ID 7 due to a
+  // migration issue, so the hash is also checked here.
+  const hasPrevious = block
+    && block.height > 1
+    && block.hash !== "0000000000000000000000000000000000000000000000000000000000000000";
   const previousID = hasPrevious ? block!.height - 1 : 0;
   const previousBtn = (
     <Button disabled={!hasPrevious} className="block-prev">
