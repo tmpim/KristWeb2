@@ -40,6 +40,18 @@
       }
     ]
   },
+  "pl": {
+    "name": "Polish",
+    "nativeName": "Polski",
+    "country": "pl",
+    "dayjsLocale": "pl",
+    "contributors": [
+      {
+        "name": "Wojbie",
+        "url": "https://github.com/Wojbie"
+      }
+    ]
+  },
   "vi": {
     "name": "Vietnamese",
     "nativeName": "Tiếng Việt",
@@ -49,17 +61,6 @@
       {
         "name": "Boom",
         "url": "https://github.com/signalhunter"
-      }
-    ]
-  },
-  "pl": {
-    "name": "Polish",
-    "nativeName": "Polski",
-    "country": "pl",
-    "contributors": [
-      {
-        "name": "Wojbie",
-        "url": "https://github.com/Wojbie"
       }
     ]
   }
