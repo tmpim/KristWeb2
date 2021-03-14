@@ -21,6 +21,7 @@ export interface Language {
   name: string;
   nativeName?: string;
   country?: string;
+  dayjsLocale?: string;
   contributors: Contributor[];
 }
 
