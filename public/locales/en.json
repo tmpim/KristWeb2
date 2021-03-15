@@ -842,6 +842,7 @@
 
   "namePicker": {
     "placeholder": "Choose a name",
+    "placeholderMultiple": "Choose names",
 
     "warningTotalLimit": "You seem to have more than 1,000 names, which is not yet supported in KristWeb v2. Please post an issue on GitHub.",
     "errorLookup": "There was an error fetching the names. See the console for details."

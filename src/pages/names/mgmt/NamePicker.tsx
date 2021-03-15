@@ -80,7 +80,13 @@ function getNameOptions(
   </Select.OptGroup>
 }
 
-export function NamePicker(): JSX.Element {
+interface Props {
+  multiple?: boolean;
+}
+
+export function NamePicker({
+  multiple
+}: Props): JSX.Element {
   const { t } = useTranslation();
 
   // Used to fetch the list of available names
@@ -108,7 +114,12 @@ export function NamePicker(): JSX.Element {
   // TODO: wrap this in a Form.Item
   return <Select
     showSearch
-    placeholder={t("namePicker.placeholder")}
+    placeholder={multiple !== false
+      ? t("namePicker.placeholderMultiple")
+      : t("namePicker.placeholder")}
+
+    allowClear
+    mode={multiple !== false ? "multiple" : undefined}
 
     loading={!nameOptions}
 
