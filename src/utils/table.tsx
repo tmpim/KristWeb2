@@ -100,11 +100,21 @@ export function useMalleablePagination<
 } {
   const { t } = useTranslation();
 
+  // The currentPageSize and currentPage may be provided by the useTableHistory
+  // hook, which gets the values from the browser state
   const defaultPageSize = useIntegerSetting("defaultPageSize");
+  const currentPageSize = options.limit ?? defaultPageSize;
+  const currentPage = options.offset
+    ? Math.max(Math.floor(options.offset / currentPageSize) + 1, 1)
+    : 1;
 
   // All this is done to allow putting the pagination in the page header
-  const [paginationPos, setPaginationPos] = useState<TablePaginationConfig>({});
-  const paginationConfig = getTablePaginationConfig(t, res, totalKey, defaultPageSize, paginationPos);
+  const [paginationPos, setPaginationPos] = useState<TablePaginationConfig>({
+    current: currentPage,
+    pageSize: currentPageSize
+  });
+  const paginationConfig = getTablePaginationConfig(t, res, totalKey, currentPageSize, paginationPos);
+  debug(defaultPageSize, currentPageSize, currentPage, paginationPos, paginationConfig);
   const [mergedPagination] = usePagination(
     results?.length || 0,
     paginationConfig,
@@ -174,31 +184,71 @@ export function getFilterOptionsQuery(opts: LookupFilterOptionsBase<string>): UR
   return qs;
 }
 
+/** Wraps the setOptions for a table, providing a sane default page size,
+ * and storing state changes in the history stack. When the page is returned to,
+ * the history stack is checked and location state is used as defaults. */
 export function useTableHistory<
-  OptionsT extends LookupFilterOptionsBase<string>
+  OptionsT extends LookupFilterOptionsBase<string>,
+  ExtraStateT = any,
 >(
-  defaults: Partial<OptionsT> & Pick<OptionsT, "orderBy" | "order">
+  defaults: Partial<OptionsT> & Pick<OptionsT, "orderBy" | "order">,
+  defaultExtraState?: Partial<ExtraStateT>
 ): {
   options: OptionsT;
   setOptions: (opts: OptionsT) => void;
+  extraState?: ExtraStateT;
+  setExtraState: (extra: ExtraStateT) => void;
 } {
   // Used to get/set the browser history state
   const history = useHistory();
-  const location = useLocation();
+  const location = useLocation<Partial<OptionsT> & { extra?: ExtraStateT }>();
+  const { state } = location;
 
   const defaultPageSize = useIntegerSetting("defaultPageSize");
 
+  // The table filter parameters
   const [options, setOptions] = useState<OptionsT>({
-    limit: defaults.limit ?? defaultPageSize,
-    offset: defaults.offset ?? 0,
-    orderBy: defaults.orderBy,
-    order: defaults.order
+    limit: state?.limit ?? defaults.limit ?? defaultPageSize,
+    offset: state?.offset ?? defaults.offset ?? 0,
+    orderBy: state?.orderBy ?? defaults.orderBy,
+    order: state?.order ?? defaults.order
   } as OptionsT);
 
   function wrappedSetOptions(opts: OptionsT) {
     debug("table calling setOptions:", opts);
+    updateLocation(opts);
     return setOptions(opts);
   }
 
-  return { options, setOptions: wrappedSetOptions };
+  // Extra state parameters (e.g. "include mined transactions")
+  const [extraState, setExtraState] = useState<ExtraStateT | undefined>(
+    (location?.state?.extra ?? defaultExtraState) as ExtraStateT | undefined
+  );
+
+  function wrappedSetExtraState(extra: ExtraStateT) {
+    debug("table calling setExtraState:", extra);
+    updateLocation(undefined, extra);
+    return setExtraState(extra);
+  }
+
+  // Merge the options and extra state into the location state and replace the
+  // entry on the history stack.
+  function updateLocation(opts?: OptionsT, extra?: ExtraStateT) {
+    const updatedLocation = {
+      ...location,
+      state: {
+        ...location?.state,
+        ...(opts ?? {}),
+        ...(extra ?? {})
+      }
+    };
+
+    debug("replacing updated location:", updatedLocation);
+    history.replace(updatedLocation);
+  }
+
+  return {
+    options, setOptions: wrappedSetOptions,
+    extraState, setExtraState: wrappedSetExtraState
+  };
 }

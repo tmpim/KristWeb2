@@ -51,6 +51,7 @@
     "precaching",
     "privatekeys",
     "readonly",
+    "serialisable",
     "serialised",
     "singleline",
     "submenu",

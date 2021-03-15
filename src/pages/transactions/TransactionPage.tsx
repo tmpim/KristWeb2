@@ -153,7 +153,7 @@ export function TransactionPage(): JSX.Element {
       siteTitle: t("transaction.siteTitleTransaction", { id: kristTransaction.id }),
       subTitle: t("transaction.subTitleTransaction", { id: kristTransaction.id })
     }
-    : { siteTitleKey: "transaction.siteTransaction" };
+    : { siteTitleKey: "transaction.siteTitle" };
 
   return <PageLayout
     className="transaction-page"

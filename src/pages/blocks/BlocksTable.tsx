@@ -9,8 +9,7 @@ import { Link } from "react-router-dom";
 
 import { KristBlock } from "@api/types";
 import { lookupBlocks, LookupBlocksOptions, LookupBlocksResponse } from "@api/lookup";
-import { useMalleablePagination } from "@utils/table";
-import { useIntegerSetting } from "@utils/settings";
+import { useMalleablePagination, useTableHistory } from "@utils/table";
 
 import { ContextualAddress } from "@comp/addresses/ContextualAddress";
 import { BlockHash } from "./BlockHash";
@@ -32,13 +31,9 @@ interface Props {
 export function BlocksTable({ refreshingID, lowest, setError, setPagination }: Props): JSX.Element {
   const { t } = useTranslation();
 
-  const defaultPageSize = useIntegerSetting("defaultPageSize");
-
   const [loading, setLoading] = useState(true);
   const [res, setRes] = useState<LookupBlocksResponse>();
-  const [options, setOptions] = useState<LookupBlocksOptions>({
-    limit: defaultPageSize,
-    offset: 0,
+  const { options, setOptions } = useTableHistory<LookupBlocksOptions>({
     orderBy: lowest ? "hash" : "height",
     order: lowest ? "ASC" : "DESC"
   });

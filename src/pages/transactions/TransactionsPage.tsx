@@ -21,6 +21,7 @@ import { useWallets } from "@wallets";
 import { useSubscription } from "@global/ws/WebsocketSubscription";
 import { useBooleanSetting } from "@utils/settings";
 import { useLinkedPagination } from "@utils/table";
+import { useHistoryState } from "@utils";
 import { KristNameLink } from "@comp/names/KristNameLink";
 
 import "./TransactionsPage.less";
@@ -183,7 +184,7 @@ export function TransactionsPage({ listingType }: Props): JSX.Element {
 
   // Whether or not to show mined transactions
   const alwaysIncludeMined = useBooleanSetting("alwaysIncludeMined");
-  const [includeMined, setIncludeMined] = useState(alwaysIncludeMined);
+  const [includeMined, setIncludeMined] = useHistoryState(alwaysIncludeMined, "includeMined");
 
   // If there is an error (e.g. the lookup rejected the address list due to an
   // invalid address), the table will bubble it up to here
