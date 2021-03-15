@@ -268,6 +268,7 @@ export function NameTransferModal({
         tabIndex={1}
 
         filterOwner={recipient}
+        suppressUpdates={submitting}
 
         value={names}
         setValue={names => form.setFieldsValue({ names })}
@@ -283,6 +284,7 @@ export function NameTransferModal({
         tabIndex={2}
 
         value={recipient}
+        suppressUpdates={submitting}
 
         noNames
         nameHint

@@ -29,7 +29,8 @@ const HINT_LOOKUP_DEBOUNCE = 250;
 export function usePickerHints(
   nameHint?: boolean,
   value?: string,
-  hasExactName?: boolean
+  hasExactName?: boolean,
+  suppressUpdates?: boolean
 ): JSX.Element | null {
   // Used for clean-up
   const isMounted = useRef(true);
@@ -104,7 +105,8 @@ export function usePickerHints(
   // Look up the address/name if it is valid (debounced to 250ms)
   useEffect(() => {
     // Skip doing anything when unmounted to avoid illegal state updates
-    if (!isMounted.current) debug("unmounted skipped lookup useEffect");
+    if (!isMounted.current) return debug("unmounted skipped lookup useEffect");
+    if (suppressUpdates) return debug("picker hint lookup check suppressed");
 
     if (!value) {
       setFoundAddress(undefined);
@@ -132,7 +134,7 @@ export function usePickerHints(
     lookupHint(nameSuffix, value, hasValidAddress, hasExactName, nameHint);
   }, [
     lookupHint, nameSuffix, value, addressPrefix, hasExactName, nameHint,
-    validAddress, lastTransactionID, joinedAddressList
+    validAddress, lastTransactionID, joinedAddressList, suppressUpdates
   ]);
 
   // Clean up the debounced function when unmounting

@@ -32,7 +32,11 @@ export async function _fetchNames(
   setOptions: Dispatch<SetStateAction<NameOptionGroup[] | null>>,
   isMounted: MutableRefObject<boolean>
 ): Promise<void> {
-  if (!isMounted.current) return;
+  if (!isMounted.current) {
+    debug("unmounted name picker lookup result skipped");
+    return;
+  }
+
   setOptions(await fetchNames(t, nameSuffix, wallets));
 }
 
@@ -45,6 +49,7 @@ interface Props {
   setValue?: (value: string[]) => void;
 
   filterOwner?: string;
+  suppressUpdates?: boolean;
 
   multiple?: boolean;
   allowAll?: boolean;
@@ -61,6 +66,7 @@ export function NamePicker({
   setValue,
 
   filterOwner,
+  suppressUpdates,
 
   multiple,
   allowAll,
@@ -96,7 +102,8 @@ export function NamePicker({
   // our wallets receives a name transaction.
   useEffect(() => {
     // Skip doing anything when unmounted to avoid illegal state updates
-    if (!isMounted.current) debug("unmounted skipped lookup useEffect");
+    if (!isMounted.current) return debug("unmounted skipped lookup useEffect");
+    if (suppressUpdates) return debug("name picker lookup suppressed");
 
     debug(
       "addressList updated (%s, %s, %d)",
@@ -111,13 +118,16 @@ export function NamePicker({
       isMounted
     );
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [throttledFetchNames, t, nameSuffix, refreshID, joinedAddressList]);
+  }, [
+    throttledFetchNames, t, nameSuffix, refreshID, joinedAddressList,
+    suppressUpdates
+  ]);
 
   // If passed an address, filter out that address from the results. Used to
   // prevent sending names to the existing owner. Renders the name options.
   useEffect(() => {
     // Skip doing anything when unmounted to avoid illegal state updates
-    if (!isMounted.current) debug("unmounted skipped filter useEffect");
+    if (!isMounted.current) return debug("unmounted skipped filter useEffect");
 
     if (!nameOptions) {
       setFilteredOptions(null);

@@ -33,6 +33,8 @@ interface Props {
   noNames?: boolean;
   nameHint?: boolean;
 
+  suppressUpdates?: boolean;
+
   className?: string;
   tabIndex?: number;
   inputRef?: Ref<RefSelectProps>;
@@ -47,6 +49,8 @@ export function AddressPicker({
   walletsOnly,
   noNames,
   nameHint,
+
+  suppressUpdates,
 
   className,
   tabIndex,
@@ -107,7 +111,9 @@ export function AddressPicker({
     : options;
 
   // Fetch an address or name hint if possible
-  const pickerHints = usePickerHints(nameHint, cleanValue, hasExactName);
+  const pickerHints = usePickerHints(
+    nameHint, cleanValue, hasExactName, suppressUpdates
+  );
 
   const classes = classNames("address-picker", className, {
     "address-picker-wallets-only": walletsOnly,
