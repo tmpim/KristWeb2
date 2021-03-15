@@ -11,6 +11,13 @@ import { Wallet, decryptWallet, useMasterPasswordOnly } from "@wallets";
 
 import * as api from "./";
 
+// Used to carry around information on which address failed auth
+export class AuthFailedError extends api.APIError {
+  constructor(message: string, public address?: string) {
+    super(message);
+  }
+}
+
 interface AuthFailedModalHookResponse {
   authFailedModal: Omit<ModalStaticFunctions, "warn">;
   authFailedContextHolder: ReactElement;

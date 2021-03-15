@@ -4,7 +4,7 @@
 import {
   useState, useEffect, useMemo, Dispatch, SetStateAction, Ref
 } from "react";
-import { Select, Form, Input, Button, notification } from "antd";
+import { Select, Form, Input, Button } from "antd";
 import { RefSelectProps } from "antd/lib/select";
 
 import { useTranslation, TFunction } from "react-i18next";
@@ -12,54 +12,25 @@ import { useTranslation, TFunction } from "react-i18next";
 import { useSelector } from "react-redux";
 import { RootState } from "@store";
 
-import { Wallet, WalletAddressMap, useWallets } from "@wallets";
-import { KristName } from "@api/types";
-import { lookupNames } from "@api/lookup";
+import { WalletAddressMap, useWallets } from "@wallets";
+import { NameOptionGroup, fetchNames } from "./lookupNames";
 
 import { useNameSuffix } from "@utils/currency";
 import shallowEqual from "shallowequal";
 
-import { throttle, groupBy } from "lodash-es";
+import { throttle } from "lodash-es";
 
 import Debug from "debug";
 const debug = Debug("kristweb:name-picker");
 
 const FETCH_THROTTLE = 500;
-
-async function _fetchNames(
+export async function _fetchNames(
   t: TFunction,
   nameSuffix: string,
   wallets: WalletAddressMap,
   setOptions: Dispatch<SetStateAction<NameOptionGroup[] | null>>
 ): Promise<void> {
-  debug("performing name fetch");
-
-  try {
-    // Get the full list of names for the given wallets.
-    const addresses = Object.keys(wallets);
-    const { names, total } = await lookupNames(addresses, {
-      orderBy: "name", order: "ASC",
-      limit: 1000 // TODO: support more than 1000
-    });
-
-    // Since more than 1000 isn't supported yet, show a warning
-    if (total > 1000)
-      notification.warning({ message: t("namePicker.warningTotalLimit") });
-
-    // Group the names into OptGroups per wallet.
-    const options = Object.entries(groupBy(names, n => n.owner))
-      .map(([address, group]) =>
-        getNameOptions(nameSuffix, wallets[address], group));
-
-    debug("got names:", names, options);
-    setOptions(options);
-  } catch (err) {
-    setOptions(null);
-    notification.error({
-      message: t("error"),
-      description: t("namePicker.errorLookup")
-    });
-  }
+  setOptions(await fetchNames(t, nameSuffix, wallets));
 }
 
 interface Props {
@@ -98,7 +69,7 @@ export function NamePicker({
 
   // Used to fetch the list of available names
   const { walletAddressMap, joinedAddressList } = useWallets();
-  const fetchNames = useMemo(() =>
+  const throttledFetchNames = useMemo(() =>
     throttle(_fetchNames, FETCH_THROTTLE, { leading: true }), []);
   const nameSuffix = useNameSuffix();
 
@@ -123,9 +94,9 @@ export function NamePicker({
       joinedAddressList, nameSuffix, refreshID
     );
 
-    fetchNames(t, nameSuffix, walletAddressMap, setNameOptions);
+    throttledFetchNames(t, nameSuffix, walletAddressMap, setNameOptions);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetchNames, t, nameSuffix, refreshID, joinedAddressList]);
+  }, [throttledFetchNames, t, nameSuffix, refreshID, joinedAddressList]);
 
   // If passed an address, filter out that address from the results. Used to
   // prevent sending names to the existing owner. Renders the name options.
@@ -234,37 +205,6 @@ export function NamePicker({
       </div>}
     </Input.Group>
   </Form.Item>;
-}
-
-interface NameOptionGroup {
-  key: string;
-  label: string;
-  names: NameOption[];
-}
-
-interface NameOption {
-  key: string;
-  value: string;
-  name: string;
-}
-
-function getNameOptions(
-  nameSuffix: string,
-  wallet: Wallet,
-  names: KristName[]
-): NameOptionGroup {
-  // Group by owning wallet
-  return {
-    key: wallet.address,
-    label: wallet.label || wallet.address,
-
-    // Each individual name
-    names: names.map(name => ({
-      key: name.name,
-      value: name.name,
-      name: name.name + "." + nameSuffix
-    }))
-  };
 }
 
 function renderNameOptions(group: NameOptionGroup): JSX.Element {

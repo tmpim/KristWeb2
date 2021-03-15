@@ -861,11 +861,25 @@
     "errorNameRequired": "At least one name is required.",
 
     "errorWalletGone": "That wallet no longer exists.",
-    "errorWalletDecrypt": "Your wallet could not be decrypted.",
+    "errorWalletDecrypt": "The wallet \"{{address}}\" could not be decrypted.",
     "errorParameterNames": "Invalid names.",
     "errorParameterRecipient": "Invalid recipient.",
-    "errorNameNotFound": "The name \"{{name}}\" could not be found.",
-    "errorUnknown": "Unknown error transferring names. See console for details."
+    "errorNameNotFound": "One or more names could not be found.",
+    "errorNotNameOwner": "You are not the owner of one or more names.",
+    "errorUnknown": "Unknown error transferring names. See console for details.",
+    "errorNotificationTitle": "Name transfer failed",
+
+    // Note that the zero and singular cases of these warnings will never be
+    // shown, but they're provided for i18n compatibility.
+    "warningMultipleNames": "Are you sure you want to transfer <1>{{count, number}}</1> name to <3 />?",
+    "warningMultipleNames_plural": "Are you sure you want to transfer <1>{{count, number}}</1> names to <3 />?",
+    "warningAllNames": "Are you sure you want to transfer <1>{{count, number}}</1> name to <3 />? This is all your names!",
+    "warningAllNames_plural": "Are you sure you want to transfer <1>{{count, number}}</1> names to <3 />? This is all your names!",
+
+    "successMessage": "Name transferred successfully",
+    "successMessage_plural": "Names transferred successfully",
+    "successDescription": "Transferred <1>{{count, number}}</1> name to <3 />.",
+    "successDescription_plural": "Transferred <1>{{count, number}}</1> names to <3 />."
   },
 
   "noNamesResult": {
