@@ -107,6 +107,11 @@ export function SettingsPage(): JSX.Element {
         <Menu.Item key="advanced/defaultPageSize">
           <SettingInteger setting="defaultPageSize" titleKey="settings.defaultPageSize" />
         </Menu.Item>
+
+        {/* Enable table navigation hotkeys (left and right arrows) */}
+        <Menu.Item key="advanced/tableHotkeys">
+          <SettingBoolean setting="tableHotkeys" titleKey="settings.tableHotkeys" />
+        </Menu.Item>
       </Menu.SubMenu>
 
       {/* Debug settings */}

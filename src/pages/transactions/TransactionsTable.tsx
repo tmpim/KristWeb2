@@ -84,7 +84,7 @@ export function TransactionsTable({
     order: "DESC"
   });
 
-  const { paginationTableProps } = useMalleablePagination(
+  const { paginationTableProps, hotkeys } = useMalleablePagination(
     res, res?.transactions,
     "transactions.tableTotal",
     options, setOptions, setPagination
@@ -118,7 +118,7 @@ export function TransactionsTable({
 
   debug("results? %b  res.transactions.length: %d  res.count: %d  res.total: %d", !!res, res?.transactions?.length, res?.count, res?.total);
 
-  return <Table<KristTransaction>
+  const tbl = <Table<KristTransaction>
     className="transactions-table"
     size="small"
 
@@ -229,4 +229,9 @@ export function TransactionsTable({
       }
     ]}
   />;
+
+  return <>
+    {tbl}
+    {hotkeys}
+  </>;
 }

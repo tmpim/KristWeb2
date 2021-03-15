@@ -40,7 +40,7 @@ export function NamesTable({ refreshingID, sortNew, addresses, setError, setPagi
     order: sortNew ? "DESC" : "ASC"
   });
 
-  const { paginationTableProps } = useMalleablePagination(
+  const { paginationTableProps, hotkeys } = useMalleablePagination(
     res, res?.names,
     "names.tableTotal",
     options, setOptions, setPagination
@@ -59,7 +59,7 @@ export function NamesTable({ refreshingID, sortNew, addresses, setError, setPagi
 
   debug("results? %b  res.names.length: %d  res.count: %d  res.total: %d", !!res, res?.names?.length, res?.count, res?.total);
 
-  return <Table<KristName>
+  const tbl = <Table<KristName>
     className="names-table"
     size="small"
 
@@ -162,4 +162,9 @@ export function NamesTable({ refreshingID, sortNew, addresses, setError, setPagi
       }
     ]}
   />;
+
+  return <>
+    {tbl}
+    {hotkeys}
+  </>;
 }

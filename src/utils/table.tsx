@@ -1,13 +1,15 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { useState, useEffect, useMemo, Dispatch, SetStateAction } from "react";
+import { useState, useEffect, useCallback, useMemo, Dispatch, SetStateAction } from "react";
 import { TablePaginationConfig, TableProps, Pagination } from "antd";
 import { SorterResult } from "antd/lib/table/interface";
 import usePagination from "antd/lib/table/hooks/usePagination";
 
 import { useTranslation, TFunction } from "react-i18next";
-import { useIntegerSetting } from "./settings";
+import { useIntegerSetting, useBooleanSetting } from "./settings";
+
+import { GlobalHotKeys } from "react-hotkeys";
 
 import { useHistory, useLocation } from "react-router-dom";
 
@@ -97,6 +99,7 @@ export function useMalleablePagination<
   setPagination?: Dispatch<SetStateAction<TablePaginationConfig>>
 ): {
   paginationTableProps: Pick<TableProps<ResultT>, "onChange" | "pagination">;
+  hotkeys: JSX.Element | null;
 } {
   const { t } = useTranslation();
 
@@ -131,6 +134,11 @@ export function useMalleablePagination<
     }
   );
 
+  const { hotkeys } = usePaginationHotkeys(
+    currentPageSize, res?.total || 0,
+    options, setOptions, setPaginationPos
+  );
+
   // Update the pagination
   useEffect(() => {
     if (setPagination) {
@@ -145,7 +153,8 @@ export function useMalleablePagination<
     paginationTableProps: {
       onChange: handleLookupTableChange(defaultPageSize, setOptions, setPaginationPos),
       pagination: paginationConfig
-    }
+    },
+    hotkeys
   };
 }
 
@@ -232,4 +241,65 @@ export function useTableHistory<
   }
 
   return { options, setOptions: wrappedSetOptions };
+}
+
+/** Provides a GlobalHotKeys component that will add the left and right arrow
+ * key hotkeys, allowing keyboard control of the table's pagination. */
+function usePaginationHotkeys<FieldsT extends string>(
+  defaultPageSize: number,
+  total: number | undefined,
+  options: LookupFilterOptionsBase<FieldsT>,
+  setOptions: (opts: LookupFilterOptionsBase<FieldsT>) => void,
+  setPaginationPos?: Dispatch<SetStateAction<TablePaginationConfig>>
+): { hotkeys: JSX.Element | null } {
+  const enableHotkeys = useBooleanSetting("tableHotkeys");
+
+  const navigate = useCallback((direction: "prev" | "next") => {
+    const mul = direction === "next" ? 1 : -1;
+    const pageSize = options?.limit ?? defaultPageSize;
+
+    // The offset for the lookup options
+    const minOffset = 0;
+    const maxOffset = (total || 1) - 1; // TODO: this isn't quite correct
+    const newOffsetRaw = (options?.offset || 0) + (pageSize * mul);
+    const newOffset = Math.min(Math.max(newOffsetRaw, minOffset), maxOffset);
+
+    // The page number for paginationPos
+    const newPage = Math.max(Math.floor(newOffset / pageSize) + 1, 1);
+
+    debug(
+      "hotkeys navigating %s (%d) across %d entries (%d total) ||| " +
+      "old offset: %d new offset: %d (%d) new page: %d ||| " +
+      "min is: %d max is: %d",
+      direction, mul, pageSize, total,
+      options?.offset, newOffset, newOffsetRaw, newPage,
+      minOffset, maxOffset
+    );
+
+    // Update the table and pagination
+    setOptions({ ...options, offset: newOffset });
+    setPaginationPos?.({ current: newPage, pageSize });
+  }, [defaultPageSize, total, options, setOptions, setPaginationPos]);
+
+  // Enforce that the hotkeys get the newest `navigate` function, especially
+  // when the `total` changes
+  const hotkeys = useMemo(() => (
+    <GlobalHotKeys
+      // allowChanges is required to get the newest `total` etc.
+      allowChanges
+
+      keyMap={{
+        PREV: ["left"],
+        NEXT: ["right"]
+      }}
+      handlers={{
+        PREV: e => { e?.preventDefault(); navigate("prev"); },
+        NEXT: e => { e?.preventDefault(); navigate("next"); }
+      }}
+    />
+  ), [navigate]);
+
+  return {
+    hotkeys: enableHotkeys ? hotkeys : null
+  };
 }

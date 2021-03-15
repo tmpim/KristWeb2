@@ -48,6 +48,8 @@ export interface SettingsState {
   readonly transactionDefaultRaw: boolean;
   /** Default page size for table listings. */
   readonly defaultPageSize: number;
+  /** Enable table navigation hotkeys (left and right arrows). */
+  readonly tableHotkeys: boolean;
 
   // ===========================================================================
   // DEBUG SETTINGS
@@ -69,6 +71,7 @@ export const DEFAULT_SETTINGS: SettingsState = {
   showRelativeDates: false,
   transactionDefaultRaw: false,
   defaultPageSize: 15,
+  tableHotkeys: true,
 
   walletFormats: false
 };

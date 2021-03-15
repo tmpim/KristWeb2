@@ -38,7 +38,7 @@ export function BlocksTable({ refreshingID, lowest, setError, setPagination }: P
     order: lowest ? "ASC" : "DESC"
   });
 
-  const { paginationTableProps } = useMalleablePagination(
+  const { paginationTableProps, hotkeys } = useMalleablePagination(
     res, res?.blocks,
     "blocks.tableTotal",
     options, setOptions, setPagination
@@ -57,7 +57,7 @@ export function BlocksTable({ refreshingID, lowest, setError, setPagination }: P
 
   debug("results? %b  res.blocks.length: %d  res.count: %d  res.total: %d", !!res, res?.blocks?.length, res?.count, res?.total);
 
-  return <Table<KristBlock>
+  const tbl = <Table<KristBlock>
     className="blocks-table"
     size="small"
 
@@ -141,4 +141,9 @@ export function BlocksTable({ refreshingID, lowest, setError, setPagination }: P
       }
     ]}
   />;
+
+  return <>
+    {tbl}
+    {hotkeys}
+  </>;
 }
