@@ -769,7 +769,8 @@
     "addressHint": "Balance: <1 />",
     "addressHintWithNames": "Names: <1>{{names, number}}</1>",
     "nameHint": "Owner: <1 />",
-    "nameHintNotFound": "Name not found."
+    "nameHintNotFound": "Name not found.",
+    "walletHint": "Wallet: <1 />"
   },
 
   "sendTransaction": {

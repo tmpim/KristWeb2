@@ -7,11 +7,13 @@ import {
   isValidAddress, stripNameSuffix,
   useAddressPrefix, useNameSuffix
 } from "@utils/currency";
+import { useWallets } from "@wallets";
 
 import * as api from "@api";
 import { KristAddressWithNames, lookupAddress } from "@api/lookup";
 import { KristName } from "@api/types";
 
+import { WalletHint } from "./WalletHint";
 import { AddressHint } from "./AddressHint";
 import { NameHint } from "./NameHint";
 
@@ -43,6 +45,11 @@ export function usePickerHints(
   // This is the address to subscribe to:
   const [validAddress, setValidAddress] = useState<string>();
   const lastTransactionID = useSubscription({ address: validAddress });
+
+  // Used to show a wallet hint
+  const { walletAddressMap, joinedAddressList } = useWallets();
+  const foundWallet = validAddress && value
+    ? walletAddressMap[validAddress] : undefined;
 
   // The actual lookup function (debounced)
   const lookupHint = useMemo(() => debounce(async (
@@ -125,7 +132,7 @@ export function usePickerHints(
     lookupHint(nameSuffix, value, hasValidAddress, hasExactName, nameHint);
   }, [
     lookupHint, nameSuffix, value, addressPrefix, hasExactName, nameHint,
-    validAddress, lastTransactionID
+    validAddress, lastTransactionID, joinedAddressList
   ]);
 
   // Clean up the debounced function when unmounting
@@ -137,15 +144,26 @@ export function usePickerHints(
     };
   }, [lookupHint]);
 
-  // Return an address hint if possible
-  if (foundAddress !== undefined) return (
-    <AddressHint address={foundAddress || undefined} nameHint={nameHint} />
-  );
+  // Whether or not to show a separator between the wallet hint and address or
+  // name hint (i.e. if two hints are shown)
+  const showSep = !!foundWallet && (!!foundAddress || !!foundName);
+  const foundAnything = !!foundWallet || !!foundAddress || !!foundName;
 
-  // Return a name hint if possible
-  if (foundName !== undefined) return (
-    <NameHint name={foundName || undefined} />
-  );
+  if (foundAnything) return <div className="address-picker-hints">
+    {/* Show a wallet hint if possible */}
+    {foundWallet && <WalletHint wallet={foundWallet} />}
+
+    {/* Show a separator if there are two hints */}
+    {showSep && <span className="address-picker-separator">&ndash;</span>}
+
+    {/* Show an address hint if possible */}
+    {foundAddress !== undefined && (
+      <AddressHint address={foundAddress || undefined} nameHint={nameHint} />
+    )}
+
+    {/* Show a name hint if possible */}
+    {foundName !== undefined && <NameHint name={foundName || undefined} />}
+  </div>;
 
   return null;
 }
