@@ -144,10 +144,15 @@ export function usePickerHints(
     };
   }, [lookupHint]);
 
+  // Whether or not to show certain hints/anything at all
+  const showWalletHint = !!foundWallet;
+  const showAddressHint = foundAddress !== undefined;
+  const showNameHint = foundName !== undefined;
+  const foundAnything = showWalletHint || showAddressHint || showNameHint;
+
   // Whether or not to show a separator between the wallet hint and address or
   // name hint (i.e. if two hints are shown)
-  const showSep = !!foundWallet && (!!foundAddress || !!foundName);
-  const foundAnything = !!foundWallet || !!foundAddress || !!foundName;
+  const showSep = showWalletHint && (showAddressHint || showNameHint);
 
   if (foundAnything) return <div className="address-picker-hints">
     {/* Show a wallet hint if possible */}
@@ -157,12 +162,12 @@ export function usePickerHints(
     {showSep && <span className="address-picker-separator">&ndash;</span>}
 
     {/* Show an address hint if possible */}
-    {foundAddress !== undefined && (
+    {showAddressHint && (
       <AddressHint address={foundAddress || undefined} nameHint={nameHint} />
     )}
 
     {/* Show a name hint if possible */}
-    {foundName !== undefined && <NameHint name={foundName || undefined} />}
+    {showNameHint && <NameHint name={foundName || undefined} />}
   </div>;
 
   return null;
