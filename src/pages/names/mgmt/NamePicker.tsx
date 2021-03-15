@@ -1,8 +1,11 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { useState, useEffect, useMemo, Dispatch, SetStateAction } from "react";
-import { Select, notification } from "antd";
+import {
+  useState, useEffect, useMemo, Dispatch, SetStateAction, Ref
+} from "react";
+import { Select, Form, Input, Button, notification } from "antd";
+import { RefSelectProps } from "antd/lib/select";
 
 import { useTranslation, TFunction } from "react-i18next";
 
@@ -14,6 +17,7 @@ import { KristName } from "@api/types";
 import { lookupNames } from "@api/lookup";
 
 import { useNameSuffix } from "@utils/currency";
+import shallowEqual from "shallowequal";
 
 import { throttle, groupBy } from "lodash-es";
 
@@ -26,7 +30,7 @@ async function _fetchNames(
   t: TFunction,
   nameSuffix: string,
   wallets: WalletAddressMap,
-  setOptions: Dispatch<SetStateAction<JSX.Element[] | null>>
+  setOptions: Dispatch<SetStateAction<NameOptionGroup[] | null>>
 ): Promise<void> {
   debug("performing name fetch");
 
@@ -45,7 +49,7 @@ async function _fetchNames(
     // Group the names into OptGroups per wallet.
     const options = Object.entries(groupBy(names, n => n.owner))
       .map(([address, group]) =>
-        getNameOptions(nameSuffix, wallets[address], group))
+        getNameOptions(nameSuffix, wallets[address], group));
 
     debug("got names:", names, options);
     setOptions(options);
@@ -58,34 +62,37 @@ async function _fetchNames(
   }
 }
 
-function getNameOptions(
-  nameSuffix: string,
-  wallet: Wallet,
-  names: KristName[]
-): JSX.Element {
-  const groupLabel = wallet.label || wallet.address;
-
-  // Group by owning wallet
-  return <Select.OptGroup key={wallet.address} label={groupLabel}>
-    {/* Each individual name */}
-    {names.map(name => (
-      <Select.Option
-        key={name.name}
-        value={name.name}
-        data-name={name.name + "." + nameSuffix}
-      >
-        {name.name}.{nameSuffix}
-      </Select.Option>
-    ))}
-  </Select.OptGroup>
-}
-
 interface Props {
+  formName: string;
+  label?: string;
+  tabIndex?: number;
+
+  value?: string[];
+  setValue?: (value: string[]) => void;
+
+  filterOwner?: string;
+
   multiple?: boolean;
+  allowAll?: boolean;
+
+  inputRef?: Ref<RefSelectProps>;
 }
 
 export function NamePicker({
-  multiple
+  formName,
+  label,
+  tabIndex,
+
+  value,
+  setValue,
+
+  filterOwner,
+
+  multiple,
+  allowAll,
+
+  inputRef,
+  ...props
 }: Props): JSX.Element {
   const { t } = useTranslation();
 
@@ -95,10 +102,18 @@ export function NamePicker({
     throttle(_fetchNames, FETCH_THROTTLE, { leading: true }), []);
   const nameSuffix = useNameSuffix();
 
+  // The actual list of available names (pre-filtered, not rendered yet)
+  const [nameOptions, setNameOptions]
+    = useState<NameOptionGroup[] | null>(null);
+  const [filteredOptions, setFilteredOptions]
+    = useState<JSX.Element[] | null>(null);
+
   // Used for auto-refreshing the names if they happen to update
   const refreshID = useSelector((s: RootState) => s.node.lastOwnNameTransactionID);
 
-  const [nameOptions, setNameOptions] = useState<JSX.Element[] | null>(null);
+  // Whether or not to show the 'All' button for bulk name management. On by
+  // default.
+  const showAllButton = allowAll !== false && multiple !== false;
 
   // Fetch the name list on mount/when the address list changes, or when one of
   // our wallets receives a name transaction.
@@ -109,33 +124,161 @@ export function NamePicker({
     );
 
     fetchNames(t, nameSuffix, walletAddressMap, setNameOptions);
-  }, [joinedAddressList, nameSuffix, refreshID]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchNames, t, nameSuffix, refreshID, joinedAddressList]);
 
-  // TODO: wrap this in a Form.Item
-  return <Select
-    showSearch
-    placeholder={multiple !== false
-      ? t("namePicker.placeholderMultiple")
-      : t("namePicker.placeholder")}
+  // If passed an address, filter out that address from the results. Used to
+  // prevent sending names to the existing owner. Renders the name options.
+  useEffect(() => {
+    if (!nameOptions) {
+      setFilteredOptions(null);
+      return;
+    }
 
-    allowClear
-    mode={multiple !== false ? "multiple" : undefined}
+    const filteredGroups = nameOptions
+      .filter(group => filterOwner ? group.key !== filterOwner : true);
 
-    loading={!nameOptions}
+    // If there are any invalid names in the form value, remove them here
+    if (value && setValue) {
+      // Convert the available names to a lookup table
+      const filteredNames = filteredGroups
+        .flatMap(g => g.names)
+        .reduce((out, o) => {
+          out[o.key] = true;
+          return out;
+        }, {} as Record<string, boolean>);
 
-    style={{ width: 300 }}
+      // Remove any names in the value that aren't in the lookup table
+      const newValue = value?.filter(v => !!filteredNames[v]);
+      const equal = shallowEqual(value, newValue);
 
-    // Filter by name with suffix case insensitively
-    filterOption={(input, option) => {
-      // Display all groups
-      if (option?.options) return false;
+      debug(
+        "updating value (filterOwner: %s) to %o (equal: %b)",
+        filterOwner, newValue, equal
+      );
 
-      const name = option?.["data-name"] || option?.value;
-      if (!name) return false;
+      // If the values are different, set the new one
+      if (!equal) setValue(newValue);
+    }
 
-      return name.toUpperCase().indexOf(input.toUpperCase()) >= 0;
-    }}
+    setFilteredOptions(filteredGroups.map(renderNameOptions));
+  }, [nameOptions, filterOwner, value, setValue]);
+
+  // Select all available names
+  function selectAll() {
+    if (!nameOptions || !setValue) return;
+
+    // Filter out names from filterOwner if applicable
+    const filteredGroups = nameOptions
+      .filter(group => filterOwner ? group.key !== filterOwner : true);
+    const names = filteredGroups
+      .flatMap(g => g.names)
+      .map(n => n.value);
+
+    setValue(names);
+  }
+
+  return <Form.Item
+    label={label}
+    required
+    {...props}
   >
-    {nameOptions}
-  </Select>
+    <Input.Group compact style={{ display: "flex" }}>
+      {/* Name select */}
+      <Form.Item
+        name={formName}
+        style={{ flex: 1, marginBottom: 0 }}
+
+        validateFirst
+        rules={[
+          { required: true, message: t("nameTransfer.errorNameRequired") }
+        ]}
+      >
+        <Select
+          showSearch
+          placeholder={multiple !== false
+            ? t("namePicker.placeholderMultiple")
+            : t("namePicker.placeholder")}
+
+          style={{ width: "100%" }}
+
+          allowClear
+          mode={multiple !== false ? "multiple" : undefined}
+          maxTagCount={5}
+
+          loading={!nameOptions}
+
+          // Filter by name with suffix case insensitively
+          filterOption={(input, option) => {
+            // Display all groups
+            if (option?.options) return false;
+
+            const name = option?.["data-name"] || option?.value;
+            if (!name) return false;
+
+            return name.toUpperCase().indexOf(input.toUpperCase()) >= 0;
+          }}
+
+          ref={inputRef}
+          tabIndex={tabIndex}
+        >
+          {filteredOptions}
+        </Select>
+      </Form.Item>
+
+      {/* "All" button */}
+      {showAllButton && <div>
+        <Button onClick={selectAll} >
+          {t("namePicker.buttonAll")}
+        </Button>
+      </div>}
+    </Input.Group>
+  </Form.Item>;
+}
+
+interface NameOptionGroup {
+  key: string;
+  label: string;
+  names: NameOption[];
+}
+
+interface NameOption {
+  key: string;
+  value: string;
+  name: string;
+}
+
+function getNameOptions(
+  nameSuffix: string,
+  wallet: Wallet,
+  names: KristName[]
+): NameOptionGroup {
+  // Group by owning wallet
+  return {
+    key: wallet.address,
+    label: wallet.label || wallet.address,
+
+    // Each individual name
+    names: names.map(name => ({
+      key: name.name,
+      value: name.name,
+      name: name.name + "." + nameSuffix
+    }))
+  };
+}
+
+function renderNameOptions(group: NameOptionGroup): JSX.Element {
+  // Group by owning wallet
+  return <Select.OptGroup key={group.key} label={group.label}>
+    {/* Each individual name */}
+    {group.names.map(name => (
+      <Select.Option
+        key={name.key}
+        value={name.value}
+        data-name={name.name}
+      >
+        {name.name}
+      </Select.Option>
+    ))}
+  </Select.OptGroup>;
 }

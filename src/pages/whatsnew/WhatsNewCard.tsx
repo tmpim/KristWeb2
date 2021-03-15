@@ -3,7 +3,7 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { FC } from "react";
 import classNames from "classnames";
-import { Card, Skeleton, Row, Tag } from "antd";
+import { Card, Skeleton, Tag } from "antd";
 
 import { useTranslation } from "react-i18next";
 

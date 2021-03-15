@@ -6,9 +6,8 @@ import { Button, Alert } from "antd";
 import { PageLayout } from "@layout/PageLayout";
 
 import { ImportBackupModal } from "../backup/ImportBackupModal";
-import { SendTransactionModal } from "../transactions/send/SendTransactionModal";
 import { AuthorisedAction } from "@comp/auth/AuthorisedAction";
-import { NamePicker } from "@pages/names/mgmt/NamePicker";
+import { NameTransferModal } from "@pages/names/mgmt/NameTransferModal";
 
 import { useWallets, deleteWallet } from "@wallets";
 
@@ -17,7 +16,7 @@ const debug = Debug("kristweb:dev-page");
 
 export function DevPage(): JSX.Element {
   const [importVisible, setImportVisible] = useState(false);
-  const [sendTXVisible, setSendTXVisible] = useState(false);
+  const [transferNameVisible, setSendNameVisible] = useState(false);
   const { wallets } = useWallets();
 
   return <PageLayout
@@ -42,15 +41,11 @@ export function DevPage(): JSX.Element {
     </AuthorisedAction>
     <ImportBackupModal visible={importVisible} setVisible={setImportVisible} />
 
-    {/* Open send tx modal */}
-    <AuthorisedAction onAuthed={() => setSendTXVisible(true)}>
-      <Button>Open send tx modal</Button>
+    {/* Open transfer name modal */}
+    <AuthorisedAction onAuthed={() => setSendNameVisible(true)}>
+      <Button>Open transfer name modal</Button>
     </AuthorisedAction>
-    <SendTransactionModal visible={sendTXVisible} setVisible={setSendTXVisible} />
-
-    <br /><br />
-
-    <NamePicker />
+    <NameTransferModal visible={transferNameVisible} setVisible={setSendNameVisible} />
 
     <br /><br />
 

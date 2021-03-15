@@ -54,6 +54,7 @@
     "readonly",
     "serialisable",
     "serialised",
+    "shallowequal",
     "singleline",
     "submenu",
     "summarising",

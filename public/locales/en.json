@@ -844,7 +844,33 @@
     "placeholder": "Choose a name",
     "placeholderMultiple": "Choose names",
 
+    "buttonAll": "All",
+
     "warningTotalLimit": "You seem to have more than 1,000 names, which is not yet supported in KristWeb v2. Please post an issue on GitHub.",
     "errorLookup": "There was an error fetching the names. See the console for details."
+  },
+
+  "nameTransfer": {
+    "modalTitle": "Transfer names",
+
+    "labelNames": "Names",
+    "labelRecipient": "Recipient",
+
+    "buttonSubmit": "Transfer names",
+
+    "errorNameRequired": "At least one name is required.",
+
+    "errorWalletGone": "That wallet no longer exists.",
+    "errorWalletDecrypt": "Your wallet could not be decrypted.",
+    "errorParameterNames": "Invalid names.",
+    "errorParameterRecipient": "Invalid recipient.",
+    "errorNameNotFound": "The name \"{{name}}\" could not be found.",
+    "errorUnknown": "Unknown error transferring names. See console for details."
+  },
+
+  "noNamesResult": {
+    "title": "No names yet",
+    "subTitle": "You currently have no names in any of your wallets saved in KristWeb, so there is nothing to see here yet. Would you like to purchase a name?",
+    "button": "Purchase name"
   }
 }

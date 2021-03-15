@@ -19,7 +19,7 @@ const debug = Debug("kristweb:locale-context");
 export const TimeagoFormatterContext = createContext<Formatter | undefined>(undefined);
 
 export const LocaleContext: FC = ({ children }): JSX.Element => {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
   const langCode = i18n.language;
   const languages = getLanguages();
   const lang = languages?.[langCode];
