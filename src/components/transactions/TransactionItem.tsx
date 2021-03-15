@@ -8,7 +8,7 @@ import { useTranslation, Trans } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { KristTransaction } from "@api/types";
-import { Wallet } from "@wallets";
+import { WalletAddressMap } from "@wallets";
 import { DateTime } from "../DateTime";
 import { KristValue } from "../krist/KristValue";
 import { KristNameLink } from "../names/KristNameLink";
@@ -21,7 +21,7 @@ interface Props {
   transaction: KristTransaction;
 
   /** [address]: Wallet */
-  wallets: Record<string, Wallet>;
+  wallets: WalletAddressMap;
 }
 
 export function TransactionARecord({ metadata }: { metadata: string | undefined | null }): JSX.Element {

@@ -8,7 +8,7 @@ import { PageLayout } from "@layout/PageLayout";
 import { ImportBackupModal } from "../backup/ImportBackupModal";
 import { SendTransactionModal } from "../transactions/send/SendTransactionModal";
 import { AuthorisedAction } from "@comp/auth/AuthorisedAction";
-import { DateTime } from "@comp/DateTime";
+import { NamePicker } from "@pages/names/mgmt/NamePicker";
 
 import { useWallets, deleteWallet } from "@wallets";
 
@@ -47,6 +47,10 @@ export function DevPage(): JSX.Element {
       <Button>Open send tx modal</Button>
     </AuthorisedAction>
     <SendTransactionModal visible={sendTXVisible} setVisible={setSendTXVisible} />
+
+    <br /><br />
+
+    <NamePicker />
 
     <br /><br />
 

@@ -7,14 +7,6 @@ import { RootState } from "@store";
 import { Wallet, WalletNew, WalletMap, WalletFormatName, applyWalletFormat } from ".";
 import { makeV2Address } from "../addressAlgo";
 
-export interface WalletsHookResponse {
-  wallets: WalletMap;
-  walletAddressMap: Record<string, Wallet>;
-
-  addressList: string[];
-  joinedAddressList: string;
-}
-
 /** Finds a wallet in the wallet map by the given Krist address. */
 export function findWalletByAddress(
   wallets: WalletMap,
@@ -29,6 +21,16 @@ export function findWalletByAddress(
   }
 
   return null;
+}
+
+export type WalletAddressMap = Record<string, Wallet>;
+
+export interface WalletsHookResponse {
+  wallets: WalletMap;
+  walletAddressMap: WalletAddressMap;
+
+  addressList: string[];
+  joinedAddressList: string;
 }
 
 /** Hook that fetches the wallets from the Redux store. */
