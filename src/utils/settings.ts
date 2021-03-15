@@ -44,6 +44,8 @@ export interface SettingsState {
   readonly blockHashCopyButtons: boolean;
   /** Show relative dates instead of absolute ones when they are recent. */
   readonly showRelativeDates: boolean;
+  /** Show dates in a native date format from the language. */
+  readonly showNativeDates: boolean;
   /** Default to the 'Raw' tab instead of 'CommonMeta' on the transaction page. */
   readonly transactionDefaultRaw: boolean;
   /** Default page size for table listings. */
@@ -69,6 +71,7 @@ export const DEFAULT_SETTINGS: SettingsState = {
   nameCopyButtons: false,
   blockHashCopyButtons: false,
   showRelativeDates: false,
+  showNativeDates: false,
   transactionDefaultRaw: false,
   defaultPageSize: 15,
   tableHotkeys: true,

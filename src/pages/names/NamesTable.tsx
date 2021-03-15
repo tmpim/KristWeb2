@@ -8,7 +8,9 @@ import { useTranslation } from "react-i18next";
 
 import { KristName } from "@api/types";
 import { lookupNames, LookupNamesOptions, LookupNamesResponse } from "@api/lookup";
-import { useMalleablePagination, useTableHistory } from "@utils/table";
+import {
+  useMalleablePagination, useTableHistory, useDateColumnWidth
+} from "@utils/table";
 
 import { KristNameLink } from "@comp/names/KristNameLink";
 import { ContextualAddress } from "@comp/addresses/ContextualAddress";
@@ -45,6 +47,8 @@ export function NamesTable({ refreshingID, sortNew, addresses, setError, setPagi
     "names.tableTotal",
     options, setOptions, setPagination
   );
+
+  const dateColumnWidth = useDateColumnWidth();
 
   // Fetch the names from the API, mapping the table options
   useEffect(() => {
@@ -144,7 +148,7 @@ export function NamesTable({ refreshingID, sortNew, addresses, setError, setPagi
         dataIndex: "registered", key: "registered",
 
         render: time => <DateTime date={time} />,
-        width: 200,
+        width: dateColumnWidth,
 
         sorter: true,
         defaultSortOrder: sortNew ? "descend" : undefined
@@ -156,7 +160,7 @@ export function NamesTable({ refreshingID, sortNew, addresses, setError, setPagi
         dataIndex: "updated", key: "updated",
 
         render: time => <DateTime date={time} />,
-        width: 200,
+        width: dateColumnWidth,
 
         sorter: true
       }

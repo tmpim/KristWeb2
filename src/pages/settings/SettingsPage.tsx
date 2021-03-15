@@ -98,6 +98,15 @@ export function SettingsPage(): JSX.Element {
           />
         </Menu.Item>
 
+        {/* Show native dates */}
+        <Menu.Item key="advanced/showNativeDates">
+          <SettingBoolean
+            setting="showNativeDates"
+            titleKey="settings.showNativeDates"
+            descriptionKey="settings.showNativeDatesDescription"
+          />
+        </Menu.Item>
+
         {/* Default to 'Raw' on transaction page */}
         <Menu.Item key="advanced/transactionDefaultRaw">
           <SettingBoolean setting="transactionDefaultRaw" titleKey="settings.transactionDefaultRaw" />

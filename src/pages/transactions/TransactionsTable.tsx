@@ -12,7 +12,9 @@ import {
   lookupTransactions, LookupTransactionsOptions, LookupTransactionsResponse,
   LookupTransactionType
 } from "@api/lookup";
-import { useMalleablePagination, useTableHistory } from "@utils/table";
+import {
+  useMalleablePagination, useTableHistory, useDateColumnWidth
+} from "@utils/table";
 
 import { ListingType } from "./TransactionsPage";
 
@@ -89,6 +91,8 @@ export function TransactionsTable({
     "transactions.tableTotal",
     options, setOptions, setPagination
   );
+
+  const dateColumnWidth = useDateColumnWidth();
 
   // Fetch the transactions from the API, mapping the table options
   useEffect(() => {
@@ -222,7 +226,7 @@ export function TransactionsTable({
         title: t("transactions.columnTime"),
         dataIndex: "time", key: "time",
         render: time => <DateTime date={time} />,
-        width: 200,
+        width: dateColumnWidth,
 
         sorter: true,
         defaultSortOrder: "descend"

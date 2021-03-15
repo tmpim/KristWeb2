@@ -303,3 +303,10 @@ function usePaginationHotkeys<FieldsT extends string>(
     hotkeys: enableHotkeys ? hotkeys : null
   };
 }
+
+/** Returns an appropriate date column width for the given language and
+ * settings. */
+export function useDateColumnWidth(): number {
+  const showNativeDates = useBooleanSetting("showNativeDates");
+  return showNativeDates ? 250 : 200;
+}

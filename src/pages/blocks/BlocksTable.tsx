@@ -9,7 +9,9 @@ import { Link } from "react-router-dom";
 
 import { KristBlock } from "@api/types";
 import { lookupBlocks, LookupBlocksOptions, LookupBlocksResponse } from "@api/lookup";
-import { useMalleablePagination, useTableHistory } from "@utils/table";
+import {
+  useMalleablePagination, useTableHistory, useDateColumnWidth
+} from "@utils/table";
 
 import { ContextualAddress } from "@comp/addresses/ContextualAddress";
 import { BlockHash } from "./BlockHash";
@@ -43,6 +45,8 @@ export function BlocksTable({ refreshingID, lowest, setError, setPagination }: P
     "blocks.tableTotal",
     options, setOptions, setPagination
   );
+
+  const dateColumnWidth = useDateColumnWidth();
 
   // Fetch the blocks from the API, mapping the table options
   useEffect(() => {
@@ -134,7 +138,7 @@ export function BlocksTable({ refreshingID, lowest, setError, setPagination }: P
         title: t("blocks.columnTime"),
         dataIndex: "time", key: "time",
         render: time => <DateTime date={time} />,
-        width: 200,
+        width: dateColumnWidth,
 
         sorter: true,
         defaultSortOrder: lowest ? undefined : "descend"

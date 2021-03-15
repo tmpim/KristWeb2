@@ -13,6 +13,7 @@ import { useWallets } from "@wallets";
 import { WalletActions } from "./WalletActions";
 
 import { keyedNullSort, localeSort } from "@utils";
+import { useDateColumnWidth } from "@utils/table";
 
 export function WalletsTable(): JSX.Element {
   const { t } = useTranslation();
@@ -23,6 +24,8 @@ export function WalletsTable(): JSX.Element {
     .filter(w => w.category !== undefined && w.category !== "")
     .map(w => w.category) as string[])];
   localeSort(categories);
+
+  const dateColumnWidth = useDateColumnWidth();
 
   return <Table
     size="small"
@@ -102,6 +105,8 @@ export function WalletsTable(): JSX.Element {
         responsive: ["lg"],
 
         render: firstSeen => <DateTime date={firstSeen} />,
+        width: dateColumnWidth,
+
         sorter: keyedNullSort("firstSeen")
       },
 

@@ -41,6 +41,7 @@ export function DateTime({
   const formatter = useContext(TimeagoFormatterContext);
 
   const showRelativeDates = useBooleanSetting("showRelativeDates");
+  const showNativeDates = useBooleanSetting("showNativeDates");
 
   if (!date) return null;
 
@@ -69,7 +70,9 @@ export function DateTime({
     <span className={classes}>
       {isTimeAgo
         ? <TimeAgo date={realDate} formatter={formatter} />
-        : dayjs(realDate).format("YYYY/MM/DD HH:mm:ss")}
+        : dayjs(realDate).format(showNativeDates
+          ? "ll LTS"
+          : "YYYY/MM/DD HH:mm:ss")}
     </span>
   );
 
