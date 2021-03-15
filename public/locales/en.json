@@ -293,7 +293,7 @@
     "blockDifficultyChartLog": "Logarithmic",
 
     "motdCardTitle": "Server MOTD",
-    "motdDebugMode": "This sync node is an unofficial development server. Balances and transactions can be manipulated. Proceed with caution.",
+    "motdDebugMode": "This server is an unofficial development server. Balances and transactions can be manipulated. Proceed with caution.",
 
     "whatsNewCardTitle": "What's new"
   },
@@ -818,7 +818,7 @@
     "title": "Auth failed",
     "message": "You do not own this address.",
     "messageLocked": "This address was locked.",
-    "alert": "Message from the sync node:"
+    "alert": "Message from the Krist server:"
   },
 
   "whatsNew": {
