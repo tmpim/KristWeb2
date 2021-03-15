@@ -188,20 +188,16 @@ export function getFilterOptionsQuery(opts: LookupFilterOptionsBase<string>): UR
  * and storing state changes in the history stack. When the page is returned to,
  * the history stack is checked and location state is used as defaults. */
 export function useTableHistory<
-  OptionsT extends LookupFilterOptionsBase<string>,
-  ExtraStateT = any,
+  OptionsT extends LookupFilterOptionsBase<string>
 >(
-  defaults: Partial<OptionsT> & Pick<OptionsT, "orderBy" | "order">,
-  defaultExtraState?: Partial<ExtraStateT>
+  defaults: Partial<OptionsT> & Pick<OptionsT, "orderBy" | "order">
 ): {
   options: OptionsT;
   setOptions: (opts: OptionsT) => void;
-  extraState?: ExtraStateT;
-  setExtraState: (extra: ExtraStateT) => void;
 } {
   // Used to get/set the browser history state
   const history = useHistory();
-  const location = useLocation<Partial<OptionsT> & { extra?: ExtraStateT }>();
+  const location = useLocation<Partial<OptionsT>>();
   const { state } = location;
 
   const defaultPageSize = useIntegerSetting("defaultPageSize");
@@ -220,26 +216,14 @@ export function useTableHistory<
     return setOptions(opts);
   }
 
-  // Extra state parameters (e.g. "include mined transactions")
-  const [extraState, setExtraState] = useState<ExtraStateT | undefined>(
-    (location?.state?.extra ?? defaultExtraState) as ExtraStateT | undefined
-  );
-
-  function wrappedSetExtraState(extra: ExtraStateT) {
-    debug("table calling setExtraState:", extra);
-    updateLocation(undefined, extra);
-    return setExtraState(extra);
-  }
-
   // Merge the options and extra state into the location state and replace the
   // entry on the history stack.
-  function updateLocation(opts?: OptionsT, extra?: ExtraStateT) {
+  function updateLocation(opts?: OptionsT) {
     const updatedLocation = {
       ...location,
       state: {
         ...location?.state,
-        ...(opts ?? {}),
-        ...(extra ?? {})
+        ...(opts ?? {})
       }
     };
 
@@ -247,8 +231,5 @@ export function useTableHistory<
     history.replace(updatedLocation);
   }
 
-  return {
-    options, setOptions: wrappedSetOptions,
-    extraState, setExtraState: wrappedSetExtraState
-  };
+  return { options, setOptions: wrappedSetOptions };
 }
