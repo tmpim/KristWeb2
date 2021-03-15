@@ -114,6 +114,7 @@ export function NameTransferModal({
       />
     });
 
+    setSubmitting(false);
     closeModal();
   }
 
@@ -207,9 +208,12 @@ export function NameTransferModal({
         />,
 
         okText: t("nameTransfer.buttonSubmit"),
-        onOk: () => handleSubmit(filteredNames, recipient)
-          .catch(handleError)
-          .finally(() => setSubmitting(false)),
+        onOk: () => {
+          // Don't return this promise, so the dialog closes immediately
+          handleSubmit(filteredNames, recipient)
+            .catch(handleError)
+            .finally(() => setSubmitting(false));
+        },
 
         cancelText: t("dialog.cancel"),
         onCancel: () => setSubmitting(false)
@@ -227,11 +231,13 @@ export function NameTransferModal({
   }
 
   function closeModal() {
+    // Don't allow closing the modal while submitting
+    if (submitting) return;
+
     setVisible(false);
     form.resetFields();
     setNames(undefined);
     setRecipient(undefined);
-    setSubmitting(false);
   }
 
   const modal = <Modal
