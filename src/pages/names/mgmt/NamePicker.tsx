@@ -2,7 +2,8 @@
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import {
-  useState, useEffect, useMemo, Dispatch, SetStateAction, Ref
+  useState, useEffect, useMemo, useRef, Dispatch, SetStateAction, Ref,
+  MutableRefObject
 } from "react";
 import { Select, Form, Input, Button } from "antd";
 import { RefSelectProps } from "antd/lib/select";
@@ -28,8 +29,10 @@ export async function _fetchNames(
   t: TFunction,
   nameSuffix: string,
   wallets: WalletAddressMap,
-  setOptions: Dispatch<SetStateAction<NameOptionGroup[] | null>>
+  setOptions: Dispatch<SetStateAction<NameOptionGroup[] | null>>,
+  isMounted: MutableRefObject<boolean>
 ): Promise<void> {
+  if (!isMounted.current) return;
   setOptions(await fetchNames(t, nameSuffix, wallets));
 }
 
@@ -67,6 +70,9 @@ export function NamePicker({
 }: Props): JSX.Element {
   const { t } = useTranslation();
 
+  // Used for clean-up
+  const isMounted = useRef(true);
+
   // Used to fetch the list of available names
   const { walletAddressMap, joinedAddressList } = useWallets();
   const throttledFetchNames = useMemo(() =>
@@ -89,18 +95,30 @@ export function NamePicker({
   // Fetch the name list on mount/when the address list changes, or when one of
   // our wallets receives a name transaction.
   useEffect(() => {
+    // Skip doing anything when unmounted to avoid illegal state updates
+    if (!isMounted.current) debug("unmounted skipped lookup useEffect");
+
     debug(
       "addressList updated (%s, %s, %d)",
       joinedAddressList, nameSuffix, refreshID
     );
 
-    throttledFetchNames(t, nameSuffix, walletAddressMap, setNameOptions);
+    throttledFetchNames(
+      t,
+      nameSuffix,
+      walletAddressMap,
+      setNameOptions,
+      isMounted
+    );
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [throttledFetchNames, t, nameSuffix, refreshID, joinedAddressList]);
 
   // If passed an address, filter out that address from the results. Used to
   // prevent sending names to the existing owner. Renders the name options.
   useEffect(() => {
+    // Skip doing anything when unmounted to avoid illegal state updates
+    if (!isMounted.current) debug("unmounted skipped filter useEffect");
+
     if (!nameOptions) {
       setFilteredOptions(null);
       return;
@@ -134,6 +152,15 @@ export function NamePicker({
 
     setFilteredOptions(filteredGroups.map(renderNameOptions));
   }, [nameOptions, filterOwner, value, setValue]);
+
+  // Clean up the debounced function when unmounting
+  useEffect(() => {
+    return () => {
+      debug("unmounting name picker");
+      isMounted.current = false;
+      throttledFetchNames?.cancel();
+    };
+  }, [throttledFetchNames]);
 
   // Select all available names
   function selectAll() {
