@@ -504,6 +504,12 @@
     "columnARecord": "A Record",
     "columnUnpaid": "Unpaid Blocks",
 
+    "actions": "Actions",
+    "actionsSendKrist": "Send Krist",
+    "actionsTransferKrist": "Transfer Krist",
+    "actionsUpdateARecord": "Update A record",
+    "actionsTransferName": "Transfer name",
+
     "tableTotal": "{{count, number}} name",
     "tableTotal_plural": "{{count, number}} names",
     "tableTotalEmpty": "No names",
@@ -881,6 +887,32 @@
     "successMessage_plural": "Names transferred successfully",
     "successDescription": "Transferred <1>{{count, number}}</1> name to <3 />.",
     "successDescription_plural": "Transferred <1>{{count, number}}</1> names to <3 />."
+  },
+
+  "nameUpdate": {
+    "modalTitle": "Update names",
+
+    "labelNames": "Names",
+    "labelARecord": "A record",
+    "placeholderARecord": "A record (optional)",
+
+    "buttonSubmit": "Update names",
+
+    "errorNameRequired": "At least one name is required.",
+
+    "errorWalletGone": "That wallet no longer exists.",
+    "errorWalletDecrypt": "The wallet \"{{address}}\" could not be decrypted.",
+    "errorParameterNames": "Invalid names.",
+    "errorParameterARecord": "Invalid A record.",
+    "errorNameNotFound": "One or more names could not be found.",
+    "errorNotNameOwner": "You are not the owner of one or more names.",
+    "errorUnknown": "Unknown error updating names. See console for details.",
+    "errorNotificationTitle": "Name transfer failed",
+
+    "successMessage": "Name updated successfully",
+    "successMessage_plural": "Names updated successfully",
+    "successDescription": "Updated <1>{{count, number}}</1> names.",
+    "successDescription_plural": "Updated <1>{{count, number}}</1> names."
   },
 
   "noNamesResult": {

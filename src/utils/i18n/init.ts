@@ -3,58 +3,20 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { notification } from "antd";
 
-import { isLocalhost } from "./";
-
 import i18n from "i18next";
 import Backend from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
-import { initReactI18next, TFunction } from "react-i18next";
+
+import { initReactI18next } from "react-i18next";
+
 import JSON5 from "json5";
 
-import languagesJson from "../__data__/languages.json";
+import { isLocalhost } from "..";
+import { getLanguages } from "./languages";
 
 // Replaced by webpack DefinePlugin and git-revision-webpack-plugin
 declare const __GIT_VERSION__: string;
 const gitVersion: string = __GIT_VERSION__;
-
-export interface Language {
-  name: string;
-  nativeName?: string;
-  country?: string;
-  dayjsLocale?: string;
-  timeagoLocale?: string;
-  antLocale?: string;
-  contributors: Contributor[];
-}
-
-export interface Contributor {
-  name: string;
-  url?: string;
-}
-
-export type Languages = { [key: string]: Language } | null;
-export function getLanguages(): Languages {
-  return languagesJson;
-}
-
-export class TranslatedError extends Error {
-  constructor(message: string) { super(message); }
-}
-
-export function translateError(t: TFunction, error: Error, unknownErrorKey?: string): string {
-  if (error instanceof TranslatedError) {
-    return t(error.message);
-  } else {
-    return unknownErrorKey ? t(unknownErrorKey) : error.message;
-  }
-}
-
-// Provided as a testing polyfill
-/*const DEFAULT_LANGUAGE = { "en": {
-  "name": "English (GB)",
-  "country": "GB",
-  "contributors": []
-}};*/
 
 export const i18nLoader = i18n
   .use(Backend)

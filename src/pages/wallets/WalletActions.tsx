@@ -51,7 +51,7 @@ export function WalletActions({ wallet }: { wallet: Wallet }): JSX.Element {
 
   return <>
     <Dropdown.Button
-      className="wallet-actions"
+      className="table-actions wallet-actions"
 
       buttonsRender={([leftButton, rightButton]) => [
         <WalletEditButton key="leftButton" wallet={wallet}>

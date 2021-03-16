@@ -18,10 +18,12 @@ export class AuthFailedError extends api.APIError {
   }
 }
 
+export type ShowAuthFailedFn = (wallet: Wallet) => void;
+
 interface AuthFailedModalHookResponse {
   authFailedModal: Omit<ModalStaticFunctions, "warn">;
   authFailedContextHolder: ReactElement;
-  showAuthFailed: (wallet: Wallet) => void;
+  showAuthFailed: ShowAuthFailedFn;
 }
 
 /**

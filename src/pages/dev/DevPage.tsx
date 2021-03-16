@@ -7,7 +7,6 @@ import { PageLayout } from "@layout/PageLayout";
 
 import { ImportBackupModal } from "../backup/ImportBackupModal";
 import { AuthorisedAction } from "@comp/auth/AuthorisedAction";
-import { NameTransferModal } from "@pages/names/mgmt/NameTransferModal";
 
 import { useWallets, deleteWallet } from "@wallets";
 
@@ -16,7 +15,6 @@ const debug = Debug("kristweb:dev-page");
 
 export function DevPage(): JSX.Element {
   const [importVisible, setImportVisible] = useState(false);
-  const [transferNameVisible, setSendNameVisible] = useState(false);
   const { wallets } = useWallets();
 
   return <PageLayout
@@ -40,12 +38,6 @@ export function DevPage(): JSX.Element {
       <Button>Open import backup modal</Button>
     </AuthorisedAction>
     <ImportBackupModal visible={importVisible} setVisible={setImportVisible} />
-
-    {/* Open transfer name modal */}
-    <AuthorisedAction onAuthed={() => setSendNameVisible(true)}>
-      <Button>Open transfer name modal</Button>
-    </AuthorisedAction>
-    <NameTransferModal visible={transferNameVisible} setVisible={setSendNameVisible} />
 
     <br /><br />
 

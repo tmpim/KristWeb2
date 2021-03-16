@@ -223,3 +223,19 @@
   font-size: @font-size-sm;
   vertical-align: -0.1em;
 }
+
+.table-actions {
+  float: right;
+
+  .ant-btn {
+    &:not(:first-child) {
+      margin-left: 1px;
+    }
+
+    &:first-child {
+      padding-left: 0;
+      padding-right: 0;
+      width: 40px;
+    }
+  }
+}

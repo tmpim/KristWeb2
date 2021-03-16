@@ -83,3 +83,9 @@ export async function fetchNames(
     return null;
   }
 }
+
+export const buildLUT = (names: string[]): Record<string, boolean> =>
+  names.reduce((out, name) => {
+    out[name] = true;
+    return out;
+  }, {} as Record<string, boolean>);

@@ -56,10 +56,20 @@ export async function request<T>(method: string, endpoint: string, options?: Req
   return data;
 }
 
+/** Generates a stringified JSON POST body, with the appropriate Content-Type
+ * headers for the request. */
+export const buildBody = (value: any): RequestOptions => ({
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(value)
+});
+
 export const get = <T>(endpoint: string, options?: RequestOptions): Promise<APIResponse<T>> =>
   request("GET", endpoint, options);
-export const post = <T>(endpoint: string, options?: RequestOptions): Promise<APIResponse<T>> =>
-  request("POST", endpoint, options);
+export const post = <T>(endpoint: string, body?: any, options?: RequestOptions): Promise<APIResponse<T>> =>
+  request("POST", endpoint, {
+    ...buildBody(body),
+    ...options
+  });
 
 /** Re-usable syncNode hook, usually for refreshing things when the syncNode
  * changes. */

@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import { KristName } from "@api/types";
 import { Wallet } from "@wallets";
 import { SendTransactionModalLink } from "@comp/transactions/SendTransactionModalLink";
+import { NameEditModalLink } from "./mgmt/NameEditModalLink";
 
 interface Props {
   name: KristName;
@@ -16,9 +17,7 @@ interface Props {
   myWallet?: Wallet;
 }
 
-// TODO: _name is currently unused, but will be used when these buttons can
-//       actually do something
-export function NameButtonRow({ name: _name, nameWithSuffix, myWallet }: Props): JSX.Element {
+export function NameButtonRow({ name, nameWithSuffix, myWallet }: Props): JSX.Element {
   const { t } = useTranslation();
 
   return <>
@@ -42,16 +41,27 @@ export function NameButtonRow({ name: _name, nameWithSuffix, myWallet }: Props):
     {/* If we're the name owner, show the management buttons */}
     {/* Update A record button */}
     {myWallet && (
-      <Button icon={<EditOutlined />} className="nyi">
-        {t("name.buttonARecord")}
-      </Button>
+      <NameEditModalLink
+        mode="update"
+        name={name.name}
+        aRecord={name.a}
+      >
+        <Button icon={<EditOutlined />}>
+          {t("name.buttonARecord")}
+        </Button>
+      </NameEditModalLink>
     )}
 
     {/* Transfer name button */}
     {myWallet && (
-      <Button danger className="nyi">
-        {t("name.buttonTransferName")}
-      </Button>
+      <NameEditModalLink
+        mode="transfer"
+        name={name.name}
+      >
+        <Button danger>
+          {t("name.buttonTransferName")}
+        </Button>
+      </NameEditModalLink>
     )}
   </>;
 }

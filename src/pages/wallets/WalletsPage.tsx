@@ -14,8 +14,6 @@ import { WalletsTable } from "./WalletsTable";
 
 import { useWallets } from "@wallets";
 
-import "./WalletsPage.less";
-
 /** Extract the subtitle into its own component to avoid re-rendering the
  * entire page when a wallet is added. */
 function WalletsPageSubtitle(): JSX.Element {

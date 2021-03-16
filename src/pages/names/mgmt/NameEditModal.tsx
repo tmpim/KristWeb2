@@ -4,34 +4,35 @@
 import { useState, Dispatch, SetStateAction } from "react";
 import { Modal, Form, notification } from "antd";
 
-import { useTranslation, Trans } from "react-i18next";
-import { TranslatedError, translateError } from "@utils/i18n";
+import { useTFns } from "@utils/i18n";
 
 import {
   useWallets, useMasterPasswordOnly,
   decryptAddresses, DecryptErrorGone, DecryptErrorFailed,
   ValidDecryptedAddresses
 } from "@wallets";
-import { NameOption, fetchNames } from "./lookupNames";
 import { useNameSuffix } from "@utils/currency";
 
-import { APIError } from "@api";
-import { transferNames } from "@api/names";
-import { useAuthFailedModal, AuthFailedError } from "@api/AuthFailed";
+import { transferNames, updateNames } from "@api/names";
+import { useAuthFailedModal } from "@api/AuthFailed";
+
+import { NameOption, fetchNames, buildLUT } from "./lookupNames";
+import { handleError } from "./handleErrors";
 
 import { NamePicker } from "./NamePicker";
 import { AddressPicker } from "@comp/addresses/picker/AddressPicker";
-import { ContextualAddress } from "@comp/addresses/ContextualAddress";
+import { ARecordInput } from "./ARecordInput";
+import { showConfirmModal } from "./ConfirmModal";
+import { SuccessNotifContent } from "./SuccessNotifContent";
 
 import awaitTo from "await-to-js";
-import { groupBy } from "lodash-es";
 
-import Debug from "debug";
-const debug = Debug("kristweb:name-transfer-modal");
+export type Mode = "transfer" | "update";
 
 interface FormValues {
   names: string[];
-  recipient: string;
+  recipient?: string;
+  aRecord?: string;
 }
 
 interface Props {
@@ -39,23 +40,29 @@ interface Props {
   setVisible: Dispatch<SetStateAction<boolean>>;
 
   name?: string;
+  aRecord?: string | null;
+  mode: Mode;
 }
 
-export function NameTransferModal({
+export function NameEditModal({
   visible,
   setVisible,
-  name
+  name,
+  aRecord,
+  mode
 }: Props): JSX.Element {
-  const { t } = useTranslation();
+  // Return translated strings with the correct prefix depending on the mode
+  const tFns = useTFns(mode === "transfer" ? "nameTransfer." : "nameUpdate.");
+  const { t, tKey, tStr, tErr } = tFns;
 
   const [form] = Form.useForm<FormValues>();
   const [submitting, setSubmitting] = useState(false);
 
-  // Used to filter out names owned by the recipient
+  // Used to filter out names owned by the recipient (for transfers)
   const [names, setNames] = useState<string[] | undefined>();
   const [recipient, setRecipient] = useState<string | undefined>();
 
-  // Confirmation modal used for when sending multiple names.
+  // Confirmation modal used for when transferring multiple names.
   // This is created here to provide a translation context for the modal.
   const [confirmModal, contextHolder] = Modal.useModal();
   // Modal used when auth fails
@@ -66,13 +73,22 @@ export function NameTransferModal({
   // Used to fetch the list of available names
   const { walletAddressMap } = useWallets();
   const nameSuffix = useNameSuffix();
-  // Used to decrypt the wallets for transfer
+  // Used to decrypt the wallets for transfer/update
   const masterPassword = useMasterPasswordOnly();
 
-  // Actually perform the bulk name transfer
-  async function handleSubmit(names: NameOption[], recipient: string) {
+  // Wrap the handleError function
+  const onError = handleError.bind(
+    handleError,
+    tFns, showAuthFailed, walletAddressMap
+  );
+
+  // Actually perform the bulk name edit
+  async function handleSubmit(
+    names: NameOption[],
+    recipient?: string,
+    aRecord?: string
+  ) {
     if (!masterPassword) return;
-    debug("submitting with names %o", names);
 
     // Attempt to decrypt each wallet. Group the names by wallet to create a
     // LUT of decrypted privatekeys.
@@ -83,71 +99,42 @@ export function NameTransferModal({
 
     // Check if there were any decryption errors
     if (Object.values(decryptResults).includes(DecryptErrorGone))
-      throw new TranslatedError("nameTransfer.errorWalletGone");
+      throw tErr("errorWalletGone");
 
     const decryptFailed = Object.entries(decryptResults)
       .find(([_, r]) => r === DecryptErrorFailed);
     if (decryptFailed) {
       throw new Error(t(
-        "nameTransfer.errorWalletDecrypt",
+        tKey("errorWalletDecrypt"),
         { address: decryptFailed[0] }
       ));
     }
 
-    // Finally perform the transfer
-    await transferNames(
-      // We've already validated the names
-      decryptResults as ValidDecryptedAddresses,
-      names.map(n => ({ name: n.key, owner: n.owner })),
-      recipient
-    );
+    // We've already validated the names, so these can be cast
+    const finalAddresses = decryptResults as ValidDecryptedAddresses;
+    const finalNames = names.map(n => ({ name: n.key, owner: n.owner }));
 
+    if (mode === "transfer") {
+      // Transfer the names
+      await transferNames(finalAddresses, finalNames, recipient!);
+    } else if (mode === "update") {
+      // Update the names
+      await updateNames(finalAddresses, finalNames, aRecord!);
+    }
 
     // Success! Show notification and close modal
     const count = names.length;
-
     notif.success({
-      message: t("nameTransfer.successMessage", { count }),
+      message: t(tKey("successMessage"), { count }),
       description: <SuccessNotifContent
         count={count}
         recipient={recipient}
+        mode={mode}
       />
     });
 
     setSubmitting(false);
     closeModal();
-  }
-
-  // Convert API errors to friendlier errors
-  function handleError(err: Error) {
-    // Construct a TranslatedError pre-keyed to nameTransfer
-    const tErr = (key: string) => new TranslatedError("nameTransfer." + key);
-    const onError = (err: Error) => notification.error({
-      message: t("nameTransfer.errorNotificationTitle"),
-      description: translateError(t, err, "nameTransfer.errorUnknown")
-    });
-
-    switch (err.message) {
-    case "missing_parameter":
-    case "invalid_parameter":
-      switch ((err as APIError).parameter) {
-      case "name":
-        return onError(tErr("errorParameterNames"));
-      case "address":
-        return onError(tErr("errorParameterRecipient"));
-      }
-      break;
-    case "name_not_found":
-      return onError(tErr("errorNameNotFound"));
-    case "not_name_owner":
-      return onError(tErr("errorNotNameOwner"));
-    case "auth_failed":
-      return showAuthFailed(walletAddressMap[(err as AuthFailedError).address!]);
-    }
-
-    // Pass through any other unknown errors
-    console.error(err);
-    onError(err);
   }
 
   // Validate the form and consolidate all the data before submission
@@ -161,14 +148,7 @@ export function NameTransferModal({
       setSubmitting(false);
       return;
     }
-
-    // Convert the desired names to a lookup table
-    const { names, recipient } = values;
-    const namesLUT = names
-      .reduce((out, name) => {
-        out[name] = true;
-        return out;
-      }, {} as Record<string, boolean>);
+    const { names, recipient, aRecord } = values;
 
     // Lookup the names list one last time, to associate the name owners
     // to the wallets for decryption, and to show the correct confirmation
@@ -178,8 +158,8 @@ export function NameTransferModal({
       // This shouldn't happen, but if the owner suddenly has no names anymore,
       // show an error.
       notification.error({
-        message: t("nameTransfer.errorNotifTitle"),
-        description: t("nameTransfer.errorNameRequired")
+        message: tStr("errorNotifTitle"),
+        description: tStr("errorNameRequired")
       });
       setSubmitting(false);
       return;
@@ -189,7 +169,8 @@ export function NameTransferModal({
     const filteredNameGroups = nameGroups
       .filter(g => g.wallet.address !== recipient);
 
-    // The names from filteredNameGroups that we actually want to transfer
+    // The names from filteredNameGroups that we actually want to edit
+    const namesLUT = buildLUT(names);
     const allNames = filteredNameGroups.flatMap(g => g.names);
     const filteredNames = allNames.filter(n => !!namesLUT[n.key]);
 
@@ -197,31 +178,23 @@ export function NameTransferModal({
     const allNamesCount = allNames.length;
     const count = filteredNames.length;
 
-    // If sending multiple names, prompt for confirmation
-    if (count > 1) {
-      confirmModal.confirm({
-        title: t("nameTransfer.modalTitle"),
-        content: <ConfirmModalContent
-          count={count}
-          allNamesCount={allNamesCount}
-          recipient={recipient}
-        />,
-
-        okText: t("nameTransfer.buttonSubmit"),
-        onOk: () => {
-          // Don't return this promise, so the dialog closes immediately
-          handleSubmit(filteredNames, recipient)
-            .catch(handleError)
-            .finally(() => setSubmitting(false));
-        },
-
-        cancelText: t("dialog.cancel"),
-        onCancel: () => setSubmitting(false)
-      });
-    } else {
-      handleSubmit(filteredNames, recipient)
-        .catch(handleError)
+    // Don't return this promise, so the confirm modal closes immediately
+    const triggerSubmit = () => {
+      handleSubmit(filteredNames, recipient, aRecord)
+        .catch(onError)
         .finally(() => setSubmitting(false));
+    };
+
+    if (mode === "transfer" && count > 1) {
+      // If transferring multiple names, prompt for confirmation
+      showConfirmModal(
+        t, confirmModal,
+        count, allNamesCount, recipient!,
+        triggerSubmit, setSubmitting
+      );
+    } else {
+      // Otherwise, submit straight away
+      triggerSubmit();
     }
   }
 
@@ -243,10 +216,10 @@ export function NameTransferModal({
   const modal = <Modal
     visible={visible}
 
-    title={t("nameTransfer.modalTitle")}
+    title={tStr("modalTitle")}
 
     onOk={onSubmit}
-    okText={t("nameTransfer.buttonSubmit")}
+    okText={tStr("buttonSubmit")}
     okButtonProps={submitting ? { loading: true } : undefined}
 
     onCancel={closeModal}
@@ -256,12 +229,17 @@ export function NameTransferModal({
     <Form
       form={form}
       layout="vertical"
-      className="name-transfer-form"
+      className={mode === "transfer"
+        ? "name-transfer-form"
+        : "name-update-form"}
 
-      name="nameTransfer"
+      name={mode === "transfer" ? "nameTransfer" : "nameUpdate"}
 
       initialValues={{
-        names: name ? [name] : undefined
+        names: name ? [name] : undefined,
+
+        // Start with an initial A record if this is the update name modal
+        ...(mode === "update" ? { aRecord } : {})
       }}
 
       onValuesChange={onValuesChange}
@@ -270,10 +248,10 @@ export function NameTransferModal({
       {/* Names */}
       <NamePicker
         formName="names"
-        label={t("nameTransfer.labelNames")}
+        label={tStr("labelNames")}
         tabIndex={1}
 
-        filterOwner={recipient}
+        filterOwner={mode === "transfer" ? recipient : undefined}
         suppressUpdates={submitting}
 
         value={names}
@@ -283,18 +261,27 @@ export function NameTransferModal({
         allowAll
       />
 
-      {/* Recipient */}
-      <AddressPicker
-        name="recipient"
-        label={t("nameTransfer.labelRecipient")}
-        tabIndex={2}
+      {/* Display the correct input; an address picker for transfer recipients,
+        * or a textbox for A records. */}
+      {mode === "transfer"
+        ? (
+          // Transfer - Recipient
+          <AddressPicker
+            name="recipient"
+            label={t("nameTransfer.labelRecipient")}
+            tabIndex={2}
 
-        value={recipient}
-        suppressUpdates={submitting}
+            value={recipient}
+            suppressUpdates={submitting}
 
-        noNames
-        nameHint
-      />
+            noNames
+            nameHint
+          />
+        )
+        : (
+          // Update - A record
+          <ARecordInput />
+        )}
     </Form>
   </Modal>;
 
@@ -308,46 +295,4 @@ export function NameTransferModal({
     {authFailedContextHolder}
     {notifContextHolder}
   </>;
-}
-
-interface CountRecipient {
-  count: number;
-  recipient: string;
-}
-
-function ConfirmModalContent({
-  count,
-  recipient,
-  allNamesCount
-}: CountRecipient & { allNamesCount: number }): JSX.Element {
-  const { t } = useTranslation();
-
-  // Show the appropriate message, if this is all the owner's names
-  return <Trans
-    t={t}
-    i18nKey={count >= allNamesCount
-      ? "nameTransfer.warningAllNames"
-      : "nameTransfer.warningMultipleNames"}
-    count={count}
-  >
-    Are you sure you want to transfer <b>{{ count }}</b> names to
-    <ContextualAddress address={recipient} />?
-  </Trans>;
-}
-
-function SuccessNotifContent({
-  count,
-  recipient
-}: CountRecipient): JSX.Element {
-  const { t } = useTranslation();
-
-  // Show the appropriate message, if this is all the owner's names
-  return <Trans
-    t={t}
-    i18nKey={"nameTransfer.successDescription"}
-    count={count}
-  >
-    Transferred <b>{{ count }}</b> names to
-    <ContextualAddress address={recipient} />.
-  </Trans>;
 }

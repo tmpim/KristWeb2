@@ -9,35 +9,53 @@ import { ValidDecryptedAddresses } from "@wallets";
 import Debug from "debug";
 const debug = Debug("kristweb:api-names");
 
+interface PartialName {
+  name: string;
+  owner: string;
+}
+
+/** Convert auth_failed errors to AuthFailedError so the modal can display the
+ * correct address. */
+async function wrapAuthFailedError(name: PartialName, err: Error) {
+  if (err.message === "auth_failed")
+    throw new AuthFailedError(err.message, name.owner);
+  else
+    throw err;
+}
+
 export async function transferNames(
   decryptedAddresses: ValidDecryptedAddresses,
-  names: { name: string; owner: string }[],
+  names: PartialName[],
   recipient: string
 ): Promise<void> {
   for (const name of names) {
     const { privatekey } = decryptedAddresses[name.owner];
+    const onError = wrapAuthFailedError.bind(undefined, name);
 
-    try {
-      debug("transferring name %s from %s to %s",
-        name.name, name.owner, recipient);
+    debug("transferring name %s from %s to %s",
+      name.name, name.owner, recipient);
 
-      await api.post(
-        `/names/${encodeURIComponent(name.name)}/transfer`,
-        {
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            address: recipient,
-            privatekey
-          })
-        }
-      );
-    } catch (err) {
-      // Convert auth_failed errors to AuthFailedError so the modal can display
-      // the correct address
-      if (err.message === "auth_failed")
-        throw new AuthFailedError(err.message, name.owner);
-      else
-        throw err;
-    }
+    await api.post(
+      `/names/${encodeURIComponent(name.name)}/transfer`,
+      { address: recipient, privatekey }
+    ).catch(onError);
+  }
+}
+
+export async function updateNames(
+  decryptedAddresses: ValidDecryptedAddresses,
+  names: PartialName[],
+  aRecord?: string | null
+): Promise<void> {
+  for (const name of names) {
+    const { privatekey } = decryptedAddresses[name.owner];
+    const onError = wrapAuthFailedError.bind(undefined, name);
+
+    debug("updating name %s a record to %s", name.name, aRecord);
+
+    await api.post(
+      `/names/${encodeURIComponent(name.name)}/update`,
+      { a: aRecord?.trim() || null, privatekey }
+    ).catch(onError);
   }
 }

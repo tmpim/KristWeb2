@@ -12,6 +12,9 @@ import {
   useMalleablePagination, useTableHistory, useDateColumnWidth
 } from "@utils/table";
 
+import { useWallets } from "@wallets";
+import { NameActions } from "./mgmt/NameActions";
+
 import { KristNameLink } from "@comp/names/KristNameLink";
 import { ContextualAddress } from "@comp/addresses/ContextualAddress";
 import { TransactionConciseMetadata } from "@comp/transactions/TransactionConciseMetadata";
@@ -49,6 +52,9 @@ export function NamesTable({ refreshingID, sortNew, addresses, setError, setPagi
   );
 
   const dateColumnWidth = useDateColumnWidth();
+
+  // Used to change the actions depending on whether or not we own the name
+  const { walletAddressMap } = useWallets();
 
   // Fetch the names from the API, mapping the table options
   useEffect(() => {
@@ -163,6 +169,18 @@ export function NamesTable({ refreshingID, sortNew, addresses, setError, setPagi
         width: dateColumnWidth,
 
         sorter: true
+      },
+
+      // Actions
+      {
+        key: "actions",
+        width: 100, // Force it to be minimum size
+        render: (_, record) => (
+          <NameActions
+            name={record}
+            isOwn={!!walletAddressMap[record.owner]}
+          />
+        )
       }
     ]}
   />;
