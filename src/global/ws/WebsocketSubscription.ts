@@ -101,6 +101,6 @@ export function useSubscription({ address, name }: { address?: string; name?: st
     ? storeSubscription.lastTransactionID
     : 0;
 
-  debug("ws subscription %s is %d", subscriptionID, out);
+  // debug("ws subscription %s is %d", subscriptionID, out);
   return out;
 }

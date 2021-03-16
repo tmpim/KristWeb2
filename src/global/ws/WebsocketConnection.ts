@@ -156,8 +156,8 @@ export class WebsocketConnection {
         // Update the name counts using the address lookup
         case "name_purchase":
         case "name_transfer":
-          if (fromWallet) syncWallet(fromWallet);
-          if (toWallet) syncWallet(toWallet);
+          if (fromWallet) this.refreshBalance(fromWallet.address, true);
+          if (toWallet) this.refreshBalance(toWallet.address, true);
           break;
 
         // Any other transaction; refresh the balances via the websocket
@@ -242,7 +242,7 @@ export class WebsocketConnection {
   /** Queues a command to re-fetch an address's balance. The response will be
    * handled in {@link handleMessage}. This is automatically throttled to
    * execute on the leading edge of 500ms (REFRESH_THROTTLE_MS). */
-  refreshBalance(address: string): void {
+  refreshBalance(address: string, fetchNames?: boolean): void {
     if (this.refreshThrottles[address]) {
       // Use the existing throttled function if it exists
       this.refreshThrottles[address](address);
@@ -255,13 +255,18 @@ export class WebsocketConnection {
       );
 
       this.refreshThrottles[address] = throttled;
-      throttled(address);
+      throttled(address, fetchNames);
     }
   }
 
-  private _refreshBalance(address: string) {
+  private _refreshBalance(address: string, fetchNames?: boolean) {
     debug("refreshing balance of %s", address);
-    this.ws?.sendPacked({ type: "address", id: this.messageID++, address });
+    this.ws?.sendPacked({
+      type: "address",
+      id: this.messageID++,
+      address,
+      fetchNames
+    });
   }
 
   /** Re-syncs balances for all the wallets, just in case. */
