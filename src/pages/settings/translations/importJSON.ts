@@ -41,7 +41,7 @@ export function importJSON(files?: FileList | null): void {
   if (!files?.[0]) return;
   const file = files[0];
 
-  debug("importing file %s: %o", file.name, file);
+  debug("importing file %s", file.name);
 
   // Disallow non-JSON files
   if (file.type !== "application/json") {
@@ -56,7 +56,7 @@ export function importJSON(files?: FileList | null): void {
     if (!e.target || !e.target.result) return;
 
     const contents = e.target.result.toString();
-    debug("got file contents: %s", contents);
+    // debug("got file contents: %s", contents);
 
     importLanguage(contents)
       .catch(err => {

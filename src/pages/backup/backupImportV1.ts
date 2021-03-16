@@ -82,11 +82,12 @@ export async function importV1Wallet(
     await to((async () => JSON.parse(dec))());
   if (err) throw new BackupWalletError("errorWalletJSON");
 
-  debug("v1 wallet %s full data:", uuid, wallet);
+  // Removed for #25
+  // debug("v1 wallet %s full data:", uuid, wallet);
 
   // Validate the type of the decrypted wallet data
   if (!isPlainObject(wallet)) {
-    debug("v1 wallet %s had decrypted type %s", uuid, typeof wallet, wallet);
+    debug("v1 wallet %s had decrypted type %s", uuid, typeof wallet);
     throw new BackupWalletError("errorInvalidTypeObject");
   }
 
@@ -222,7 +223,7 @@ export async function importV1Wallet(
     newWalletData, password,
     true
   );
-  debug("new wallet %s (%s): %o", newWallet.id, newWallet.address, newWallet);
+  debug("new wallet %s (%s)", newWallet.id, newWallet.address);
 
   // Add it to the results
   results.newWallets++;

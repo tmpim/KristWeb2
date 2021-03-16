@@ -44,7 +44,7 @@ export function StorageBroadcast(): JSX.Element | null {
         // Load the wallet from localStorage (the update should've been
         // synchronous)
         const wallet = parseWallet(id, localStorage.getItem(key));
-        debug("%s broadcast %s: %o", type, id, wallet);
+        debug("%s broadcast %s", type, id);
 
         // Dispatch the new/updated wallet to the Redux store
         if (type === "addWallet") store.dispatch(actions.addWallet(wallet));

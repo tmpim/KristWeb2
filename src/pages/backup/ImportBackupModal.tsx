@@ -69,7 +69,7 @@ export function ImportBackupModal({ visible, setVisible }: Props): JSX.Element {
     if (!files?.[0]) return;
     const file = files[0];
 
-    debug("importing file %s: %o", file.name, file);
+    debug("importing file %s", file.name);
 
     // Disallow non-plaintext files
     if (file.type !== "text/plain") {
@@ -90,7 +90,7 @@ export function ImportBackupModal({ visible, setVisible }: Props): JSX.Element {
       }
 
       const contents = e.target.result.toString();
-      debug("got file contents: %s", contents);
+      // debug("got file contents: %s", contents);
 
       // Update the form
       setCode(contents); // Triggers a format re-detection

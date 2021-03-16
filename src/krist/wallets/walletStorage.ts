@@ -72,7 +72,7 @@ export function saveWallet(wallet: Wallet): void {
   if (wallet.dontSave) return;
 
   const key = getWalletKey(wallet);
-  debug("saving wallet key %s with data %o", key, wallet);
+  debug("saving wallet key %s", key);
 
   const serialised = JSON.stringify(wallet);
   localStorage.setItem(key, serialised);
