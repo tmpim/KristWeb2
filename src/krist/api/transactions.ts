@@ -28,11 +28,8 @@ export async function makeTransaction(
   const { transaction } = await api.post<MakeTransactionResponse>(
     "/transactions",
     {
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        privatekey, to, amount,
-        metadata: metadata || undefined // Clean up empty strings
-      })
+      privatekey, to, amount,
+      metadata: metadata || undefined // Clean up empty strings
     }
   );
 

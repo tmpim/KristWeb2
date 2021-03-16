@@ -79,10 +79,7 @@ function ModalContents({ wallet }: { wallet: Wallet }): JSX.Element {
       const { privatekey } = decrypted;
 
       // Perform the fetch
-      api.post<AlertAPIResponse>("/addresses/alert", {
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ privatekey })
-      })
+      api.post<AlertAPIResponse>("/addresses/alert", { privatekey })
         .then(res => setAlert(res.alert))
         .catch(console.error)
         .finally(() => setLoading(false));
