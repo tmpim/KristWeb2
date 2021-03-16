@@ -9,6 +9,8 @@ import { ValidDecryptedAddresses } from "@wallets";
 import Debug from "debug";
 const debug = Debug("kristweb:api-names");
 
+export type ProgressCallback = () => void;
+
 interface PartialName {
   name: string;
   owner: string;
@@ -26,7 +28,8 @@ async function wrapAuthFailedError(name: PartialName, err: Error) {
 export async function transferNames(
   decryptedAddresses: ValidDecryptedAddresses,
   names: PartialName[],
-  recipient: string
+  recipient: string,
+  onProgress?: ProgressCallback
 ): Promise<void> {
   for (const name of names) {
     const { privatekey } = decryptedAddresses[name.owner];
@@ -39,13 +42,16 @@ export async function transferNames(
       `/names/${encodeURIComponent(name.name)}/transfer`,
       { address: recipient, privatekey }
     ).catch(onError);
+
+    onProgress?.();
   }
 }
 
 export async function updateNames(
   decryptedAddresses: ValidDecryptedAddresses,
   names: PartialName[],
-  aRecord?: string | null
+  aRecord?: string | null,
+  onProgress?: ProgressCallback
 ): Promise<void> {
   for (const name of names) {
     const { privatekey } = decryptedAddresses[name.owner];
@@ -57,5 +63,7 @@ export async function updateNames(
       `/names/${encodeURIComponent(name.name)}/update`,
       { a: aRecord?.trim() || null, privatekey }
     ).catch(onError);
+
+    onProgress?.();
   }
 }

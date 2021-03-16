@@ -2,7 +2,7 @@
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { useState, Dispatch, SetStateAction } from "react";
-import { Modal, Form, notification } from "antd";
+import { Modal, notification } from "antd";
 
 import { useTFns } from "@utils/i18n";
 
@@ -20,6 +20,7 @@ import { NameOption, fetchNames, buildLUT } from "./lookupNames";
 import { handleError } from "./handleErrors";
 
 import { useNameEditForm } from "./NameEditForm";
+import { useEditProgress } from "./EditProgress";
 import { showConfirmModal } from "./ConfirmModal";
 import { SuccessNotifContent } from "./SuccessNotifContent";
 
@@ -66,6 +67,9 @@ export function NameEditModal({
   // Create the form. This is usually not rendered during submission.
   const { form, formInstance, resetFields }
     = useNameEditForm({ name, aRecord, mode, submitting, onSubmit, tFns });
+  // Progress bar for bulk edits
+  const { progressBar, onProgress, initProgress, resetProgress }
+    = useEditProgress(tFns);
 
   // Wrap the handleError function
   const onError = handleError.bind(
@@ -107,10 +111,10 @@ export function NameEditModal({
 
     if (mode === "transfer") {
       // Transfer the names
-      await transferNames(finalAddresses, finalNames, recipient!);
+      await transferNames(finalAddresses, finalNames, recipient!, onProgress);
     } else if (mode === "update") {
       // Update the names
-      await updateNames(finalAddresses, finalNames, aRecord!);
+      await updateNames(finalAddresses, finalNames, aRecord!, onProgress);
     }
 
     // Success! Show notification and close modal
@@ -171,6 +175,7 @@ export function NameEditModal({
 
     // Don't return this promise, so the confirm modal closes immediately
     const triggerSubmit = () => {
+      initProgress(count);
       handleSubmit(filteredNames, recipient, aRecord)
         .catch(onError)
         .finally(() => setSubmitting(false));
@@ -194,6 +199,7 @@ export function NameEditModal({
     if (submitting) return;
     setVisible(false);
     resetFields();
+    resetProgress();
   }
 
   return <>
@@ -213,7 +219,7 @@ export function NameEditModal({
       {/* Only render the form if not submitting */}
       {!submitting && form}
 
-      {/* TODO: Display a progress bar here */}
+      {submitting && progressBar}
     </Modal>
 
     {/* Give the modals somewhere to find the context from. This is done

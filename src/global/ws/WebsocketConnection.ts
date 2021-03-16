@@ -7,7 +7,7 @@ import * as nodeActions from "@actions/NodeActions";
 
 import * as api from "@api";
 import { KristAddress, KristBlock, KristTransaction, WSConnectionState, WSIncomingMessage, WSSubscriptionLevel } from "@api/types";
-import { Wallet, WalletMap, findWalletByAddress, syncWallet, syncWalletUpdate } from "@wallets";
+import { Wallet, WalletMap, findWalletByAddress, syncWalletUpdate } from "@wallets";
 import WebSocketAsPromised from "websocket-as-promised";
 
 import { WSSubscription } from "./WebsocketSubscription";
