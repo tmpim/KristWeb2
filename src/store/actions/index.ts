@@ -6,12 +6,14 @@ import * as walletsActions from "./WalletsActions";
 import * as settingsActions from "./SettingsActions";
 import * as websocketActions from "./WebsocketActions";
 import * as nodeActions from "./NodeActions";
+import * as miscActions from "./MiscActions";
 
 const RootAction = {
   masterPassword: masterPasswordActions,
   wallets: walletsActions,
   settings: settingsActions,
   websocket: websocketActions,
-  node: nodeActions
+  node: nodeActions,
+  misc: miscActions
 };
 export default RootAction;

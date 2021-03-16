@@ -1,7 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { useState, Dispatch, SetStateAction } from "react";
+import { useState, useRef, Dispatch, SetStateAction } from "react";
 import { Modal, notification } from "antd";
 
 import { useTFns } from "@utils/i18n";
@@ -18,6 +18,7 @@ import { useAuthFailedModal } from "@api/AuthFailed";
 
 import { NameOption, fetchNames, buildLUT } from "./lookupNames";
 import { handleError } from "./handleErrors";
+import { lockNameTable, NameTableLock } from "../tableLock";
 
 import { useNameEditForm } from "./NameEditForm";
 import { useEditProgress } from "./EditProgress";
@@ -49,6 +50,8 @@ export function NameEditModal({
   const { t, tKey, tStr, tErr } = tFns;
 
   const [submitting, setSubmitting] = useState(false);
+  // Pause updates of the name table if it's visible when submitting
+  const tableLock = useRef<NameTableLock>();
 
   // Confirmation modal used for when transferring multiple names.
   // This is created here to provide a translation context for the modal.
@@ -109,6 +112,10 @@ export function NameEditModal({
     const finalAddresses = decryptResults as ValidDecryptedAddresses;
     const finalNames = names.map(n => ({ name: n.key, owner: n.owner }));
 
+    // Lock the name table if present
+    tableLock?.current?.release();
+    tableLock.current = lockNameTable();
+
     if (mode === "transfer") {
       // Transfer the names
       await transferNames(finalAddresses, finalNames, recipient!, onProgress);
@@ -129,6 +136,7 @@ export function NameEditModal({
     });
 
     setSubmitting(false);
+    tableLock?.current?.release();
     closeModal();
   }
 
@@ -178,7 +186,10 @@ export function NameEditModal({
       initProgress(count);
       handleSubmit(filteredNames, recipient, aRecord)
         .catch(onError)
-        .finally(() => setSubmitting(false));
+        .finally(() => {
+          setSubmitting(false);
+          tableLock?.current?.release();
+        });
     };
 
     if (mode === "transfer" && count > 1) {
@@ -200,6 +211,7 @@ export function NameEditModal({
     setVisible(false);
     resetFields();
     resetProgress();
+    tableLock?.current?.release();
   }
 
   return <>

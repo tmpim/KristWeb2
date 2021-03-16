@@ -49,3 +49,8 @@ export const PACKAGE = "PACKAGE";
 export const CURRENCY = "CURRENCY";
 export const CONSTANTS = "CONSTANTS";
 export const MOTD = "MOTD";
+
+// Miscellaneous
+// ---
+export const INCR_NAME_TABLE_LOCK = "INCR_NAME_TABLE_LOCK";
+export const DECR_NAME_TABLE_LOCK = "DECR_NAME_TABLE_LOCK";

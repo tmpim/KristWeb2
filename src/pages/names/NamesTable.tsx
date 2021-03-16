@@ -14,6 +14,7 @@ import {
 
 import { useWallets } from "@wallets";
 import { NameActions } from "./mgmt/NameActions";
+import { useNameTableLock } from "./tableLock";
 
 import { KristNameLink } from "@comp/names/KristNameLink";
 import { ContextualAddress } from "@comp/addresses/ContextualAddress";
@@ -56,8 +57,16 @@ export function NamesTable({ refreshingID, sortNew, addresses, setError, setPagi
   // Used to change the actions depending on whether or not we own the name
   const { walletAddressMap } = useWallets();
 
+  // Used to pause the table lookups when performing a bulk name edit
+  const locked = useNameTableLock();
+
   // Fetch the names from the API, mapping the table options
   useEffect(() => {
+    if (locked) {
+      debug("skipping name lookup; table locked");
+      return;
+    }
+
     debug("looking up names for %s", addresses ? addresses.join(",") : "network");
     setLoading(true);
 
@@ -65,7 +74,7 @@ export function NamesTable({ refreshingID, sortNew, addresses, setError, setPagi
       .then(setRes)
       .catch(setError)
       .finally(() => setLoading(false));
-  }, [refreshingID, addresses, setError, options]);
+  }, [locked, refreshingID, addresses, setError, options]);
 
   debug("results? %b  res.names.length: %d  res.count: %d  res.total: %d", !!res, res?.names?.length, res?.count, res?.total);
 

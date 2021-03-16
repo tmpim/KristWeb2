@@ -8,11 +8,13 @@ import { WalletsReducer } from "./WalletsReducer";
 import { SettingsReducer } from "./SettingsReducer";
 import { WebsocketReducer } from "./WebsocketReducer";
 import { NodeReducer } from "./NodeReducer";
+import { MiscReducer } from "./MiscReducer";
 
 export default combineReducers({
   masterPassword: MasterPasswordReducer,
   wallets: WalletsReducer,
   settings: SettingsReducer,
   websocket: WebsocketReducer,
-  node: NodeReducer
+  node: NodeReducer,
+  misc: MiscReducer
 });
