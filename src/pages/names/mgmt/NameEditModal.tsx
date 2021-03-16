@@ -19,21 +19,13 @@ import { useAuthFailedModal } from "@api/AuthFailed";
 import { NameOption, fetchNames, buildLUT } from "./lookupNames";
 import { handleError } from "./handleErrors";
 
-import { NamePicker } from "./NamePicker";
-import { AddressPicker } from "@comp/addresses/picker/AddressPicker";
-import { ARecordInput } from "./ARecordInput";
+import { useNameEditForm } from "./NameEditForm";
 import { showConfirmModal } from "./ConfirmModal";
 import { SuccessNotifContent } from "./SuccessNotifContent";
 
 import awaitTo from "await-to-js";
 
 export type Mode = "transfer" | "update";
-
-interface FormValues {
-  names: string[];
-  recipient?: string;
-  aRecord?: string;
-}
 
 interface Props {
   visible: boolean;
@@ -55,12 +47,7 @@ export function NameEditModal({
   const tFns = useTFns(mode === "transfer" ? "nameTransfer." : "nameUpdate.");
   const { t, tKey, tStr, tErr } = tFns;
 
-  const [form] = Form.useForm<FormValues>();
   const [submitting, setSubmitting] = useState(false);
-
-  // Used to filter out names owned by the recipient (for transfers)
-  const [names, setNames] = useState<string[] | undefined>();
-  const [recipient, setRecipient] = useState<string | undefined>();
 
   // Confirmation modal used for when transferring multiple names.
   // This is created here to provide a translation context for the modal.
@@ -75,6 +62,10 @@ export function NameEditModal({
   const nameSuffix = useNameSuffix();
   // Used to decrypt the wallets for transfer/update
   const masterPassword = useMasterPasswordOnly();
+
+  // Create the form. This is usually not rendered during submission.
+  const { form, formInstance, resetFields }
+    = useNameEditForm({ name, aRecord, mode, submitting, onSubmit, tFns });
 
   // Wrap the handleError function
   const onError = handleError.bind(
@@ -142,7 +133,7 @@ export function NameEditModal({
     setSubmitting(true);
 
     // Get the form values
-    const [err, values] = await awaitTo(form.validateFields());
+    const [err, values] = await awaitTo(formInstance.validateFields());
     if (err || !values) {
       // Validation errors are handled by the form
       setSubmitting(false);
@@ -198,95 +189,32 @@ export function NameEditModal({
     }
   }
 
-  function onValuesChange(_: unknown, values: Partial<FormValues>) {
-    setNames(values.names || undefined);
-    setRecipient(values.recipient || undefined);
-  }
-
   function closeModal() {
     // Don't allow closing the modal while submitting
     if (submitting) return;
-
     setVisible(false);
-    form.resetFields();
-    setNames(undefined);
-    setRecipient(undefined);
+    resetFields();
   }
 
-  const modal = <Modal
-    visible={visible}
-
-    title={tStr("modalTitle")}
-
-    onOk={onSubmit}
-    okText={tStr("buttonSubmit")}
-    okButtonProps={submitting ? { loading: true } : undefined}
-
-    onCancel={closeModal}
-    cancelText={t("dialog.cancel")}
-    destroyOnClose
-  >
-    <Form
-      form={form}
-      layout="vertical"
-      className={mode === "transfer"
-        ? "name-transfer-form"
-        : "name-update-form"}
-
-      name={mode === "transfer" ? "nameTransfer" : "nameUpdate"}
-
-      initialValues={{
-        names: name ? [name] : undefined,
-
-        // Start with an initial A record if this is the update name modal
-        ...(mode === "update" ? { aRecord } : {})
-      }}
-
-      onValuesChange={onValuesChange}
-      onFinish={onSubmit}
-    >
-      {/* Names */}
-      <NamePicker
-        formName="names"
-        label={tStr("labelNames")}
-        tabIndex={1}
-
-        filterOwner={mode === "transfer" ? recipient : undefined}
-        suppressUpdates={submitting}
-
-        value={names}
-        setValue={names => form.setFieldsValue({ names })}
-
-        multiple
-        allowAll
-      />
-
-      {/* Display the correct input; an address picker for transfer recipients,
-        * or a textbox for A records. */}
-      {mode === "transfer"
-        ? (
-          // Transfer - Recipient
-          <AddressPicker
-            name="recipient"
-            label={t("nameTransfer.labelRecipient")}
-            tabIndex={2}
-
-            value={recipient}
-            suppressUpdates={submitting}
-
-            noNames
-            nameHint
-          />
-        )
-        : (
-          // Update - A record
-          <ARecordInput />
-        )}
-    </Form>
-  </Modal>;
-
   return <>
-    {modal}
+    <Modal
+      visible={visible}
+
+      title={tStr("modalTitle")}
+
+      onOk={onSubmit}
+      okText={tStr("buttonSubmit")}
+      okButtonProps={submitting ? { loading: true } : undefined}
+
+      onCancel={closeModal}
+      cancelText={t("dialog.cancel")}
+      destroyOnClose
+    >
+      {/* Only render the form if not submitting */}
+      {!submitting && form}
+
+      {/* TODO: Display a progress bar here */}
+    </Modal>
 
     {/* Give the modals somewhere to find the context from. This is done
       * outside of the modal so that they don't get immediately destroyed when

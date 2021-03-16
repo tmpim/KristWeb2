@@ -886,7 +886,10 @@
     "successMessage": "Name transferred successfully",
     "successMessage_plural": "Names transferred successfully",
     "successDescription": "Transferred <1>{{count, number}}</1> name to <3 />.",
-    "successDescription_plural": "Transferred <1>{{count, number}}</1> names to <3 />."
+    "successDescription_plural": "Transferred <1>{{count, number}}</1> names to <3 />.",
+
+    "progress": "Transferring <1>{{count, number}}</1> name...",
+    "progress_plural": "Transferring <1>{{count, number}}</1> names..."
   },
 
   "nameUpdate": {
@@ -912,7 +915,10 @@
     "successMessage": "Name updated successfully",
     "successMessage_plural": "Names updated successfully",
     "successDescription": "Updated <1>{{count, number}}</1> names.",
-    "successDescription_plural": "Updated <1>{{count, number}}</1> names."
+    "successDescription_plural": "Updated <1>{{count, number}}</1> names.",
+
+    "progress": "Updating <1>{{count, number}}</1> name...",
+    "progress_plural": "Updating <1>{{count, number}}</1> names..."
   },
 
   "noNamesResult": {

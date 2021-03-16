@@ -24,7 +24,7 @@ import { throttle } from "lodash-es";
 import Debug from "debug";
 const debug = Debug("kristweb:name-picker");
 
-const FETCH_THROTTLE = 500;
+const FETCH_THROTTLE = 2000;
 export async function _fetchNames(
   t: TFunction,
   nameSuffix: string,
