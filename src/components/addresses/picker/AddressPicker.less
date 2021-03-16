@@ -41,6 +41,13 @@
 }
 
 .address-picker-hints {
+  .address-picker-hint {
+    // Disallow wrapping within a hint, but still allow the hints themselves to
+    // be wrapped (see #23)
+    white-space: nowrap;
+    word-break: none;
+  }
+
   .address-picker-separator {
     margin: 0 @padding-xs;
     color: @text-color-secondary;
