@@ -119,11 +119,13 @@ export function NamesPage({ listingType, sortNew }: Props): JSX.Element {
 
     // Purchase name button
     extra={<>
-      <NamePurchaseModalLink>
-        <Button type="primary" icon={<TagsOutlined />}>
-          {t("names.purchaseButton")}
-        </Button>
-      </NamePurchaseModalLink>
+      {!error && !isEmpty && (
+        <NamePurchaseModalLink>
+          <Button type="primary" icon={<TagsOutlined />}>
+            {t("names.purchaseButton")}
+          </Button>
+        </NamePurchaseModalLink>
+      )}
     </>}
   >
     {(() => {
