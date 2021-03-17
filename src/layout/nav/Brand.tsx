@@ -1,6 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
+import { useDebugValue } from "react";
 import { Tag } from "antd";
 
 import { useTranslation } from "react-i18next";
@@ -14,12 +15,17 @@ import { ConditionalLink } from "@comp/ConditionalLink";
 
 import packageJson from "../../../package.json";
 
+declare const __GIT_VERSION__: string;
+
 const prereleaseTagColours: { [key: string]: string } = {
   "dev": "red",
   "alpha": "orange",
   "beta": "blue",
   "rc": "green"
 };
+
+const devEnvs = ["development", "local", "test"];
+const dirtyRegex = /-dirty$/;
 
 export function Brand(): JSX.Element {
   const { t } = useTranslation();
@@ -31,11 +37,18 @@ export function Brand(): JSX.Element {
   const patch = semverPatch(version);
   const prerelease = semverPrerelease(version);
 
+  // Determine if the 'dev' tag should be shown
+  // Replaced by webpack DefinePlugin and git-revision-webpack-plugin
+  const gitVersion: string = __GIT_VERSION__;
+  const isDirty = dirtyRegex.test(gitVersion);
+  const isDev = devEnvs.includes(process.env.NODE_ENV || "development");
+
   // Convert semver prerelease parts to Bootstrap badge
+  const tagContents = isDirty || isDev ? ["dev"] : prerelease;
   let tag = null;
-  if (prerelease && prerelease.length) {
-    const variant = prereleaseTagColours[prerelease[0]] || undefined;
-    tag = <Tag color={variant}>{prerelease.join(".")}</Tag>;
+  if (tagContents && tagContents.length) {
+    const variant = prereleaseTagColours[tagContents[0]] || undefined;
+    tag = <Tag color={variant}>{tagContents.join(".")}</Tag>;
   }
 
   return <div className="site-header-brand">

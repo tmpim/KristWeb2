@@ -81,8 +81,8 @@ module.exports = {
       new AntdDayjsWebpackPlugin(),
       gitRevisionPlugin,
       new DefinePlugin({
-        "__GIT_VERSION__": JSON.stringify(gitRevisionPlugin.version()),
-        "__GIT_COMMIT_HASH__": JSON.stringify(gitRevisionPlugin.commithash()),
+        "__GIT_VERSION__": DefinePlugin.runtimeValue(() => JSON.stringify(gitRevisionPlugin.version()), []),
+        "__GIT_COMMIT_HASH__": DefinePlugin.runtimeValue(() => JSON.stringify(gitRevisionPlugin.commithash()), []),
         "__BUILD_TIME__": DefinePlugin.runtimeValue(Date.now),
         "__GIT_COMMITS__": JSON.stringify(commits)
       })
