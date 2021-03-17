@@ -515,7 +515,9 @@
     "tableTotalEmpty": "No names",
 
     "resultInvalidTitle": "Invalid address",
-    "resultInvalid": "That does not look like a valid Krist address."
+    "resultInvalid": "That does not look like a valid Krist address.",
+
+    "purchaseButton": "Purchase name"
   },
 
   "name": {
@@ -925,5 +927,37 @@
     "title": "No names yet",
     "subTitle": "You currently have no names in any of your wallets saved in KristWeb, so there is nothing to see here yet. Would you like to purchase a name?",
     "button": "Purchase name"
+  },
+
+  "namePurchase": {
+    "modalTitle": "Purchase name",
+
+    "nameCost": "Cost to purchase: <1 />",
+
+    "labelWallet": "Wallet",
+    "labelName": "Name",
+    "placeholderName": "Name",
+
+    "buttonSubmit": "Purchase (<1 />)",
+
+    "errorNameRequired": "Name is required.",
+    "errorInvalidName": "Invalid name.",
+    "errorNameTooLong": "Name is too long.",
+    "errorNameTaken": "That name is already taken!",
+    "errorInsufficientFunds": "Your wallet does not have enough funds to purchase a name.",
+
+    "errorWalletGone": "That wallet no longer exists.",
+    "errorWalletDecrypt": "The wallet \"{{address}}\" could not be decrypted.",
+    "errorUnknown": "Unknown error purchasing name. See console for details.",
+    "errorNotificationTitle": "Name purchase failed",
+
+    "successMessage": "Name purchased successfully",
+    "successNotificationButton": "View name",
+
+    "nameAvailable": "Name is available!"
+  },
+
+  "purchaseKrist": {
+    "modalTitle": "Purchase Krist"
   }
 }

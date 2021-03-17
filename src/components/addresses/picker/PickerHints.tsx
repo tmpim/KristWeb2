@@ -32,6 +32,8 @@ export function usePickerHints(
   hasExactName?: boolean,
   suppressUpdates?: boolean
 ): JSX.Element | null {
+  debug("using picker hints for %s", value);
+
   // Used for clean-up
   const isMounted = useRef(true);
 
@@ -111,6 +113,7 @@ export function usePickerHints(
     if (!value) {
       setFoundAddress(undefined);
       setFoundName(undefined);
+      setValidAddress(undefined);
       return;
     }
 
@@ -139,6 +142,8 @@ export function usePickerHints(
 
   // Clean up the debounced function when unmounting
   useEffect(() => {
+    isMounted.current = true;
+
     return () => {
       debug("unmounting address picker hint");
       isMounted.current = false;

@@ -27,6 +27,7 @@ import { useBooleanSetting } from "@utils/settings";
 
 import { NameButtonRow } from "./NameButtonRow";
 import { NameTransactionsCard } from "./NameTransactionsCard";
+import { NameEditModalLink } from "./mgmt/NameEditModalLink";
 
 import "./NamePage.less";
 
@@ -130,9 +131,15 @@ function PageContents({
             titleKey="name.aRecord"
             titleExtra={myWallet && <>
               <Tooltip title={t("name.aRecordEditTooltip")}>
-                <Typography.Link className="name-a-record-edit nyi">
-                  <EditOutlined />
-                </Typography.Link>
+                <NameEditModalLink
+                  mode="update"
+                  name={name.name}
+                  aRecord={name.a}
+                >
+                  <Typography.Link className="name-a-record-edit">
+                    <EditOutlined />
+                  </Typography.Link>
+                </NameEditModalLink>
               </Tooltip>
             </>}
             value={<NameARecordLink a={name.a} />}

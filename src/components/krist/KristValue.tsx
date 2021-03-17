@@ -1,6 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
+import React from "react";
 import classNames from "classnames";
 
 import { useSelector } from "react-redux";
@@ -11,6 +12,7 @@ import { KristSymbol } from "./KristSymbol";
 import "./KristValue.less";
 
 interface OwnProps {
+  icon?: React.ReactNode;
   value?: number;
   long?: boolean;
   hideNullish?: boolean;
@@ -19,7 +21,15 @@ interface OwnProps {
 }
 type Props = React.HTMLProps<HTMLSpanElement> & OwnProps;
 
-export const KristValue = ({ value, long, hideNullish, green, highlightZero, ...props }: Props): JSX.Element | null => {
+export const KristValue = ({
+  icon,
+  value,
+  long,
+  hideNullish,
+  green,
+  highlightZero,
+  ...props
+}: Props): JSX.Element | null => {
   const currencySymbol = useSelector((s: RootState) => s.node.currency.currency_symbol);
 
   if (hideNullish && (value === undefined || value === null)) return null;
@@ -31,7 +41,7 @@ export const KristValue = ({ value, long, hideNullish, green, highlightZero, ...
 
   return (
     <span {...props} className={classes}>
-      {(currencySymbol || "KST") === "KST" && <KristSymbol />}
+      {icon || ((currencySymbol || "KST") === "KST" && <KristSymbol />)}
       <span className="krist-value-amount">{(value || 0).toLocaleString()}</span>
       {long && <span className="krist-currency-long">{currencySymbol || "KST"}</span>}
     </span>

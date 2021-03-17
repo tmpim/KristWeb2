@@ -8,6 +8,7 @@ import { WebsocketService } from "./ws/WebsocketService";
 import { SyncMOTD } from "./ws/SyncMOTD";
 import { AppHotkeys } from "./AppHotkeys";
 import { StorageBroadcast } from "./StorageBroadcast";
+import { PurchaseKristHandler } from "./PurchaseKrist";
 
 export function AppServices(): JSX.Element {
   return <>
@@ -17,5 +18,7 @@ export function AppServices(): JSX.Element {
     <WebsocketService />
     <AppHotkeys />
     <StorageBroadcast />
+
+    <PurchaseKristHandler />
   </>;
 }

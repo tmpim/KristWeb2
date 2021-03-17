@@ -27,8 +27,6 @@ import { KristValue } from "@comp/krist/KristValue";
 
 import awaitTo from "await-to-js";
 
-import "./SendTransactionForm.less";
-
 import Debug from "debug";
 const debug = Debug("kristweb:send-transaction-form");
 

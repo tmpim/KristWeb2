@@ -1,10 +1,11 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { useMemo, Ref } from "react";
+import React, { useMemo, Ref } from "react";
 import classNames from "classnames";
 import { AutoComplete, Form } from "antd";
 import { Rule } from "antd/lib/form";
+import { ValidateStatus } from "antd/lib/form/FormItem";
 import { RefSelectProps } from "antd/lib/select";
 
 import { useTranslation } from "react-i18next";
@@ -33,6 +34,9 @@ interface Props {
   noNames?: boolean;
   nameHint?: boolean;
 
+  validateStatus?: ValidateStatus;
+  help?: React.ReactNode;
+
   suppressUpdates?: boolean;
 
   className?: string;
@@ -49,6 +53,9 @@ export function AddressPicker({
   walletsOnly,
   noNames,
   nameHint,
+
+  validateStatus,
+  help,
 
   suppressUpdates,
 
@@ -130,6 +137,10 @@ export function AddressPicker({
       // This stops the 'Wallet is invalid' rule from showing twice e.g. for a
       // blank input
       validateFirst
+
+      // Allow the host form to show its own errors
+      validateStatus={validateStatus}
+      help={help}
 
       rules={[
         { required: true, message: walletsOnly

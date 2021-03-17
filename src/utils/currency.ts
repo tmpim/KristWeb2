@@ -11,6 +11,11 @@ import { memoize, escapeRegExp, truncate, toString } from "lodash-es";
 // -----------------------------------------------------------------------------
 // NAMES
 // -----------------------------------------------------------------------------
+export const BARE_NAME_REGEX = /^([a-z0-9]{1,64})$/;
+export const MAX_NAME_LENGTH = 64;
+export const isValidName =
+  (name: string): boolean => BARE_NAME_REGEX.test(name);
+
 // Cheap way to avoid RegExp DoS
 const MAX_NAME_SUFFIX_LENGTH = 6;
 const _cleanNameSuffix = (nameSuffix: string | undefined | null): string => {

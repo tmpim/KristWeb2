@@ -1,10 +1,12 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
+import { TranslatedError } from "@utils/i18n";
+
 import * as api from ".";
 import { AuthFailedError } from "@api/AuthFailed";
 
-import { ValidDecryptedAddresses } from "@wallets";
+import { ValidDecryptedAddresses, Wallet, decryptWallet } from "@wallets";
 
 import Debug from "debug";
 const debug = Debug("kristweb:api-names");
@@ -66,4 +68,21 @@ export async function updateNames(
 
     onProgress?.();
   }
+}
+
+export async function purchaseName(
+  masterPassword: string,
+  wallet: Wallet,
+  name: string
+): Promise<void> {
+  // Attempt to decrypt the wallet to get the privatekey
+  const decrypted = await decryptWallet(masterPassword, wallet);
+  if (!decrypted)
+    throw new TranslatedError("namePurchase.errorWalletDecrypt");
+  const { privatekey } = decrypted;
+
+  await api.post(
+    `names/${encodeURIComponent(name)}`,
+    { privatekey }
+  );
 }

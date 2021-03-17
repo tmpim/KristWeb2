@@ -44,7 +44,7 @@ export function AmountInput({
       {/* Prepend the Krist symbol if possible. Note that ant's InputNumber
         * doesn't support addons, so this has to be done manually. */}
       {(currency_symbol || "KST") === "KST" && (
-        <span className="ant-input-group-addon currency-prefix">
+        <span className="ant-input-group-addon kw-fake-addon currency-prefix">
           <KristSymbol />
         </span>
       )}
@@ -83,7 +83,7 @@ export function AmountInput({
       </Form.Item>
 
       {/* Currency suffix */}
-      <span className="ant-input-group-addon">
+      <span className="ant-input-group-addon kw-fake-addon">
         {currency_symbol || "KST"}
       </span>
 

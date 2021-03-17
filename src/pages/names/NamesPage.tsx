@@ -2,6 +2,8 @@
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { useState, useMemo } from "react";
+import { Button } from "antd";
+import { TagsOutlined } from "@ant-design/icons";
 
 import { useTranslation, TFunction } from "react-i18next";
 import { useParams } from "react-router-dom";
@@ -13,6 +15,8 @@ import { PageLayout } from "@layout/PageLayout";
 import { APIErrorResult } from "@comp/results/APIErrorResult";
 import { NoWalletsResult } from "@comp/results/NoWalletsResult";
 import { NamesTable } from "./NamesTable";
+
+import { NamePurchaseModalLink } from "./mgmt/NamePurchaseModalLink";
 
 import { useWallets } from "@wallets";
 import { useBooleanSetting } from "@utils/settings";
@@ -113,7 +117,14 @@ export function NamesPage({ listingType, sortNew }: Props): JSX.Element {
     // For an address's name listing, show that address in the subtitle.
     subTitle={subTitle}
 
-    extra={paginationComponent}
+    // Purchase name button
+    extra={<>
+      <NamePurchaseModalLink>
+        <Button type="primary" icon={<TagsOutlined />}>
+          {t("names.purchaseButton")}
+        </Button>
+      </NamePurchaseModalLink>
+    </>}
   >
     {(() => {
       if (error)

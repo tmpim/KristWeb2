@@ -8,10 +8,10 @@ import { translateError, TFns } from "@utils/i18n";
 import { APIError } from "@api";
 import { AuthFailedError, ShowAuthFailedFn } from "@api/AuthFailed";
 
-import { WalletAddressMap } from "@wallets";
+import { WalletAddressMap, Wallet } from "@wallets";
 
 // Convert API errors to friendlier errors
-export async function handleError(
+export async function handleEditError(
   { t, tKey, tStr, tErr }: TFns,
   showAuthFailed: ShowAuthFailedFn,
   walletAddressMap: WalletAddressMap,
@@ -40,6 +40,34 @@ export async function handleError(
     return onError(tErr("errorNotNameOwner"));
   case "auth_failed":
     return showAuthFailed(walletAddressMap[(err as AuthFailedError).address!]);
+  }
+
+  // Pass through any other unknown errors
+  console.error(err);
+  onError(err);
+}
+
+export async function handlePurchaseError(
+  { t, tKey, tStr, tErr }: TFns,
+  showAuthFailed: ShowAuthFailedFn,
+  wallet: Wallet,
+  err: Error
+): Promise<void> {
+  const onError = (err: Error) => notification.error({
+    message: tStr("errorNotificationTitle"),
+    description: translateError(t, err, tKey("errorUnknown"))
+  });
+
+  switch (err.message) {
+  case "missing_parameter":
+  case "invalid_parameter":
+    return onError(tErr("errorInvalidName"));
+  case "name_taken":
+    return onError(tErr("errorNameTaken"));
+  case "insufficient_funds":
+    return onError(tErr("errorInsufficientFunds"));
+  case "auth_failed":
+    return showAuthFailed(wallet);
   }
 
   // Pass through any other unknown errors

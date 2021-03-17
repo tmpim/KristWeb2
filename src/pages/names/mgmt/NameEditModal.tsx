@@ -17,7 +17,7 @@ import { transferNames, updateNames } from "@api/names";
 import { useAuthFailedModal } from "@api/AuthFailed";
 
 import { NameOption, fetchNames, buildLUT } from "./lookupNames";
-import { handleError } from "./handleErrors";
+import { handleEditError } from "./handleErrors";
 import { lockNameTable, NameTableLock } from "../tableLock";
 
 import { useNameEditForm } from "./NameEditForm";
@@ -75,8 +75,8 @@ export function NameEditModal({
     = useEditProgress(tFns);
 
   // Wrap the handleError function
-  const onError = handleError.bind(
-    handleError,
+  const onError = handleEditError.bind(
+    handleEditError,
     tFns, showAuthFailed, walletAddressMap
   );
 

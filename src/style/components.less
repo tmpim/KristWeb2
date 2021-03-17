@@ -127,6 +127,22 @@
   }
 }
 
+.ant-input-group-addon.kw-fake-addon {
+  border: none;
+  flex: 0;
+  width: auto;
+  vertical-align: middle;
+  line-height: @input-height-base;
+  height: @input-height-base;
+
+  .anticon {
+    color: @kw-text-tertiary;
+    font-size: 80%;
+    vertical-align: middle;
+    line-height: @input-height-base;
+  }
+}
+
 .ant-input-group.ant-input-group-compact .ant-btn {
   border-left: 1px solid @modal-content-bg;
 
@@ -184,17 +200,10 @@
   }
 }
 
-.text-small {
-  font-size: @font-size-sm;
-}
-
-.text-green {
-  color: @kw-green;
-}
-
-.text-orange {
-  color: @orange-7;
-}
+.text-small { font-size: @font-size-sm; }
+.text-green { color: @kw-green; }
+.text-orange { color: @orange-7; }
+.text-red { color: @kw-red; }
 
 .nyi {
   text-decoration: line-through;
