@@ -46,8 +46,8 @@ dependencies:
   workbox-strategies: 6.1.1
 devDependencies:
   '@craco/craco': 6.1.1_react-scripts@4.0.3
-  '@lemmmy/babel-plugin-use-what-changed': 2.0.5_2c571758f5994ba8e8659c08260bd813
   '@lemmmy/craco-less': 1.18.0_077094f002a207b28261f7f7ea13418e
+  '@simbathesailor/babel-plugin-use-what-changed': 2.0.3_2c571758f5994ba8e8659c08260bd813
   '@simbathesailor/use-what-changed': 1.0.0_react@17.0.1
   '@types/classnames': 2.2.11
   '@types/debug': 4.1.5
@@ -1691,23 +1691,6 @@ packages:
       node: '>= 10.14.2'
     resolution:
       integrity: sha512-fC6QCp7Sc5sX6g8Tvbmj4XUTbyrik0akgRy03yjXbQaBWWNWGE7SGtJk98m0N8nzegD/7SggrUlivxo5ax4KWQ==
-  /@lemmmy/babel-plugin-use-what-changed/2.0.5_2c571758f5994ba8e8659c08260bd813:
-    dependencies:
-      '@babel/generator': 7.13.9
-      '@babel/types': 7.13.0
-      '@simbathesailor/use-what-changed': 1.0.0_react@17.0.1
-      '@types/babel-template': 6.25.2
-      babel-template: 6.26.0
-      babel-traverse: 6.26.0
-      babel-types: 6.26.0
-      babylon: 6.18.0
-      react: 17.0.1
-    dev: true
-    peerDependencies:
-      '@simbathesailor/use-what-changed': 1.x
-      react: '>=16'
-    resolution:
-      integrity: sha512-TpfagcvJbokcwm3CAz5l7waKW9EBWXLVEcJIpl41lvouUMDeVeIGW3F5ENzee3oUAN+zFRyxGjVzyfYMHJfCGw==
   /@lemmmy/craco-less/1.18.0_077094f002a207b28261f7f7ea13418e:
     dependencies:
       '@craco/craco': 6.1.1_react-scripts@4.0.3
@@ -1846,6 +1829,23 @@ packages:
       rollup: ^1.20.0||^2.0.0
     resolution:
       integrity: sha512-GksZ6pr6TpIjHm8h9lSQ8pi8BE9VeubNT0OMJ3B5uZJ8pz73NPiqOtCog/x2/QzM1ENChPKxMDhiQuRHsqc+lg==
+  /@simbathesailor/babel-plugin-use-what-changed/2.0.3_2c571758f5994ba8e8659c08260bd813:
+    dependencies:
+      '@babel/generator': 7.13.9
+      '@babel/types': 7.13.0
+      '@simbathesailor/use-what-changed': 1.0.0_react@17.0.1
+      '@types/babel-template': 6.25.2
+      babel-template: 6.26.0
+      babel-traverse: 6.26.0
+      babel-types: 6.26.0
+      babylon: 6.18.0
+      react: 17.0.1
+    dev: true
+    peerDependencies:
+      '@simbathesailor/use-what-changed': 1.x
+      react: '>=16'
+    resolution:
+      integrity: sha512-iS7CBpjolCbJA8G7G+CJzRpwY1TdRu/3nTfQVvAOb5N7hzlYuv+Sc51oyP/6jdtAKgG98o2Y/f6ZGwyUokITXw==
   /@simbathesailor/use-what-changed/1.0.0_react@17.0.1:
     dependencies:
       react: 17.0.1
@@ -14041,8 +14041,8 @@ packages:
 specifiers:
   '@ant-design/icons': ^4.5.0
   '@craco/craco': ^6.1.1
-  '@lemmmy/babel-plugin-use-what-changed': 2.0.5
   '@lemmmy/craco-less': 1.18.0
+  '@simbathesailor/babel-plugin-use-what-changed': ^2.0.3
   '@simbathesailor/use-what-changed': ^1.0.0
   '@testing-library/jest-dom': ^5.11.9
   '@testing-library/react': ^11.2.5
