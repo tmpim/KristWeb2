@@ -3,16 +3,18 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { useState } from "react";
 import { Button } from "antd";
-import { DatabaseOutlined, PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 
 import { useTranslation } from "react-i18next";
 
 import { PageLayout } from "@layout/PageLayout";
 import { AuthorisedAction } from "@comp/auth/AuthorisedAction";
-import { AddWalletModal } from "./AddWalletModal";
-import { WalletsTable } from "./WalletsTable";
 
 import { useWallets } from "@wallets";
+
+import { ManageBackupsDropdown } from "./ManageBackupsDropdown";
+import { AddWalletModal } from "./AddWalletModal";
+import { WalletsTable } from "./WalletsTable";
 
 /** Extract the subtitle into its own component to avoid re-rendering the
  * entire page when a wallet is added. */
@@ -34,10 +36,10 @@ function WalletsPageExtraButtons(): JSX.Element {
   const [addWalletVisible, setAddWalletVisible] = useState(false);
 
   return <>
-    <Button icon={<DatabaseOutlined />} className="nyi">
-      {t("myWallets.manageBackups")}
-    </Button>
+    {/* Manage backups */}
+    <ManageBackupsDropdown />
 
+    {/* Create wallet */}
     <AuthorisedAction encrypt onAuthed={() => setCreateWalletVisible(true)}>
       <Button type="primary" icon={<PlusOutlined />}>
         {t("myWallets.createWallet")}
@@ -45,6 +47,7 @@ function WalletsPageExtraButtons(): JSX.Element {
     </AuthorisedAction>
     <AddWalletModal create visible={createWalletVisible} setVisible={setCreateWalletVisible} setAddExistingVisible={setAddWalletVisible} />
 
+    {/* Add existing wallet */}
     <AuthorisedAction encrypt onAuthed={() => setAddWalletVisible(true)}>
       <Button ghost>{t("myWallets.addExistingWallet")}</Button>
     </AuthorisedAction>

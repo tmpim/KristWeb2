@@ -69,9 +69,6 @@ export function NamesPage({ listingType, sortNew }: Props): JSX.Element {
   // invalid address), the table will bubble it up to here
   const [error, setError] = useState<Error | undefined>();
 
-  // Linked pagination from the table
-  const [paginationComponent, setPagination] = useLinkedPagination();
-
   // Used to handle memoisation and auto-refreshing
   const { joinedAddressList } = useWallets();
   const lastNameTransactionID = useSelector((s: RootState) => s.node.lastNameTransactionID);
@@ -98,9 +95,8 @@ export function NamesPage({ listingType, sortNew }: Props): JSX.Element {
       sortNew={sortNew}
       addresses={usedAddresses?.split(",")}
       setError={setError}
-      setPagination={setPagination}
     />
-  ), [usedAddresses, sortNew, usedRefreshID, setError, setPagination]);
+  ), [usedAddresses, sortNew, usedRefreshID, setError]);
 
   const siteTitle = getSiteTitle(t, listingType, address);
   const subTitle = listingType === ListingType.NETWORK_ADDRESS

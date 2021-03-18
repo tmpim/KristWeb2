@@ -125,6 +125,8 @@
   "myWallets": {
     "title": "Wallets",
     "manageBackups": "Manage backups",
+    "importBackup": "Import wallets",
+    "exportBackup": "Export wallets",
     "createWallet": "Create wallet",
     "addExistingWallet": "Add existing wallet",
     "searchPlaceholder": "Search wallets...",
@@ -747,6 +749,16 @@
       "treeWallet": "Wallet {{id}}",
       "treeFriend": "Friend {{id}}"
     }
+  },
+
+  "export": {
+    "modalTitle": "Export backup",
+
+    "description": "This secret code contains your wallets and address book contacts. You can use it to import them in another browser, or to back them up. You will still need your master password to import the wallets in the future. <1>Do not share this code with anyone.</1>",
+    "size": "Size: <1 />",
+
+    "buttonSave": "Save to file",
+    "buttonCopy": "Copy to clipboard"
   },
 
   "walletLimitMessage": "You have more wallets stored than KristWeb supports. This was either caused by a bug, or you bypassed it intentionally. Expect issues with syncing.",
