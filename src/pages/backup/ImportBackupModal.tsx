@@ -54,6 +54,9 @@ export function ImportBackupModal({ visible, setVisible }: Props): JSX.Element {
   }
 
   function closeModal() {
+    // Don't allow closing the modal while importing
+    if (loading) return;
+
     debug("closing modal and resetting fields");
     resetState();
     setVisible(false);
