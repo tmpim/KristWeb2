@@ -27,5 +27,10 @@ export function DevPage(): JSX.Element {
     }}>
       Delete all wallets with zero balance
     </Button>
+
+    {/* Delete all wallets */}
+    <Button danger onClick={() => Object.values(wallets).forEach(deleteWallet)}>
+      Delete all wallets
+    </Button>
   </PageLayout>;
 }

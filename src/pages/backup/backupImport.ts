@@ -8,9 +8,12 @@ import { TranslatedError } from "@utils/i18n";
 import { aesGcmDecrypt } from "@utils/crypto";
 import { decryptCryptoJS } from "@utils/CryptoJS";
 
-import { Backup, BackupFormatType, isBackupKristWebV1 } from "./backupFormats";
+import {
+  Backup, BackupFormatType, isBackupKristWebV1, isBackupKristWebV2
+} from "./backupFormats";
 import { BackupResults } from "./backupResults";
 import { importV1Backup } from "./backupImportV1";
+import { importV2Backup } from "./backupImportV2";
 
 import Debug from "debug";
 const debug = Debug("kristweb:backup-import");
@@ -109,6 +112,12 @@ export async function backupImport(
   if (isBackupKristWebV1(backup)) {
     await importV1Backup(
       existingWallets, appMasterPassword, appSyncNode, addressPrefix,
+      backup, masterPassword, noOverwrite,
+      results
+    );
+  } else if (isBackupKristWebV2(backup)) {
+    await importV2Backup(
+      existingWallets, appMasterPassword, addressPrefix,
       backup, masterPassword, noOverwrite,
       results
     );

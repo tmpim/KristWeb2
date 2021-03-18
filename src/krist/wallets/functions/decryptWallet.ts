@@ -3,14 +3,15 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { aesGcmDecrypt } from "@utils/crypto";
 
-import { Wallet, WalletAddressMap } from "..";
+import { WalletAddressMap } from "..";
 
+export interface EncryptedWallet { encPassword: string; encPrivatekey: string }
 export interface DecryptedWallet { password: string; privatekey: string }
 
 /** Decrypts a wallet's password and privatekey. */
 export async function decryptWallet(
   masterPassword: string,
-  wallet: Wallet
+  wallet: EncryptedWallet
 ): Promise<DecryptedWallet | null> {
   try {
     const decPassword = await aesGcmDecrypt(wallet.encPassword, masterPassword);

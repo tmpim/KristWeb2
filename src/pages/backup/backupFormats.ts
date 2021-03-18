@@ -57,6 +57,7 @@ export interface BackupKristWebV2 extends Backup {
   version: 2;
 
   wallets: Record<string, KristWebV2Wallet>;
+  // TODO:
   // contacts: Record<string, Contact>;
 }
 export const isBackupKristWebV2 = (backup: Backup): backup is BackupKristWebV2 =>
