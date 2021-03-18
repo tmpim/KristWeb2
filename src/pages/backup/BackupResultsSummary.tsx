@@ -47,38 +47,22 @@ export function BackupResultsSummary({ results }: { results: BackupResults }): J
 
     {/* TODO: Show contact counts too (only if >0) */}
 
-    {/* Errors/warnings */}
-    <div className="summary-errors-warnings">
-      {warningCount > 0 && errorCount > 0
-        ? (
-          // Show errors and warnings
-          <Trans t={t} i18nKey="import.results.errorsAndWarnings">
-            There were
-            <b className="errors">{{ errors: errorCount }} error(s)</b>
-            and
-            <b className="warnings">{{ warnings: warningCount }} warning(s)</b>
-            while importing your backup.
-          </Trans>
-        )
-        : (warningCount > 0
-          ? (
-            // Show just warnings
-            <Trans t={t} i18nKey="import.results.warnings" count={warningCount}>
-              There was
-              <b className="warnings">{{ count: warningCount }} warning</b>
-              while importing your backup.
-            </Trans>
-          )
-          : (errorCount > 0
-            ? (
-              // Show just errors
-              <Trans t={t} i18nKey="import.results.errors" count={errorCount}>
-                There was
-                <b className="errors">{{ count: errorCount }} error</b>
-                while importing your backup.
-              </Trans>
-            )
-            : <></>))}
-    </div>
+    {/* Errors */}
+    {errorCount > 0 && <div className="summary-errors-warnings">
+      <Trans t={t} i18nKey="import.results.errors" count={errorCount}>
+        There was
+        <b className="errors">{{ count: errorCount }} error</b>
+        while importing your backup.
+      </Trans>
+    </div>}
+
+    {/* Warnings */}
+    {warningCount > 0 && <div className="summary-errors-warnings">
+      <Trans t={t} i18nKey="import.results.warnings" count={warningCount}>
+        There was
+        <b className="warnings">{{ count: warningCount }} warning</b>
+        while importing your backup.
+      </Trans>
+    </div>}
   </Paragraph>;
 }

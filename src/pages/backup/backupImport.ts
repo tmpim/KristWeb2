@@ -10,7 +10,7 @@ import { decryptCryptoJS } from "@utils/CryptoJS";
 
 import { Backup, BackupFormatType, isBackupKristWebV1 } from "./backupFormats";
 import { BackupResults } from "./backupResults";
-import { importV1Wallet } from "./backupImportV1";
+import { importV1Backup } from "./backupImportV1";
 
 import Debug from "debug";
 const debug = Debug("kristweb:backup-import");
@@ -107,29 +107,11 @@ export async function backupImport(
 
   // Attempt to add the wallets
   if (isBackupKristWebV1(backup)) {
-    // Import wallets from a KristWeb v1 backup
-    for (const uuid in backup.wallets) {
-      if (!uuid || !uuid.startsWith("Wallet-")) {
-        // Not a wallet
-        debug("skipping v1 wallet key %s", uuid);
-        continue;
-      }
-
-      const rawWallet = backup.wallets[uuid];
-      debug("importing v1 wallet uuid %s", uuid);
-
-      try {
-        await importV1Wallet(
-          existingWallets, appMasterPassword, appSyncNode, addressPrefix,
-          backup, masterPassword, noOverwrite,
-          uuid, rawWallet,
-          results
-        );
-      } catch (err) {
-        debug("error importing v1 wallet", err);
-        results.addErrorMessage("wallets", uuid, undefined, err);
-      }
-    }
+    await importV1Backup(
+      existingWallets, appMasterPassword, appSyncNode, addressPrefix,
+      backup, masterPassword, noOverwrite,
+      results
+    );
   } else {
     debug("WTF: unsupported backup format %s", backup.type);
   }

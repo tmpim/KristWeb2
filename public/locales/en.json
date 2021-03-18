@@ -739,10 +739,9 @@
       "contactsSkipped_plural": "{{count, number}} contacts were skipped.",
 
       "warnings": "There was <1>{{count, number}} warning</1> while importing your backup.",
-      "warnings_plural": "There were <1>{{count, number}} warning</1> while importing your backup.",
+      "warnings_plural": "There were <1>{{count, number}} warnings</1> while importing your backup.",
       "errors": "There was <1>{{count, number}} error</1> while importing your backup.",
       "errors_plural": "There were <1>{{count, number}} errors</1> while importing your backup.",
-      "errorsAndWarnings": "There were <1>{{errors, number}} error(s)</1> and <3>{{warnings, number}} warning(s)</3> while importing your backup.",
 
       "treeHeaderWallets": "Wallets",
       "treeHeaderContacts": "Contacts",

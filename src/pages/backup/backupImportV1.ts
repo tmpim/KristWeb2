@@ -24,9 +24,49 @@ const _cleanSyncNode = memoize((node: string) => node.replace(/^https?:/, ""));
 const _upgradeFormatName = (name: string): WalletFormatName =>
   name === "krist" ? "api" : name as WalletFormatName;
 
-/**
- * Imports a single wallet in the KristWeb v1 format.
- */
+/** Imports a KristWeb v1 backup. */
+export async function importV1Backup(
+  // Things regarding the app's existing state
+  existingWallets: WalletMap,
+  appMasterPassword: string,
+  appSyncNode: string,
+  addressPrefix: string,
+
+  // Things related to the backup
+  backup: BackupKristWebV1,
+  masterPassword: string,
+  noOverwrite: boolean,
+
+  results: BackupResults
+): Promise<void> {
+  // Import wallets
+  for (const uuid in backup.wallets) {
+    if (!uuid || !uuid.startsWith("Wallet-")) {
+      // Not a wallet
+      debug("skipping v1 wallet key %s", uuid);
+      continue;
+    }
+
+    const rawWallet = backup.wallets[uuid];
+    debug("importing v1 wallet uuid %s", uuid);
+
+    try {
+      await importV1Wallet(
+        existingWallets, appMasterPassword, appSyncNode, addressPrefix,
+        backup, masterPassword, noOverwrite,
+        uuid, rawWallet,
+        results
+      );
+    } catch (err) {
+      debug("error importing v1 wallet", err);
+      results.addErrorMessage("wallets", uuid, undefined, err);
+    }
+  }
+
+  // TODO: Import contacts
+}
+
+/** Imports a single wallet in the KristWeb v1 format. */
 export async function importV1Wallet(
   // Things regarding the app's existing state
   existingWallets: WalletMap,
