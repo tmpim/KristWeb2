@@ -282,11 +282,22 @@ export function useTransactionForm({
 
     // Find the wallet we're trying to pay from, and verify it actually exists
     // and has a balance (shouldn't happen)
-    const currentWallet = walletAddressMap[values.from];
-    if (!currentWallet)
-      throw new TranslatedError("sendTransaction.errorWalletGone");
-    if (!currentWallet.balance)
-      throw new TranslatedError("sendTransaction.errorAmountTooHigh");
+    const [err2, currentWallet] = await awaitTo((async () => {
+      const currentWallet = walletAddressMap[values.from];
+      if (!currentWallet)
+        throw new TranslatedError("sendTransaction.errorWalletGone");
+      if (!currentWallet.balance)
+        throw new TranslatedError("sendTransaction.errorAmountTooHigh");
+
+      return currentWallet;
+    })());
+
+    // Push out any errors with the wallet
+    if (err2 || !currentWallet?.balance) {
+      onError?.(err2!);
+      setIsSubmitting(false);
+      return;
+    }
 
     // If the transaction is large (over half the balance), prompt for
     // confirmation before sending
