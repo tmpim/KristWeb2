@@ -52,7 +52,7 @@ function PageContents({ address, lastTransactionID }: PageContentsProps): JSX.El
         {address.address}
       </Text>
 
-      {/* Buttons (e.g. Send Krist, Add friend) */}
+      {/* Buttons (e.g. Send Krist, Add contact) */}
       <AddressButtonRow address={address} myWallet={myWallet} />
     </Row>
 

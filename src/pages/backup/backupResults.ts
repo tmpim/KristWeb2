@@ -14,7 +14,7 @@ export interface TranslatedMessage {
   args?: Record<string, string>;
 }
 
-export type MessageSource = "wallets" | "friends";
+export type MessageSource = "wallets" | "contacts";
 export type MessageType = React.ReactNode | TranslatedMessage | string;
 export type ResultType = "success" | "warning" | "error";
 
@@ -30,14 +30,14 @@ export class BackupResults {
    * date). */
   public importedWallets: Wallet[] = [];
 
-  /** For both wallets and friends, a map of wallet/friend UUIDs containing
+  /** For both wallets and contacts, a map of wallet/contact UUIDs containing
    * all the messages (success, warning, error). */
   public messages: {
     wallets: Record<string, BackupMessage[]>;
-    friends: Record<string, BackupMessage[]>;
+    contacts: Record<string, BackupMessage[]>;
   } = {
     wallets: {},
-    friends: {}
+    contacts: {}
   };
 
   /** Adds a message to the appropriate message map. */
@@ -49,19 +49,19 @@ export class BackupResults {
     else msgMap[uuid].push(message);
   }
 
-  /** Logs a success message for the given wallet/friend UUID to the appropriate
-   * message map. */
+  /** Logs a success message for the given wallet/contact UUID to the
+   * appropriate message map. */
   public addSuccessMessage(src: MessageSource, uuid: string, message: MessageType): void {
     this.addMessage(src, uuid, { type: "success", message });
   }
 
-  /** Logs a warning message for the given wallet/friend UUID to the appropriate
-   * message map. */
+  /** Logs a warning message for the given wallet/contact UUID to the
+   * appropriate message map. */
   public addWarningMessage(src: MessageSource, uuid: string, message: MessageType): void {
     this.addMessage(src, uuid, { type: "warning", message });
   }
 
-  /** Logs an error message for the given wallet/friend UUID to the appropriate
+  /** Logs an error message for the given wallet/contact UUID to the appropriate
    * message map. */
   public addErrorMessage(src: MessageSource, uuid: string, message?: MessageType, error?: Error): void {
     this.addMessage(src, uuid, { type: "error", message, error });

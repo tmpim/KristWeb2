@@ -37,8 +37,8 @@ export function AddressButtonRow({ address, myWallet }: Props): JSX.Element {
       </Button>
     </SendTransactionModalLink>
 
-    {/* Add friend/edit wallet button */}
-    {/* TODO: Change this to edit if they're already a friend */}
+    {/* Add contact/edit wallet button */}
+    {/* TODO: Change this to edit if they're already a contact */}
     {myWallet
       ? (
         <WalletEditButton wallet={myWallet}>
@@ -47,7 +47,7 @@ export function AddressButtonRow({ address, myWallet }: Props): JSX.Element {
       )
       : (
         <Button icon={<UserAddOutlined />} className="nyi">
-          {t("address.buttonAddFriend")}
+          {t("address.buttonAddContact")}
         </Button>
       )}
   </>;

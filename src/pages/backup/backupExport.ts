@@ -18,7 +18,7 @@ export async function backupExport(): Promise<string> {
     salt, tester,
 
     wallets: finalWallets,
-    friends: {} // TODO
+    contacts: {} // TODO
   };
 
   // Convert to base64'd JSON

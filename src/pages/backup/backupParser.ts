@@ -32,6 +32,8 @@ export function decodeBackup(rawData: string): Backup {
       throw new TranslatedError("import.decodeErrors.invalidWallets");
     if (data.friends !== undefined && !isPlainObject(data.friends))
       throw new TranslatedError("import.decodeErrors.invalidFriends");
+    if (data.contacts !== undefined && !isPlainObject(data.contacts))
+      throw new TranslatedError("import.decodeErrors.invalidContacts");
 
     // Determine the format
     if (data.version === 2) {

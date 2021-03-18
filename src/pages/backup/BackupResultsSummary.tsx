@@ -16,7 +16,7 @@ const { Paragraph } = Typography;
 export function BackupResultsSummary({ results }: { results: BackupResults }): JSX.Element {
   const { t } = useTranslation();
 
-  // TODO: do this for friends too
+  // TODO: do this for contacts too
   const { newWallets, skippedWallets } = results;
   const warningCount = Object.values(results.messages.wallets)
     .reduce((acc, msgs) => acc + msgs.filter(m => m.type === "warning").length, 0);
@@ -45,7 +45,7 @@ export function BackupResultsSummary({ results }: { results: BackupResults }): J
       </Trans>
     </div>}
 
-    {/* TODO: Show friend counts too (only if >0) */}
+    {/* TODO: Show contact counts too (only if >0) */}
 
     {/* Errors/warnings */}
     <div className="summary-errors-warnings">

@@ -66,7 +66,7 @@ function getMessageTitle(
 }
 
 /** Converts the backup results into a tree of messages, grouped by wallet
- * and friend UUID. */
+ * and contact UUID. */
 function getTreeData(
   t: TFunction, i18n: i18n,
   results: BackupResults
@@ -102,7 +102,7 @@ function getTreeData(
     });
   }
 
-  // TODO: Add the friends data
+  // TODO: Add the address book contacts data
 
   return out;
 }
