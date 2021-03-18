@@ -10,16 +10,23 @@ import { useTranslation } from "react-i18next";
 type Props = ButtonProps & {
   targetInput: React.RefObject<Input>;
   refocusButton?: boolean;
+  content?: React.ReactNode;
 }
 
-export function CopyInputButton({ targetInput, refocusButton, ...buttonProps }: Props): JSX.Element {
+export function CopyInputButton({
+  targetInput,
+  refocusButton,
+  content,
+  ...buttonProps
+}: Props): JSX.Element {
   const { t } = useTranslation();
   const [showCopied, setShowCopied] = useState(false);
 
   function copy(e: React.MouseEvent<HTMLButtonElement>) {
     if (!targetInput.current) return;
 
-    targetInput.current.select();
+    // targetInput.current.select();
+    targetInput.current.focus({ cursor: "all" });
     document.execCommand("copy");
 
     if (refocusButton === undefined || refocusButton) {
@@ -36,6 +43,8 @@ export function CopyInputButton({ targetInput, refocusButton, ...buttonProps }: 
       if (!visible && showCopied) setShowCopied(false);
     }}
   >
-    <Button icon={<CopyOutlined />} onClick={copy} {...buttonProps} />
+    <Button icon={<CopyOutlined />} onClick={copy} {...buttonProps}>
+      {content}
+    </Button>
   </Tooltip>;
 }
