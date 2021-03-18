@@ -12,7 +12,7 @@ export async function backupExport(): Promise<string> {
     .filter(([_, w]) => w.dontSave !== true));
 
   const backup = {
-    version: "2",
+    version: 2,
 
     // Store these to verify the master password is correct when importing
     salt, tester,
