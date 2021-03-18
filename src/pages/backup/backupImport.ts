@@ -83,7 +83,7 @@ export async function backupImport(
 ): Promise<BackupResults> {
   // It is assumed at this point that the backup was already successfully
   // decoded, and the master password was verified to be correct.
-  debug("beginning import (format: %s)", backup.type, backup);
+  debug("beginning import (format: %s)", backup.type);
 
   // Fetch the current set of wallets from the Redux store, to ensure the limit
   // isn't reached, and to handle duplication checking.
@@ -116,7 +116,7 @@ export async function backupImport(
       }
 
       const rawWallet = backup.wallets[uuid];
-      debug("importing v1 wallet uuid %s: %o", uuid, rawWallet);
+      debug("importing v1 wallet uuid %s", uuid);
 
       try {
         await importV1Wallet(
@@ -134,6 +134,6 @@ export async function backupImport(
     debug("WTF: unsupported backup format %s", backup.type);
   }
 
-  debug("import finished, final results:", results);
+  debug("import finished");
   return results;
 }
