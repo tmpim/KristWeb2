@@ -1,7 +1,6 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { FC } from "react";
 import classNames from "classnames";
 import { Card, Skeleton, Tag } from "antd";
 
@@ -10,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import { WhatsNewItem } from "./types";
 
 import Markdown from "markdown-to-jsx";
+import { useMarkdownLink } from "@comp/krist/MarkdownLink";
 import { DateTime } from "@comp/DateTime";
 
 import { slice } from "lodash-es";
@@ -54,22 +54,7 @@ interface WhatsNewProps {
 
 function WhatsNew({ whatsNew, baseURL, repoURL }: WhatsNewProps): JSX.Element {
   const { t } = useTranslation();
-
-  // Allow overriding a link to make it open in a new tab and start with baseURL
-  const OverrideLink: FC<HTMLAnchorElement> = ({ title, href, children }) => {
-    // Force the link to start with baseURL if it's relative
-    const absLink = href.startsWith("/")
-      ? baseURL + href
-      : href;
-
-    return <a
-      title={title}
-      href={absLink}
-      target="_blank" rel="noopener noreferrer"
-    >
-      {children}
-    </a>;
-  };
+  const MarkdownLink = useMarkdownLink(baseURL);
 
   return <div className="card-list-item whats-new-item">
     <div className="whats-new-body">
@@ -81,9 +66,7 @@ function WhatsNew({ whatsNew, baseURL, repoURL }: WhatsNewProps): JSX.Element {
       {/* What's new item body */}
       <Markdown options={{
         disableParsingRawHTML: true,
-        overrides: {
-          a: OverrideLink
-        }
+        overrides: { a: MarkdownLink }
       }}>
         {whatsNew.body}
       </Markdown>
