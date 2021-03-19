@@ -18,6 +18,11 @@ export type MessageSource = "wallets" | "contacts";
 export type MessageType = React.ReactNode | TranslatedMessage | string;
 export type ResultType = "success" | "warning" | "error";
 
+export interface ResultSet {
+  label?: string;
+  messages: BackupMessage[];
+}
+
 export class BackupResults {
   /** Number of new wallets that were added as a result of this import. */
   public newWallets = 0;
@@ -33,8 +38,8 @@ export class BackupResults {
   /** For both wallets and contacts, a map of wallet/contact UUIDs containing
    * all the messages (success, warning, error). */
   public messages: {
-    wallets: Record<string, BackupMessage[]>;
-    contacts: Record<string, BackupMessage[]>;
+    wallets: Record<string, ResultSet>;
+    contacts: Record<string, ResultSet>;
   } = {
     wallets: {},
     contacts: {}
@@ -45,8 +50,8 @@ export class BackupResults {
     debug("backup result msg [%s] for %s: %o", src, uuid, message);
 
     const msgMap = this.messages[src];
-    if (!msgMap[uuid]) msgMap[uuid] = [message];
-    else msgMap[uuid].push(message);
+    if (!msgMap[uuid]) msgMap[uuid] = { messages: [message] };
+    else msgMap[uuid].messages.push(message);
   }
 
   /** Logs a success message for the given wallet/contact UUID to the
@@ -65,6 +70,13 @@ export class BackupResults {
    * message map. */
   public addErrorMessage(src: MessageSource, uuid: string, message?: MessageType, error?: Error): void {
     this.addMessage(src, uuid, { type: "error", message, error });
+  }
+
+  /** Sets the label of a result set for the given wallet/contact UUID. */
+  public setResultLabel(src: MessageSource, uuid: string, label: string): void {
+    const msgMap = this.messages[src];
+    if (!msgMap[uuid]) msgMap[uuid] = { label, messages: [] };
+    else msgMap[uuid].label = label;
   }
 }
 

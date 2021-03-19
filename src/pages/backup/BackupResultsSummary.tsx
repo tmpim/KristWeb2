@@ -19,9 +19,9 @@ export function BackupResultsSummary({ results }: { results: BackupResults }): J
   // TODO: do this for contacts too
   const { newWallets, skippedWallets } = results;
   const warningCount = Object.values(results.messages.wallets)
-    .reduce((acc, msgs) => acc + msgs.filter(m => m.type === "warning").length, 0);
+    .reduce((acc, r) => acc + r.messages.filter(m => m.type === "warning").length, 0);
   const errorCount = Object.values(results.messages.wallets)
-    .reduce((acc, msgs) => acc + msgs.filter(m => m.type === "error").length, 0);
+    .reduce((acc, r) => acc + r.messages.filter(m => m.type === "error").length, 0);
 
   return <Paragraph className="backup-results-summary">
     {/* New wallets imported count */}

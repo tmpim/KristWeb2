@@ -109,6 +109,7 @@ export async function checkAddress(
   addressPrefix: string,
   existingWallets: WalletMap,
   results: BackupResults,
+  uuid: string,
 
   oldPrivatekey: string,
   privatekeyMismatchErrorKey:
@@ -125,6 +126,9 @@ export async function checkAddress(
     password,
     username
   );
+
+  // Display the address in the results tree
+  results.setResultLabel("wallets", uuid, address);
 
   // Check that our calculated private key is actually equal to the stored
   // private key. In practice these should never be different.

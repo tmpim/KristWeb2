@@ -110,7 +110,7 @@ export async function importV2Wallet(
   const { password, privatekey } = dec;
 
   const { address, existingWallet, existingImportWallet } = await checkAddress(
-    addressPrefix, existingWallets, results,
+    addressPrefix, existingWallets, results, uuid,
     privatekey, "errorPrivateKeyMismatch",
     format, password, username
   );

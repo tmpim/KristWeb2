@@ -138,7 +138,7 @@ export async function importV1Wallet(
   // WALLET IMPORT PREPARATION/VALIDATION
   // ---------------------------------------------------------------------------
   const { address, existingWallet, existingImportWallet } = await checkAddress(
-    addressPrefix, existingWallets, results,
+    addressPrefix, existingWallets, results, uuid,
     masterkey, "errorMasterKeyMismatch",
     format, password, username
   );

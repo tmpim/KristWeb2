@@ -78,7 +78,8 @@ function getTreeData(
     // The IDs are the keys of the backup, which may begin with prefixes like
     // "Wallet-"; remove those for cleanliness
     const cleanID = id.replace(CLEAN_ID_RE, "");
-    const messages = results.messages.wallets[id];
+    const resultSet = results.messages.wallets[id];
+    const { label, messages } = resultSet;
     const messageNodes: DataNode[] = [];
 
     for (let i = 0; i < messages.length; i++) {
@@ -97,7 +98,7 @@ function getTreeData(
 
     out.push({
       key: `wallets-${cleanID}`,
-      title: t("import.results.treeWallet", { id: cleanID }),
+      title: t("import.results.treeWallet", { id: label || cleanID }),
       children: messageNodes
     });
   }
