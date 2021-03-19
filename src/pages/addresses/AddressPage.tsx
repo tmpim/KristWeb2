@@ -24,6 +24,8 @@ import { AddressButtonRow } from "./AddressButtonRow";
 import { AddressTransactionsCard } from "./AddressTransactionsCard";
 import { AddressNamesCard } from "./AddressNamesCard";
 
+import { getVerified, VerifiedDescription } from "@comp/addresses/VerifiedAddress";
+
 import "./AddressPage.less";
 
 const { Text } = Typography;
@@ -43,6 +45,9 @@ function PageContents({ address, lastTransactionID }: PageContentsProps): JSX.El
 
   const myWallet = Object.values(wallets)
     .find(w => w.address === address.address);
+  const showWalletTags = myWallet && (myWallet.label || myWallet.category);
+
+  const verified = getVerified(address.address);
 
   return <>
     {/* Address and buttons */}
@@ -56,19 +61,33 @@ function PageContents({ address, lastTransactionID }: PageContentsProps): JSX.El
       <AddressButtonRow address={address} myWallet={myWallet} />
     </Row>
 
-    {/* Wallet tags (if applicable) */}
-    {myWallet && (myWallet.label || myWallet.category) && (
+    {/* Wallet/verified tags (if applicable) */}
+    {(showWalletTags || verified) && (
       <Row className="address-wallet-row">
-        {myWallet.label && <span className="address-wallet-label">
+        {/* Verified label */}
+        {verified?.label && <span className="address-wallet-label">
+          <Tag color={verified.isActive !== false ? "orange" : undefined}>
+            {verified.label}
+          </Tag>
+        </span>}
+
+        {/* Label */}
+        {myWallet?.label && <span className="address-wallet-label">
           <span className="prefix">{t("address.walletLabel")}</span>
           <Tag>{myWallet.label}</Tag>
         </span>}
 
-        {myWallet.category && <span className="address-wallet-category">
+        {/* Category */}
+        {myWallet?.category && <span className="address-wallet-category">
           <span className="prefix">{t("address.walletCategory")}</span>
           <Tag>{myWallet.category}</Tag>
         </span>}
       </Row>
+    )}
+
+    {/* Verified description/website */}
+    {(verified?.description || verified?.website) && (
+      <VerifiedDescription verified={verified} />
     )}
 
     {/* Main address info */}

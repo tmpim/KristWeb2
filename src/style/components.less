@@ -248,3 +248,12 @@
     }
   }
 }
+
+// Correct some commonly used tag colours
+.ant-tag {
+  &.ant-tag-orange {
+    color: lighten(saturate(@kw-orange, 40%), 7%);
+    background: fade(darken(@kw-orange, 25%), 25%);
+    border-color: @alert-warning-border-color;
+  }
+}

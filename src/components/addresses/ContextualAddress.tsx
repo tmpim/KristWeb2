@@ -16,6 +16,8 @@ import { useBooleanSetting } from "@utils/settings";
 import { KristNameLink } from "../names/KristNameLink";
 import { ConditionalLink } from "@comp/ConditionalLink";
 
+import { getVerified, VerifiedAddress } from "./VerifiedAddress";
+
 import "./ContextualAddress.less";
 
 const { Text } = Typography;
@@ -40,10 +42,38 @@ interface AddressMetanameProps {
   hideNameAddress: boolean;
 }
 
-export function AddressMetaname({ nameSuffix, address, commonMeta, source, hideNameAddress }: AddressMetanameProps): JSX.Element {
+export function AddressMetaname({
+  nameSuffix,
+  address,
+  commonMeta,
+  source,
+  hideNameAddress
+}: AddressMetanameProps): JSX.Element {
   const rawMetaname = (source ? commonMeta?.return : commonMeta?.recipient) || undefined;
   const name = (source ? commonMeta?.returnName : commonMeta?.name) || undefined;
   const nameWithoutSuffix = name ? stripNameSuffix(nameSuffix, name) : undefined;
+
+  const verified = getVerified(address);
+
+  function AddressContent() {
+    return verified
+      ? (
+        // Verified address
+        <VerifiedAddress address={address} verified={verified} parens />
+      )
+      : (
+        // Regular address
+        <span className="address-original">
+          <ConditionalLink
+            to={"/network/addresses/" + encodeURIComponent(address)}
+            matchTo
+            matchExact
+          >
+            ({address})
+          </ConditionalLink>
+        </span>
+      );
+  }
 
   return name
     ? <>
@@ -56,11 +86,7 @@ export function AddressMetaname({ nameSuffix, address, commonMeta, source, hideN
 
       {/* Display the original address too */}
       {!hideNameAddress && <>
-        &nbsp;<span className="address-original">
-          <Link to={"/network/addresses/" + encodeURIComponent(address)}>
-            ({address})
-          </Link>
-        </span>
+        &nbsp;<AddressContent />
       </>}
     </>
     : (
@@ -108,7 +134,9 @@ export function ContextualAddress({
     ? !!commonMeta?.returnRecipient
     : !!commonMeta?.recipient;
 
-  const showTooltip = (hideNameAddress && !!hasMetaname) || !!wallet?.label;
+  const verified = getVerified(address);
+
+  const showTooltip = !verified && ((hideNameAddress && !!hasMetaname) || !!wallet?.label);
 
   const copyable = !neverCopyable && addressCopyButtons
     ? { text: address } : undefined;
@@ -144,15 +172,20 @@ export function ContextualAddress({
             hideNameAddress={!!hideNameAddress}
           />
         )
-        : (
-          <ConditionalLink
-            to={"/network/addresses/" + encodeURIComponent(address)}
-            matchTo
-            matchExact
-            condition={!nonExistent}
-          >
-            <AddressContent />
-          </ConditionalLink>
+        : (verified
+          // Display the verified address if possible
+          ? <VerifiedAddress address={address} verified={verified} />
+          : (
+            // Display the regular address or label
+            <ConditionalLink
+              to={"/network/addresses/" + encodeURIComponent(address)}
+              matchTo
+              matchExact
+              condition={!nonExistent}
+            >
+              <AddressContent />
+            </ConditionalLink>
+          )
         )
       }
 

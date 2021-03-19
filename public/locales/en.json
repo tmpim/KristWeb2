@@ -425,7 +425,10 @@
     "resultInvalidTitle": "Invalid address",
     "resultInvalid": "That does not look like a valid Krist address.",
     "resultNotFoundTitle": "Address not found",
-    "resultNotFound": "That address has not yet been initialised on the Krist network."
+    "resultNotFound": "That address has not yet been initialised on the Krist network.",
+
+    "verifiedCardTitle": "Verified address",
+    "verifiedWebsiteButton": "Visit website"
   },
 
   "transactionSummary": {

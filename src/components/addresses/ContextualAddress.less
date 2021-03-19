@@ -29,4 +29,25 @@
     text-decoration-color: @text-color-secondary;
     text-decoration-thickness: 1px;
   }
+
+  .address-verified {
+    &:not(.address-verified-inactive) a {
+      color: fade(@kw-orange, 60%);
+
+      .address-verified-label, .kw-verified-check-icon {
+        color: @kw-orange;
+      }
+    }
+
+    .kw-verified-check-icon {
+      display: inline-block;
+      font-size: 80%;
+      margin-left: 0.25em;
+
+      svg {
+        position: relative;
+        top: -1px;
+      }
+    }
+  }
 }
