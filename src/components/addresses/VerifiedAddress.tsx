@@ -2,7 +2,7 @@
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import classNames from "classnames";
-import { Row, Col, Card, Tooltip, Button } from "antd";
+import { Row, Col, Card, Tooltip, Button, Typography } from "antd";
 import { GlobalOutlined } from "@ant-design/icons";
 
 import { useTranslation } from "react-i18next";
@@ -14,6 +14,8 @@ import { VerifiedCheck } from "./VerifiedCheck";
 
 import Markdown from "markdown-to-jsx";
 import { useMarkdownLink } from "@comp/krist/MarkdownLink";
+
+const { Text } = Typography;
 
 // A verified address is a service that transacts on behalf of its users, or
 // holds a balance for its users, and is run by someone we think is trustworthy.
@@ -90,6 +92,13 @@ export function VerifiedDescription({
             {verified.description}
           </Markdown>
         </p>}
+
+        {/* Inactive notice */}
+        {verified.isActive === false && <div>
+          <Text type={verified.description ? "secondary" : undefined}>
+            {t("address.verifiedInactive")}
+          </Text>
+        </div>}
 
         {/* Website button */}
         {verified.website && <div style={{ marginTop: 16 }}>

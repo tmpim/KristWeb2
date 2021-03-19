@@ -428,6 +428,7 @@
     "resultNotFound": "That address has not yet been initialised on the Krist network.",
 
     "verifiedCardTitle": "Verified address",
+    "verifiedInactive": "This service is not currently active.",
     "verifiedWebsiteButton": "Visit website"
   },
 

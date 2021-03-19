@@ -48,6 +48,8 @@ function PageContents({ address, lastTransactionID }: PageContentsProps): JSX.El
   const showWalletTags = myWallet && (myWallet.label || myWallet.category);
 
   const verified = getVerified(address.address);
+  const showVerifiedDesc = verified?.description || verified?.website ||
+    verified?.isActive === false;
 
   return <>
     {/* Address and buttons */}
@@ -86,8 +88,8 @@ function PageContents({ address, lastTransactionID }: PageContentsProps): JSX.El
     )}
 
     {/* Verified description/website */}
-    {(verified?.description || verified?.website) && (
-      <VerifiedDescription verified={verified} />
+    {showVerifiedDesc && (
+      <VerifiedDescription verified={verified!} />
     )}
 
     {/* Main address info */}
