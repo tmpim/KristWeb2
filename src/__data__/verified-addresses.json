@@ -4,7 +4,10 @@
     "description": "This address is the master wallet for the SwitchCraft Minecraft server. It represents the balance of all SwitchCraft players.",
     "website": "https://switchcraft.pw"
   },
-  "kitsemmaya": { "label": "BustAKrist" },
+  "kitsemmaya": {
+    "label": "BustAKrist",
+    "website": "https://bustakrist.its-em.ma"
+  },
   "ksellshopq": { "label": "Sellshop" },
   "kr08ac3b4o": { "label": "CodersNet", "isActive": false },
   "kyq7arbu73": { "label": "CodersNet", "isActive": false },
