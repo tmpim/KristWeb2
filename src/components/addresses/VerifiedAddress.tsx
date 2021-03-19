@@ -78,7 +78,7 @@ export function VerifiedDescription({
   const MarkdownLink = useMarkdownLink();
 
   return <Row gutter={16} className="address-verified-description-row">
-    <Col span={24} md={12}>
+    <Col span={24}>
       <Card
         title={t("address.verifiedCardTitle")}
         className="kw-card address-verified-description"

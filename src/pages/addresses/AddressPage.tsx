@@ -87,11 +87,6 @@ function PageContents({ address, lastTransactionID }: PageContentsProps): JSX.El
       </Row>
     )}
 
-    {/* Verified description/website */}
-    {showVerifiedDesc && (
-      <VerifiedDescription verified={verified!} />
-    )}
-
     {/* Main address info */}
     <Row className="address-info-row">
       {/* Current balance */}
@@ -120,6 +115,11 @@ function PageContents({ address, lastTransactionID }: PageContentsProps): JSX.El
         />
       </Col>
     </Row>
+
+    {/* Verified description/website */}
+    {showVerifiedDesc && (
+      <VerifiedDescription verified={verified!} />
+    )}
 
     {/* Transaction and name row */}
     <Row gutter={16} className="address-card-row">
