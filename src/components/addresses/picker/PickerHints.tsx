@@ -4,7 +4,7 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 
 import {
-  isValidAddress, stripNameSuffix,
+  isValidAddress, getNameParts,
   useAddressPrefix, useNameSuffix
 } from "@utils/currency";
 import { useWallets } from "@wallets";
@@ -99,9 +99,9 @@ export function usePickerHints(
       setFoundAddress(undefined);
 
       try {
-        const rawName = stripNameSuffix(nameSuffix, value);
+        const nameParts = getNameParts(nameSuffix, value);
         const res = await api.get<{ name: KristName }>(
-          "names/" + encodeURIComponent(rawName)
+          "names/" + encodeURIComponent(nameParts!.name!)
         );
 
         if (!isMounted.current)
