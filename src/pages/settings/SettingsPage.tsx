@@ -9,8 +9,8 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 import { PageLayout, PageLayoutProps } from "@layout/PageLayout";
+import { SettingsGroup, booleanSetting, integerSetting } from "./SettingsGroup";
 import { SettingBoolean } from "./SettingBoolean";
-import { SettingInteger } from "./SettingInteger";
 import { getLanguageItems } from "./translations/LanguageItem";
 
 import "./SettingsPage.less";
@@ -41,87 +41,33 @@ export function SettingsPage(): JSX.Element {
       </Menu.SubMenu>
 
       {/* Auto-refresh settings */}
-      <Menu.SubMenu key="sub-autoRefresh" icon={<ReloadOutlined />} title={t("settings.subMenuAutoRefresh")}>
-        {/* Auto-refresh tables */}
-        <Menu.Item key="autoRefresh/autoRefreshTables">
-          <SettingBoolean
-            setting="autoRefreshTables"
-            titleKey="settings.autoRefreshTables"
-            descriptionKey="settings.autoRefreshTablesDescription"
-          />
-        </Menu.Item>
-
-        {/* Auto-refresh address page */}
-        <Menu.Item key="autoRefresh/autoRefreshAddressPage">
-          <SettingBoolean setting="autoRefreshAddressPage" titleKey="settings.autoRefreshAddressPage"/>
-        </Menu.Item>
-
-        {/* Auto-refresh name page */}
-        <Menu.Item key="autoRefresh/autoRefreshNamePage">
-          <SettingBoolean setting="autoRefreshNamePage" titleKey="settings.autoRefreshNamePage"/>
-        </Menu.Item>
-      </Menu.SubMenu>
+      <SettingsGroup
+        subKey="AutoRefresh"
+        icon={<ReloadOutlined />}
+        settings={[
+          booleanSetting("autoRefreshTables"),
+          booleanSetting("autoRefreshAddressPage"),
+          booleanSetting("autoRefreshNamePage")
+        ]}
+      />
 
       {/* Advanced settings */}
-      <Menu.SubMenu key="sub-advanced" icon={<SettingOutlined />} title={t("settings.subMenuAdvanced")}>
-        {/* Always include mined transactions */}
-        <Menu.Item key="advanced/alwaysIncludeMined">
-          <SettingBoolean setting="alwaysIncludeMined" titleKey="settings.alwaysIncludeMined" />
-        </Menu.Item>
-
-        {/* Copy name suffixes */}
-        <Menu.Item key="advanced/copyNameSuffixes">
-          <SettingBoolean setting="copyNameSuffixes" titleKey="settings.copyNameSuffixes" />
-        </Menu.Item>
-
-        {/* Address copy buttons */}
-        <Menu.Item key="advanced/addressCopyButtons">
-          <SettingBoolean setting="addressCopyButtons" titleKey="settings.addressCopyButtons" />
-        </Menu.Item>
-
-        {/* Name copy buttons */}
-        <Menu.Item key="advanced/nameCopyButtons">
-          <SettingBoolean setting="nameCopyButtons" titleKey="settings.nameCopyButtons" />
-        </Menu.Item>
-
-        {/* Block hash copy buttons */}
-        <Menu.Item key="advanced/blockHashCopyButtons">
-          <SettingBoolean setting="blockHashCopyButtons" titleKey="settings.blockHashCopyButtons" />
-        </Menu.Item>
-
-        {/* Show relative dates */}
-        <Menu.Item key="advanced/showRelativeDates">
-          <SettingBoolean
-            setting="showRelativeDates"
-            titleKey="settings.showRelativeDates"
-            descriptionKey="settings.showRelativeDatesDescription"
-          />
-        </Menu.Item>
-
-        {/* Show native dates */}
-        <Menu.Item key="advanced/showNativeDates">
-          <SettingBoolean
-            setting="showNativeDates"
-            titleKey="settings.showNativeDates"
-            descriptionKey="settings.showNativeDatesDescription"
-          />
-        </Menu.Item>
-
-        {/* Default to 'Raw' on transaction page */}
-        <Menu.Item key="advanced/transactionDefaultRaw">
-          <SettingBoolean setting="transactionDefaultRaw" titleKey="settings.transactionDefaultRaw" />
-        </Menu.Item>
-
-        {/* Default page size for table listings */}
-        <Menu.Item key="advanced/defaultPageSize">
-          <SettingInteger setting="defaultPageSize" titleKey="settings.defaultPageSize" />
-        </Menu.Item>
-
-        {/* Enable table navigation hotkeys (left and right arrows) */}
-        <Menu.Item key="advanced/tableHotkeys">
-          <SettingBoolean setting="tableHotkeys" titleKey="settings.tableHotkeys" />
-        </Menu.Item>
-      </Menu.SubMenu>
+      <SettingsGroup
+        subKey="Advanced"
+        icon={<SettingOutlined />}
+        settings={[
+          booleanSetting("alwaysIncludeMined"),
+          booleanSetting("copyNameSuffixes"),
+          booleanSetting("addressCopyButtons"),
+          booleanSetting("nameCopyButtons"),
+          booleanSetting("blockHashCopyButtons"),
+          booleanSetting("showRelativeDates"),
+          booleanSetting("showNativeDates"),
+          booleanSetting("transactionDefaultRaw"),
+          integerSetting("defaultPageSize"),
+          booleanSetting("tableHotkeys"),
+        ]}
+      />
 
       {/* Debug settings */}
       <Menu.SubMenu key="sub-debug" icon={<BugOutlined />} title={t("settings.subMenuDebug")}>
