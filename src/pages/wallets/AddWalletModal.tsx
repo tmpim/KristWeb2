@@ -324,7 +324,7 @@ export function AddWalletModal({ create, editing, visible, setVisible, setAddExi
 
       {/* Advanced options */}
       {!create && <Collapse ghost className="flush-collapse" style={{ marginTop: 24 }}>
-        <Collapse.Panel header={t("addWallet.advancedOptions")} key="1">
+        <Collapse.Panel forceRender header={t("addWallet.advancedOptions")} key="1">
           {/* Wallet format */}
           <Form.Item name="format" label={t("addWallet.walletFormat")}>
             {SelectWalletFormat({ initialFormat })}

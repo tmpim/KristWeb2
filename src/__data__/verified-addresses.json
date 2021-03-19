@@ -6,6 +6,7 @@
   },
   "kitsemmaya": {
     "label": "BustAKrist",
+    "description": "This address holds the bankroll and player balances for BustAKrist, a Krist gambling site.",
     "website": "https://bustakrist.its-em.ma"
   },
   "ksellshopq": { "label": "Sellshop" },
