@@ -137,6 +137,7 @@ function SendTransactionForm({
       {/* To */}
       <Col span={24} md={12}>
         <AddressPicker
+          form={form} // Used to perform the self-name checks
           name="to"
           label={t("sendTransaction.labelTo")}
           value={to}

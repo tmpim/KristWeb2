@@ -28,12 +28,18 @@ const debug = Debug("kristweb:address-picker-hints");
 
 const HINT_LOOKUP_DEBOUNCE = 250;
 
+interface PickerHintsRes {
+  pickerHints: JSX.Element | null;
+  foundAddress?: KristAddressWithNames | false;
+  foundName?: KristName | false;
+}
+
 export function usePickerHints(
   nameHint?: boolean,
   value?: string,
   hasExactName?: boolean,
   suppressUpdates?: boolean
-): JSX.Element | null {
+): PickerHintsRes {
   debug("using picker hints for %s", value);
 
   // Used for clean-up
@@ -169,29 +175,31 @@ export function usePickerHints(
   const showSep = (showWalletHint || showVerifiedHint)
     && (showAddressHint || showNameHint);
 
-  if (foundAnything) return <div className="address-picker-hints">
-    {/* Show a wallet hint if possible */}
-    {foundWallet && <WalletHint wallet={foundWallet} />}
+  const pickerHints = foundAnything
+    ? <div className="address-picker-hints">
+      {/* Show a wallet hint if possible */}
+      {foundWallet && <WalletHint wallet={foundWallet} />}
 
-    {/* Show a verified hint if possible */}
-    {foundVerified && (
-      // Make it look like a contextual address to inherit the styles
-      <span className="contextual-address">
-        <VerifiedHint address={validAddress!} verified={foundVerified} />
-      </span>
-    )}
+      {/* Show a verified hint if possible */}
+      {foundVerified && (
+        // Make it look like a contextual address to inherit the styles
+        <span className="contextual-address">
+          <VerifiedHint address={validAddress!} verified={foundVerified} />
+        </span>
+      )}
 
-    {/* Show a separator if there are two hints */}
-    {showSep && <span className="address-picker-separator">&ndash;</span>}
+      {/* Show a separator if there are two hints */}
+      {showSep && <span className="address-picker-separator">&ndash;</span>}
 
-    {/* Show an address hint if possible */}
-    {showAddressHint && (
-      <AddressHint address={foundAddress || undefined} nameHint={nameHint} />
-    )}
+      {/* Show an address hint if possible */}
+      {showAddressHint && (
+        <AddressHint address={foundAddress || undefined} nameHint={nameHint} />
+      )}
 
-    {/* Show a name hint if possible */}
-    {showNameHint && <NameHint name={foundName || undefined} />}
-  </div>;
+      {/* Show a name hint if possible */}
+      {showNameHint && <NameHint name={foundName || undefined} />}
+    </div>
+    : null;
 
-  return null;
+  return { pickerHints, foundAddress, foundName };
 }

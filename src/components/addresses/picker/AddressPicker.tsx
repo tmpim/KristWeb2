@@ -1,9 +1,9 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import React, { useMemo, Ref } from "react";
+import React, { useMemo, Ref, useEffect } from "react";
 import classNames from "classnames";
-import { AutoComplete, Form } from "antd";
+import { AutoComplete, Form, FormInstance } from "antd";
 import { Rule } from "antd/lib/form";
 import { ValidateStatus } from "antd/lib/form/FormItem";
 import { RefSelectProps } from "antd/lib/select";
@@ -25,6 +25,8 @@ import { usePickerHints } from "./PickerHints";
 import "./AddressPicker.less";
 
 interface Props {
+  form?: FormInstance;
+
   name: string;
   label?: string;
   value?: string;
@@ -45,6 +47,8 @@ interface Props {
 }
 
 export function AddressPicker({
+  form,
+
   name,
   label,
   value,
@@ -118,9 +122,14 @@ export function AddressPicker({
     : options;
 
   // Fetch an address or name hint if possible
-  const pickerHints = usePickerHints(
+  const { pickerHints, foundName } = usePickerHints(
     nameHint, cleanValue, hasExactName, suppressUpdates
   );
+
+  // Re-validate this field if the picker hints foundName changed
+  useEffect(() => {
+    form?.validateFields([name]);
+  }, [form, name, foundName, otherPickerValue]);
 
   const classes = classNames("address-picker", className, {
     "address-picker-wallets-only": walletsOnly,
@@ -182,6 +191,11 @@ export function AddressPicker({
         ...(otherPickerValue ? [{
           async validator(_, value): Promise<void> {
             if (value === otherPickerValue)
+              throw t("addressPicker.errorEqual");
+
+            // If the value is a name, and we know the name's owner, assert that
+            // it's not the same as the otherPickerValue as well
+            if (hasExactName && foundName && foundName.owner === otherPickerValue)
               throw t("addressPicker.errorEqual");
           }
         } as Rule] : [])
