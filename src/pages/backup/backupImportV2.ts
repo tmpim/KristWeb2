@@ -1,14 +1,20 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { BackupKristWebV2, KristWebV2Wallet } from "./backupFormats";
-import { BackupWalletError, BackupResults } from "./backupResults";
+import {
+  BackupKristWebV2, KristWebV2Wallet, KristWebV2Contact
+} from "./backupFormats";
+import {
+  BackupWalletError, BackupContactError, BackupResults
+} from "./backupResults";
 import {
   getShorthands, str, checkFormat, checkAddress, checkLabelValid,
-  checkCategoryValid, finalWalletImport
+  checkCategoryValid, finalWalletImport,
+  validateContactAddress, checkExistingContact, finalContactImport
 } from "./backupImportUtils";
 
 import { WalletMap, decryptWallet } from "@wallets";
+import { ContactMap } from "@contacts";
 
 import { isPlainObject } from "lodash-es";
 
@@ -21,8 +27,10 @@ const UUID_REGEXP = /[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12
 export async function importV2Backup(
   // Things regarding the app's existing state
   existingWallets: WalletMap,
+  existingContacts: ContactMap,
   appMasterPassword: string,
   addressPrefix: string,
+  nameSuffix: string,
 
   // Things related to the backup
   backup: BackupKristWebV2,
@@ -55,7 +63,29 @@ export async function importV2Backup(
     }
   }
 
-  // TODO: Import contacts
+  // Import contacts
+  for (const uuid in backup.contacts) {
+    if (!uuid || !UUID_REGEXP.test(uuid)) {
+      // Not a contact
+      debug("skipping v2 contact key %s", uuid);
+      continue;
+    }
+
+    const rawContact = backup.contacts[uuid];
+    debug("importing v2 contact uuid %s", uuid);
+
+    try {
+      await importV2Contact(
+        existingContacts, addressPrefix, nameSuffix,
+        backup, noOverwrite,
+        uuid, rawContact,
+        results
+      );
+    } catch (err) {
+      debug("error importing v2 contact", err);
+      results.addErrorMessage("contacts", uuid, undefined, err);
+    }
+  }
 }
 
 /** Imports a single wallet in the KristWeb v2 format. */
@@ -129,5 +159,63 @@ export async function importV2Wallet(
     shorthands, results, noOverwrite,
     existingWallet, address, password,
     { label, category, username, format }
+  );
+}
+
+// =============================================================================
+// CONTACT IMPORT
+// =============================================================================
+
+/** Imports a single contact in the KristWeb v1 format. */
+export async function importV2Contact(
+  // Things regarding the app's existing state
+  existingContacts: ContactMap,
+  addressPrefix: string,
+  nameSuffix: string,
+
+  // Things related to the backup
+  backup: BackupKristWebV2,
+  noOverwrite: boolean,
+
+  uuid: string,
+  contact: KristWebV2Contact, // The contact object as found in the backup
+
+  results: BackupResults
+): Promise<void> {
+  const shorthands = getShorthands(results, uuid, "v2", "contact");
+  const { success, importWarn } = shorthands;
+
+  // Validate the type of the contact data
+  if (!isPlainObject(contact)) {
+    debug("v2 contact %s had type %s", uuid, typeof contact, contact);
+    throw new BackupContactError("errorInvalidTypeObject");
+  }
+
+  // Validate the address, which is required
+  const { address, isName } =
+    validateContactAddress(addressPrefix, nameSuffix, contact);
+
+  results.setResultLabel("contacts", uuid, address);
+
+  // Check that the label is valid
+  const { label } = contact;
+  checkLabelValid(shorthands, label);
+
+  // Check for existing contacts
+  const { existingContact, existingImportContact } = checkExistingContact(
+    existingContacts, results, address);
+
+  // Skip with no additional checks or updates if this contact was already
+  // handled by this backup import
+  if (existingImportContact) {
+    results.skippedContacts++;
+    return success({ key: "import.contactMessages.successImportSkipped", args: { address }});
+  }
+
+  // Import the contact
+  finalContactImport(
+    existingContacts,
+    shorthands, results, noOverwrite,
+    existingContact, address, label, isName
   );
 }

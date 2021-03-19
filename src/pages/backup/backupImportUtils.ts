@@ -1,18 +1,23 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under GPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { BackupResults, BackupWalletError, MessageType } from "./backupResults";
+import {
+  BackupResults, BackupWalletError, BackupContactError, MessageType
+} from "./backupResults";
 
 import {
   ADDRESS_LIST_LIMIT,
   WALLET_FORMATS, ADVANCED_FORMATS, WalletFormatName, formatNeedsUsername,
   WalletMap, Wallet, WalletNew, calculateAddress, editWalletLabel, addWallet
 } from "@wallets";
+import { ContactMap, Contact, addContact, editContactLabel } from "@contacts";
+
+import { isValidAddress, getNameParts } from "@utils/currency";
 
 import Debug from "debug";
 const debug = Debug("kristweb:backup-import-utils");
 
-interface ShorthandsRes {
+export interface Shorthands {
   warn: (message: MessageType) => void;
   success: (message: MessageType) => void;
 
@@ -23,19 +28,21 @@ interface ShorthandsRes {
 export function getShorthands(
   results: BackupResults,
   uuid: string,
-  version: string
-): ShorthandsRes {
-  const warn = results.addWarningMessage.bind(results, "wallets", uuid);
-  const success = results.addSuccessMessage.bind(results, "wallets", uuid);
+  version: string,
+  type: "wallet" | "contact" = "wallet"
+): Shorthands {
+  const typePlural = type === "wallet" ? "wallets" : "contacts";
+  const warn = results.addWarningMessage.bind(results, typePlural, uuid);
+  const success = results.addSuccessMessage.bind(results, typePlural, uuid);
 
-  // Warnings to only be added if the wallet was actually added
+  // Warnings to only be added if the wallet/contact was actually added
   const importWarnings: MessageType[] = [];
   const importWarn = (msg: MessageType) => {
-    debug("%s wallet %s added import warning:", version, uuid, msg);
+    debug("%s %s %s added import warning:", version, type, uuid, msg);
 
     // Prepend the i18n key if it was just a string
     importWarnings.push(typeof msg === "string"
-      ? "import.walletMessages." + msg
+      ? `import.${type}Messages.${msg}`
       : msg);
   };
 
@@ -55,7 +62,7 @@ const _upgradeFormatName = (name: string): WalletFormatName =>
 /** Verifies that the wallet's format is valid, upgrade it if necessary,
  * and check if it's an advanced format. */
 export function checkFormat(
-  { importWarn }: ShorthandsRes,
+  { importWarn }: Shorthands,
   wallet: { format?: string; username?: string }
 ): {
   format: WalletFormatName;
@@ -79,18 +86,38 @@ export function checkFormat(
   return { format, username };
 }
 
+interface ValidateContactAddressRes {
+  address: string;
+  isName: boolean;
+}
+
+export function validateContactAddress(
+  addressPrefix: string,
+  nameSuffix: string,
+  contact: { address?: string }
+): ValidateContactAddressRes {
+  const { address } = contact;
+  if (!str(address)) throw new BackupContactError("errorAddressMissing");
+
+  const nameParts = getNameParts(nameSuffix, address);
+  if (!isValidAddress(addressPrefix, address) && !nameParts)
+    throw new BackupContactError("errorAddressInvalid");
+
+  return { address, isName: !!nameParts };
+}
+
 // -----------------------------------------------------------------------------
 // OPTIONAL PROPERTY VALIDATION
 // -----------------------------------------------------------------------------
 export const isLabelValid = (label?: string): boolean =>
   str(label) && label.trim().length < 32;
-export function checkLabelValid({ importWarn }: ShorthandsRes, label?: string): void {
+export function checkLabelValid({ importWarn }: Shorthands, label?: string): void {
   const labelValid = isLabelValid(label);
   if (label && !labelValid) importWarn("warningLabelInvalid");
 }
 
 export const isCategoryValid = isLabelValid;
-export function checkCategoryValid({ importWarn }: ShorthandsRes, category?: string): void {
+export function checkCategoryValid({ importWarn }: Shorthands, category?: string): void {
   const categoryValid = isCategoryValid(category);
   if (category && !categoryValid) importWarn("warningCategoryInvalid");
 }
@@ -153,7 +180,7 @@ export async function finalWalletImport(
   appMasterPassword: string,
   addressPrefix: string,
 
-  shorthands: ShorthandsRes,
+  { warn, success, importWarnings }: Shorthands,
   results: BackupResults,
   noOverwrite: boolean,
 
@@ -162,8 +189,6 @@ export async function finalWalletImport(
   password: string,
   newWalletData: WalletNew
 ): Promise<void> {
-  const { warn, success, importWarnings } = shorthands;
-
   const { label } = newWalletData;
   const labelValid = isLabelValid(label);
 
@@ -184,7 +209,7 @@ export async function finalWalletImport(
           existingWallet.label, newLabel
         );
 
-        await editWalletLabel(existingWallet, newLabel);
+        editWalletLabel(existingWallet, newLabel);
 
         return success({ key: "import.walletMessages.successUpdated", args: { address, label: newLabel }});
       }
@@ -217,4 +242,79 @@ export async function finalWalletImport(
   results.newWallets++;
   results.importedWallets.push(newWallet); // To keep track of limits
   return success("import.walletMessages.success");
+}
+
+// -----------------------------------------------------------------------------
+// CONTACT IMPORT PREPARATION
+// -----------------------------------------------------------------------------
+interface CheckExistingContactRes {
+  existingContact?: Contact;
+  existingImportContact?: Contact;
+}
+
+export function checkExistingContact(
+  existingContacts: ContactMap,
+  results: BackupResults,
+  address: string
+): CheckExistingContactRes {
+  // Check if a contact already exists, either in the Redux store, or our list
+  // of imported contacts during this backup import
+  const existingContact = Object.values(existingContacts)
+    .find(c => c.address === address);
+  const existingImportContact = results.importedContacts
+    .find(c => c.address === address);
+
+  return { existingContact, existingImportContact };
+}
+
+// -----------------------------------------------------------------------------
+// CONTACT IMPORT
+// -----------------------------------------------------------------------------
+export function finalContactImport(
+  existingContacts: ContactMap,
+
+  { warn, success, importWarnings }: Shorthands,
+  results: BackupResults,
+  noOverwrite: boolean,
+
+  existingContact: Contact | undefined,
+  address: string,
+  label: string | undefined,
+  isName: boolean
+): void {
+  const labelValid = isLabelValid(label);
+
+  // Handle duplicate contacts
+  if (existingContact) {
+    if (labelValid && existingContact.label !== label!.trim()) {
+      if (noOverwrite) {
+        results.skippedContacts++;
+        return success({ key: "import.contactMessages.successSkippedNoOverwrite", args: { address }});
+      } else {
+        const newLabel = label!.trim();
+        editContactLabel(existingContact, newLabel);
+        return success({ key: "import.contactMessages.successUpdated", args: { address, label: newLabel }});
+      }
+    } else {
+      results.skippedContacts++;
+      return success({ key: "import.contactMessages.successSkipped", args: { address }});
+    }
+  }
+
+  // Verify contact limit
+  const currentContactCount =
+    Object.keys(existingContacts).length + results.importedContacts.length;
+  if (currentContactCount >= ADDRESS_LIST_LIMIT)
+    throw new BackupContactError("errorLimitReached");
+
+  importWarnings.forEach(warn);
+
+  debug("adding new contact %s", address);
+  const newContact = addContact({ address, label, isName });
+  debug("new contact %s (%s)", newContact.id, newContact.address);
+
+  // Add it to the results
+  results.newContacts++;
+  results.importedContacts.push(newContact); // To keep track of limits
+  return success("import.contactMessages.success");
 }

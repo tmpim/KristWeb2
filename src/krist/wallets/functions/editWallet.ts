@@ -65,11 +65,11 @@ export async function editWallet(
  * @param label - The new wallet label.
  * @param category - The new wallet category.
  */
-export async function editWalletLabel(
+export function editWalletLabel(
   wallet: Wallet,
   label: string | "" | undefined,
   category?: string | "" | undefined
-): Promise<void> {
+): void {
   const updatedLabel = label?.trim() === ""
     ? undefined
     : (label?.trim() || wallet.label);

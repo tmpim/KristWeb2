@@ -3,8 +3,10 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { store } from "@app";
 import * as actions from "@actions/WalletsActions";
+import * as contactActions from "@actions/ContactsActions";
 
 import { getWalletKey, parseWallet, syncWallet } from "@wallets";
+import { getContactKey, parseContact } from "@contacts";
 
 import Debug from "debug";
 const debug = Debug("kristweb:storage-broadcast");
@@ -26,6 +28,21 @@ export function broadcastDeleteWallet(id: string): void {
   channel.postMessage(["deleteWallet", id]);
 }
 
+export function broadcastAddContact(id: string): void {
+  debug("broadcasting deleteContact event for contact id %s", id);
+  channel.postMessage(["deleteContact", id]);
+}
+
+export function broadcastEditContact(id: string): void {
+  debug("broadcasting editContact event for contact id %s", id);
+  channel.postMessage(["editContact", id]);
+}
+
+export function broadcastDeleteContact(id: string): void {
+  debug("broadcasting deleteContact event for contact id %s", id);
+  channel.postMessage(["deleteContact", id]);
+}
+
 /** Component that manages a BroadcastChannel responsible for dispatching wallet
  * storage events (add, edit, delete) across tabs. */
 export function StorageBroadcast(): JSX.Element | null {
@@ -38,6 +55,9 @@ export function StorageBroadcast(): JSX.Element | null {
       const [type, ...data] = e.data;
 
       if (type === "addWallet" || type === "editWallet") {
+        // ---------------------------------------------------------------------
+        // addWallet, editWallet
+        // ---------------------------------------------------------------------
         const id: string = data[0];
         const key = getWalletKey(id);
 
@@ -52,9 +72,34 @@ export function StorageBroadcast(): JSX.Element | null {
 
         syncWallet(wallet, true);
       } else if (type === "deleteWallet") {
+        // ---------------------------------------------------------------------
+        // deleteWallet
+        // ---------------------------------------------------------------------
         const id: string = data[0];
         debug("addWallet broadcast %s", id);
         store.dispatch(actions.removeWallet(id));
+      } else if (type === "addContact" || type === "editContact") {
+        // ---------------------------------------------------------------------
+        // addContact, editContact
+        // ---------------------------------------------------------------------
+        const id: string = data[0];
+        const key = getContactKey(id);
+
+        // Load the contact from localStorage (the update should've been
+        // synchronous)
+        const contact = parseContact(id, localStorage.getItem(key));
+        debug("%s broadcast %s", type, id);
+
+        // Dispatch the new/updated contact to the Redux store
+        if (type === "addContact") store.dispatch(contactActions.addContact(contact));
+        else store.dispatch(contactActions.updateContact({ id, contact }));
+      } else if (type === "deleteContact") {
+        // ---------------------------------------------------------------------
+        // deleteContact
+        // ---------------------------------------------------------------------
+        const id: string = data[0];
+        debug("deleteContact broadcast %s", id);
+        store.dispatch(contactActions.removeContact(id));
       } else {
         debug("received unknown broadcast msg type %s", type);
       }

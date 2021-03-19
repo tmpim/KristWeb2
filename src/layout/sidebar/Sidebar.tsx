@@ -30,7 +30,7 @@ type SidebarItemProps = MenuItemProps & {
 const sidebarItems: SidebarItemProps[] = [
   { icon: <HomeOutlined />,   name: "dashboard",    to: "/" },
   { icon: <WalletOutlined />, name: "myWallets",    to: "/wallets" },
-  { icon: <TeamOutlined />,   name: "addressBook",  to: "/contacts",  nyi: true },
+  { icon: <TeamOutlined />,   name: "addressBook",  to: "/contacts" },
   { icon: <BankOutlined />,   name: "transactions", to: "/me/transactions" },
   { icon: <TagsOutlined />,   name: "names",        to: "/me/names" },
   { icon: <SketchOutlined />, name: "mining",       to: "/mining", nyi: true },

@@ -3,6 +3,7 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { getInitialMasterPasswordState } from "./reducers/MasterPasswordReducer";
 import { getInitialWalletsState } from "./reducers/WalletsReducer";
+import { getInitialContactsState } from "./reducers/ContactsReducer";
 import { getInitialSettingsState } from "./reducers/SettingsReducer";
 import { getInitialNodeState } from "./reducers/NodeReducer";
 
@@ -17,6 +18,7 @@ export const initStore = (): Store<RootState, RootAction> => createStore(
   {
     masterPassword: getInitialMasterPasswordState(),
     wallets: getInitialWalletsState(),
+    contacts: getInitialContactsState(),
     settings: getInitialSettingsState(),
     node: getInitialNodeState()
   },

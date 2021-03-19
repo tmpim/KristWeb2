@@ -189,6 +189,16 @@
     }
   },
 
+  "addressBook": {
+    "title": "Address book",
+
+    "contactCount": "{{count, number}} contact",
+    "contactCount_plural": "{{count, number}} contacts",
+    "contactCountEmpty": "No contacts",
+
+    "buttonAddContact": "Add contact"
+  },
+
   "myTransactions": {
     "title": "Transactions",
     "searchPlaceholder": "Search transactions...",
@@ -712,7 +722,7 @@
       "errorInvalidTypeObject": "This wallet was not an object!",
       "errorDecrypt": "This wallet could not be decrypted!",
       "errorPasswordDecrypt": "The password for this wallet could not be decrypted!",
-      "errorWalletJSON": "The decrypted data was not valid JSON!",
+      "errorDataJSON": "The decrypted data was not valid JSON!",
       "errorUnknownFormat": "This wallet uses an unknown or unsupported format!",
       "errorFormatMissing": "This wallet is missing a format!",
       "errorUsernameMissing": "This wallet is missing a username!",
@@ -726,7 +736,24 @@
     },
 
     "contactMessages": {
-      "errorNYI": "The Address Book has not yet been implemented, so it was skipped."
+      "success": "Contact imported successfully.",
+      "successSkipped": "A contact with the same address ({{address}}) and settings already exists, so it was skipped.",
+      "successUpdated": "A contact with the same address ({{address}}) already exists. Its label was updated to \"{{label}}\"",
+      "successSkippedNoOverwrite": "A contact with the same address ({{address}}) already exists, and you chose not to overwrite the label, so it was skipped.",
+      "successImportSkipped": "A contact with the same address ({{address}}) was already imported, so it was skipped.",
+
+      "warningSyncNode": "This contact had a custom sync node, which is not supported in KristWeb v2. The sync node was skipped.",
+      "warningIcon": "This contact had a custom icon, which is not supported in KristWeb v2. The icon was skipped.",
+      "warningLabelInvalid": "The label for this contact was invalid. The label was skipped.",
+
+      "errorInvalidTypeString": "This contact was not a string!",
+      "errorInvalidTypeObject": "This contact was not an object!",
+      "errorDecrypt": "This contact could not be decrypted!",
+      "errorDataJSON": "The decrypted data was not valid JSON!",
+      "errorAddressMissing": "This contact is missing an address!",
+      "errorAddressInvalid": "This contact's address is invalid!",
+      "errorLimitReached": "You reached the contact limit. You currently cannot add any more contacts.",
+      "errorUnknown": "An unknown error occurred. See console for details."
     },
 
     "results": {

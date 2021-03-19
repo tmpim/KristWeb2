@@ -7,6 +7,7 @@ import { Switch, Route } from "react-router-dom";
 
 import { DashboardPage } from "@pages/dashboard/DashboardPage";
 import { WalletsPage } from "@pages/wallets/WalletsPage";
+import { ContactsPage } from "@pages/contacts/ContactsPage";
 
 import { SendTransactionPage } from "@pages/transactions/send/SendTransactionPage";
 
@@ -39,6 +40,7 @@ export const APP_ROUTES: AppRoute[] = [
 
   // My wallets, etc
   { path: "/wallets", name: "wallets", component: <WalletsPage /> },
+  { path: "/contacts", name: "contacts", component: <ContactsPage /> },
   { path: "/me/transactions", name: "myTransactions",
     component: <TransactionsPage listingType={TXListing.WALLETS} /> },
   { path: "/me/names", name: "myNames",

@@ -5,23 +5,34 @@ import { Typography } from "antd";
 
 import { useTranslation, Trans } from "react-i18next";
 
-import { BackupResults } from "./backupResults";
+import { BackupResults, ResultType } from "./backupResults";
 
 import "./BackupResultsSummary.less";
 
 const { Paragraph } = Typography;
+
+function getMessageCountByType(
+  results: BackupResults,
+  type: ResultType
+): number {
+  let acc = 0;
+
+  acc += Object.values(results.messages.wallets)
+    .reduce((acc, r) => acc + r.messages.filter(m => m.type === type).length, 0);
+  acc += Object.values(results.messages.contacts)
+    .reduce((acc, r) => acc + r.messages.filter(m => m.type === type).length, 0);
+
+  return acc;
+}
 
 /** Provides a paragraph summarising the results of the backup import (e.g. the
  * amount of wallets imported, the amount of errors, etc.). */
 export function BackupResultsSummary({ results }: { results: BackupResults }): JSX.Element {
   const { t } = useTranslation();
 
-  // TODO: do this for contacts too
-  const { newWallets, skippedWallets } = results;
-  const warningCount = Object.values(results.messages.wallets)
-    .reduce((acc, r) => acc + r.messages.filter(m => m.type === "warning").length, 0);
-  const errorCount = Object.values(results.messages.wallets)
-    .reduce((acc, r) => acc + r.messages.filter(m => m.type === "error").length, 0);
+  const { newWallets, skippedWallets, newContacts, skippedContacts } = results;
+  const warningCount = getMessageCountByType(results, "warning");
+  const errorCount = getMessageCountByType(results, "error");
 
   return <Paragraph className="backup-results-summary">
     {/* New wallets imported count */}
@@ -29,9 +40,7 @@ export function BackupResultsSummary({ results }: { results: BackupResults }): J
       {newWallets > 0
         ? (
           <Trans t={t} i18nKey="import.results.walletsImported" count={newWallets}>
-            <span className="positive">
-              {{ count: newWallets }} new wallet
-            </span>
+            <span className="positive">{{ count: newWallets }} new wallet</span>
             was imported.
           </Trans>
         )
@@ -45,7 +54,20 @@ export function BackupResultsSummary({ results }: { results: BackupResults }): J
       </Trans>
     </div>}
 
-    {/* TODO: Show contact counts too (only if >0) */}
+    {/* New contacts imported count */}
+    {newContacts > 0 && <div className="summary-contacts-imported">
+      <Trans t={t} i18nKey="import.results.contactsImported" count={newContacts}>
+        <span className="positive">{{ count: newContacts }} new contact</span>
+        was imported.
+      </Trans>
+    </div>}
+
+    {/* Skipped contacts count */}
+    {skippedContacts > 0 && <div className="summary-contacts-skipped">
+      <Trans t={t} i18nKey="import.results.contactsSkipped" count={skippedContacts}>
+        {{ count: skippedContacts }} contact was skipped.
+      </Trans>
+    </div>}
 
     {/* Errors */}
     {errorCount > 0 && <div className="summary-errors-warnings">

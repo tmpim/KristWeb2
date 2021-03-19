@@ -5,6 +5,7 @@ import { combineReducers } from "redux";
 
 import { MasterPasswordReducer } from "./MasterPasswordReducer";
 import { WalletsReducer } from "./WalletsReducer";
+import { ContactsReducer } from "./ContactsReducer";
 import { SettingsReducer } from "./SettingsReducer";
 import { WebsocketReducer } from "./WebsocketReducer";
 import { NodeReducer } from "./NodeReducer";
@@ -13,6 +14,7 @@ import { MiscReducer } from "./MiscReducer";
 export default combineReducers({
   masterPassword: MasterPasswordReducer,
   wallets: WalletsReducer,
+  contacts: ContactsReducer,
   settings: SettingsReducer,
   websocket: WebsocketReducer,
   node: NodeReducer,

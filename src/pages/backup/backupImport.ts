@@ -91,12 +91,15 @@ export async function backupImport(
   // Fetch the current set of wallets from the Redux store, to ensure the limit
   // isn't reached, and to handle duplication checking.
   const existingWallets = store.getState().wallets.wallets;
+  const existingContacts = store.getState().contacts.contacts;
   // Used to encrypt new wallets/edited wallets
   const appMasterPassword = store.getState().masterPassword.masterPassword;
   // Used to check if an imported v1 wallet has a custom sync node
   const appSyncNode = store.getState().node.syncNode;
   // Used to re-calculate the addresses
   const addressPrefix = store.getState().node.currency.address_prefix;
+  // Used to verify contact addresses
+  const nameSuffix = store.getState().node.currency.name_suffix;
 
   // The app master password is required to import wallets. The backup import
   // is usually done through an authenticated action anyway.
@@ -111,13 +114,17 @@ export async function backupImport(
   // Attempt to add the wallets
   if (isBackupKristWebV1(backup)) {
     await importV1Backup(
-      existingWallets, appMasterPassword, appSyncNode, addressPrefix,
+      existingWallets, existingContacts,
+      appMasterPassword, appSyncNode,
+      addressPrefix, nameSuffix,
       backup, masterPassword, noOverwrite,
       results
     );
   } else if (isBackupKristWebV2(backup)) {
     await importV2Backup(
-      existingWallets, appMasterPassword, addressPrefix,
+      existingWallets, existingContacts,
+      appMasterPassword,
+      addressPrefix, nameSuffix,
       backup, masterPassword, noOverwrite,
       results
     );

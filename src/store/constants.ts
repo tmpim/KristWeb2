@@ -19,6 +19,13 @@ export const UNSYNC_WALLET = "UNSYNC_WALLET";
 export const RECALCULATE_WALLETS = "RECALCULATE_WALLETS";
 export const SET_LAST_TX_FROM = "SET_LAST_TX_FROM";
 
+// Contacts
+// ---
+export const LOAD_CONTACTS = "LOAD_CONTACTS";
+export const ADD_CONTACT = "ADD_CONTACT";
+export const REMOVE_CONTACT = "REMOVE_CONTACT";
+export const UPDATE_CONTACT = "UPDATE_CONTACT";
+
 // Settings
 // ---
 export const SET_BOOLEAN_SETTING = "SET_BOOLEAN_SETTING";

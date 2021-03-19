@@ -5,6 +5,7 @@
 import { TranslatedError } from "@utils/i18n";
 
 import { Wallet } from "@wallets";
+import { Contact } from "@contacts";
 
 import Debug from "debug";
 const debug = Debug("kristweb:backup-results");
@@ -26,14 +27,17 @@ export interface ResultSet {
 export class BackupResults {
   /** Number of new wallets that were added as a result of this import. */
   public newWallets = 0;
+  public newContacts = 0;
 
   /** Number of wallets from the backup that were skipped (not imported). */
   public skippedWallets = 0;
+  public skippedContacts = 0;
 
   /** Array of wallets that were successfully imported, used to handle
    * duplication checking (since the Redux state isn't guaranteed to be up to
    * date). */
   public importedWallets: Wallet[] = [];
+  public importedContacts: Contact[] = [];
 
   /** For both wallets and contacts, a map of wallet/contact UUIDs containing
    * all the messages (success, warning, error). */
@@ -92,4 +96,8 @@ export class BackupError extends TranslatedError {
 
 export class BackupWalletError extends BackupError {
   constructor(message: string) { super("import.walletMessages." + message); }
+}
+
+export class BackupContactError extends BackupError {
+  constructor(message: string) { super("import.contactMessages." + message); }
 }

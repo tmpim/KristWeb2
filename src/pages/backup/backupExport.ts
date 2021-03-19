@@ -6,6 +6,7 @@ import { store } from "@app";
 export async function backupExport(): Promise<string> {
   const { salt, tester } = store.getState().masterPassword;
   const { wallets } = store.getState().wallets;
+  const { contacts } = store.getState().contacts;
 
   // Get the wallets, skipping those with dontSave set to true
   const finalWallets = Object.fromEntries(Object.entries(wallets)
@@ -18,7 +19,7 @@ export async function backupExport(): Promise<string> {
     salt, tester,
 
     wallets: finalWallets,
-    contacts: {} // TODO
+    contacts
   };
 
   // Convert to base64'd JSON

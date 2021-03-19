@@ -18,6 +18,8 @@
       "@api/*": ["./krist/api/*"],
       "@wallets": ["./krist/wallets"],
       "@wallets/*": ["./krist/wallets/*"],
+      "@contacts": ["./krist/contacts"],
+      "@contacts/*": ["./krist/contacts/*"],
       "@krist/*": ["./krist/*"],
       "@global/*": ["./global/*"],
 

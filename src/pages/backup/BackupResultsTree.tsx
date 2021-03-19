@@ -20,7 +20,7 @@ interface Props {
   results: BackupResults;
 }
 
-const CLEAN_ID_RE = /^(?:[Ww]allet\d*|[Ff]riend\d*)-/;
+const CLEAN_ID_RE = /^(?:[Ww]allet\d*|[Ff]riend\d*|[Cc]ontact\d*)-/;
 
 /** Maps the different types of message results (success, warning, error)
  * to icons. */
@@ -65,45 +65,60 @@ function getMessageTitle(
   return null;
 }
 
+function getTreeItem(
+  t: TFunction, i18n: i18n,
+  results: BackupResults,
+  type: "wallets" | "contacts",
+  id: string,
+): DataNode {
+  // The IDs are the keys of the backup, which may begin with prefixes like
+  // "Wallet-"; remove those for cleanliness
+  const cleanID = id.replace(CLEAN_ID_RE, "");
+  const resultSet = results.messages[type][id];
+  const { label, messages } = resultSet;
+  const messageNodes: DataNode[] = [];
+
+  for (let i = 0; i < messages.length; i++) {
+    const { type, message, error } = messages[i];
+    const icon = getMessageIcon(type);
+    const title = getMessageTitle(t, i18n, message, error);
+
+    messageNodes.push({
+      key: `${type}-${cleanID}-${i}`,
+      title,
+      icon,
+      isLeaf: true,
+      className: "backup-results-tree-message"
+    });
+  }
+
+  return {
+    key: `${type}-${cleanID}`,
+    title: t(
+      type === "wallets"
+        ? "import.results.treeWallet"
+        : "import.results.treeContact",
+      { id: label || cleanID }
+    ),
+    children: messageNodes
+  };
+}
+
 /** Converts the backup results into a tree of messages, grouped by wallet
  * and contact UUID. */
 function getTreeData(
   t: TFunction, i18n: i18n,
   results: BackupResults
 ): DataNode[] {
-  // Add the wallet messages data
   const out: DataNode[] = [];
 
-  for (const id in results.messages.wallets) {
-    // The IDs are the keys of the backup, which may begin with prefixes like
-    // "Wallet-"; remove those for cleanliness
-    const cleanID = id.replace(CLEAN_ID_RE, "");
-    const resultSet = results.messages.wallets[id];
-    const { label, messages } = resultSet;
-    const messageNodes: DataNode[] = [];
+  // Add the wallet messages data
+  for (const id in results.messages.wallets)
+    out.push(getTreeItem(t, i18n, results, "wallets", id));
 
-    for (let i = 0; i < messages.length; i++) {
-      const { type, message, error } = messages[i];
-      const icon = getMessageIcon(type);
-      const title = getMessageTitle(t, i18n, message, error);
-
-      messageNodes.push({
-        key: `wallets-${cleanID}-${i}`,
-        title,
-        icon,
-        isLeaf: true,
-        className: "backup-results-tree-message"
-      });
-    }
-
-    out.push({
-      key: `wallets-${cleanID}`,
-      title: t("import.results.treeWallet", { id: label || cleanID }),
-      children: messageNodes
-    });
-  }
-
-  // TODO: Add the address book contacts data
+  // Add the contact messages data
+  for (const id in results.messages.contacts)
+    out.push(getTreeItem(t, i18n, results, "contacts", id));
 
   return out;
 }
