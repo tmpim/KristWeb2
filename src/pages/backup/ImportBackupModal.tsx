@@ -9,6 +9,8 @@ import { translateError } from "@utils/i18n";
 
 import { getMasterPasswordInput } from "@comp/auth/MasterPasswordInput";
 
+import { useBooleanSetting, setBooleanSetting } from "@utils/settings";
+
 import { ImportDetectFormat } from "./ImportDetectFormat";
 import { decodeBackup } from "./backupParser";
 import { backupVerifyPassword, backupImport } from "./backupImport";
@@ -64,6 +66,12 @@ export function ImportBackupModal({ visible, setVisible }: Props): JSX.Element {
 
   function onValuesChange(changed: Partial<FormValues>) {
     if (changed.code) setCode(changed.code);
+
+    // Remember the value of the 'overwrite' checkbox
+    if (changed.overwrite !== undefined) {
+      debug("updating importOverwrite to %b", changed.overwrite);
+      setBooleanSetting("importOverwrite", changed.overwrite, false);
+    }
   }
 
   /** Updates the contents of the 'code' field with the given file. */
@@ -246,6 +254,8 @@ interface FormProps {
 function ImportBackupForm({ form, code, decodeError, setDecodeError, masterPasswordError, onValuesChange, onFinish }: FormProps): JSX.Element {
   const { t } = useTranslation();
 
+  const importOverwrite = useBooleanSetting("importOverwrite");
+
   return <Form
     form={form}
     layout="vertical"
@@ -255,7 +265,7 @@ function ImportBackupForm({ form, code, decodeError, setDecodeError, masterPassw
     initialValues={{
       masterPassword: "",
       code: "",
-      overwrite: true
+      overwrite: importOverwrite
     }}
 
     onValuesChange={onValuesChange}

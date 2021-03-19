@@ -52,6 +52,8 @@ export interface SettingsState {
   readonly defaultPageSize: number;
   /** Enable table navigation hotkeys (left and right arrows). */
   readonly tableHotkeys: boolean;
+  /** Overwrite labels when importing wallets. */
+  readonly importOverwrite: boolean;
 
   // ===========================================================================
   // DEBUG SETTINGS
@@ -75,6 +77,7 @@ export const DEFAULT_SETTINGS: SettingsState = {
   transactionDefaultRaw: false,
   defaultPageSize: 15,
   tableHotkeys: true,
+  importOverwrite: true,
 
   walletFormats: false
 };
@@ -127,18 +130,26 @@ export function notifySettingChange(): void {
   message.success(i18n.t("settings.messageSuccess"));
 }
 
-export function setBooleanSetting(settingName: SettingName<boolean>, value: boolean): void {
+export function setBooleanSetting(
+  settingName: SettingName<boolean>,
+  value: boolean,
+  notify = true
+): void {
   debug("changing setting [boolean] %s value to %o", settingName, value);
   localStorage.setItem(getSettingKey(settingName), value ? "true" : "false");
   store.dispatch(actions.setBooleanSetting(settingName, value));
-  notifySettingChange();
+  if (notify) notifySettingChange();
 }
 
-export function setIntegerSetting(settingName: SettingName<number>, value: number): void {
+export function setIntegerSetting(
+  settingName: SettingName<number>,
+  value: number,
+  notify = true
+): void {
   debug("changing setting [integer] %s value to %o", settingName, value);
   localStorage.setItem(getSettingKey(settingName), Math.floor(value).toString());
   store.dispatch(actions.setIntegerSetting(settingName, value));
-  notifySettingChange();
+  if (notify) notifySettingChange();
 }
 
 export function validateIntegerSetting(settingName: SettingName<number>, value: number): boolean {
