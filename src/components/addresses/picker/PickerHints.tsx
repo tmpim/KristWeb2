@@ -14,9 +14,11 @@ import { KristAddressWithNames, lookupAddress } from "@api/lookup";
 import { KristName } from "@api/types";
 
 import { WalletHint } from "./WalletHint";
+import { VerifiedHint } from "./VerifiedHint";
 import { AddressHint } from "./AddressHint";
 import { NameHint } from "./NameHint";
 
+import { getVerified } from "@comp/addresses/VerifiedAddress";
 import { useSubscription } from "@global/ws/WebsocketSubscription";
 
 import { debounce } from "lodash-es";
@@ -53,6 +55,9 @@ export function usePickerHints(
   const { walletAddressMap, joinedAddressList } = useWallets();
   const foundWallet = validAddress && value
     ? walletAddressMap[validAddress] : undefined;
+
+  // Used to show a verified hint
+  const foundVerified = validAddress ? getVerified(validAddress) : undefined;
 
   // The actual lookup function (debounced)
   const lookupHint = useMemo(() => debounce(async (
@@ -153,17 +158,28 @@ export function usePickerHints(
 
   // Whether or not to show certain hints/anything at all
   const showWalletHint = !!foundWallet;
+  const showVerifiedHint = !!foundVerified && !showWalletHint;
   const showAddressHint = foundAddress !== undefined;
   const showNameHint = foundName !== undefined;
-  const foundAnything = showWalletHint || showAddressHint || showNameHint;
+  const foundAnything = showWalletHint || showVerifiedHint
+    || showAddressHint || showNameHint;
 
   // Whether or not to show a separator between the wallet hint and address or
   // name hint (i.e. if two hints are shown)
-  const showSep = showWalletHint && (showAddressHint || showNameHint);
+  const showSep = (showWalletHint || showVerifiedHint)
+    && (showAddressHint || showNameHint);
 
   if (foundAnything) return <div className="address-picker-hints">
     {/* Show a wallet hint if possible */}
     {foundWallet && <WalletHint wallet={foundWallet} />}
+
+    {/* Show a verified hint if possible */}
+    {foundVerified && (
+      // Make it look like a contextual address to inherit the styles
+      <span className="contextual-address">
+        <VerifiedHint address={validAddress!} verified={foundVerified} />
+      </span>
+    )}
 
     {/* Show a separator if there are two hints */}
     {showSep && <span className="address-picker-separator">&ndash;</span>}

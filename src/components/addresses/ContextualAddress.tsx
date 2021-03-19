@@ -16,7 +16,7 @@ import { useBooleanSetting } from "@utils/settings";
 import { KristNameLink } from "../names/KristNameLink";
 import { ConditionalLink } from "@comp/ConditionalLink";
 
-import { getVerified, VerifiedAddress } from "./VerifiedAddress";
+import { getVerified, VerifiedAddressLink } from "./VerifiedAddress";
 
 import "./ContextualAddress.less";
 
@@ -59,7 +59,7 @@ export function AddressMetaname({
     return verified
       ? (
         // Verified address
-        <VerifiedAddress address={address} verified={verified} parens />
+        <VerifiedAddressLink address={address} verified={verified} parens />
       )
       : (
         // Regular address
@@ -174,7 +174,7 @@ export function ContextualAddress({
         )
         : (verified
           // Display the verified address if possible
-          ? <VerifiedAddress address={address} verified={verified} />
+          ? <VerifiedAddressLink address={address} verified={verified} />
           : (
             // Display the regular address or label
             <ConditionalLink

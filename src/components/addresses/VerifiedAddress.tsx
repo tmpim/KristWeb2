@@ -38,7 +38,7 @@ interface Props {
   className?: string;
 }
 
-export function VerifiedAddress({
+export function VerifiedAddressLink({
   address,
   verified,
   parens,
