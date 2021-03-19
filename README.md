@@ -2,16 +2,7 @@
 
 <table align="center">
   <tr>
-    <td><img src="https://i.imgur.com/qBHn6Pz.png" width="360" /></td>
-    <td><img src="https://i.imgur.com/DW86wns.png" width="360" /></td>
-  </tr>
-  <tr>
-    <td colspan="2" align="center">
-      <img src="https://i.imgur.com/PtineSx.png" width="480" />        
-      <p align="center">
-        <i>Dashboard design mockup</i>
-      </p>
-    </td>
+    <td><img src="https://i.imgur.com/kVXMYpX.png" width="360" /></td>
   </tr>
 </table>
 
