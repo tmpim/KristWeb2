@@ -307,7 +307,8 @@
     "motdCardTitle": "Server MOTD",
     "motdDebugMode": "This server is an unofficial development server. Balances and transactions can be manipulated. Proceed with caution.",
 
-    "whatsNewCardTitle": "What's new"
+    "whatsNewCardTitle": "What's new",
+    "whatsNewButton": "What's new"
   },
 
   "credits": {

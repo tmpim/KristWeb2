@@ -90,7 +90,7 @@ export function WhatsNewPage(): JSX.Element {
     </Row>
 
     {/* Krist */}
-    <Title level={2}>
+    <Title level={2} style={{ marginTop: 16 }}>
       {t("whatsNew.titleKrist")}
       <GithubLink repoURL={kristPackage.repository} />
     </Title>
