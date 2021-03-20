@@ -76,7 +76,7 @@ export const DEFAULT_SETTINGS: SettingsState = {
   addressCopyButtons: false,
   nameCopyButtons: false,
   blockHashCopyButtons: false,
-  showRelativeDates: false,
+  showRelativeDates: true,
   showNativeDates: false,
   transactionsHighlightOwn: true,
   transactionsHighlightVerified: true,
