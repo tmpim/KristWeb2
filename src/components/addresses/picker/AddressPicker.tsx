@@ -33,6 +33,7 @@ interface Props {
   otherPickerValue?: string;
 
   walletsOnly?: boolean;
+  noWallets?: boolean;
   noNames?: boolean;
   nameHint?: boolean;
 
@@ -55,6 +56,7 @@ export function AddressPicker({
   otherPickerValue,
 
   walletsOnly,
+  noWallets,
   noNames,
   nameHint,
 
@@ -117,9 +119,9 @@ export function AddressPicker({
     ? [
       ...(exactAddressItem ? [exactAddressItem] : []),
       ...(exactNameItem ? [exactNameItem] : []),
-      ...options
+      ...(!noWallets ? options : [])
     ]
-    : options;
+    : (!noWallets ? options : []);
 
   // Fetch an address or name hint if possible
   const { pickerHints, foundName } = usePickerHints(
@@ -131,8 +133,18 @@ export function AddressPicker({
     form?.validateFields([name]);
   }, [form, name, foundName, otherPickerValue]);
 
+  function getPlaceholder() {
+    if (walletsOnly) return t("addressPicker.placeholderWalletsOnly");
+    if (noWallets) {
+      if (noNames) return t("addressPicker.placeholderNoWalletsNoNames");
+      else return t("addressPicker.placeholderNoWallets");
+    }
+    return t("addressPicker.placeholder");
+  }
+
   const classes = classNames("address-picker", className, {
     "address-picker-wallets-only": walletsOnly,
+    "address-picker-no-wallets": noWallets,
     "address-picker-no-names": noNames,
     "address-picker-has-exact-address": hasExactAddress,
     "address-picker-has-exact-name": hasExactName,
@@ -154,7 +166,9 @@ export function AddressPicker({
       rules={[
         { required: true, message: walletsOnly
           ? t("addressPicker.errorWalletRequired")
-          : t("addressPicker.errorRecipientRequired")},
+          : (noWallets
+            ? t("addressPicker.errorAddressRequired")
+            : t("addressPicker.errorRecipientRequired"))},
 
         // Address/name regexp
         {
@@ -172,8 +186,11 @@ export function AddressPicker({
             } else {
               // Validate addresses and names
               const nameRegexp = getNameRegex(nameSuffix);
-              if (!addressRegexp.test(value) && !nameRegexp.test(value))
-                throw t("addressPicker.errorInvalidRecipient");
+              if (!addressRegexp.test(value) && !nameRegexp.test(value)) {
+                if (noWallets)
+                  throw t("addressPicker.errorInvalidAddress");
+                else throw t("addressPicker.errorInvalidRecipient");
+              }
             }
           }
         },
@@ -210,9 +227,7 @@ export function AddressPicker({
         dropdownMatchSelectWidth={false}
 
         // Change the placeholder to 'Choose a wallet' if applicable
-        placeholder={walletsOnly
-          ? t("addressPicker.placeholderWalletsOnly")
-          : t("addressPicker.placeholder")}
+        placeholder={getPlaceholder()}
 
         // Show a clear button on the input for convenience
         allowClear

@@ -269,6 +269,31 @@
     "errorWalletLimitDescription": "You currently cannot add any more wallets."
   },
 
+  "addContact": {
+    "modalTitle": "Add contact",
+    "modalTitleEdit": "Edit contact",
+
+    "buttonSubmit": "Add",
+    "buttonSubmitEdit": "Save",
+
+    "contactLabel": "Label",
+    "contactLabelPlaceholder": "Contact label (optional)",
+    "contactLabelMaxLengthError": "No longer than 32 characters",
+    "contactLabelWhitespaceError": "Must not be only spaces",
+
+    "contactAddressLabel": "Address or name",
+
+    "messageSuccessAdd": "Added contact successfully!",
+    "messageSuccessEdit": "Saved contact successfully!",
+
+    "errorDuplicateContactTitle": "Contact already exists",
+    "errorDuplicateContactDescription": "You already have a contact for that address.",
+    "errorMissingContactTitle": "Contact not found",
+    "errorMissingContactDescription": "The contact you are trying to edit no longer exists.",
+    "errorContactLimitTitle": "Contact limit reached",
+    "errorContactLimitDescription": "You currently cannot add any more contacts."
+  },
+
   "dashboard": {
     "siteTitle": "Dashboard",
 
@@ -804,9 +829,12 @@
   "addressPicker": {
     "placeholder": "Choose a recipient",
     "placeholderWalletsOnly": "Choose a wallet",
+    "placeholderNoWallets": "Address or name",
+    "placeholderNoWalletsNoNames": "Address",
 
     "hintCurrentBalance": "Current balance: <1 />",
 
+    "errorAddressRequired": "Address is required.",
     "errorRecipientRequired": "Recipient is required.",
     "errorWalletRequired": "Wallet is required.",
 

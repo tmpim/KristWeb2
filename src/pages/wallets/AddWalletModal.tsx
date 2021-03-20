@@ -244,7 +244,10 @@ export function AddWalletModal({ create, editing, visible, setVisible, setAddExi
               { whitespace: true, message: t("addWallet.walletLabelWhitespaceError") }
             ]}
           >
-            <Input placeholder={t("addWallet.walletLabelPlaceholder")} />
+            <Input
+              placeholder={t("addWallet.walletLabelPlaceholder")}
+              maxLength={32}
+            />
           </Form.Item>
         </Col>
 

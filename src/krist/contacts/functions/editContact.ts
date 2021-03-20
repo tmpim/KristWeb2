@@ -1,8 +1,6 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { v4 as uuid } from "uuid";
-
 import { store } from "@app";
 import * as actions from "@actions/ContactsActions";
 
@@ -18,7 +16,7 @@ import { broadcastEditContact } from "@global/StorageBroadcast";
  */
 export function editContact(
   contact: Contact,
-  updated: Contact
+  updated: ContactNew
 ): void {
   const finalContact = {
     ...contact,
