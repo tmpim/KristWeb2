@@ -95,4 +95,4 @@ in the future, please consider [donating](https://donate.lemmmy.pw).
 
 **Copyright (c) 2020-2021 Drew Lemmy**
 
-This project is licensed under the GPL v3 license. See LICENSE.txt for more.
+This project is licensed under the AGPL v3 license. See LICENSE.txt for more.
