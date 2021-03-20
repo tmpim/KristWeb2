@@ -54,7 +54,6 @@ export function AddressButtonRow({
       )}
 
     {/* Add contact/edit wallet button */}
-    {/* TODO: Change this to edit if they're already a contact */}
     {myWallet
       ? (
         <WalletEditButton wallet={myWallet}>

@@ -4,6 +4,7 @@
 import { TFunction } from "react-i18next";
 
 import { WalletMap, Wallet } from "@wallets";
+import { ContactMap, Contact } from "@contacts";
 
 import { getCategoryHeader } from "./Header";
 import { getAddressItem } from "./Item";
@@ -21,7 +22,9 @@ export interface OptionValue {
   // For some reason, all these props get passed all the way to the DOM element!
   // Make this a 'valid' DOM prop
   "data-wallet-label"?: string;
+  "data-contact-label"?: string;
   "data-wallet"?: Wallet;
+  "data-contact"?: Contact;
   value: string;
 }
 
@@ -39,6 +42,7 @@ export type Option = OptionValue | OptionChildren;
 interface WalletOptions {
   categorised: Record<string, OptionValue[]>;
   uncategorised: OptionValue[];
+  contacts: OptionValue[];
   categoryCount: number;
 }
 
@@ -46,18 +50,30 @@ interface WalletOptions {
 // the bottom by using keyedNullSort. Addresses are sorted ascending, though
 // because of the implicit reversing behaviour of keyedNullSort, they need to
 // be swapped here (i.e. sort with `b`, `a`).
-const sortBalance = keyedNullSort<Wallet>("balance");
-const sortAddress = keyedNullSort<Wallet>("address", true);
+const sortBalance = keyedNullSort<{ balance?: number }>("balance");
+const sortLabel = keyedNullSort<{ label?: string }>("label", true);
+const sortAddress = keyedNullSort<{ address: string }>("address", true);
+
 const sortFn = (a: Wallet, b: Wallet): number =>
   sortBalance(a, b, "descend") || sortAddress(b, a);
 const optionSortFn = (a: OptionValue, b: OptionValue): number =>
   sortFn(a["data-wallet"]!, b["data-wallet"]!);
 
+const contactSortFn = (a: Contact, b: Contact): number =>
+  sortLabel(b, a) || sortAddress(b, a);
+const contactOptionSortFn = (a: OptionValue, b: OptionValue): number =>
+  contactSortFn(a["data-contact"]!, b["data-contact"]!);
+
 /** Groups the wallets by category for autocompletion and generates their select
  * options. */
-function getWalletOptions(wallets: WalletMap): WalletOptions {
+function getWalletOptions(
+  wallets: WalletMap,
+  contacts: ContactMap
+): WalletOptions {
   const categorised: Record<string, OptionValue[]> = {};
   const uncategorised: OptionValue[] = [];
+  const contactValues: OptionValue[] = Object.values(contacts)
+    .map(contact => getAddressItem({ contact }));
 
   // Go through all wallets and group them
   for (const id in wallets) {
@@ -84,12 +100,17 @@ function getWalletOptions(wallets: WalletMap): WalletOptions {
     categorised[category].sort(optionSortFn);
     categorised[category].reverse();
   }
+
   uncategorised.sort(optionSortFn);
   uncategorised.reverse();
+
+  contactValues.sort(contactOptionSortFn);
+  contactValues.reverse();
 
   return {
     categorised,
     uncategorised,
+    contacts: contactValues,
     categoryCount: Object.keys(categorised).length
   };
 }
@@ -99,10 +120,14 @@ function getWalletOptions(wallets: WalletMap): WalletOptions {
 // -----------------------------------------------------------------------------
 /** Gets the base options to show for autocompletion, including the wallets,
  * grouped by category if possible. Will include the address book soon too. */
-export function getOptions(t: TFunction, wallets: WalletMap): Option[] {
+export function getOptions(
+  t: TFunction,
+  wallets: WalletMap,
+  contactMap: ContactMap,
+): Option[] {
   // Wallet options
-  const { categorised, uncategorised, categoryCount }
-    = getWalletOptions(wallets);
+  const { categorised, uncategorised, categoryCount, contacts }
+    = getWalletOptions(wallets, contactMap);
 
   // Sort the wallet categories in a human-friendly manner
   const sortedCategories = Object.keys(categorised);
@@ -130,6 +155,10 @@ export function getOptions(t: TFunction, wallets: WalletMap): Option[] {
       options: uncategorised
     },
 
-    // TODO: Address book
+    // Address book
+    {
+      ...getCategoryHeader(t("addressPicker.categoryAddressBook")),
+      options: contacts
+    },
   ];
 }

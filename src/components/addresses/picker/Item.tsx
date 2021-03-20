@@ -3,6 +3,7 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 
 import { Wallet } from "@wallets";
+import { Contact } from "@contacts";
 import { NameParts } from "@utils/currency";
 
 import { KristValue } from "@comp/krist/KristValue";
@@ -13,10 +14,17 @@ interface AddressItemProps {
   address?: string;
   name?: NameParts;
   wallet?: Wallet;
+  contact?: Contact;
 }
 
-function getPlainAddress({ address, name, wallet }: AddressItemProps): string {
+function getPlainAddress({
+  address,
+  name,
+  wallet,
+  contact
+}: AddressItemProps): string {
   if (wallet) return wallet.address;
+  if (contact) return contact.address;
   if (name?.recipient) return name.recipient;
   else return address || "";
 }
@@ -24,13 +32,20 @@ function getPlainAddress({ address, name, wallet }: AddressItemProps): string {
 function PickerContent({
   name,
   wallet,
+  contact,
   plainAddress
 }: AddressItemProps & { plainAddress: string }): JSX.Element {
-  if (wallet && wallet.label) {
+  if (wallet?.label) {
     // Show the wallet label if possible
     return <>
       <span className="address-picker-wallet-label">{wallet.label}&nbsp;</span>
       <span className="address-picker-wallet-address">({wallet.address})</span>
+    </>;
+  } else if (contact?.label) {
+    // Show the contact label if possible
+    return <>
+      <span className="address-picker-contact-label">{contact.label}&nbsp;</span>
+      <span className="address-picker-contact-address">({contact.address})</span>
     </>;
   } else if (name?.recipient) {
     // Show a formatted name if possible
@@ -49,12 +64,12 @@ function PickerContent({
 export function getAddressItem(props: AddressItemProps): OptionValue {
   // The address to use as a value
   const plainAddress = getPlainAddress(props);
-  const { wallet } = props;
+  const { wallet, contact } = props;
 
   return {
     label: (
       <div className="address-picker-address-item">
-        {/* Address, wallet label, or name */}
+        {/* Address, wallet label, contact label, or name */}
         <div className="address-picker-item-content">
           <PickerContent {...props} plainAddress={plainAddress} />
         </div>
@@ -66,8 +81,10 @@ export function getAddressItem(props: AddressItemProps): OptionValue {
 
     // The wallet label is used for filtering the options
     "data-wallet-label": wallet?.label,
+    "data-contact-label": contact?.label,
     // The wallet itself is used for sorting the options
     "data-wallet": wallet,
+    "data-contact": contact,
 
     value: plainAddress
   };

@@ -11,6 +11,7 @@ import { RefSelectProps } from "antd/lib/select";
 import { useTranslation } from "react-i18next";
 
 import { useWallets } from "@wallets";
+import { useContacts } from "@contacts";
 import {
   useAddressPrefix, useNameSuffix,
   isValidAddress, getNameParts,
@@ -78,7 +79,9 @@ export function AddressPicker({
   // (and soon the address book too), but to save on time and expense, the
   // 'exact address' match is prepended to these options dynamically.
   const { wallets, addressList } = useWallets();
-  const options = useMemo(() => getOptions(t, wallets), [t, wallets]);
+  const { contacts, contactAddressList } = useContacts();
+  const options = useMemo(() => getOptions(t, wallets, contacts),
+    [t, wallets, contacts]);
 
   // Check if the input text is an exact address. If it is, create an extra item
   // to prepend to the list. Note that the 'exact address' item is NOT shown if
@@ -241,6 +244,7 @@ export function AddressPicker({
 
           const address = option!.value?.toUpperCase();
           const walletLabel = option!["data-wallet-label"]?.toUpperCase();
+          const contactLabel = option!["data-contact-label"]?.toUpperCase();
 
           // If we have another address picker's value, hide that option from
           // the list (it will always be a wallet)
@@ -258,8 +262,9 @@ export function AddressPicker({
 
           const matchedAddress = address.indexOf(inp) !== -1;
           const matchedLabel = walletLabel?.indexOf(inp) !== -1;
+          const matchedContactLabel = contactLabel?.indexOf(inp) !== -1;
 
-          return matchedAddress || matchedLabel;
+          return matchedAddress || matchedLabel || matchedContactLabel;
         }}
 
         options={fullOptions}
