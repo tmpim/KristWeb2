@@ -80,8 +80,8 @@ export function AddressPicker({
   // 'exact address' match is prepended to these options dynamically.
   const { wallets, addressList } = useWallets();
   const { contacts, contactAddressList } = useContacts();
-  const options = useMemo(() => getOptions(t, wallets, contacts),
-    [t, wallets, contacts]);
+  const options = useMemo(() => getOptions(t, wallets, contacts, noNames),
+    [t, wallets, contacts, noNames]);
 
   // Check if the input text is an exact address. If it is, create an extra item
   // to prepend to the list. Note that the 'exact address' item is NOT shown if

@@ -69,12 +69,11 @@ const contactOptionSortFn = (a: OptionValue, b: OptionValue): number =>
  * options. */
 function getWalletOptions(
   wallets: WalletMap,
-  contacts: ContactMap
+  contacts: ContactMap,
+  noNames?: boolean
 ): WalletOptions {
   const categorised: Record<string, OptionValue[]> = {};
   const uncategorised: OptionValue[] = [];
-  const contactValues: OptionValue[] = Object.values(contacts)
-    .map(contact => getAddressItem({ contact }, "contact"));
 
   // Go through all wallets and group them
   for (const id in wallets) {
@@ -92,6 +91,11 @@ function getWalletOptions(
       uncategorised.push(item);
     }
   }
+
+  // Add the contacts too, filtering out names if noNames is set
+  const contactValues: OptionValue[] = Object.values(contacts)
+    .filter(c => noNames ? !c.isName : true)
+    .map(contact => getAddressItem({ contact }, "contact"));
 
   // Sort the wallets by balance descending, and then by address ascending.
   // Since this uses keyedNullSort, which depends on ant-design's implicit
@@ -125,10 +129,11 @@ export function getOptions(
   t: TFunction,
   wallets: WalletMap,
   contactMap: ContactMap,
+  noNames?: boolean
 ): Option[] {
   // Wallet options
   const { categorised, uncategorised, categoryCount, contacts }
-    = getWalletOptions(wallets, contactMap);
+    = getWalletOptions(wallets, contactMap, noNames);
 
   // Sort the wallet categories in a human-friendly manner
   const sortedCategories = Object.keys(categorised);
