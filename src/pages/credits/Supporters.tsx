@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 
 import packageJson from "../../../package.json";
 
-import { useMountEffect } from "@utils";
+import { useMountEffect, localeSort } from "@utils";
 
 interface Supporter {
   name: string;
@@ -35,9 +35,16 @@ export function Supporters(): JSX.Element | null {
       const res = await fetch(supportersURL);
       const data = await res.json();
 
+      // Sort the supporters in alphabetical order
+      const supporters: Supporter[] = [...data.supporters];
+      supporters.sort((a, b) => a.name.localeCompare(b.name, undefined, {
+        sensitivity: "base",
+        numeric: true
+      }));
+
       setSupportersState({
         loaded: true,
-        supporters: data.supporters
+        supporters
       });
     })();
   });
