@@ -91,7 +91,8 @@ export function AddressPicker({
   const hasExactAddress = !!cleanValue
     && !walletsOnly
     && isValidAddress(addressPrefix, cleanValue)
-    && !addressList.includes(cleanValue);
+    && !addressList.includes(cleanValue)
+    && !contactAddressList.includes(cleanValue);
   const exactAddressItem = hasExactAddress
     ? {
       ...getCategoryHeader(t("addressPicker.categoryExactAddress")),
@@ -261,8 +262,8 @@ export function AddressPicker({
           const inp = inputValue.toUpperCase();
 
           const matchedAddress = address.indexOf(inp) !== -1;
-          const matchedLabel = walletLabel?.indexOf(inp) !== -1;
-          const matchedContactLabel = contactLabel?.indexOf(inp) !== -1;
+          const matchedLabel = walletLabel && walletLabel.indexOf(inp) !== -1;
+          const matchedContactLabel = contactLabel && contactLabel.indexOf(inp) !== -1;
 
           return matchedAddress || matchedLabel || matchedContactLabel;
         }}

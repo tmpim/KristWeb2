@@ -17,6 +17,7 @@ import { keyedNullSort } from "@utils";
 // basically anything for options, and passes the full objects down as props.
 // The documentation on the topic is very limited.
 export interface OptionValue {
+  key: string;
   label: React.ReactNode;
 
   // For some reason, all these props get passed all the way to the DOM element!
@@ -73,7 +74,7 @@ function getWalletOptions(
   const categorised: Record<string, OptionValue[]> = {};
   const uncategorised: OptionValue[] = [];
   const contactValues: OptionValue[] = Object.values(contacts)
-    .map(contact => getAddressItem({ contact }));
+    .map(contact => getAddressItem({ contact }, "contact"));
 
   // Go through all wallets and group them
   for (const id in wallets) {
@@ -81,7 +82,7 @@ function getWalletOptions(
     const { category } = wallet;
 
     // Generate the autocomplete option for this wallet
-    const item = getAddressItem({ wallet });
+    const item = getAddressItem({ wallet }, "wallet");
 
     // Group it by category if possible
     if (category) {

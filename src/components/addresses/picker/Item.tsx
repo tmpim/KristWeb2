@@ -61,12 +61,14 @@ function PickerContent({
 }
 
 /** Autocompletion option for the address picker. */
-export function getAddressItem(props: AddressItemProps): OptionValue {
+export function getAddressItem(props: AddressItemProps, type?: string): OptionValue {
   // The address to use as a value
   const plainAddress = getPlainAddress(props);
   const { wallet, contact } = props;
 
   return {
+    key: `${type || "item"}-${plainAddress}`,
+
     label: (
       <div className="address-picker-address-item">
         {/* Address, wallet label, contact label, or name */}

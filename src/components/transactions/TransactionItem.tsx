@@ -47,7 +47,6 @@ export function TransactionItem({ transaction: tx, wallets }: Props): JSX.Elemen
   const bps = Grid.useBreakpoint();
 
   // Whether or not the from/to addresses are a wallet we own
-  // TODO: Address book here too
   const fromWallet = tx.from ? wallets[tx.from] : undefined;
   const toWallet   = tx.to ? wallets[tx.to] : undefined;
 
