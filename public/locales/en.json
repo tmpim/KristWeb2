@@ -423,6 +423,8 @@
     "buttonEditContact": "Edit in address book",
     "buttonEditWallet": "Edit wallet",
 
+    "tooltipV1Address": "Transactions cannot be sent to v1 addresses, as they have been deprecated.",
+
     "cardRecentTransactionsTitle": "Recent transactions",
     "cardNamesTitle": "Names",
 

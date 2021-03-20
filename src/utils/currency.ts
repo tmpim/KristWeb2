@@ -120,6 +120,9 @@ export function isValidAddress(
     : getAddressRegexV2(addressPrefix).test(address);
 }
 
+export const v1AddressRegex = /^[a-f0-9]{10}$/;
+export const isV1Address = (address: string): boolean =>
+  v1AddressRegex.test(address);
 
 // -----------------------------------------------------------------------------
 // MISC
