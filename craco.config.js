@@ -90,6 +90,11 @@ module.exports = {
 
     optimization: {
       sideEffects: true
+    },
+
+    configure: {
+      devtool: process.env.NODE_ENV === "development"
+        ? "eval" : "hidden-source-map"
     }
   },
 };
