@@ -46,7 +46,6 @@ export function AddressButtonRow({ address, myWallet }: Props): JSX.Element {
         </SendTransactionModalLink>
       )}
 
-
     {/* Add contact/edit wallet button */}
     {/* TODO: Change this to edit if they're already a contact */}
     {myWallet

@@ -356,6 +356,8 @@
     "showRelativeDatesDescription": "Everywhere on the site, if a date is less than 7 days ago, it will show as a relative date instead.",
     "showNativeDates": "Show dates in a native date format from the language",
     "showNativeDatesDescription": "If disabled, dates will always be shown as YYYY/MM/DD HH:mm:ss",
+    "transactionsHighlightOwn": "Highlight own transactions in the transactions table",
+    "transactionsHighlightVerified": "Highlight verified addresses in the transactions table",
     "transactionDefaultRaw": "Default to the 'Raw' tab instead of 'CommonMeta' on the transaction page",
     "defaultPageSize": "Default page size for table listings",
     "tableHotkeys": "Enable table navigation hotkeys (left and right arrows)",

@@ -63,6 +63,8 @@ export function SettingsPage(): JSX.Element {
           booleanSetting("blockHashCopyButtons"),
           booleanSetting("showRelativeDates"),
           booleanSetting("showNativeDates"),
+          booleanSetting("transactionsHighlightOwn"),
+          booleanSetting("transactionsHighlightVerified"),
           booleanSetting("transactionDefaultRaw"),
           integerSetting("defaultPageSize"),
           booleanSetting("tableHotkeys"),

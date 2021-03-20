@@ -46,6 +46,10 @@ export interface SettingsState {
   readonly showRelativeDates: boolean;
   /** Show dates in a native date format from the language. */
   readonly showNativeDates: boolean;
+  /** Highlight own transactions in the transactions table. */
+  readonly transactionsHighlightOwn: boolean;
+  /** Highlight verified addresses in the transactions table. */
+  readonly transactionsHighlightVerified: boolean;
   /** Default to the 'Raw' tab instead of 'CommonMeta' on the transaction page. */
   readonly transactionDefaultRaw: boolean;
   /** Default page size for table listings. */
@@ -74,6 +78,8 @@ export const DEFAULT_SETTINGS: SettingsState = {
   blockHashCopyButtons: false,
   showRelativeDates: false,
   showNativeDates: false,
+  transactionsHighlightOwn: true,
+  transactionsHighlightVerified: true,
   transactionDefaultRaw: false,
   defaultPageSize: 15,
   tableHotkeys: true,

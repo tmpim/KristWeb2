@@ -30,8 +30,8 @@ export interface VerifiedAddress {
 export type VerifiedAddresses = Record<string, VerifiedAddress>;
 export const verifiedAddresses: VerifiedAddresses = verifiedAddressesJson;
 
-export const getVerified = (address: string): VerifiedAddress | undefined =>
-  verifiedAddresses[address];
+export const getVerified = (address?: string | null): VerifiedAddress | undefined =>
+  address ? verifiedAddresses[address] : undefined;
 
 interface Props {
   address: string;

@@ -13,4 +13,46 @@
       margin-right: @margin-sm;
     }
   }
+
+  // Highlight own transactions
+  .ant-table .transaction-row-own {
+    background: fade(@kw-primary, 15%);
+
+    td.ant-table-cell {
+      border-bottom-color: fade(@kw-primary, 20%);
+    }
+
+    .ant-table-cell.ant-table-column-sort {
+      background: fade(@kw-primary, 20%);
+    }
+
+    &:hover td.ant-table-cell {
+      background: fade(@kw-primary, 20%);
+
+      &.ant-table-cell.ant-table-column-sort {
+        background: fade(@kw-primary, 35%);
+      }
+    }
+  }
+
+  // Highlight verified addresses
+  .ant-table .transaction-row-verified {
+    background: fade(@kw-orange, 10%);
+
+    td.ant-table-cell {
+      border-bottom-color: fade(@kw-orange, 20%);
+    }
+
+    .ant-table-cell.ant-table-column-sort {
+      background: fade(@kw-orange, 10%);
+    }
+
+    &:hover td.ant-table-cell {
+      background: fade(@kw-orange, 20%);
+
+      &.ant-table-cell.ant-table-column-sort {
+        background: fade(@kw-orange, 35%);
+      }
+    }
+  }
 }

@@ -2,6 +2,7 @@
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
+import classNames from "classnames";
 import { Table, TablePaginationConfig } from "antd";
 
 import { useTranslation } from "react-i18next";
@@ -20,10 +21,14 @@ import { ListingType } from "./TransactionsPage";
 
 import { TransactionType, TYPES_SHOW_VALUE } from "@comp/transactions/TransactionType";
 import { ContextualAddress } from "@comp/addresses/ContextualAddress";
+import { getVerified } from "@comp/addresses/VerifiedAddress";
 import { KristValue } from "@comp/krist/KristValue";
 import { KristNameLink } from "@comp/names/KristNameLink";
 import { TransactionConciseMetadata } from "@comp/transactions/TransactionConciseMetadata";
 import { DateTime } from "@comp/DateTime";
+
+import { useWallets } from "@wallets";
+import { useBooleanSetting } from "@utils/settings";
 
 import Debug from "debug";
 const debug = Debug("kristweb:transactions-table");
@@ -93,6 +98,12 @@ export function TransactionsTable({
   );
 
   const dateColumnWidth = useDateColumnWidth();
+  const highlightOwn = useBooleanSetting("transactionsHighlightOwn") &&
+    listingType !== ListingType.WALLETS;
+  const highlightVerified = useBooleanSetting("transactionsHighlightVerified");
+
+  // Used to highlight own transactions
+  const { walletAddressMap } = useWallets();
 
   // Fetch the transactions from the API, mapping the table options
   useEffect(() => {
@@ -122,6 +133,19 @@ export function TransactionsTable({
 
   debug("results? %b  res.transactions.length: %d  res.count: %d  res.total: %d", !!res, res?.transactions?.length, res?.count, res?.total);
 
+  function getRowClasses(tx: KristTransaction): string {
+    return classNames({
+      // Highlight own transactions
+      "transaction-row-own": highlightOwn
+        && ((tx.from && walletAddressMap[tx.from])
+        || (tx.to && walletAddressMap[tx.to])),
+
+      // Highlight verified addresses
+      "transaction-row-verified": highlightVerified
+        && (!!getVerified(tx.from) || !!getVerified(tx.to)),
+    });
+  }
+
   const tbl = <Table<KristTransaction>
     className="transactions-table"
     size="small"
@@ -131,6 +155,9 @@ export function TransactionsTable({
     rowKey="id"
 
     {...paginationTableProps}
+
+    // Highlight own transactions and verified addresses
+    rowClassName={getRowClasses}
 
     columns={[
       // ID
