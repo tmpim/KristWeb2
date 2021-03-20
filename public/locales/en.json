@@ -436,6 +436,7 @@
 
     "walletLabel": "Label:",
     "walletCategory": "Category:",
+    "contactLabel": "Contact:",
 
     "balance": "Current balance",
     "names": "Names",
@@ -447,7 +448,7 @@
     "buttonSendKrist": "Send Krist to {{address}}",
     "buttonTransferKrist": "Transfer Krist to {{address}}",
     "buttonAddContact": "Add to address book",
-    "buttonEditContact": "Edit in address book",
+    "buttonEditContact": "Edit contact",
     "buttonEditWallet": "Edit wallet",
 
     "tooltipV1Address": "Transactions cannot be sent to v1 addresses, as they have been deprecated.",

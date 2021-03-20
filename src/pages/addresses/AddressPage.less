@@ -42,8 +42,13 @@
       margin-right: @padding-xs;
     }
 
-    .address-wallet-label:not(:last-child) {
-      margin-right: @padding-xs;
+    .address-wallet-verified,
+    .address-wallet-label,
+    .address-wallet-category,
+    .address-wallet-contact {
+      &:not(:last-child) {
+        margin-right: @padding-xs;
+      }
     }
   }
 

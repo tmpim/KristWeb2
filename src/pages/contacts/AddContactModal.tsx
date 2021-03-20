@@ -8,7 +8,7 @@ import { useTFns } from "@utils/i18n";
 
 import { ADDRESS_LIST_LIMIT } from "@wallets";
 import { Contact, useContacts, addContact, editContact } from "@contacts";
-import { useAddressPrefix, useNameSuffix, getNameParts } from "@utils/currency";
+import { useNameSuffix, getNameParts } from "@utils/currency";
 
 import { AddressPicker } from "@comp/addresses/picker/AddressPicker";
 
@@ -18,6 +18,7 @@ interface FormValues {
 }
 
 interface Props {
+  address?: string;
   editing?: Contact;
 
   visible: boolean;
@@ -25,6 +26,7 @@ interface Props {
 }
 
 export function AddContactModal({
+  address: initialAddress,
   editing,
 
   visible,
@@ -33,11 +35,10 @@ export function AddContactModal({
   const { t, tStr } = useTFns("addContact.");
 
   const [form] = Form.useForm<FormValues>();
-  const [address, setAddress] = useState("");
+  const [address, setAddress] = useState(editing?.address ?? initialAddress);
 
   // Required to check for existing contacts
   const { contacts, contactAddressMap } = useContacts();
-  const addressPrefix = useAddressPrefix();
   const nameSuffix = useNameSuffix();
 
   function closeModal() {
@@ -123,7 +124,7 @@ export function AddContactModal({
 
       initialValues={{
         label: editing?.label ?? undefined,
-        address: editing?.address ?? undefined
+        address: editing?.address ?? initialAddress
       }}
 
       onValuesChange={onValuesChange}

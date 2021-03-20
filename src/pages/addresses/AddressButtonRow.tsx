@@ -10,15 +10,22 @@ import { isV1Address } from "@utils/currency";
 
 import { KristAddressWithNames } from "@api/lookup";
 import { Wallet } from "@wallets";
+import { Contact } from "@contacts";
 import { WalletEditButton } from "../wallets/WalletEditButton";
+import { ContactEditButton } from "../contacts/ContactEditButton";
 import { SendTransactionModalLink } from "@comp/transactions/SendTransactionModalLink";
 
 interface Props {
   address: KristAddressWithNames;
   myWallet?: Wallet;
+  myContact?: Contact;
 }
 
-export function AddressButtonRow({ address, myWallet }: Props): JSX.Element {
+export function AddressButtonRow({
+  address,
+  myWallet,
+  myContact
+}: Props): JSX.Element {
   const { t } = useTranslation();
 
   const isV1 = address && isV1Address(address.address);
@@ -55,9 +62,13 @@ export function AddressButtonRow({ address, myWallet }: Props): JSX.Element {
         </WalletEditButton>
       )
       : (
-        <Button icon={<UserAddOutlined />} className="nyi">
-          {t("address.buttonAddContact")}
-        </Button>
+        <ContactEditButton address={address.address} contact={myContact}>
+          <Button icon={myContact ? <EditOutlined /> : <UserAddOutlined />}>
+            {t(myContact
+              ? "address.buttonEditContact"
+              : "address.buttonAddContact")}
+          </Button>
+        </ContactEditButton>
       )}
   </>;
 }

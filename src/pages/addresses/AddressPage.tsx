@@ -17,6 +17,7 @@ import { DateTime } from "@comp/DateTime";
 import * as api from "@api";
 import { lookupAddress, KristAddressWithNames } from "@api/lookup";
 import { useWallets } from "@wallets";
+import { useContacts } from "@contacts";
 import { useSubscription } from "@global/ws/WebsocketSubscription";
 import { useBooleanSetting } from "@utils/settings";
 
@@ -41,11 +42,13 @@ interface PageContentsProps {
 
 function PageContents({ address, lastTransactionID }: PageContentsProps): JSX.Element {
   const { t } = useTranslation();
-  const { wallets } = useWallets();
+  const { walletAddressMap } = useWallets();
+  const { contactAddressMap } = useContacts();
 
-  const myWallet = Object.values(wallets)
-    .find(w => w.address === address.address);
+  const myWallet = walletAddressMap[address.address];
+  const myContact = contactAddressMap[address.address];
   const showWalletTags = myWallet && (myWallet.label || myWallet.category);
+  const showContactTags = myContact && myContact.label;
 
   const verified = getVerified(address.address);
   const showVerifiedDesc = verified?.description || verified?.website ||
@@ -60,14 +63,18 @@ function PageContents({ address, lastTransactionID }: PageContentsProps): JSX.El
       </Text>
 
       {/* Buttons (e.g. Send Krist, Add contact) */}
-      <AddressButtonRow address={address} myWallet={myWallet} />
+      <AddressButtonRow
+        address={address}
+        myWallet={myWallet}
+        myContact={myContact}
+      />
     </Row>
 
-    {/* Wallet/verified tags (if applicable) */}
-    {(showWalletTags || verified) && (
+    {/* Wallet/contact/verified tags (if applicable) */}
+    {(showWalletTags || showContactTags || verified) && (
       <Row className="address-wallet-row">
         {/* Verified label */}
-        {verified?.label && <span className="address-wallet-label">
+        {verified?.label && <span className="address-wallet-verified">
           <Tag color={verified.isActive !== false ? "orange" : undefined}>
             {verified.label}
           </Tag>
@@ -83,6 +90,12 @@ function PageContents({ address, lastTransactionID }: PageContentsProps): JSX.El
         {myWallet?.category && <span className="address-wallet-category">
           <span className="prefix">{t("address.walletCategory")}</span>
           <Tag>{myWallet.category}</Tag>
+        </span>}
+
+        {/* Contact label */}
+        {myContact?.label && <span className="address-wallet-contact">
+          <span className="prefix">{t("address.contactLabel")}</span>
+          <Tag>{myContact.label}</Tag>
         </span>}
       </Row>
     )}

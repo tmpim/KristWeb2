@@ -62,6 +62,7 @@ export function WalletsTable(): JSX.Element {
           <ContextualAddress
             address={address}
             wallet={false}
+            contact={false}
             nonExistent={!wallet.firstSeen}
           />
         ),
