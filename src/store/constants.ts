@@ -61,3 +61,4 @@ export const MOTD = "MOTD";
 // ---
 export const INCR_NAME_TABLE_LOCK = "INCR_NAME_TABLE_LOCK";
 export const DECR_NAME_TABLE_LOCK = "DECR_NAME_TABLE_LOCK";
+export const SET_TIP = "SET_TIP";

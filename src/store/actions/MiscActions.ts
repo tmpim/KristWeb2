@@ -6,3 +6,5 @@ import * as constants from "../constants";
 
 export const incrementNameTableLock = createAction(constants.INCR_NAME_TABLE_LOCK)();
 export const decrementNameTableLock = createAction(constants.DECR_NAME_TABLE_LOCK)();
+
+export const setTip = createAction(constants.SET_TIP)<number>();

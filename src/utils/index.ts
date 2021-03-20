@@ -150,3 +150,5 @@ export function useHistoryState<S>(
 
   return [state, wrappedSetState];
 }
+
+export const mod = (n: number, m: number): number => ((n % m) + m) % m;

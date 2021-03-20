@@ -3,15 +3,19 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { createReducer } from "typesafe-actions";
 import {
-  incrementNameTableLock, decrementNameTableLock
+  incrementNameTableLock, decrementNameTableLock, setTip
 } from "@actions/MiscActions";
 
 export interface State {
   readonly nameTableLock: number;
+  readonly tip: number;
 }
 
 const initialState: State = {
-  nameTableLock: 0
+  nameTableLock: 0,
+  tip: localStorage.getItem("tip") !== null
+    ? parseInt(localStorage.getItem("tip")!)
+    : -1
 };
 
 export const MiscReducer = createReducer(initialState)
@@ -22,4 +26,7 @@ export const MiscReducer = createReducer(initialState)
   .handleAction(decrementNameTableLock, (state, _) => ({
     ...state,
     nameTableLock: state.nameTableLock - 1
+  }))
+  .handleAction(setTip, (state, { payload }) => ({
+    ...state, tip: payload
   }));

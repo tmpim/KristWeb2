@@ -9,6 +9,7 @@ import { SyncMOTD } from "./ws/SyncMOTD";
 import { AppHotkeys } from "./AppHotkeys";
 import { StorageBroadcast } from "./StorageBroadcast";
 import { PurchaseKristHandler } from "./PurchaseKrist";
+import { AdvanceTip } from "@pages/dashboard/TipsCard";
 
 export function AppServices(): JSX.Element {
   return <>
@@ -18,7 +19,7 @@ export function AppServices(): JSX.Element {
     <WebsocketService />
     <AppHotkeys />
     <StorageBroadcast />
-
     <PurchaseKristHandler />
+    <AdvanceTip />
   </>;
 }

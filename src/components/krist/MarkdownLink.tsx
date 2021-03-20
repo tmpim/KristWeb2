@@ -2,6 +2,7 @@
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { FC } from "react";
+import { Link } from "react-router-dom";
 
 import { useSyncNode } from "@api";
 
@@ -25,5 +26,13 @@ export function useMarkdownLink(baseURL?: string): FC<HTMLAnchorElement> {
     >
       {children}
     </a>;
+  };
+}
+
+export function useRelativeMarkdownLink(): FC<HTMLAnchorElement> {
+  return ({ title, href, children }) => {
+    return <Link title={title} to={href}>
+      {children}
+    </Link>;
   };
 }

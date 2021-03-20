@@ -31,6 +31,10 @@ export function SidebarFooter(): JSX.Element {
       <div>
         <a href={gitURL} target="_blank" rel="noopener noreferrer">{t("sidebar.github")}</a>
         &nbsp;&ndash;&nbsp;
+        <ConditionalLink to="/whatsnew" matchTo>
+          {t("sidebar.whatsNew")}
+        </ConditionalLink>
+        &nbsp;&ndash;&nbsp;
         <ConditionalLink to="/credits" matchTo>
           {t("sidebar.credits")}
         </ConditionalLink>

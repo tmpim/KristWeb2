@@ -58,6 +58,7 @@
     "hostedBy": "Hosted by <1>{{host}}</1>",
     "github": "GitHub",
     "credits": "Credits",
+    "whatsNew": "What's new",
 
     "updateTitle": "Update available!",
     "updateDescription": "A new version of KristWeb is available. Please reload.",
@@ -333,7 +334,28 @@
     "motdDebugMode": "This server is an unofficial development server. Balances and transactions can be manipulated. Proceed with caution.",
 
     "whatsNewCardTitle": "What's new",
-    "whatsNewButton": "What's new"
+    "whatsNewButton": "What's new",
+
+    "tipsCardTitle": "Tip of the day",
+    "tipsPrevious": "Prev",
+    "tipsNext": "Next",
+    "tips": {
+      "0": "Check out what's new in Krist and KristWeb on the [What's New page](/whatsnew)!",
+      "1": "You can quickly navigate through tables with the arrow keys on desktop.",
+      "2": "You can click on table headers to sort them.",
+      "3": "You can filter by categories in the [My Wallets](/wallets) page by clicking the filter icon in the table header.",
+      "4": "The [settings page](/settings) has many advanced options to personalise your KristWeb experience.",
+      "5": "Generate pre-filled transaction links with the new [Request page](/request).",
+      "6": "Be sure to backup [your wallets](/wallets)!",
+      "7": "Quickly search the Krist network with the keyboard shortcut Ctrl+K (Cmd+K on macOS).",
+      "8": "Add contacts in the [address book](/contacts) to quickly send them transactions.",
+      "9": "A 'bumped' transaction is a transaction sent to and from the same address.",
+      "10": "The 'block difficulty' chart can be shown with a logarithmic scale to see small changes easier at lower difficulties.",
+      "11": "The date format can be changed in the [advanced settings](/settings).",
+      "12": "You can see the [lowest mined block hashes](/network/blocks/lowest).",
+      "13": "The most recently purchased names can be seen on the [Network Names page](/network/names/new).",
+      "14": "The block value increases when [names](/network/names) are purchased."
+    }
   },
 
   "credits": {

@@ -120,4 +120,28 @@
       margin-bottom: 0;
     }
   }
+
+  .dashboard-card-tips {
+    .ant-card-extra {
+      padding: 0;
+      margin-top: @margin-sm;
+    }
+
+    .dashboard-tips-pagination {
+      user-select: none;
+
+      .ant-btn.ant-btn-link {
+        &:not(:last-child) {
+          margin-right: @margin-lg;
+        }
+
+        padding: 0;
+        // height: auto;
+        font-size: 90%;
+
+        &:hover, &:active, &:focus { background: transparent; }
+        span { color: @text-color-secondary; }
+      }
+    }
+  }
 }

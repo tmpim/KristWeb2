@@ -12,7 +12,7 @@ import { TransactionsCard } from "./TransactionsCard";
 import { BlockValueCard } from "./BlockValueCard";
 import { BlockDifficultyCard } from "./BlockDifficultyCard";
 import { MOTDCard } from "./MOTDCard";
-import { WhatsNewCard } from "./WhatsNewCard";
+import { TipsCard } from "./TipsCard";
 
 import { SyncDetailedWork } from "@global/ws/SyncDetailedWork";
 
@@ -40,7 +40,7 @@ export function DashboardPage(): JSX.Element {
 
     <Row gutter={16} className="dashboard-main-row">
       <Col span={24} xl={12}><MOTDCard /></Col>
-      <Col span={24} xl={12}><WhatsNewCard /></Col>
+      <Col span={24} xl={12}><TipsCard /></Col>
     </Row>
   </PageLayout>;
 }
