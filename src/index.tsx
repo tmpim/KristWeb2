@@ -1,13 +1,14 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import "./utils/setup";
-import { i18nLoader } from "./utils/i18n";
+import "@utils/setup";
+import { i18nLoader } from "@utils/i18n";
+import { isLocalhost } from "@utils";
 
 import ReactDOM from "react-dom";
 
 import "./index.css";
-import App from "./App";
+import App from "@app";
 
 import Debug from "debug";
 const debug = Debug("kristweb:index");
@@ -15,7 +16,14 @@ const debug = Debug("kristweb:index");
 // import reportWebVitals from "./reportWebVitals";
 
 debug("============================ APP STARTING ============================");
-debug("waiting for i18n first");
+if (isLocalhost && !localStorage.getItem("status")) {
+  // Automatically enable debug logging on localhost
+  localStorage.setItem("debug", "kristweb:*");
+  localStorage.setItem("status", "LOCAL");
+  location.reload();
+}
+
+debug("waiting for i18n");
 i18nLoader.then(() => {
   debug("performing initial render");
   ReactDOM.render(

@@ -43,6 +43,10 @@ export async function importV1Backup(
 
   results: BackupResults
 ): Promise<void> {
+  const walletCount = Object.keys(backup.wallets).length;
+  const contactCount = Object.keys(backup.friends || {}).length;
+  results.initProgress(walletCount + contactCount);
+
   // Import wallets
   for (const uuid in backup.wallets) {
     if (!uuid || !uuid.startsWith("Wallet-")) {
@@ -64,30 +68,36 @@ export async function importV1Backup(
     } catch (err) {
       debug("error importing v1 wallet", err);
       results.addErrorMessage("wallets", uuid, undefined, err);
+    } finally {
+      results.onProgress();
     }
   }
 
   // Import contacts
-  for (const uuid in backup.friends) {
-    if (!uuid || !uuid.startsWith("Friend-")) {
-      // Not a contact
-      debug("skipping v1 contact key %s", uuid);
-      continue;
-    }
+  if (backup.friends) {
+    for (const uuid in backup.friends) {
+      if (!uuid || !uuid.startsWith("Friend-")) {
+        // Not a contact
+        debug("skipping v1 contact key %s", uuid);
+        continue;
+      }
 
-    const rawContact = backup.friends[uuid];
-    debug("importing v1 contact uuid %s", uuid);
+      const rawContact = backup.friends[uuid];
+      debug("importing v1 contact uuid %s", uuid);
 
-    try {
-      await importV1Contact(
-        existingContacts, appSyncNode, addressPrefix, nameSuffix,
-        backup, masterPassword, noOverwrite,
-        uuid, rawContact,
-        results
-      );
-    } catch (err) {
-      debug("error importing v1 contact", err);
-      results.addErrorMessage("contacts", uuid, undefined, err);
+      try {
+        await importV1Contact(
+          existingContacts, appSyncNode, addressPrefix, nameSuffix,
+          backup, masterPassword, noOverwrite,
+          uuid, rawContact,
+          results
+        );
+      } catch (err) {
+        debug("error importing v1 contact", err);
+        results.addErrorMessage("contacts", uuid, undefined, err);
+      } finally {
+        results.onProgress();
+      }
     }
   }
 }

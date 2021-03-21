@@ -15,6 +15,8 @@ import { BackupResults } from "./backupResults";
 import { importV1Backup } from "./backupImportV1";
 import { importV2Backup } from "./backupImportV2";
 
+import { IncrProgressFn, InitProgressFn } from "./ImportProgress";
+
 import Debug from "debug";
 const debug = Debug("kristweb:backup-import");
 
@@ -82,7 +84,9 @@ export async function backupVerifyPassword(
 export async function backupImport(
   backup: Backup,
   masterPassword: string,
-  noOverwrite: boolean
+  noOverwrite: boolean,
+  onProgress: IncrProgressFn,
+  initProgress: InitProgressFn
 ): Promise<BackupResults> {
   // It is assumed at this point that the backup was already successfully
   // decoded, and the master password was verified to be correct.
@@ -109,7 +113,7 @@ export async function backupImport(
     throw new TranslatedError("import.appMasterPasswordRequired");
 
   // The results instance to keep track of logged messages, etc.
-  const results = new BackupResults();
+  const results = new BackupResults(onProgress, initProgress);
 
   // Attempt to add the wallets
   if (isBackupKristWebV1(backup)) {

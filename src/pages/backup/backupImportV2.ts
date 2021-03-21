@@ -39,6 +39,10 @@ export async function importV2Backup(
 
   results: BackupResults
 ): Promise<void> {
+  const walletCount = Object.keys(backup.wallets).length;
+  const contactCount = Object.keys(backup.contacts || {}).length;
+  results.initProgress(walletCount + contactCount);
+
   // Import wallets
   for (const uuid in backup.wallets) {
     if (!uuid || !UUID_REGEXP.test(uuid)) {
@@ -60,6 +64,8 @@ export async function importV2Backup(
     } catch (err) {
       debug("error importing v2 wallet", err);
       results.addErrorMessage("wallets", uuid, undefined, err);
+    } finally {
+      results.onProgress();
     }
   }
 
@@ -84,6 +90,8 @@ export async function importV2Backup(
     } catch (err) {
       debug("error importing v2 contact", err);
       results.addErrorMessage("contacts", uuid, undefined, err);
+    } finally {
+      results.onProgress();
     }
   }
 }

@@ -745,6 +745,9 @@
     "detectedFormatKristWebV2": "KristWeb v2",
     "detectedFormatInvalid": "Invalid!",
 
+    "progress": "Importing <1>{{count, number}}</1> item...",
+    "progress_plural": "Importing <1>{{count, number}}</1> items...",
+
     "decodeErrors": {
       "atob": "The backup could not be decoded as it is not valid base64!",
       "json": "The backup could not be decoded as it is not valid JSON!",

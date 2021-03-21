@@ -28,9 +28,18 @@ export function DevPage(): JSX.Element {
       Delete all wallets with zero balance
     </Button>
 
+    &nbsp;&nbsp;
+
     {/* Delete all wallets */}
     <Button danger onClick={() => Object.values(wallets).forEach(deleteWallet)}>
       Delete all wallets
+    </Button>
+
+    &nbsp;&nbsp;
+
+    {/* Clear local storage */}
+    <Button danger onClick={() => { localStorage.clear(); location.reload(); }}>
+      Clear local storage
     </Button>
   </PageLayout>;
 }

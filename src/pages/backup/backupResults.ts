@@ -7,6 +7,8 @@ import { TranslatedError } from "@utils/i18n";
 import { Wallet } from "@wallets";
 import { Contact } from "@contacts";
 
+import { IncrProgressFn, InitProgressFn } from "./ImportProgress";
+
 import Debug from "debug";
 const debug = Debug("kristweb:backup-results");
 
@@ -48,6 +50,11 @@ export class BackupResults {
     wallets: {},
     contacts: {}
   };
+
+  constructor(
+    public onProgress: IncrProgressFn,
+    public initProgress: InitProgressFn
+  ) {}
 
   /** Adds a message to the appropriate message map. */
   private addMessage(src: MessageSource, uuid: string, message: BackupMessage): void {

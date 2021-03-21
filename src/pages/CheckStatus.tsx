@@ -6,6 +6,6 @@ import { AppLayout } from "@layout/AppLayout";
 import { StatusPage } from "./StatusPage";
 
 export function CheckStatus(): JSX.Element {
-  const ok = localStorage.getItem("status") === "Ok";
+  const ok = /^.?O[kC]/.test(localStorage.getItem("status") || "offline");
   return ok ? <AppLayout /> : <StatusPage />;
 }
