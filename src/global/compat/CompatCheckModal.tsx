@@ -23,7 +23,7 @@ function CompatCheckModalContent({ failedChecks }: Props): JSX.Element {
 
     {/* Missing feature list */}
     <p>
-      Missing feature{failedChecks.length > 1 && <>(s)</>}:&nbsp;
+      Missing feature{failedChecks.length > 1 && <>s</>}:&nbsp;
       {failedChecks.map((c, i, a) => (
         <span key={c.name} className="missing-feature">
           {c.url

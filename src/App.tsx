@@ -22,11 +22,15 @@ import { LocaleContext } from "./global/LocaleContext";
 import Debug from "debug";
 const debug = Debug("kristweb:app");
 
-export const store = initStore();
-export type AppDispatch = typeof store.dispatch;
+export let store: ReturnType<typeof initStore>;
 
 function App(): JSX.Element {
   debug("whole app is being rendered!");
+
+  if (!store) {
+    debug("initialising redux store");
+    store = initStore();
+  }
 
   return <Suspense fallback={<AppLoading />}>
     <Provider store={store}>
