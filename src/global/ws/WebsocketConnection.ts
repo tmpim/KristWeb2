@@ -108,6 +108,7 @@ export class WebsocketConnection {
   }
 
   private setConnectionState(state: WSConnectionState) {
+    debug("ws conn state: %s", state);
     store.dispatch(wsActions.setConnectionState(state));
   }
 
@@ -120,7 +121,6 @@ export class WebsocketConnection {
     if (data.type === "hello") {
       // Initial connection
       debug("connected");
-      this.setConnectionState("connected");
 
       // Subscribe to all the events
       this.subscribe("transactions");
@@ -128,8 +128,7 @@ export class WebsocketConnection {
       this.subscribe("names");
       this.subscribe("motd");
 
-      // Re-sync all balances just in case
-      this.refreshBalances();
+      this.setConnectionState("connected");
     } else if (data.address && this.wallets) {
       // Probably a response to `refreshBalance`
       const address: KristAddress = data.address;
@@ -267,18 +266,6 @@ export class WebsocketConnection {
       address,
       fetchNames
     });
-  }
-
-  /** Re-syncs balances for all the wallets, just in case. */
-  refreshBalances(): void {
-    debug("refreshing all balances");
-
-    const { wallets } = this;
-    if (!wallets) return;
-
-    for (const id in wallets) {
-      this.refreshBalance(wallets[id].address);
-    }
   }
 
   /** Subscribe to a Krist WS event. */

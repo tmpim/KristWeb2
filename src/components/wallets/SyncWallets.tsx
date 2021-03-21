@@ -2,21 +2,38 @@
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { useEffect } from "react";
-import { message } from "antd";
+import { message, notification } from "antd";
 
+import { useSelector } from "react-redux";
+import { RootState } from "@store";
 import { useTranslation } from "react-i18next";
 
 import { syncWallets, useWallets, ADDRESS_LIST_LIMIT } from "@wallets";
-import { useMountEffect } from "@utils";
 
-/** Sync the wallets with the Krist node on startup. */
+import Debug from "debug";
+const debug = Debug("kristweb:sync-wallets");
+
+/** Sync the wallets with the Krist node when connected. */
 export function SyncWallets(): JSX.Element | null {
   const { t } = useTranslation();
 
-  useMountEffect(() => {
-    // TODO: show errors to the user?
-    syncWallets().catch(console.error);
-  });
+  const connectionState = useSelector((s: RootState) => s.websocket.connectionState);
+
+  // When the websocket connects (usually just on startup), perform the initial
+  // sync. This replaces `WebsocketConnection.refreshBalances`.
+  useEffect(() => {
+    if (connectionState !== "connected") return;
+    debug("syncing wallets (ws is %s)", connectionState);
+    syncWallets()
+      .then(() => debug("synced"))
+      .catch(err => {
+        console.error(err);
+        notification.error({
+          message: t("syncWallets.errorMessage"),
+          description: t("syncWallets.errorDescription"),
+        });
+      });
+  }, [t, connectionState]);
 
   // This is an appropriate place to perform the wallet limit check too. Warn
   // the user if they have more wallets than ADDRESS_LIST_LIMIT; bypassing this

@@ -1058,5 +1058,10 @@
 
   "purchaseKrist": {
     "modalTitle": "Purchase Krist"
+  },
+
+  "syncWallets": {
+    "errorMessage": "Error syncing wallets",
+    "errorDescription": "There was an error while syncing your wallets. See console for details."
   }
 }
