@@ -2,7 +2,7 @@
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React, { useState } from "react";
-import { Modal, Tooltip, Dropdown, Menu } from "antd";
+import { Modal, Dropdown, Menu } from "antd";
 import { MenuClickEventHandler } from "rc-menu/lib/interface";
 import {
   EditOutlined, DeleteOutlined, InfoCircleOutlined, ExclamationCircleOutlined,
@@ -11,16 +11,23 @@ import {
 
 import { useTranslation } from "react-i18next";
 
-import { WalletEditButton } from "./WalletEditButton";
-import { AddWalletModal } from "./AddWalletModal";
+import { AuthorisedAction } from "@comp/auth/AuthorisedAction";
+import { OpenEditWalletFn } from "./WalletEditButton";
 import { WalletInfoModal } from "./info/WalletInfoModal";
 import { SendTransactionModalLink } from "@comp/transactions/SendTransactionModalLink";
 
 import { Wallet, deleteWallet } from "@wallets";
 
-export function WalletActions({ wallet }: { wallet: Wallet }): JSX.Element {
+interface Props {
+  wallet: Wallet;
+  openEditWallet: OpenEditWalletFn;
+}
+
+export function WalletActions({
+  wallet,
+  openEditWallet
+}: Props): JSX.Element {
   const { t } = useTranslation();
-  const [editWalletVisible, setEditWalletVisible] = useState(false);
   const [walletInfoVisible, setWalletInfoVisible] = useState(false);
 
   function showWalletDeleteConfirm(): void {
@@ -54,14 +61,23 @@ export function WalletActions({ wallet }: { wallet: Wallet }): JSX.Element {
       className="table-actions wallet-actions"
 
       buttonsRender={([leftButton, rightButton]) => [
-        <WalletEditButton key="leftButton" wallet={wallet}>
-          <Tooltip title={t("myWallets.actionsEditTooltip")}>
-            {React.cloneElement(leftButton as React.ReactElement<any>, {
-              className: "ant-btn-left", // force the border-radius
-              disabled: wallet.dontSave
-            })}
-          </Tooltip>
-        </WalletEditButton>,
+        // Edit wallet button
+        <AuthorisedAction
+          key="leftButton"
+          encrypt
+          onAuthed={() => openEditWallet(wallet)}
+          popoverPlacement="left"
+        >
+          {/* Tooltip was removed for now as an optimisation */}
+          {/* <Tooltip title={t("myWallets.actionsEditTooltip")}> */}
+          {React.cloneElement(leftButton as React.ReactElement<any>, {
+            className: "ant-btn-left", // force the border-radius
+            disabled: wallet.dontSave
+          })}
+          {/* </Tooltip> */}
+        </AuthorisedAction>,
+
+        // Dropdown button
         rightButton
       ]}
 
@@ -94,7 +110,6 @@ export function WalletActions({ wallet }: { wallet: Wallet }): JSX.Element {
       <EditOutlined />
     </Dropdown.Button>
 
-    <AddWalletModal editing={wallet} visible={editWalletVisible} setVisible={setEditWalletVisible} />
     <WalletInfoModal wallet={wallet} visible={walletInfoVisible} setVisible={setWalletInfoVisible} />
   </>;
 }

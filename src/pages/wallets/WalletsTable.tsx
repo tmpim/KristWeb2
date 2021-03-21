@@ -11,11 +11,16 @@ import { DateTime } from "@comp/DateTime";
 
 import { useWallets } from "@wallets";
 import { WalletActions } from "./WalletActions";
+import { OpenEditWalletFn } from "./WalletEditButton";
 
 import { keyedNullSort, localeSort } from "@utils";
 import { useDateColumnWidth } from "@utils/table";
 
-export function WalletsTable(): JSX.Element {
+interface Props {
+  openEditWallet: OpenEditWalletFn;
+}
+
+export function WalletsTable({ openEditWallet }: Props): JSX.Element {
   const { t } = useTranslation();
   const { wallets } = useWallets();
 
@@ -116,7 +121,12 @@ export function WalletsTable(): JSX.Element {
         key: "actions",
         width: 80,
 
-        render: (_, record) => <WalletActions wallet={record} />
+        render: (_, record) => (
+          <WalletActions
+            wallet={record}
+            openEditWallet={openEditWallet}
+          />
+        )
       }
     ]}
   />;

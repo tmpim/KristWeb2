@@ -27,3 +27,29 @@ export const WalletEditButton: FC<Props> = ({ wallet, children }): JSX.Element =
     <AddWalletModal editing={wallet} visible={editWalletVisible} setVisible={setEditWalletVisible} />
   </>;
 };
+
+export type OpenEditWalletFn = (wallet: Wallet) => void;
+export type WalletEditHookRes = [
+  OpenEditWalletFn,
+  JSX.Element | null,
+  (visible: boolean) => void
+];
+
+export function useEditWalletModal(): WalletEditHookRes {
+  // The modal will only be rendered if it is opened at least once
+  const [opened, setOpened] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [wallet, setWallet] = useState<Wallet>();
+
+  function open(wallet: Wallet) {
+    setWallet(wallet);
+    setVisible(true);
+    if (!opened) setOpened(true);
+  }
+
+  const modal = opened
+    ? <AddWalletModal editing={wallet} visible={visible} setVisible={setVisible} />
+    : null;
+
+  return [open, modal, setVisible];
+}

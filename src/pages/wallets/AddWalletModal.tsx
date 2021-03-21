@@ -1,7 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { Modal, Form, Input, Checkbox, Collapse, Button, Tooltip, Typography, Row, Col, message, notification, Grid } from "antd";
 import { ReloadOutlined } from "@ant-design/icons";
 
@@ -20,6 +20,9 @@ import {
   useWallets, addWallet, decryptWallet, editWallet, ADDRESS_LIST_LIMIT,
   useMasterPasswordOnly
 } from "@wallets";
+
+import Debug from "debug";
+const debug = Debug("kristweb:add-wallet-modal");
 
 const { Text } = Typography;
 const { useBreakpoint } = Grid;
@@ -182,6 +185,31 @@ export function AddWalletModal({ create, editing, visible, setVisible, setAddExi
     }
   }, [t, generateNewPassword, updateCalculatedAddress, masterPassword, visible, form, create, editing]);
 
+  const initialValues = useMemo(() => ({
+    label: editing?.label ?? undefined,
+    category: editing?.category ?? "",
+
+    username: editing?.username ?? undefined,
+
+    format: editing?.format ?? initialFormat,
+    save: true
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }), [
+    initialFormat,
+    editing?.id,
+    editing?.label,
+    editing?.category,
+    editing?.username,
+    editing?.format
+  ]);
+
+  // If the `editing` wallet ID changes, refresh the form
+  useEffect(() => {
+    if (!form || !editing?.id) return;
+    form.setFieldsValue(initialValues);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form, editing?.id]);
+
   return <Modal
     visible={visible}
 
@@ -221,15 +249,7 @@ export function AddWalletModal({ create, editing, visible, setVisible, setAddExi
         ? "editWalletForm"
         : (create ? "createWalletForm" : "addWalletForm")}
 
-      initialValues={{
-        label: editing?.label ?? undefined,
-        category: editing?.category ?? "",
-
-        username: editing?.username ?? undefined,
-
-        format: editing?.format ?? initialFormat,
-        save: true
-      }}
+      initialValues={initialValues}
 
       onValuesChange={onValuesChange}
     >
