@@ -79,7 +79,7 @@ export const DEFAULT_SETTINGS: SettingsState = {
   showRelativeDates: true,
   showNativeDates: false,
   transactionsHighlightOwn: true,
-  transactionsHighlightVerified: true,
+  transactionsHighlightVerified: false,
   transactionDefaultRaw: false,
   defaultPageSize: 15,
   tableHotkeys: true,
