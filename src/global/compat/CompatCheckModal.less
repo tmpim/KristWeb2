@@ -1,0 +1,43 @@
+// Copyright (c) 2020-2021 Drew Lemmy
+// This file is part of KristWeb 2 under AGPL-3.0.
+// Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
+@import (reference) "../../App.less";
+
+.compat-check-modal {
+  .ant-modal-confirm-btns {
+    display: none;
+  }
+
+  .browser-choices {
+    display: flex;
+    flex-direction: row;
+
+    // Remove the offset from the confirm modal body padding
+    margin-left: -38px;
+    padding-top: @margin-sm;
+
+    a {
+      flex: 1;
+
+      display: flex;
+      flex-direction: column;
+
+      padding: @margin-sm;
+
+      color: @text-color;
+      text-align: center;
+      background: transparent;
+      border-radius: @border-radius-base;
+      transition: all @animation-duration-base ease;
+
+      &:hover {
+        background: @kw-lighter;
+      }
+
+      img {
+        width: 96px;
+        margin: 0 auto @margin-md auto;
+      }
+    }
+  }
+}

@@ -66,11 +66,27 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+
     <div id="root">
-      <div class="kw-preloader">
+      <div class="kw-preloader" id="kw-preloader">
         <div class="kw-preloader-spinner"></div>
         <span>Loading KristWeb...</span>
       </div>
     </div>
+
+    <script>
+      var msg = "Your web browser is not supported by KristWeb v2. Please " +
+        "install a recent version of Google Chrome or Mozilla Firefox."
+
+      var isIE = navigator.userAgent.indexOf("MSIE ") !== -1 
+        || navigator.appVersion.indexOf("Trident/") > 0;
+      var isLocalhost = window.location.hostname === "localhost"
+        || window.location.hostname === "[::1]";
+
+      if (isIE && !isLocalhost) {
+        document.getElementById("kw-preloader").innerText = msg;
+        alert(msg);
+      }
+    </script>
   </body>
 </html>
