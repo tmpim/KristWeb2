@@ -75,7 +75,8 @@
     "unmounting",
     "unregistering",
     "unsyncable",
-    "whatsnew"
+    "whatsnew",
+    "workerize"
   ],
   "i18next.defaultTranslatedLocale": "en",
   "i18next.i18nPaths": "public/locales",

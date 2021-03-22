@@ -13,6 +13,9 @@ import "./utils/i18n";
 // FIXME: Apparently the import order of my CSS is important. Who knew!
 import "./App.less";
 
+import createWorker from "workerize-loader?name=kw-storage-worker.[contenthash:8]!./workers/Storage.worker";
+import * as StorageWorker from "./workers/Storage.worker";
+
 import { AppLoading } from "./global/AppLoading";
 import { CheckStatus } from "./pages/CheckStatus";
 import { AppServices } from "./global/AppServices";
@@ -31,6 +34,11 @@ function App(): JSX.Element {
     debug("initialising redux store");
     store = initStore();
   }
+
+  const worker = createWorker<typeof StorageWorker>();
+  console.log(worker);
+  worker.foo("test")
+    .then((s: string) => debug("worker said: %s", s));
 
   return <Suspense fallback={<AppLoading />}>
     <Provider store={store}>
