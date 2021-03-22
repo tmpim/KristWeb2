@@ -24,10 +24,10 @@ jobs:
         fetch-depth: 0
 
     - name: Install dependencies
-      run: npm install --legacy-peer-deps
+      run: yarn install
 
     - name: Build
-      run: npm run full-build
+      run: yarn run full-build
         
     - name: Deploy to dev server
       uses: appleboy/scp-action@master

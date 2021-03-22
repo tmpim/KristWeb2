@@ -22,9 +22,7 @@ type in wallet passwords ever again!
 git clone https://github.com/tmpim/KristWeb2
 cd KristWeb2
 
-npm i -g pnpm # If you don't have pnpm, please use it for development
-
-pnpm install
+yarn install
 npm start # Run the development server
 ```
 
@@ -33,8 +31,8 @@ npm start # Run the development server
 ```sh
 git clone https://github.com/tmpim/KristWeb2
 cd KristWeb2
-npm install
-npm run full-build # Build the production files
+yarn install
+yarn run full-build # Build the production files
 ```
 
 ### Contributing

@@ -128,7 +128,7 @@ async function importV1Object<T extends KristWebV1Wallet | KristWebV1Contact>(
   if (dec === false) throw mkErr("errorDecrypt");
 
   // Parse JSON, promisify to catch syntax errors
-  const [err, obj]: [Error | null, T] =
+  const [err, obj] =
     await to((async () => JSON.parse(dec))());
   if (err) throw mkErr("errorDataJSON");
 
