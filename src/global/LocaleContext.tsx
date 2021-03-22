@@ -46,7 +46,7 @@ export const LocaleContext: FC = ({ children }): JSX.Element => {
     // the TypeScript typings, which causes build warnings due to a missing
     // loader for those files.
     import(
-      /* webpackInclude: /\.js$/ */
+      /* webpackInclude: /\b(de|fr|nl|pl|pt-br|vi)\.js$/ */
       /* webpackMode: "lazy" */
       /* webpackChunkName: "locale-dayjs-[request]" */
       `dayjs/locale/${dayjsLocale}`
@@ -71,7 +71,7 @@ export const LocaleContext: FC = ({ children }): JSX.Element => {
     // Load the locale
     debug("loading timeago locale %s for language %s", timeagoLocale, langCode);
     import(
-      /* webpackInclude: /\.js$/ */
+      /* webpackInclude: /\b(de|fr|nl|pl|pt-br|vi)\.js$/ */
       /* webpackMode: "lazy" */
       /* webpackChunkName: "locale-timeago-[request]" */
       `react-timeago/lib/language-strings/${timeagoLocale}`
@@ -96,7 +96,7 @@ export const LocaleContext: FC = ({ children }): JSX.Element => {
     // Load the locale
     debug("loading antd locale %s for language %s", antLocaleCode, langCode);
     import(
-      /* webpackInclude: /\.js$/ */
+      /* webpackInclude: /\b(de_DE|fr_FR|nl_NL|pl_PL|pt_BR|vi_VN)\.js$/ */
       /* webpackMode: "lazy" */
       /* webpackChunkName: "locale-antd-[request]" */
       `antd/lib/locale/${antLocaleCode}`
