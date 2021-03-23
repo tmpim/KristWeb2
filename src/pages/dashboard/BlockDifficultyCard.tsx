@@ -94,7 +94,10 @@ const CHART_OPTIONS_Y_AXIS = {
     suggestedMin: 100,
     suggestedMax: 100000,
     beginAtZero: true,
-    padding: 8
+    padding: 8,
+    callback(value: number | string): string {
+      return Number(value).toLocaleString();
+    }
   },
 
   gridLines: {
@@ -134,6 +137,23 @@ export function BlockDifficultyCard(): JSX.Element {
   const [loading, setLoading] = useState(true);
 
   const [chartMode, setChartMode] = useState<"linear" | "logarithmic">("linear");
+
+  function changeChartMode(value: "linear" | "logarithmic") {
+    // Persist the change to localStorage
+    debug("setting chart mode to %s", value);
+    localStorage.setItem("dashboard-difficulty-chart-mode", value);
+    setChartMode(value);
+  }
+
+  // Load the chartMode from localStorage on startup if possible (done only on
+  // first render, because localStorage is blocking)
+  useEffect(() => {
+    const storedMode = localStorage.getItem("dashboard-difficulty-chart-mode");
+    if (storedMode === "linear" || storedMode === "logarithmic") {
+      debug("using saved chart mode %s", storedMode);
+      setChartMode(storedMode);
+    }
+  }, []);
 
   const fetchWorkOverTime = useMemo(() =>
     trailingThrottleState(_fetchWorkOverTime, WORK_THROTTLE, false, setWorkOverTime, setError, setLoading), []);
@@ -209,7 +229,7 @@ export function BlockDifficultyCard(): JSX.Element {
         <Select
           value={chartMode}
           className="chart-mode-dropdown"
-          onSelect={value => setChartMode(value)}
+          onSelect={changeChartMode}
         >
           <Select.Option value="linear">{t("dashboard.blockDifficultyChartLinear")}</Select.Option>
           <Select.Option value="logarithmic">{t("dashboard.blockDifficultyChartLog")}</Select.Option>
