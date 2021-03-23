@@ -197,7 +197,15 @@
     "contactCount_plural": "{{count, number}} contacts",
     "contactCountEmpty": "No contacts",
 
-    "buttonAddContact": "Add contact"
+    "buttonAddContact": "Add contact",
+
+    "columnLabel": "Label",
+    "columnAddress": "Address",
+
+    "actionsEditTooltip": "Edit contact",
+    "actionsSendTransaction": "Send Krist",
+    "actionsDelete": "Delete contact",
+    "actionsDeleteConfirm": "Are you sure you want to delete this contact?"
   },
 
   "myTransactions": {

@@ -109,8 +109,8 @@ export function WalletActions({
           <DeleteOutlined /> {t("myWallets.actionsDelete")}
         </Menu.Item>
       </Menu>
-    )}>
-
+    )}
+  >
     {/* Edit button */}
     <EditOutlined />
   </Dropdown.Button>;

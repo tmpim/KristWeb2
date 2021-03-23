@@ -10,7 +10,11 @@ import { useTFns } from "@utils/i18n";
 import { PageLayout } from "@layout/PageLayout";
 
 import { useContacts } from "@contacts";
+import { ContactsTable } from "./ContactsTable";
 import { AddContactModal } from "./AddContactModal";
+
+import { useEditContactModal } from "./ContactEditButton";
+import { useSendTransactionModal } from "@comp/transactions/SendTransactionModalLink";
 
 /** Contact count subtitle */
 function ContactsPageSubtitle(): JSX.Element {
@@ -44,10 +48,20 @@ function ContactsPageExtraButtons(): JSX.Element {
 }
 
 export function ContactsPage(): JSX.Element {
+  const [openEditContact, editContactModal] = useEditContactModal();
+  const [openSendTx, sendTxModal] = useSendTransactionModal();
+
   return <PageLayout
     siteTitleKey="addressBook.title" titleKey="addressBook.title"
     subTitle={<ContactsPageSubtitle />}
     extra={<ContactsPageExtraButtons />}
   >
+    <ContactsTable
+      openEditContact={openEditContact}
+      openSendTx={openSendTx}
+    />
+
+    {editContactModal}
+    {sendTxModal}
   </PageLayout>;
 }

@@ -35,3 +35,28 @@ export const ContactEditButton: FC<Props> = ({
     />
   </>;
 };
+
+export type OpenEditContactFn = (contact: Contact) => void;
+export type ContactEditHookRes = [
+  OpenEditContactFn,
+  JSX.Element | null,
+  (visible: boolean) => void
+];
+
+export function useEditContactModal(): ContactEditHookRes {
+  const [opened, setOpened] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [contact, setContact] = useState<Contact>();
+
+  function open(contact: Contact) {
+    setContact(contact);
+    setVisible(true);
+    if (!opened) setOpened(true);
+  }
+
+  const modal = opened
+    ? <AddContactModal editing={contact} visible={visible} setVisible={setVisible} />
+    : null;
+
+  return [open, modal, setVisible];
+}
