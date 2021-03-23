@@ -141,14 +141,14 @@ export function BlockDifficultyCard(): JSX.Element {
   function changeChartMode(value: "linear" | "logarithmic") {
     // Persist the change to localStorage
     debug("setting chart mode to %s", value);
-    localStorage.setItem("dashboard-difficulty-chart-mode", value);
+    localStorage.setItem("dashboardDifficultyChartMode", value);
     setChartMode(value);
   }
 
   // Load the chartMode from localStorage on startup if possible (done only on
   // first render, because localStorage is blocking)
   useEffect(() => {
-    const storedMode = localStorage.getItem("dashboard-difficulty-chart-mode");
+    const storedMode = localStorage.getItem("dashboardDifficultyChartMode");
     if (storedMode === "linear" || storedMode === "logarithmic") {
       debug("using saved chart mode %s", storedMode);
       setChartMode(storedMode);
