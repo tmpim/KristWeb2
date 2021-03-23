@@ -1076,5 +1076,22 @@
   "syncWallets": {
     "errorMessage": "Error syncing wallets",
     "errorDescription": "There was an error while syncing your wallets. See console for details."
+  },
+
+  "legacyMigration": {
+    "modalTitle": "KristWeb v1 migration",
+    "description": "Welcome to KristWeb v2! It looks like you have used KristWeb v1 on this domain before. Please enter your master password to migrate your wallets to the new format. You will only have to do this once.",
+
+    "walletCount": "Detected <1>{{count, number}}</1> wallets",
+    "contactCount": "Detected <1>{{count, number}}</1> contacts",
+
+    "masterPasswordLabel": "Master password",
+    "masterPasswordPlaceholder": "Master password",
+
+    "errorPasswordRequired": "Password is required.",
+    "errorPasswordLength": "Must be at least 1 character.",
+    "errorPasswordIncorrect": "Incorrect password.",
+
+    "buttonSubmit": "Begin migration"
   }
 }

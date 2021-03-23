@@ -26,8 +26,8 @@ export interface State {
 
 export function getInitialMasterPasswordState(): State {
   // Salt and tester from local storage (or undefined)
-  const salt = localStorage.getItem("salt") || undefined;
-  const tester = localStorage.getItem("tester") || undefined;
+  const salt = localStorage.getItem("salt2") || undefined;
+  const tester = localStorage.getItem("tester2") || undefined;
 
   // There is a master password configured if both `salt` and `tester` exist
   const hasMasterPassword = !!salt && !!tester;

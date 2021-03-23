@@ -57,8 +57,8 @@ export async function setMasterPassword(password: string): Promise<void> {
   const tester = await aesGcmEncrypt(saltHex, password);
 
   // Store them in local storage
-  localStorage.setItem("salt", saltHex);
-  localStorage.setItem("tester", tester);
+  localStorage.setItem("salt2", saltHex);
+  localStorage.setItem("tester2", tester);
 
   // Dispatch the auth state changes to the Redux store
   store.dispatch(actions.setMasterPassword(saltHex, tester, password));
