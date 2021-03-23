@@ -1,7 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import { Modal, Dropdown, Menu } from "antd";
 import { MenuClickEventHandler } from "rc-menu/lib/interface";
 import {
@@ -33,7 +33,7 @@ export function WalletActions({
 }: Props): JSX.Element {
   const { t } = useTranslation();
 
-  function showWalletDeleteConfirm(): void {
+  const showWalletDeleteConfirm = useCallback((): void => {
     Modal.confirm({
       icon: <ExclamationCircleOutlined />,
 
@@ -45,9 +45,9 @@ export function WalletActions({
       okType: "danger",
       cancelText: t("dialog.no")
     });
-  }
+  }, [t, wallet]);
 
-  const onMenuClick: MenuClickEventHandler = e => {
+  const onMenuClick: MenuClickEventHandler = useCallback(e => {
     switch (e.key) {
     // "Wallet info" button
     case "2":
@@ -57,9 +57,9 @@ export function WalletActions({
     case "3":
       return showWalletDeleteConfirm();
     }
-  };
+  }, [wallet, openWalletInfo, showWalletDeleteConfirm]);
 
-  return <Dropdown.Button
+  const memoDropdown = useMemo(() => <Dropdown.Button
     className="table-actions wallet-actions"
 
     buttonsRender={([leftButton, rightButton]) => [
@@ -113,5 +113,9 @@ export function WalletActions({
   >
     {/* Edit button */}
     <EditOutlined />
-  </Dropdown.Button>;
+  </Dropdown.Button>, [
+    t, wallet, onMenuClick, openEditWallet, openSendTx
+  ]);
+
+  return memoDropdown;
 }

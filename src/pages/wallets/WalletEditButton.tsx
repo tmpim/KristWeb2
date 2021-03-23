@@ -1,7 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { useState, FC } from "react";
+import { useState, useCallback, FC } from "react";
 
 import { AuthorisedAction } from "@comp/auth/AuthorisedAction";
 import { AddWalletModal } from "./AddWalletModal";
@@ -41,11 +41,11 @@ export function useEditWalletModal(): WalletEditHookRes {
   const [visible, setVisible] = useState(false);
   const [wallet, setWallet] = useState<Wallet>();
 
-  function open(wallet: Wallet) {
+  const open = useCallback((wallet: Wallet) => {
     setWallet(wallet);
     setVisible(true);
-    if (!opened) setOpened(true);
-  }
+    setOpened(true);
+  }, []);
 
   const modal = opened
     ? <AddWalletModal editing={wallet} visible={visible} setVisible={setVisible} />

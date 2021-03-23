@@ -40,8 +40,6 @@ export function usePickerHints(
   hasExactName?: boolean,
   suppressUpdates?: boolean
 ): PickerHintsRes {
-  debug("using picker hints for %s", value);
-
   // Used for clean-up
   const isMounted = useRef(true);
 

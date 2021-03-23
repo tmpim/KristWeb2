@@ -1,7 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { useState, Dispatch, SetStateAction } from "react";
+import { useState, useCallback, Dispatch, SetStateAction } from "react";
 import { Modal, Button, DescriptionsProps } from "antd";
 
 import { useTranslation } from "react-i18next";
@@ -74,11 +74,11 @@ export function useWalletInfoModal(): WalletInfoHookRes {
   const [visible, setVisible] = useState(false);
   const [wallet, setWallet] = useState<Wallet>();
 
-  function open(wallet: Wallet) {
+  const open = useCallback((wallet: Wallet) => {
     setWallet(wallet);
     setVisible(true);
-    if (!opened) setOpened(true);
-  }
+    setOpened(true);
+  }, []);
 
   const modal = opened && wallet
     ? <WalletInfoModal wallet={wallet} visible={visible} setVisible={setVisible} />

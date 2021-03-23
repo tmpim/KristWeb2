@@ -1,7 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { FC, useState } from "react";
+import { FC, useState, useCallback } from "react";
 
 import { AuthorisedAction } from "@comp/auth/AuthorisedAction";
 import { SendTransactionModal } from "@pages/transactions/send/SendTransactionModal";
@@ -52,11 +52,11 @@ export function useSendTransactionModal(): SendTxHookRes {
   const [visible, setVisible] = useState(false);
   const [fromTo, setFromTo] = useState<FromTo>({});
 
-  function open(from?: Wallet | string, to?: string) {
+  const open = useCallback((from?: Wallet | string, to?: string) => {
     setFromTo({ from, to });
     setVisible(true);
-    if (!opened) setOpened(true);
-  }
+    setOpened(true);
+  }, []);
 
   const modal = opened
     ? <SendTransactionModal

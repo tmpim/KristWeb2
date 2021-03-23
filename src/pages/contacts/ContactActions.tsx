@@ -1,7 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import { Modal, Dropdown, Menu } from "antd";
 import {
   EditOutlined, DeleteOutlined, ExclamationCircleOutlined, SendOutlined
@@ -28,7 +28,7 @@ export function ContactActions({
 }: Props): JSX.Element {
   const { t, tStr } = useTFns("addressBook.");
 
-  function showContactDeleteConfirm(): void {
+  const showContactDeleteConfirm = useCallback((): void => {
     Modal.confirm({
       icon: <ExclamationCircleOutlined />,
 
@@ -39,9 +39,9 @@ export function ContactActions({
       okType: "danger",
       cancelText: t("dialog.no")
     });
-  }
+  }, [t, tStr, contact]);
 
-  return <Dropdown.Button
+  const memoDropdown = useMemo(() => <Dropdown.Button
     className="table-actions contact-actions"
 
     buttonsRender={([leftButton, rightButton]) => [
@@ -86,5 +86,9 @@ export function ContactActions({
   >
     {/* Edit button */}
     <EditOutlined />
-  </Dropdown.Button>;
+  </Dropdown.Button>, [
+    tStr, contact, showContactDeleteConfirm, openEditContact, openSendTx
+  ]);
+
+  return memoDropdown;
 }

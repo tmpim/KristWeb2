@@ -14,6 +14,8 @@ import {
 
 import { useWallets } from "@wallets";
 import { NameActions } from "./mgmt/NameActions";
+import { OpenEditNameFn } from "./mgmt/NameEditModalLink";
+import { OpenSendTxFn } from "@comp/transactions/SendTransactionModalLink";
 import { useNameTableLock } from "./tableLock";
 
 import { KristNameLink } from "@comp/names/KristNameLink";
@@ -34,9 +36,23 @@ interface Props {
   addresses?: string[];
   setError?: Dispatch<SetStateAction<Error | undefined>>;
   setPagination?: Dispatch<SetStateAction<TablePaginationConfig>>;
+
+  openNameEdit: OpenEditNameFn;
+  openSendTx: OpenSendTxFn;
 }
 
-export function NamesTable({ refreshingID, sortNew, addresses, setError, setPagination }: Props): JSX.Element {
+export function NamesTable({
+  refreshingID,
+
+  sortNew,
+
+  addresses,
+  setError,
+  setPagination,
+
+  openNameEdit,
+  openSendTx
+}: Props): JSX.Element {
   const { t } = useTranslation();
 
   const [loading, setLoading] = useState(true);
@@ -188,6 +204,9 @@ export function NamesTable({ refreshingID, sortNew, addresses, setError, setPagi
           <NameActions
             name={record}
             isOwn={!!walletAddressMap[record.owner]}
+
+            openNameEdit={openNameEdit}
+            openSendTx={openSendTx}
           />
         )
       }

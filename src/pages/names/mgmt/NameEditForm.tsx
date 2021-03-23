@@ -1,7 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Form, FormInstance } from "antd";
 
 import { TFns } from "@utils/i18n";
@@ -64,6 +64,19 @@ export function useNameEditForm({
     setRecipient(undefined);
   }
 
+  const initialValues: FormValues = useMemo(() => ({
+    names: name ? [name] : [],
+
+    // Start with an initial A record if this is the update name modal
+    ...(mode === "update" && aRecord ? { aRecord } : {})
+  }), [mode, name, aRecord]);
+
+  // If the initial values change, refresh the form
+  useEffect(() => {
+    if (!formInstance || !mode) return;
+    formInstance.setFieldsValue(initialValues);
+  }, [formInstance, mode, initialValues]);
+
   const form = <Form
     form={formInstance}
     layout="vertical"
@@ -72,13 +85,6 @@ export function useNameEditForm({
       : "name-update-form"}
 
     name={mode === "transfer" ? "nameTransfer" : "nameUpdate"}
-
-    initialValues={{
-      names: name ? [name] : undefined,
-
-      // Start with an initial A record if this is the update name modal
-      ...(mode === "update" ? { aRecord } : {})
-    }}
 
     onValuesChange={onValuesChange}
     onFinish={onSubmit}

@@ -18,9 +18,11 @@ import { NamesTable } from "./NamesTable";
 
 import { NamePurchaseModalLink } from "./mgmt/NamePurchaseModalLink";
 
+import { useNameEditModal } from "./mgmt/NameEditModalLink";
+import { useSendTransactionModal } from "@comp/transactions/SendTransactionModalLink";
+
 import { useWallets } from "@wallets";
 import { useBooleanSetting } from "@utils/settings";
-import { useLinkedPagination } from "@utils/table";
 
 import "./NamesPage.less";
 
@@ -69,6 +71,9 @@ export function NamesPage({ listingType, sortNew }: Props): JSX.Element {
   // invalid address), the table will bubble it up to here
   const [error, setError] = useState<Error | undefined>();
 
+  const [openNameEdit, nameEditModal] = useNameEditModal();
+  const [openSendTx, sendTxModal] = useSendTransactionModal();
+
   // Used to handle memoisation and auto-refreshing
   const { joinedAddressList } = useWallets();
   const lastNameTransactionID = useSelector((s: RootState) => s.node.lastNameTransactionID);
@@ -95,8 +100,13 @@ export function NamesPage({ listingType, sortNew }: Props): JSX.Element {
       sortNew={sortNew}
       addresses={usedAddresses?.split(",")}
       setError={setError}
+
+      openNameEdit={openNameEdit}
+      openSendTx={openSendTx}
     />
-  ), [usedAddresses, sortNew, usedRefreshID, setError]);
+  ), [
+    usedAddresses, sortNew, usedRefreshID, setError, openSendTx, openNameEdit
+  ]);
 
   const siteTitle = getSiteTitle(t, listingType, address);
   const subTitle = listingType === ListingType.NETWORK_ADDRESS
@@ -133,7 +143,12 @@ export function NamesPage({ listingType, sortNew }: Props): JSX.Element {
           invalidParameterSubTitleKey="names.resultInvalid"
         />;
       else if (isEmpty) return <NoWalletsResult type="names" />;
-      else return memoTable;
+      else return <>
+        {memoTable}
+
+        {nameEditModal}
+        {sendTxModal}
+      </>;
     })()}
   </PageLayout>;
 }

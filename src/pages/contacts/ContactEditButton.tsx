@@ -1,7 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import React, { useState, FC } from "react";
+import React, { useState, useCallback, FC } from "react";
 
 import { AddContactModal } from "./AddContactModal";
 
@@ -48,11 +48,11 @@ export function useEditContactModal(): ContactEditHookRes {
   const [visible, setVisible] = useState(false);
   const [contact, setContact] = useState<Contact>();
 
-  function open(contact: Contact) {
+  const open = useCallback((contact: Contact) => {
     setContact(contact);
     setVisible(true);
-    if (!opened) setOpened(true);
-  }
+    setOpened(true);
+  }, []);
 
   const modal = opened
     ? <AddContactModal editing={contact} visible={visible} setVisible={setVisible} />
