@@ -87,7 +87,9 @@ export const APP_ROUTES: AppRoute[] = [
   { path: "/whatsnew", name: "whatsNew", component: <WhatsNewPage /> },
   { path: "/credits", name: "credits", component: <CreditsPage /> },
 
-  // TODO: remove this
+  // NYI and dev
+  { path: "/mining", name: "mining", component: <NotFoundPage nyi /> },
+  { path: "/network/statistics", name: "statistics", component: <NotFoundPage nyi /> },
   { path: "/dev", name: "dev", component: <DevPage /> }
 ];
 

@@ -31,7 +31,6 @@ export class WebsocketConnection {
 
   private forceClosing = false;
 
-  // TODO: automatically clean this up?
   private refreshThrottles: Record<string, (address: string) => void> = {};
 
   private subscriptions: Record<string, WSSubscription> = {};

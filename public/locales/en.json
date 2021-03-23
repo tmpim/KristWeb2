@@ -86,6 +86,8 @@
 
   "pageNotFound": {
     "resultTitle": "Page not found",
+    "nyiTitle": "Not yet implemented",
+    "nyiSubTitle": "This feature will be coming soon!",
     "buttonGoBack": "Go back"
   },
 

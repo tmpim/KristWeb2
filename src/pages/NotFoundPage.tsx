@@ -5,21 +5,26 @@ import { Button } from "antd";
 import { FrownOutlined } from "@ant-design/icons";
 
 import { useHistory } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import { useTFns } from "@utils/i18n";
 
 import { SmallResult } from "@comp/results/SmallResult";
 
-export function NotFoundPage(): JSX.Element {
-  const { t } = useTranslation();
+interface Props {
+  nyi?: boolean;
+}
+
+export function NotFoundPage({ nyi }: Props): JSX.Element {
+  const { tStr } = useTFns("pageNotFound.");
   const history = useHistory();
 
   return <SmallResult
     icon={<FrownOutlined />}
     status="error"
-    title={t("pageNotFound.resultTitle")}
+    title={nyi ? tStr("nyiTitle") : tStr("resultTitle")}
+    subTitle={nyi ? tStr("nyiSubTitle") : undefined}
     extra={(
       <Button type="primary" onClick={() => history.goBack()}>
-        {t("pageNotFound.buttonGoBack")}
+        {tStr("buttonGoBack")}
       </Button>
     )}
     fullPage

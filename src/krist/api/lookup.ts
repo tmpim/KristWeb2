@@ -33,7 +33,6 @@ export async function lookupAddresses(
 
     return data.addresses;
   } catch (err) {
-    // TODO: proper error handling function for API requests
     console.error(err);
   }
 
