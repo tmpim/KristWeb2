@@ -34,3 +34,36 @@ export const SendTransactionModalLink: FC<Props> = ({
     />
   </>;
 };
+
+export type OpenSendTxFn = (from?: Wallet | string, to?: string) => void;
+export type SendTxHookRes = [
+  OpenSendTxFn,
+  JSX.Element | null,
+  (visible: boolean) => void
+];
+
+interface FromTo {
+  from?: Wallet | string;
+  to?: string;
+}
+
+export function useSendTransactionModal(): SendTxHookRes {
+  const [opened, setOpened] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [fromTo, setFromTo] = useState<FromTo>({});
+
+  function open(from?: Wallet | string, to?: string) {
+    setFromTo({ from, to });
+    setVisible(true);
+    if (!opened) setOpened(true);
+  }
+
+  const modal = opened
+    ? <SendTransactionModal
+      from={fromTo.from} to={fromTo.to}
+      visible={visible} setVisible={setVisible}
+    />
+    : null;
+
+  return [open, modal, setVisible];
+}

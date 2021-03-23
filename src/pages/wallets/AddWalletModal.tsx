@@ -21,9 +21,6 @@ import {
   useMasterPasswordOnly
 } from "@wallets";
 
-import Debug from "debug";
-const debug = Debug("kristweb:add-wallet-modal");
-
 const { Text } = Typography;
 const { useBreakpoint } = Grid;
 
@@ -47,7 +44,14 @@ interface Props {
   setAddExistingVisible?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export function AddWalletModal({ create, editing, visible, setVisible, setAddExistingVisible }: Props): JSX.Element {
+export function AddWalletModal({
+  create,
+  editing,
+
+  visible,
+  setVisible,
+  setAddExistingVisible
+}: Props): JSX.Element {
   if (editing && create)
     throw new Error("AddWalletModal: 'editing' and 'create' simultaneously, uh oh!");
 

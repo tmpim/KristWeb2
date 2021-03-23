@@ -14,18 +14,20 @@ import { useTranslation } from "react-i18next";
 import { AuthorisedAction } from "@comp/auth/AuthorisedAction";
 import { OpenEditWalletFn } from "./WalletEditButton";
 import { WalletInfoModal } from "./info/WalletInfoModal";
-import { SendTransactionModalLink } from "@comp/transactions/SendTransactionModalLink";
+import { OpenSendTxFn } from "@comp/transactions/SendTransactionModalLink";
 
 import { Wallet, deleteWallet } from "@wallets";
 
 interface Props {
   wallet: Wallet;
   openEditWallet: OpenEditWalletFn;
+  openSendTx: OpenSendTxFn;
 }
 
 export function WalletActions({
   wallet,
-  openEditWallet
+  openEditWallet,
+  openSendTx,
 }: Props): JSX.Element {
   const { t } = useTranslation();
   const [walletInfoVisible, setWalletInfoVisible] = useState(false);
@@ -87,9 +89,12 @@ export function WalletActions({
         <Menu onClick={onMenuClick}>
           {/* Send tx button */}
           <Menu.Item key="1">
-            <SendTransactionModalLink from={wallet}>
+            <AuthorisedAction
+              onAuthed={() => openSendTx(wallet)}
+              popoverPlacement="left"
+            >
               <div><SendOutlined /> {t("myWallets.actionsSendTransaction")}</div>
-            </SendTransactionModalLink>
+            </AuthorisedAction>
           </Menu.Item>
 
           {/* Wallet info button */}

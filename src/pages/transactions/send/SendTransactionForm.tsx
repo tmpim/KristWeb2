@@ -1,7 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { useState, useRef } from "react";
+import { useState, useRef, useMemo, useEffect } from "react";
 import { Row, Col, Form, FormInstance, Input, Modal } from "antd";
 import { RefSelectProps } from "antd/lib/select";
 
@@ -101,6 +101,25 @@ function SendTransactionForm({
     }
   }
 
+  const initialValues = useMemo(() => ({
+    from: initialFrom,
+    to: initialTo,
+    amount: 1,
+    metadata: ""
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }), [
+    rawInitialFrom,
+    initialFrom,
+    initialTo
+  ]);
+
+  // If the to/from change, refresh the form
+  useEffect(() => {
+    if (!form || (!rawInitialFrom && !initialTo)) return;
+    form.setFieldsValue(initialValues);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form, rawInitialFrom, to]);
+
   return <Form
     // The form instance is managed by the parent, so that it has control over
     // the behaviour of resetting. For example, a modal dialog would want to
@@ -112,12 +131,7 @@ function SendTransactionForm({
 
     name="sendTransaction"
 
-    initialValues={{
-      from: initialFrom,
-      to: initialTo,
-      amount: 1,
-      metadata: ""
-    }}
+    initialValues={initialValues}
 
     onValuesChange={onValuesChange}
     onFinish={triggerSubmit}

@@ -12,15 +12,20 @@ import { DateTime } from "@comp/DateTime";
 import { useWallets } from "@wallets";
 import { WalletActions } from "./WalletActions";
 import { OpenEditWalletFn } from "./WalletEditButton";
+import { OpenSendTxFn } from "@comp/transactions/SendTransactionModalLink";
 
 import { keyedNullSort, localeSort } from "@utils";
 import { useDateColumnWidth } from "@utils/table";
 
 interface Props {
   openEditWallet: OpenEditWalletFn;
+  openSendTx: OpenSendTxFn;
 }
 
-export function WalletsTable({ openEditWallet }: Props): JSX.Element {
+export function WalletsTable({
+  openEditWallet,
+  openSendTx
+}: Props): JSX.Element {
   const { t } = useTranslation();
   const { wallets } = useWallets();
 
@@ -125,6 +130,7 @@ export function WalletsTable({ openEditWallet }: Props): JSX.Element {
           <WalletActions
             wallet={record}
             openEditWallet={openEditWallet}
+            openSendTx={openSendTx}
           />
         )
       }
