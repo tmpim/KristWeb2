@@ -1,7 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import React, { useState } from "react";
+import React from "react";
 import { Modal, Dropdown, Menu } from "antd";
 import { MenuClickEventHandler } from "rc-menu/lib/interface";
 import {
@@ -13,8 +13,8 @@ import { useTranslation } from "react-i18next";
 
 import { AuthorisedAction } from "@comp/auth/AuthorisedAction";
 import { OpenEditWalletFn } from "./WalletEditButton";
-import { WalletInfoModal } from "./info/WalletInfoModal";
 import { OpenSendTxFn } from "@comp/transactions/SendTransactionModalLink";
+import { OpenWalletInfoFn } from "./info/WalletInfoModal";
 
 import { Wallet, deleteWallet } from "@wallets";
 
@@ -22,15 +22,16 @@ interface Props {
   wallet: Wallet;
   openEditWallet: OpenEditWalletFn;
   openSendTx: OpenSendTxFn;
+  openWalletInfo: OpenWalletInfoFn;
 }
 
 export function WalletActions({
   wallet,
   openEditWallet,
   openSendTx,
+  openWalletInfo,
 }: Props): JSX.Element {
   const { t } = useTranslation();
-  const [walletInfoVisible, setWalletInfoVisible] = useState(false);
 
   function showWalletDeleteConfirm(): void {
     Modal.confirm({
@@ -50,7 +51,7 @@ export function WalletActions({
     switch (e.key) {
     // "Wallet info" button
     case "2":
-      return setWalletInfoVisible(true);
+      return openWalletInfo(wallet);
 
     // "Delete wallet" button
     case "3":
@@ -58,63 +59,59 @@ export function WalletActions({
     }
   };
 
-  return <>
-    <Dropdown.Button
-      className="table-actions wallet-actions"
+  return <Dropdown.Button
+    className="table-actions wallet-actions"
 
-      buttonsRender={([leftButton, rightButton]) => [
-        // Edit wallet button
-        <AuthorisedAction
-          key="leftButton"
-          encrypt
-          onAuthed={() => openEditWallet(wallet)}
-          popoverPlacement="left"
-        >
-          {/* Tooltip was removed for now as an optimisation */}
-          {/* <Tooltip title={t("myWallets.actionsEditTooltip")}> */}
-          {React.cloneElement(leftButton as React.ReactElement<any>, {
-            className: "ant-btn-left", // force the border-radius
-            disabled: wallet.dontSave
-          })}
-          {/* </Tooltip> */}
-        </AuthorisedAction>,
+    buttonsRender={([leftButton, rightButton]) => [
+      // Edit wallet button
+      <AuthorisedAction
+        key="leftButton"
+        encrypt
+        onAuthed={() => openEditWallet(wallet)}
+        popoverPlacement="left"
+      >
+        {/* Tooltip was removed for now as an optimisation */}
+        {/* <Tooltip title={t("myWallets.actionsEditTooltip")}> */}
+        {React.cloneElement(leftButton as React.ReactElement<any>, {
+          className: "ant-btn-left", // force the border-radius
+          disabled: wallet.dontSave
+        })}
+        {/* </Tooltip> */}
+      </AuthorisedAction>,
 
-        // Dropdown button
-        rightButton
-      ]}
+      // Dropdown button
+      rightButton
+    ]}
 
-      trigger={["click"]}
+    trigger={["click"]}
 
-      overlay={(
-        <Menu onClick={onMenuClick}>
-          {/* Send tx button */}
-          <Menu.Item key="1">
-            <AuthorisedAction
-              onAuthed={() => openSendTx(wallet)}
-              popoverPlacement="left"
-            >
-              <div><SendOutlined /> {t("myWallets.actionsSendTransaction")}</div>
-            </AuthorisedAction>
-          </Menu.Item>
+    overlay={(
+      <Menu onClick={onMenuClick}>
+        {/* Send tx button */}
+        <Menu.Item key="1">
+          <AuthorisedAction
+            onAuthed={() => openSendTx(wallet)}
+            popoverPlacement="left"
+          >
+            <div><SendOutlined /> {t("myWallets.actionsSendTransaction")}</div>
+          </AuthorisedAction>
+        </Menu.Item>
 
-          {/* Wallet info button */}
-          <Menu.Item key="2">
-            <InfoCircleOutlined /> {t("myWallets.actionsWalletInfo")}
-          </Menu.Item>
+        {/* Wallet info button */}
+        <Menu.Item key="2">
+          <InfoCircleOutlined /> {t("myWallets.actionsWalletInfo")}
+        </Menu.Item>
 
-          <Menu.Divider />
+        <Menu.Divider />
 
-          {/* Delete button */}
-          <Menu.Item key="3" danger>
-            <DeleteOutlined /> {t("myWallets.actionsDelete")}
-          </Menu.Item>
-        </Menu>
-      )}>
+        {/* Delete button */}
+        <Menu.Item key="3" danger>
+          <DeleteOutlined /> {t("myWallets.actionsDelete")}
+        </Menu.Item>
+      </Menu>
+    )}>
 
-      {/* Edit button */}
-      <EditOutlined />
-    </Dropdown.Button>
-
-    <WalletInfoModal wallet={wallet} visible={walletInfoVisible} setVisible={setWalletInfoVisible} />
-  </>;
+    {/* Edit button */}
+    <EditOutlined />
+  </Dropdown.Button>;
 }

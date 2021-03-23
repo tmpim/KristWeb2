@@ -18,6 +18,7 @@ import { WalletsTable } from "./WalletsTable";
 
 import { useEditWalletModal } from "./WalletEditButton";
 import { useSendTransactionModal } from "@comp/transactions/SendTransactionModalLink";
+import { useWalletInfoModal } from "./info/WalletInfoModal";
 
 /** Extract the subtitle into its own component to avoid re-rendering the
  * entire page when a wallet is added. */
@@ -61,6 +62,7 @@ function WalletsPageExtraButtons(): JSX.Element {
 export function WalletsPage(): JSX.Element {
   const [openEditWallet, editWalletModal] = useEditWalletModal();
   const [openSendTx, sendTxModal] = useSendTransactionModal();
+  const [openWalletInfo, walletInfoModal] = useWalletInfoModal();
 
   return <PageLayout
     siteTitleKey="myWallets.title" titleKey="myWallets.title"
@@ -70,10 +72,12 @@ export function WalletsPage(): JSX.Element {
     <WalletsTable
       openEditWallet={openEditWallet}
       openSendTx={openSendTx}
+      openWalletInfo={openWalletInfo}
     />
 
     {/* Rendered only once, as an optimisation */}
     {editWalletModal}
     {sendTxModal}
+    {walletInfoModal}
   </PageLayout>;
 }

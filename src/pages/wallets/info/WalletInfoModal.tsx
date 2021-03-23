@@ -1,7 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { Dispatch, SetStateAction } from "react";
+import { useState, Dispatch, SetStateAction } from "react";
 import { Modal, Button, DescriptionsProps } from "antd";
 
 import { useTranslation } from "react-i18next";
@@ -60,4 +60,29 @@ export function WalletInfoModal({
     <WalletDescSyncedInfo wallet={wallet} descProps={descProps} />
     <WalletDescAdvancedInfo wallet={wallet} descProps={descProps} />
   </Modal>;
+}
+
+export type OpenWalletInfoFn = (wallet: Wallet) => void;
+export type WalletInfoHookRes = [
+  OpenWalletInfoFn,
+  JSX.Element | null,
+  (visible: boolean) => void
+];
+
+export function useWalletInfoModal(): WalletInfoHookRes {
+  const [opened, setOpened] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [wallet, setWallet] = useState<Wallet>();
+
+  function open(wallet: Wallet) {
+    setWallet(wallet);
+    setVisible(true);
+    if (!opened) setOpened(true);
+  }
+
+  const modal = opened && wallet
+    ? <WalletInfoModal wallet={wallet} visible={visible} setVisible={setVisible} />
+    : null;
+
+  return [open, modal, setVisible];
 }
