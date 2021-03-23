@@ -2,7 +2,7 @@
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import classNames from "classnames";
-import { Tooltip, Typography } from "antd";
+import { Tooltip } from "antd";
 
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -16,12 +16,11 @@ import { useBooleanSetting } from "@utils/settings";
 
 import { KristNameLink } from "../names/KristNameLink";
 import { ConditionalLink } from "@comp/ConditionalLink";
+import { SmallCopyable } from "@comp/SmallCopyable";
 
 import { getVerified, VerifiedAddressLink } from "./VerifiedAddress";
 
 import "./ContextualAddress.less";
-
-const { Text } = Typography;
 
 interface Props {
   address: KristAddress | string | null;
@@ -80,8 +79,13 @@ export function ContextualAddress({
 
   const verified = getVerified(address);
 
+  // If the address definitely doesn't exist, show the 'not yet initialised'
+  // tooltip on hover instead.
   const showTooltip = !verified &&
     ((hideNameAddress && !!hasMetaname) || !!wallet?.label || !!contact?.label);
+  const tooltipTitle = nonExistent
+    ? t("contextualAddressNonExistentTooltip")
+    : (showTooltip ? address : undefined);
 
   const copyable = !neverCopyable && addressCopyButtons
     ? { text: address } : undefined;
@@ -91,56 +95,74 @@ export function ContextualAddress({
     "contextual-address-non-existent": nonExistent
   });
 
-  /** The label of the wallet or contact, or the address itself (not a metaname) */
-  function AddressContent(props: any): JSX.Element {
-    return wallet?.label
-      ? <span className="address-wallet" {...props}>{wallet.label}</span>
-      : (contact?.label
-        ? <span className="address-contact" {...props}>{contact.label}</span>
-        : <span className="address-address" {...props}>{address}</span>);
-  }
-
-  return <Text className={classes} copyable={copyable}>
-    {/* If the address definitely doesn't exist, show the 'not yet initialised'
-      * tooltip on hover instead. */}
-    <Tooltip
-      title={nonExistent
-        ? t("contextualAddressNonExistentTooltip")
-        : (showTooltip ? address : undefined)}
-    >
-      {commonMeta && hasMetaname
-        ? (
-          // Display the metaname and link to the name if possible
-          <AddressMetaname
-            nameSuffix={nameSuffix}
+  // The main contents of the contextual address, may be wrapped in a tooltip
+  const mainContents = commonMeta && hasMetaname
+    ? (
+      // Display the metaname and link to the name if possible
+      <AddressMetaname
+        nameSuffix={nameSuffix}
+        address={address}
+        commonMeta={commonMeta}
+        source={!!source}
+        hideNameAddress={!!hideNameAddress}
+      />
+    )
+    : (verified
+      // Display the verified address if possible
+      ? <VerifiedAddressLink address={address} verified={verified} />
+      : (
+        // Display the regular address or label
+        <ConditionalLink
+          to={"/network/addresses/" + encodeURIComponent(address)}
+          matchTo
+          matchExact
+          condition={!nonExistent}
+        >
+          <AddressContent
+            wallet={wallet}
+            contact={contact}
             address={address}
-            commonMeta={commonMeta}
-            source={!!source}
-            hideNameAddress={!!hideNameAddress}
           />
-        )
-        : (verified
-          // Display the verified address if possible
-          ? <VerifiedAddressLink address={address} verified={verified} />
-          : (
-            // Display the regular address or label
-            <ConditionalLink
-              to={"/network/addresses/" + encodeURIComponent(address)}
-              matchTo
-              matchExact
-              condition={!nonExistent}
-            >
-              <AddressContent />
-            </ConditionalLink>
-          )
-        )
-      }
+        </ConditionalLink>
+      )
+    );
 
-      {/* This empty child here forces the Tooltip to change its hover
-        * behaviour. Pretty funky, needs investigating. */}
-      <></>
-    </Tooltip>
-  </Text>;
+  return <span className={classes}>
+    {/* Only render the tooltip component if it's actually used */}
+    {tooltipTitle
+      ? (
+        <Tooltip title={tooltipTitle}>
+          {mainContents}
+
+          {/* This empty child here forces the Tooltip to change its hover
+            * behaviour. Pretty funky, needs investigating. */}
+          <></>
+        </Tooltip>
+      )
+      : mainContents}
+
+    {copyable && <SmallCopyable {...copyable} />}
+  </span>;
+}
+
+interface AddressContentProps {
+  wallet?: Wallet;
+  contact?: Contact;
+  address: string;
+}
+
+/** The label of the wallet or contact, or the address itself (not a metaname) */
+function AddressContent({
+  wallet,
+  contact,
+  address,
+  ...props
+}: AddressContentProps): JSX.Element {
+  return wallet?.label
+    ? <span className="address-wallet" {...props}>{wallet.label}</span>
+    : (contact?.label
+      ? <span className="address-contact" {...props}>{contact.label}</span>
+      : <span className="address-address" {...props}>{address}</span>);
 }
 
 interface AddressMetanameProps {

@@ -110,6 +110,7 @@
     "antd-dayjs-webpack-plugin": "^1.0.6",
     "babel-plugin-lodash": "^3.3.4",
     "chalk": "^4.1.0",
+    "copy-to-clipboard": "^3.3.1",
     "craco-alias": "^2.2.0",
     "diff": "^5.0.0",
     "eslint": "^7.22.0",
