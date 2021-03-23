@@ -16,7 +16,10 @@ export interface CommonMeta {
   custom: Record<string, string>;
 }
 
-export function parseCommonMeta(nameSuffix: string, metadata: string | undefined | null): CommonMeta | null {
+export function parseCommonMeta(
+  nameSuffix: string,
+  metadata: string | undefined | null
+): CommonMeta | null {
   if (!metadata) return null;
 
   const custom: Record<string, string> = {};

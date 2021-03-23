@@ -98,7 +98,10 @@ export function TransactionItem({ transaction: tx, wallets }: Props): JSX.Elemen
         <span className="transaction-to"><Trans t={t} i18nKey="transactionSummary.itemTo">
           <span className="transaction-field">To:</span>
           {type === "name_purchased"
-            ? <ContextualAddress address={tx.from} wallet={fromWallet} />
+            ? <ContextualAddress
+              address={tx.from || "UNKNOWN"}
+              wallet={fromWallet}
+            />
             : <ContextualAddress
               address={tx.to}
               wallet={toWallet}
@@ -113,7 +116,7 @@ export function TransactionItem({ transaction: tx, wallets }: Props): JSX.Elemen
         <span className="transaction-from"><Trans t={t} i18nKey="transactionSummary.itemFrom">
           <span className="transaction-field">From:</span>
           <ContextualAddress
-            address={tx.from}
+            address={tx.from || "UNKNOWN"}
             wallet={fromWallet}
             metadata={tx.metadata}
             source

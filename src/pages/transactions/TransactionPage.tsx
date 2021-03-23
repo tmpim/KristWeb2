@@ -70,7 +70,7 @@ function PageContents({ transaction }: { transaction: KristTransaction }): JSX.E
         <Statistic
           className="transaction-statistic-address"
           titleKey="transaction.from"
-          value={<ContextualAddress address={from} metadata={metadata} source />}
+          value={<ContextualAddress address={from || "UNKNOWN"} metadata={metadata} source />}
         />
       </Col>}
 

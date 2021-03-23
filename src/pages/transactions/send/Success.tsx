@@ -19,7 +19,7 @@ export function NotifSuccessContents({ tx }: { tx: KristTransaction }): JSX.Elem
     <KristValue value={tx.value} />
     from
     <ContextualAddress
-      address={tx.from}
+      address={tx.from || "UNKNOWN"}
       metadata={tx.metadata}
       source
       neverCopyable

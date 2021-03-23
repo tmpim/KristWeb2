@@ -1,6 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
+import { useMemo } from "react";
 import classNames from "classnames";
 import { Tooltip } from "antd";
 
@@ -23,7 +24,7 @@ import { getVerified, VerifiedAddressLink } from "./VerifiedAddress";
 import "./ContextualAddress.less";
 
 interface Props {
-  address: KristAddress | string | null;
+  address: KristAddress | string;
   wallet?: Wallet | false;
   contact?: Contact | false;
   metadata?: string;
@@ -48,16 +49,12 @@ export function ContextualAddress({
   className
 }: Props): JSX.Element {
   const { t } = useTranslation();
+
   const { walletAddressMap } = useWallets();
   const { contactAddressMap } = useContacts();
+
   const nameSuffix = useNameSuffix();
   const addressCopyButtons = useBooleanSetting("addressCopyButtons");
-
-  if (!origAddress) return (
-    <span className="contextual-address address-unknown">
-      {t("contextualAddressUnknown")}
-    </span>
-  );
 
   const address = typeof origAddress === "object"
     ? origAddress.address
@@ -65,24 +62,36 @@ export function ContextualAddress({
 
   // If we were given a wallet, use it. Otherwise, look it up, unless it was
   // explicitly excluded (e.g. the Wallets table)
-  const wallet = origWallet !== false
-    ? (origWallet || walletAddressMap[address])
+  const walletLabel = origWallet !== false
+    ? (origWallet || walletAddressMap[address])?.label
     : undefined;
-  const contact = origContact !== false
-    ? (origContact || contactAddressMap[address])
+  const contactLabel = origContact !== false
+    ? (origContact || contactAddressMap[address])?.label
     : undefined;
 
-  const commonMeta = parseCommonMeta(nameSuffix, metadata);
-  const hasMetaname = source
-    ? !!commonMeta?.returnRecipient
-    : !!commonMeta?.recipient;
+  // Parse the CommonMeta, if metadata was supplied, to determine whether or not
+  // to display a name or metaname.
+  const {
+    name: cmName,
+    recipient: cmRecipient,
+    return: cmReturn,
+    returnName: cmReturnName,
+    returnRecipient: cmReturnRecipient
+  } = useMemo(
+    () => parseCommonMeta(nameSuffix, metadata) || {} as Partial<CommonMeta>,
+    [nameSuffix, metadata]
+  );
 
+  // Finally, whether or not this a metaname should be displayed:
+  const hasMetaname = source ? !!cmReturnRecipient : !!cmRecipient;
+
+  // Display a verified address if available
   const verified = getVerified(address);
 
   // If the address definitely doesn't exist, show the 'not yet initialised'
   // tooltip on hover instead.
   const showTooltip = !verified &&
-    ((hideNameAddress && !!hasMetaname) || !!wallet?.label || !!contact?.label);
+    ((hideNameAddress && !!hasMetaname) || !!walletLabel || !!contactLabel);
   const tooltipTitle = nonExistent
     ? t("contextualAddressNonExistentTooltip")
     : (showTooltip ? address : undefined);
@@ -96,15 +105,19 @@ export function ContextualAddress({
   });
 
   // The main contents of the contextual address, may be wrapped in a tooltip
-  const mainContents = commonMeta && hasMetaname
+  const mainContents = useMemo(() => hasMetaname
     ? (
       // Display the metaname and link to the name if possible
       <AddressMetaname
         nameSuffix={nameSuffix}
         address={address}
-        commonMeta={commonMeta}
         source={!!source}
         hideNameAddress={!!hideNameAddress}
+
+        name={cmName}
+        recipient={cmRecipient}
+        return={cmReturn}
+        returnName={cmReturnName}
       />
     )
     : (verified
@@ -119,13 +132,17 @@ export function ContextualAddress({
           condition={!nonExistent}
         >
           <AddressContent
-            wallet={wallet}
-            contact={contact}
+            walletLabel={walletLabel}
+            contactLabel={contactLabel}
             address={address}
           />
         </ConditionalLink>
       )
-    );
+    ), [
+    hideNameAddress, nonExistent, source, nameSuffix,
+    address, walletLabel, contactLabel, verified,
+    cmName, cmRecipient, cmReturn, cmReturnName, hasMetaname,
+  ]);
 
   return <span className={classes}>
     {/* Only render the tooltip component if it's actually used */}
@@ -146,42 +163,50 @@ export function ContextualAddress({
 }
 
 interface AddressContentProps {
-  wallet?: Wallet;
-  contact?: Contact;
+  walletLabel?: string;
+  contactLabel?: string;
   address: string;
 }
 
 /** The label of the wallet or contact, or the address itself (not a metaname) */
 function AddressContent({
-  wallet,
-  contact,
+  walletLabel,
+  contactLabel,
   address,
   ...props
 }: AddressContentProps): JSX.Element {
-  return wallet?.label
-    ? <span className="address-wallet" {...props}>{wallet.label}</span>
-    : (contact?.label
-      ? <span className="address-contact" {...props}>{contact.label}</span>
+  return walletLabel
+    ? <span className="address-wallet" {...props}>{walletLabel}</span>
+    : (contactLabel
+      ? <span className="address-contact" {...props}>{contactLabel}</span>
       : <span className="address-address" {...props}>{address}</span>);
 }
 
 interface AddressMetanameProps {
   nameSuffix: string;
   address: string;
-  commonMeta: CommonMeta;
   source: boolean;
   hideNameAddress: boolean;
+
+  name?: string;
+  recipient?: string;
+  return?: string;
+  returnName?: string;
 }
 
 export function AddressMetaname({
   nameSuffix,
   address,
-  commonMeta,
   source,
-  hideNameAddress
+  hideNameAddress,
+
+  name: cmName,
+  recipient: cmRecipient,
+  return: cmReturn,
+  returnName: cmReturnName
 }: AddressMetanameProps): JSX.Element {
-  const rawMetaname = (source ? commonMeta?.return : commonMeta?.recipient) || undefined;
-  const name = (source ? commonMeta?.returnName : commonMeta?.name) || undefined;
+  const rawMetaname = (source ? cmReturn : cmRecipient) || undefined;
+  const name = (source ? cmReturnName : cmName) || undefined;
   const nameWithoutSuffix = name ? stripNameSuffix(nameSuffix, name) : undefined;
 
   const verified = getVerified(address);
