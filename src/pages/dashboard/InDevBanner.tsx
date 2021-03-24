@@ -18,7 +18,7 @@ export function InDevBanner(): JSX.Element {
     message={<Trans t={t} i18nKey="dashboard.inDevBanner">
       Welcome to the KristWeb v2 private beta! This site is still in development,
       so most features are currently missing. Please report all bugs on
-      <a href={gitURL} target="_blank" rel="noopener noreferrer">GitHub</a>.
+      <a href={gitURL + "/issues/new"} target="_blank" rel="noopener noreferrer">GitHub</a>.
       Thanks!
     </Trans>}
   />;

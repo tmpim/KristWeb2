@@ -361,6 +361,7 @@
       "8": "Add contacts in the [address book](/contacts) to quickly send them transactions.",
       "9": "A 'bumped' transaction is a transaction sent to and from the same address.",
       "10": "The 'block difficulty' chart can be shown with a logarithmic scale to see small changes easier at lower difficulties.",
+      "1-status": "You are connected to an unofficial server. Your wallet passwords may be sent to the operator, who can use them to access your wallets on the official server. Please ask a question <1>here</1> for more information.",
       "11": "The date format can be changed in the [advanced settings](/settings).",
       "12": "You can see the [lowest mined block hashes](/network/blocks/lowest).",
       "13": "The most recently purchased names can be seen on the [Network Names page](/network/names/new).",
@@ -417,6 +418,7 @@
     "transactionsHighlightVerified": "Highlight verified addresses in the transactions table",
     "transactionDefaultRaw": "Default to the 'Raw' tab instead of 'CommonMeta' on the transaction page",
     "clearTransactionForm": "Clear the Send Transaction form after clicking 'Send'",
+    "sendTransactionDelay": "Time to wait, in milliseconds, before allowing another transaction to be sent",
     "defaultPageSize": "Default page size for table listings",
     "tableHotkeys": "Enable table navigation hotkeys (left and right arrows)",
 
