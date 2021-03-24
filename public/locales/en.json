@@ -365,7 +365,8 @@
       "11": "The date format can be changed in the [advanced settings](/settings).",
       "12": "You can see the [lowest mined block hashes](/network/blocks/lowest).",
       "13": "The most recently purchased names can be seen on the [Network Names page](/network/names/new).",
-      "14": "The block value increases when [names](/network/names) are purchased."
+      "14": "The block value increases when [names](/network/names) are purchased.",
+      "15": "If you're worried about accidental transactions, you can enable a confirmation prompt in the [advanced settings](/settings)."
     }
   },
 
@@ -417,6 +418,7 @@
     "transactionsHighlightOwn": "Highlight own transactions in the transactions table",
     "transactionsHighlightVerified": "Highlight verified addresses in the transactions table",
     "transactionDefaultRaw": "Default to the 'Raw' tab instead of 'CommonMeta' on the transaction page",
+    "confirmTransactions": "Prompt for confirmation for all transactions",
     "clearTransactionForm": "Clear the Send Transaction form after clicking 'Send'",
     "sendTransactionDelay": "Time to wait, in milliseconds, before allowing another transaction to be sent",
     "defaultPageSize": "Default page size for table listings",
@@ -932,8 +934,10 @@
 
     "errorUnknown": "Unknown error sending transaction. See console for details.",
 
+    "payLargeConfirm": "Are you sure you want to send <1 />?",
     "payLargeConfirmHalf": "Are you sure you want to send <1 />? This is over half your balance!",
     "payLargeConfirmAll": "Are you sure you want to send <1 />? This is your entire balance!",
+    "payLargeConfirmDefault": "You are about to send your wallet private key and password to an unofficial Krist server, which will give them access to your Krist on the official server. Are you sure you want to do this?",
 
     "errorNotificationTitle": "Transaction failed",
     "successNotificationTitle": "Transaction successful",

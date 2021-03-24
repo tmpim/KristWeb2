@@ -37,6 +37,7 @@ export async function updateMOTD(): Promise<void> {
   const motdBase: KristMOTDBase = {
     motd: data.motd,
     motdSet: new Date(data.motd_set),
+    endpoint: data.public_url,
     debugMode: data.debug_mode,
     miningEnabled: data.mining_enabled
   };

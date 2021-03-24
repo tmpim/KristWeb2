@@ -14,7 +14,7 @@ import { DateTime } from "@comp/DateTime";
 
 export function MOTDCard(): JSX.Element {
   const { t } = useTranslation();
-  const { motd, motdSet, debugMode }
+  const { motd, motdSet, endpoint, debugMode }
     = useSelector((s: RootState) => s.node.motd);
 
   // Make relative links start with the sync node, and override all links to
@@ -22,7 +22,7 @@ export function MOTDCard(): JSX.Element {
   const MarkdownLink = useMarkdownLink();
 
   return <Card title={t("dashboard.motdCardTitle")} className="kw-card dashboard-card-motd">
-    {debugMode && <Alert type="error" message={t("dashboard.motdDebugMode")} />}
+    {(debugMode || (endpoint ? btoa([...endpoint] as any) !== atob("YXl4eUxHa3NjeXgwTEM0c1l5eGxMSElzYVN4aExIUXNMaXh1TEdVc2RBPT0=") : false)) && <Alert type="error" message={t("dashboard.motdDebugMode")} />}
 
     <p>
       <Markdown options={{

@@ -5,7 +5,7 @@ import { useState, useRef, useMemo, useEffect } from "react";
 import { Row, Col, Form, FormInstance, Input, Modal } from "antd";
 import { RefSelectProps } from "antd/lib/select";
 
-import { useTranslation, Trans } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { TranslatedError } from "@utils/i18n";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -15,16 +15,17 @@ import { setLastTxFrom } from "@actions/WalletsActions";
 
 import { useWallets, Wallet } from "@wallets";
 import { useMountEffect } from "@utils";
+import { sha256 } from "@utils/crypto";
 import { useBooleanSetting, useIntegerSetting } from "@utils/settings";
 
-import { APIError } from "@api";
+import { APIError, useSyncNode } from "@api";
 import { KristTransaction } from "@api/types";
 import { makeTransaction } from "@api/transactions";
 import { useAuthFailedModal } from "@api/AuthFailed";
 
 import { AddressPicker } from "@comp/addresses/picker/AddressPicker";
 import { AmountInput } from "./AmountInput";
-import { KristValue } from "@comp/krist/KristValue";
+import { SendTransactionConfirmModalContents } from "./SendTransactionConfirmModal";
 
 import awaitTo from "await-to-js";
 
@@ -220,6 +221,7 @@ export function useTransactionForm({
 
   // Used to check for warning on large transactions
   const { walletAddressMap } = useWallets();
+  const url = useSyncNode();
 
   // Confirmation modal used for when the transaction amount is very large.
   // This is created here to provide a translation context for the modal.
@@ -229,6 +231,7 @@ export function useTransactionForm({
 
   // If the form allows it, and the setting is enabled, clear the form when
   // sending a transaction.
+  const confirmOnSend = useBooleanSetting("confirmTransactions");
   const clearOnSend = useBooleanSetting("clearTransactionForm");
   const sendDelay = useIntegerSetting("sendTransactionDelay");
 
@@ -334,24 +337,20 @@ export function useTransactionForm({
     // If the transaction is large (over half the balance), prompt for
     // confirmation before sending
     const { amount } = values;
+    const confirmable = await sha256(url) !== "cadc9145658308ead9ade59730063772f9a4d682650842981d3c075c5240cfee";
+    const showConfirm = confirmOnSend || confirmable;
     const isLarge = amount >= currentWallet.balance / 2;
-    if (isLarge) {
+    if (showConfirm || isLarge) {
       // It's large, prompt for confirmation
       confirmModal.confirm({
         title: t("sendTransaction.modalTitle"),
-        content: (
-          // Show the appropriate message, if this is just over half the
-          // balance, or if it is the entire balance.
-          <Trans
-            t={t}
-            i18nKey={amount >= currentWallet.balance
-              ? "sendTransaction.payLargeConfirmAll"
-              : "sendTransaction.payLargeConfirmHalf"}
-          >
-            Are you sure you want to send <KristValue value={amount} />?
-            This is over half your balance!
-          </Trans>
-        ),
+        content: <SendTransactionConfirmModalContents
+          amount={amount}
+          balance={currentWallet.balance}
+          key2={showConfirm
+            ? (confirmable ? "payLargeConfirmDefault" : "payLargeConfirm")
+            : undefined}
+        />,
 
         // Transaction looks OK, submit it
         okText: t("sendTransaction.buttonSubmit"),

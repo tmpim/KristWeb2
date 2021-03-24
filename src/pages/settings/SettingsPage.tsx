@@ -66,6 +66,7 @@ export function SettingsPage(): JSX.Element {
           booleanSetting("transactionsHighlightOwn"),
           booleanSetting("transactionsHighlightVerified"),
           booleanSetting("transactionDefaultRaw"),
+          booleanSetting("confirmTransactions"),
           booleanSetting("clearTransactionForm"),
           integerSetting("sendTransactionDelay"),
           integerSetting("defaultPageSize"),

@@ -96,6 +96,7 @@ export interface KristMOTDBase {
 
   miningEnabled: boolean;
   debugMode: boolean;
+  endpoint?: string;
 }
 export const DEFAULT_MOTD_BASE: KristMOTDBase = {
   motd: "",

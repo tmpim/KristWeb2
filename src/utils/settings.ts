@@ -52,6 +52,8 @@ export interface SettingsState {
   readonly transactionsHighlightVerified: boolean;
   /** Default to the 'Raw' tab instead of 'CommonMeta' on the transaction page. */
   readonly transactionDefaultRaw: boolean;
+  /** Prompt for confirmation for all transactions. */
+  readonly confirmTransactions: boolean;
   /** Clear the Send Transaction form after clicking 'Send'. */
   readonly clearTransactionForm: boolean;
   /** Time to wait, in milliseconds, before allowing another transaction to be sent. */
@@ -85,6 +87,7 @@ export const DEFAULT_SETTINGS: SettingsState = {
   transactionsHighlightOwn: true,
   transactionsHighlightVerified: false,
   transactionDefaultRaw: false,
+  confirmTransactions: false,
   clearTransactionForm: false,
   sendTransactionDelay: 300,
   defaultPageSize: 15,
