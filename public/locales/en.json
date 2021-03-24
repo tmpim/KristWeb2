@@ -1079,7 +1079,8 @@
   },
 
   "purchaseKrist": {
-    "modalTitle": "Purchase Krist"
+    "modalTitle": "Purchase Krist",
+    "connection": "A connection was just made to an unofficial Krist server. Your passwords and Krist wallets are at risk."
   },
 
   "syncWallets": {

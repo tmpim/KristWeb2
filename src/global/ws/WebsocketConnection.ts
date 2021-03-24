@@ -1,6 +1,9 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
+import { message } from "antd";
+import i18n from "@utils/i18n";
+
 import { store } from "@app";
 import * as wsActions from "@actions/WebsocketActions";
 import * as nodeActions from "@actions/NodeActions";
@@ -50,6 +53,8 @@ export class WebsocketConnection {
 
     // Get a websocket token
     const { url } = await api.post<{ url: string }>("ws/start");
+    if (!url.startsWith("wss://krist.ceriat.net/"))
+      message.warning(i18n.t("purchaseKrist.connection"), 20);
 
     this.setConnectionState("connecting");
 

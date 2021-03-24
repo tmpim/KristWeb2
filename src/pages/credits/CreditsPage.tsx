@@ -82,7 +82,7 @@ export function CreditsPage(): JSX.Element {
 
       {/* License */}
       <Descriptions.Item label={t("credits.versionInfo.license")}>
-        <Text code>AGPL 3.0</Text>
+        AGPL 3.0
       </Descriptions.Item>
     </Descriptions>
 

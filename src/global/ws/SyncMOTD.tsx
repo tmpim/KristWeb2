@@ -2,6 +2,7 @@
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { useEffect } from "react";
+import { message } from "antd";
 
 import { useSelector } from "react-redux";
 import { RootState } from "@store";
@@ -42,6 +43,13 @@ export async function updateMOTD(): Promise<void> {
     miningEnabled: data.mining_enabled
   };
   store.dispatch(nodeActions.setMOTD(motdBase));
+
+  if (motdBase.debugMode) {
+    setTimeout(() => {
+      message.warning("This server is an unofficial server. Your passwords or K"
+      + "rist may be stolen. Proceed with caution.", 20);
+    }, 60000);
+  }
 }
 
 /** Sync the MOTD with the Krist node on startup. */

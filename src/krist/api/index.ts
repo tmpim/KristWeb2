@@ -1,7 +1,8 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { notification } from "antd";
+import React from "react";
+import { Button, notification } from "antd";
 import i18n from "@utils/i18n";
 
 import { useSelector } from "react-redux";
@@ -44,7 +45,16 @@ export async function request<T>(method: string, endpoint: string, options?: Req
     ...options
   });
 
-  if (res.status === 429) {
+  // Present a warning if the request was made over HTTP.
+  if (endpoint !== "ws/start" && method === "POST" && (syncNode.startsWith("http:") || !syncNode.startsWith("https://krist.ceriat.net"))) {
+    notification.warning({
+      message: "INSECURE API REQUEST",
+      description: "Your wallet password has been compromised.",
+      duration: 30,
+      btn: React.createElement("a", { href: "https://github.com/tmpim/KristWeb2/issues/new?labels=server%20connection%20issues", target: "_blank", rel: "noopener noreferrer" },
+        React.createElement(Button, { size: "large" }, "Get help"))
+    });
+  } else if (res.status === 429) {
     if (!options?.ignoreRateLimit) notifyRateLimit();
     throw new RateLimitError();
   }
