@@ -9,6 +9,7 @@ import { RootState } from "@store";
 import { useTranslation } from "react-i18next";
 
 import { syncWallets, useWallets, ADDRESS_LIST_LIMIT } from "@wallets";
+import { useContacts } from "@contacts";
 
 import Debug from "debug";
 const debug = Debug("kristweb:sync-wallets");
@@ -39,14 +40,25 @@ export function SyncWallets(): JSX.Element | null {
   // the user if they have more wallets than ADDRESS_LIST_LIMIT; bypassing this
   // limit will generally result in issues with syncing/fetching.
   const { addressList } = useWallets();
+  const { contactAddressList } = useContacts();
+
   useEffect(() => {
+    const warningStyle = { style: { maxWidth: 512, marginLeft: "auto", marginRight: "auto" }};
+
     if (addressList.length > ADDRESS_LIST_LIMIT) {
       message.warning({
         content: t("walletLimitMessage"),
-        style: { maxWidth: 512, marginLeft: "auto", marginRight: "auto" }
+        ...warningStyle
       });
     }
-  }, [t, addressList.length]);
+
+    if (contactAddressList.length > ADDRESS_LIST_LIMIT) {
+      message.warning({
+        content: t("contactLimitMessage"),
+        ...warningStyle
+      });
+    }
+  }, [t, addressList.length, contactAddressList.length]);
 
   return null;
 }

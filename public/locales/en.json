@@ -866,6 +866,7 @@
   },
 
   "walletLimitMessage": "You have more wallets stored than KristWeb supports. This was either caused by a bug, or you bypassed it intentionally. Expect issues with syncing.",
+  "contactLimitMessage": "You have more contacts stored than KristWeb supports. This was either caused by a bug, or you bypassed it intentionally. Expect issues with syncing.",
 
   "optionalFieldUnset": "(unset)",
 
