@@ -1,8 +1,11 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
+import { useMemo } from "react";
 import { Typography } from "antd";
 import Icon from "@ant-design/icons";
+
+import packageJson from "../../../package.json";
 
 import { useSelector, shallowEqual } from "react-redux";
 import { RootState } from "@store";
@@ -23,12 +26,14 @@ export const CymbalIcon = (props: any): JSX.Element =>
 export function CymbalIndicator(): JSX.Element | null {
   const allSettings: SettingsState = useSelector((s: RootState) => s.settings, shallowEqual);
   const { addressList } = useWallets();
+  const serverChanged = useMemo(() => localStorage.getItem("syncNode") !== packageJson.defaultSyncNode, []);
 
   const on = allSettings.walletFormats
-    || addressList.length > ADDRESS_LIST_LIMIT;
+    || addressList.length > ADDRESS_LIST_LIMIT
+    || serverChanged;
 
   return on ? <div className="site-header-element">
-    <CymbalIcon className="site-header-cymbal" />
+    <CymbalIcon className="site-header-cymbal" style={{ color: serverChanged ? "#1b1f31" : undefined }} />
     {addressList.length > ADDRESS_LIST_LIMIT && (
       <Text type="secondary" style={{ fontSize: "80%", marginLeft: "4px" }}>
         {addressList.length.toLocaleString()}

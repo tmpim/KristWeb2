@@ -385,7 +385,9 @@
     "versionInfo": {
       "version": "Version",
       "commitHash": "Commit",
-      "buildTime": "Build time"
+      "buildTime": "Build time",
+      "variant": "Build variant",
+      "license": "License"
     }
   },
 

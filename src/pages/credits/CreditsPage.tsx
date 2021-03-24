@@ -18,6 +18,7 @@ const { Title, Text } = Typography;
 declare const __GIT_VERSION__: string;
 declare const __GIT_COMMIT_HASH__: string;
 declare const __BUILD_TIME__: string;
+declare const __PKGBUILD__: string;
 
 export function CreditsPage(): JSX.Element {
   const { t } = useTranslation();
@@ -29,6 +30,7 @@ export function CreditsPage(): JSX.Element {
   const gitVersion: string = __GIT_VERSION__;
   const gitCommitHash: string = __GIT_COMMIT_HASH__;
   const buildTime: string = __BUILD_TIME__;
+  const pkgbuild: string = __PKGBUILD__;
 
   return <PageLayout siteTitleKey="credits.title" className="page-credits" noHeader>
     <Title level={1}>KristWeb v2</Title>
@@ -71,6 +73,16 @@ export function CreditsPage(): JSX.Element {
       {/* Git commit hash */}
       <Descriptions.Item label={t("credits.versionInfo.commitHash")}>
         <Text code>{gitCommitHash}</Text>
+      </Descriptions.Item>
+
+      {/* Variant */}
+      <Descriptions.Item label={t("credits.versionInfo.variant")}>
+        <Text code>{pkgbuild}</Text>
+      </Descriptions.Item>
+
+      {/* License */}
+      <Descriptions.Item label={t("credits.versionInfo.license")}>
+        <Text code>AGPL 3.0</Text>
       </Descriptions.Item>
     </Descriptions>
 

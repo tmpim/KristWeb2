@@ -8,6 +8,7 @@ import { getAuthorInfo, useHostInfo } from "@utils/credits";
 import { ConditionalLink } from "@comp/ConditionalLink";
 
 declare const __GIT_VERSION__: string;
+declare const __PKGBUILD__: string;
 
 export function SidebarFooter(): JSX.Element {
   const { t } = useTranslation();
@@ -17,6 +18,7 @@ export function SidebarFooter(): JSX.Element {
 
   // Replaced by webpack DefinePlugin and git-revision-webpack-plugin
   const gitVersion: string = __GIT_VERSION__;
+  const pkgbuild = __PKGBUILD__;
 
   return (
     <div className="site-sidebar-footer">
@@ -42,7 +44,7 @@ export function SidebarFooter(): JSX.Element {
 
       {/* Git describe version */}
       <div className="site-sidebar-footer-version">
-        {gitVersion}
+        {gitVersion}-{pkgbuild}
       </div>
     </div>
   );

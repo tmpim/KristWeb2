@@ -84,7 +84,8 @@ module.exports = {
         "__GIT_VERSION__": DefinePlugin.runtimeValue(() => JSON.stringify(gitRevisionPlugin.version()), []),
         "__GIT_COMMIT_HASH__": DefinePlugin.runtimeValue(() => JSON.stringify(gitRevisionPlugin.commithash()), []),
         "__BUILD_TIME__": DefinePlugin.runtimeValue(Date.now),
-        "__GIT_COMMITS__": JSON.stringify(commits)
+        "__GIT_COMMITS__": JSON.stringify(commits),
+        "__PKGBUILD__": DefinePlugin.runtimeValue(() => JSON.stringify(require("crypto").createHash("sha256").update(require("fs").readFileSync("package.json")).digest("hex").substr(0, 7)), ["package.json"])
       })
     ],
 
