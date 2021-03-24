@@ -38,6 +38,12 @@ export function SendTransactionPage(): JSX.Element {
   const { addressList } = useWallets();
   const hasWallets = addressList?.length > 0;
 
+  function onSubmit() {
+    // Close the alert before submission, to forcibly move the form
+    setAlert(null);
+    triggerSubmit();
+  }
+
   return <PageLayout
     className="send-transaction-page"
     titleKey="sendTransaction.title"
@@ -52,12 +58,15 @@ export function SendTransactionPage(): JSX.Element {
           {txForm}
 
           {/* Send submit button */}
-          <AuthorisedAction onAuthed={triggerSubmit}>
+          <AuthorisedAction onAuthed={onSubmit}>
             <Button
               type="primary"
               className="send-transaction-submit"
               icon={<SendOutlined />}
               loading={isSubmitting}
+
+              // Prevent accidental space bar clicks
+              onKeyUp={e => e.preventDefault()}
             >
               {t("sendTransaction.buttonSubmit")}
             </Button>

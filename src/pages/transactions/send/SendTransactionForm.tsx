@@ -15,6 +15,7 @@ import { setLastTxFrom } from "@actions/WalletsActions";
 
 import { useWallets, Wallet } from "@wallets";
 import { useMountEffect } from "@utils";
+import { useBooleanSetting, useIntegerSetting } from "@utils/settings";
 
 import { APIError } from "@api";
 import { KristTransaction } from "@api/types";
@@ -194,6 +195,7 @@ interface TransactionFormHookProps {
   to?: string;
   onError?: (err: Error) => void;
   onSuccess?: (transaction: KristTransaction) => void;
+  allowClearOnSend?: boolean;
 }
 
 interface TransactionFormHookResponse {
@@ -208,7 +210,8 @@ export function useTransactionForm({
   from: initialFrom,
   to: initialTo,
   onError,
-  onSuccess
+  onSuccess,
+  allowClearOnSend
 }: TransactionFormHookProps = {}): TransactionFormHookResponse {
   const { t } = useTranslation();
 
@@ -223,6 +226,11 @@ export function useTransactionForm({
   const [confirmModal, contextHolder] = Modal.useModal();
   // Modal used when auth fails
   const { showAuthFailed, authFailedContextHolder } = useAuthFailedModal();
+
+  // If the form allows it, and the setting is enabled, clear the form when
+  // sending a transaction.
+  const clearOnSend = useBooleanSetting("clearTransactionForm");
+  const sendDelay = useIntegerSetting("sendTransactionDelay");
 
   // Called when the modal is closed
   function onReset() {
@@ -251,6 +259,15 @@ export function useTransactionForm({
       amount,
       metadata
     );
+
+    // Intentionally delay transaction submission, to prevent accidental double
+    // clicks on fast networks.
+    if (sendDelay > 0)
+      await (() => new Promise(resolve => setTimeout(resolve, sendDelay)))();
+
+    // Clear the form if the setting for it is enabled
+    if (allowClearOnSend && clearOnSend)
+      form.resetFields();
 
     onSuccess?.(tx);
   }

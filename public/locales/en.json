@@ -416,6 +416,7 @@
     "transactionsHighlightOwn": "Highlight own transactions in the transactions table",
     "transactionsHighlightVerified": "Highlight verified addresses in the transactions table",
     "transactionDefaultRaw": "Default to the 'Raw' tab instead of 'CommonMeta' on the transaction page",
+    "clearTransactionForm": "Clear the Send Transaction form after clicking 'Send'",
     "defaultPageSize": "Default page size for table listings",
     "tableHotkeys": "Enable table navigation hotkeys (left and right arrows)",
 

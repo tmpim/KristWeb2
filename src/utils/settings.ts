@@ -52,6 +52,10 @@ export interface SettingsState {
   readonly transactionsHighlightVerified: boolean;
   /** Default to the 'Raw' tab instead of 'CommonMeta' on the transaction page. */
   readonly transactionDefaultRaw: boolean;
+  /** Clear the Send Transaction form after clicking 'Send'. */
+  readonly clearTransactionForm: boolean;
+  /** Time to wait, in milliseconds, before allowing another transaction to be sent. */
+  readonly sendTransactionDelay: number;
   /** Default page size for table listings. */
   readonly defaultPageSize: number;
   /** Enable table navigation hotkeys (left and right arrows). */
@@ -81,6 +85,8 @@ export const DEFAULT_SETTINGS: SettingsState = {
   transactionsHighlightOwn: true,
   transactionsHighlightVerified: false,
   transactionDefaultRaw: false,
+  clearTransactionForm: false,
+  sendTransactionDelay: 300,
   defaultPageSize: 15,
   tableHotkeys: true,
   importOverwrite: true,
