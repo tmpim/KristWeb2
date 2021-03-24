@@ -1093,6 +1093,13 @@
     "errorPasswordIncorrect": "Incorrect password.",
     "errorUnknown": "An unknown error occurred. See console for details.",
 
-    "buttonSubmit": "Begin migration"
+    "buttonForgotPassword": "Forgot password",
+    "buttonSubmit": "Begin migration",
+
+    "forgotPassword": {
+      "modalTitle": "Skip v1 migration",
+      "modalContent": "If you forgot your master password for KristWeb v1, then you will not be able to migrate your wallets. You will never be asked again. Are you sure you want to skip migration?",
+      "buttonSkip": "Skip"
+    }
   }
 }

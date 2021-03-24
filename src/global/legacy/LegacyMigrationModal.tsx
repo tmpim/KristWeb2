@@ -3,6 +3,7 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { useState } from "react";
 import { Modal, Button } from "antd";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 
 import { useTFns } from "@utils/i18n";
 
@@ -13,6 +14,9 @@ import { useImportProgress } from "@pages/backup/ImportProgress";
 import { BackupResults } from "@pages/backup/backupResults";
 import { BackupResultsSummary } from "@pages/backup/BackupResultsSummary";
 import { BackupResultsTree } from "@pages/backup/BackupResultsTree";
+
+import Debug from "debug";
+const debug = Debug("kristweb:legacy-migration-modal");
 
 interface Props {
   backup: BackupKristWebV1;
@@ -38,6 +42,30 @@ export function LegacyMigrationModal({
     setVisible(false);
   }
 
+  function openForgotPasswordModal() {
+    Modal.confirm({
+      title: tStr("forgotPassword.modalTitle"),
+      icon: <ExclamationCircleOutlined />,
+
+      content: tStr("forgotPassword.modalContent"),
+
+      cancelText: t("dialog.cancel"),
+
+      okText: tStr("forgotPassword.buttonSkip"),
+      okType: "danger",
+      onOk() {
+        debug("skipping v1 legacy migration");
+
+        // Mark the migration as completed, so the modal won't appear again.
+        // The data will be deleted after 7 days.
+        localStorage.setItem("migrated", "2");
+        localStorage.setItem("legacyMigratedTime", new Date().toISOString());
+
+        closeModal();
+      }
+    });
+  }
+
   return <Modal
     title={tStr("modalTitle")}
 
@@ -48,7 +76,16 @@ export function LegacyMigrationModal({
     width={results ? 640 : undefined}
 
     // Remove the 'Cancel' button
-    footer={(
+    footer={<>
+      {/* Forgot password button */}
+      <Button
+        danger
+        onClick={openForgotPasswordModal}
+      >
+        {tStr("buttonForgotPassword")}
+      </Button>
+
+      {/* Submit button */}
       <Button
         type="primary"
         loading={loading}
@@ -56,7 +93,7 @@ export function LegacyMigrationModal({
       >
         {results ? t("dialog.close") : tStr("buttonSubmit")}
       </Button>
-    )}
+    </>}
   >
     {/* Show the results screen, progress bar, or backup form */}
     {results
