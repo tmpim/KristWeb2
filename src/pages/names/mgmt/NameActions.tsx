@@ -13,7 +13,6 @@ import { useNameSuffix } from "@utils/currency";
 import { AuthorisedAction } from "@comp/auth/AuthorisedAction";
 import { OpenEditNameFn } from "./NameEditModalLink";
 import { OpenSendTxFn } from "@comp/transactions/SendTransactionModalLink";
-import { NameEditModalLink } from "./NameEditModalLink";
 
 interface Props {
   name: KristName;

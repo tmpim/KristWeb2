@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Progress } from "antd";
 
 import { Trans } from "react-i18next";
-import { TFns } from "@utils/i18n";
+import { useTFns } from "@utils/i18n";
 
 export type IncrProgressFn = () => void;
 export type InitProgressFn = (total: number) => void;
@@ -17,9 +17,9 @@ interface ImportProgressHookResponse {
   resetProgress: () => void;
 }
 
-export function useImportProgress(
-  { t, tKey }: TFns
-): ImportProgressHookResponse {
+export function useImportProgress(): ImportProgressHookResponse {
+  const { t, tKey } = useTFns("import.");
+
   const [progress, setProgress] = useState(0);
   const [total, setTotal] = useState(1);
 

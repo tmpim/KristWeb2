@@ -22,14 +22,13 @@ interface Props {
 }
 
 export function ImportBackupModal({ visible, setVisible }: Props): JSX.Element {
-  const tFns = useTFns("import.");
-  const { t, tStr } = tFns;
+  const { t, tStr } = useTFns("import.");
 
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<BackupResults>();
 
   const { progressBar, onProgress, initProgress, resetProgress }
-    = useImportProgress(tFns);
+    = useImportProgress();
 
   const { form, resetForm, triggerSubmit, setCode }
     = useImportBackupForm(setLoading, setResults, onProgress, initProgress);

@@ -83,7 +83,7 @@ export async function importV2Backup(
     try {
       await importV2Contact(
         existingContacts, addressPrefix, nameSuffix,
-        backup, noOverwrite,
+        noOverwrite,
         uuid, rawContact,
         results
       );
@@ -182,7 +182,6 @@ export async function importV2Contact(
   nameSuffix: string,
 
   // Things related to the backup
-  backup: BackupKristWebV2,
   noOverwrite: boolean,
 
   uuid: string,
@@ -191,7 +190,7 @@ export async function importV2Contact(
   results: BackupResults
 ): Promise<void> {
   const shorthands = getShorthands(results, uuid, "v2", "contact");
-  const { success, importWarn } = shorthands;
+  const { success } = shorthands;
 
   // Validate the type of the contact data
   if (!isPlainObject(contact)) {
