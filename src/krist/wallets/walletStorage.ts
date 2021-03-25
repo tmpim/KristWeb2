@@ -54,15 +54,20 @@ export function parseWallet(id: string, data: string | null): Wallet {
 
 /** Loads all available wallets from local storage. */
 export function loadWallets(): WalletMap {
-  // Find all `wallet2` keys from local storage
-  const keysToLoad = Object.keys(localStorage)
-    .map(extractWalletKey)
-    .filter(k => k !== undefined) as [string, string][];
+  const walletMap: WalletMap = {};
 
-  const wallets = keysToLoad.map(([key, id]) => parseWallet(id, localStorage.getItem(key)));
+  const lsKeys = Object.keys(localStorage);
+  for (const lsKey of lsKeys) {
+    // Find all 'wallet2' keys from local storage
+    const extracted = extractWalletKey(lsKey);
+    if (!extracted) continue;
 
-  // Convert to map with wallet IDs
-  const walletMap: WalletMap = wallets.reduce((obj, w) => ({ ...obj, [w.id]: w }), {});
+    // Parse the wallet from the stored string
+    const [key, id] = extracted;
+    const wallet = parseWallet(id, localStorage.getItem(key));
+
+    walletMap[wallet.id] = wallet;
+  }
 
   return walletMap;
 }

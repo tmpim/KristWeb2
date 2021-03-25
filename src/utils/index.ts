@@ -152,3 +152,14 @@ export function useHistoryState<S>(
 }
 
 export const mod = (n: number, m: number): number => ((n % m) + m) % m;
+
+export function toLookup(arr: string[]): Record<string, true> {
+  const out: Record<string, true> = {};
+  if (!arr) return out;
+
+  for (let i = 0; i < arr.length; i++) {
+    out[arr[i]] = true;
+  }
+
+  return out;
+}

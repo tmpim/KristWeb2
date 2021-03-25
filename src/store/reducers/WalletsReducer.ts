@@ -19,7 +19,12 @@ export function getInitialWalletsState(): State {
   };
 }
 
-function assignNewWalletProperties(state: State, id: string, partialWallet: Partial<Wallet>, allowedKeys?: (keyof Wallet)[]) {
+function assignNewWalletProperties(
+  state: State,
+  id: string,
+  partialWallet: Partial<Wallet>,
+  allowedKeys?: (keyof Wallet)[]
+) {
   // Fetch the old wallet and assign the new properties
   const { [id]: wallet } = state.wallets;
   const newWallet = allowedKeys

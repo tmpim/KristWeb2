@@ -48,15 +48,20 @@ export function parseContact(id: string, data: string | null): Contact {
 
 /** Loads all available contacts from local storage. */
 export function loadContacts(): ContactMap {
-  // Find all `contact2` keys from local storage
-  const keysToLoad = Object.keys(localStorage)
-    .map(extractContactKey)
-    .filter(k => k !== undefined) as [string, string][];
+  const contactMap: ContactMap = {};
 
-  const contacts = keysToLoad.map(([key, id]) => parseContact(id, localStorage.getItem(key)));
+  const lsKeys = Object.keys(localStorage);
+  for (const lsKey of lsKeys) {
+    // Find all 'contact2' keys from local storage
+    const extracted = extractContactKey(lsKey);
+    if (!extracted) continue;
 
-  // Convert to map with contact IDs
-  const contactMap: ContactMap = contacts.reduce((obj, c) => ({ ...obj, [c.id]: c }), {});
+    // Parse the contact from the stored string
+    const [key, id] = extracted;
+    const contact = parseContact(id, localStorage.getItem(key));
+
+    contactMap[contact.id] = contact;
+  }
 
   return contactMap;
 }

@@ -19,10 +19,18 @@ export interface ContactsHookResponse {
 /** Hook that fetches the contacts from the Redux store. */
 export function useContacts(): ContactsHookResponse {
   const contacts = useSelector((s: RootState) => s.contacts.contacts, shallowEqual);
-  const contactAddressMap = Object.values(contacts)
-    .reduce((o, contact) => ({ ...o, [contact.address]: contact }), {});
 
-  const contactAddressList = Object.keys(contactAddressMap);
+  const contactAddressMap: ContactAddressMap = {};
+  const contactAddressList: string[] = [];
+
+  for (const id in contacts) {
+    const contact = contacts[id];
+    const address = contact.address;
+
+    contactAddressMap[address] = contact;
+    contactAddressList.push(address);
+  }
+
   const joinedContactAddressList = contactAddressList.join(",");
 
   return {

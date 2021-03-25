@@ -36,16 +36,25 @@ export interface WalletsHookResponse {
 /** Hook that fetches the wallets from the Redux store. */
 export function useWallets(): WalletsHookResponse {
   const wallets = useSelector((s: RootState) => s.wallets.wallets, shallowEqual);
-  const walletAddressMap = Object.values(wallets)
-    .reduce((o, wallet) => ({ ...o, [wallet.address]: wallet }), {});
 
-  // A cheap address list used for deep comparison. It's totally okay to assume
-  // this list will only change when the addresses will change, as since ES2015,
-  // object ordering is _basically_ consistent:
-  // https://stackoverflow.com/a/5525820/1499974
-  // https://stackoverflow.com/a/38218582/1499974
-  // https://stackoverflow.com/a/23202095/1499974
-  const addressList = Object.keys(walletAddressMap);
+  const walletAddressMap: WalletAddressMap = {};
+  const addressList: string[] = [];
+
+  for (const id in wallets) {
+    const wallet = wallets[id];
+    const address = wallet.address;
+
+    walletAddressMap[address] = wallet;
+
+    // A cheap address list used for deep comparison. It's totally okay to
+    // assume this list will only change when the addresses will change, as
+    // since ES2015, object ordering is *basically* consistent:
+    // https://stackoverflow.com/a/5525820/1499974
+    // https://stackoverflow.com/a/38218582/1499974
+    // https://stackoverflow.com/a/23202095/1499974
+    addressList.push(address);
+  }
+
   const joinedAddressList = addressList.join(",");
 
   return { wallets, walletAddressMap, addressList, joinedAddressList };
