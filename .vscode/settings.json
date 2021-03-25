@@ -38,6 +38,7 @@
     "desaturate",
     "dont",
     "firstseen",
+    "gitlog",
     "initialising",
     "jwalelset",
     "languagedetector",
@@ -76,6 +77,7 @@
     "unmounting",
     "unregistering",
     "unsyncable",
+    "webpackbar",
     "whatsnew"
   ],
   "i18next.defaultTranslatedLocale": "en",
