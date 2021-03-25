@@ -1743,9 +1743,9 @@
     "@testing-library/dom" "^7.28.1"
 
 "@testing-library/user-event@^13.0.7":
-  version "13.0.13"
-  resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-13.0.13.tgz#fd406a9496ffe7217fd201393d42d126a6ccf666"
-  integrity sha512-C36WYVk/BsFy/proxRSVx3igUZg7qc6FxXKt0X3+vx2+mR9yid0JLyNSeevs11BSNs60I1qdSLz8+jovr8pYcQ==
+  version "13.0.15"
+  resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-13.0.15.tgz#9b2cbcd954474b71392f52341053b24c770bb404"
+  integrity sha512-GjSG8Sf/aIvYkaN54ENrA0brg1fU/69P+ow02fBF4NQpbLLKRfGX1z3pWGBBpxBXY/2Be9RHBYlkj2058SroTg==
   dependencies:
     "@babel/runtime" "^7.12.5"
 
@@ -6199,14 +6199,14 @@ human-signals@^1.1.1:
   resolved "https://registry.yarnpkg.com/human-signals/-/human-signals-1.1.1.tgz#c5b1cd14f50aeae09ab6c59fe63ba3395fe4dfa3"
   integrity sha512-SEQu7vl8KjNL2eoGBLF3+wAjpsNfA9XMlXAYj/3EdaNfAlxKthD1xjEQfGOUhllCGGJVNY34bRr6lPINhNjyZw==
 
-i18next-browser-languagedetector@^6.0.1:
+i18next-browser-languagedetector@^6.1.0:
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/i18next-browser-languagedetector/-/i18next-browser-languagedetector-6.1.0.tgz#83d3a920d5f300424aa37bd4c0a09c267844de71"
   integrity sha512-NXbr/qPqkg6VyUwPrzmVOAafqIk1zdjzhYVxZWoSi338XEGmuOeroEglLdR8nJUJcf5BfOSHva80tqCPwXFTFQ==
   dependencies:
     "@babel/runtime" "^7.5.5"
 
-i18next-http-backend@^1.1.1:
+i18next-http-backend@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/i18next-http-backend/-/i18next-http-backend-1.2.0.tgz#6dbecac14de4baa744ca8cdd4d887d3e76a8378f"
   integrity sha512-Lv5wcpkNGG3LHW4yv6asvGQ/KoWzktyBP1B4thTPFYz/L+t1tDfMRUIDTH/k9RmgyUh8gFtAvzmn2ci9UYWCKg==
@@ -10144,7 +10144,7 @@ react-hotkeys@^2.0.0:
   dependencies:
     prop-types "^15.6.1"
 
-react-i18next@^11.8.10:
+react-i18next@^11.8.11:
   version "11.8.11"
   resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-11.8.11.tgz#bdf0440bad0d576664057a0c1233cb4fecf9eaab"
   integrity sha512-S17B952IB8T5Zs0SoGNR5zSHU5N7+X2D2OydhAtqNHT+iw9Tbt7WBNExufe9NbmpUQUUjKrCHIkl2diNTdGYtA==

@@ -41,7 +41,7 @@ const sidebarItems: SidebarItemProps[] = [
   { group: "network", icon: <StockOutlined />, name: "statistics",   to: "/network/statistics", nyi: true },
 ];
 
-function getSidebarItems(t: TFunction<string>, group?: string) {
+function getSidebarItems(t: TFunction, group?: string) {
   return sidebarItems
     .filter(i => i.group === group)
     .map(i => (

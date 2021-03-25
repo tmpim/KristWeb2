@@ -48,7 +48,7 @@ export const i18nLoader = i18n
 
       // Translations now use JSON5 to allow for comments, newlines, and basic
       // syntax errors like trailing commas
-      parse: JSON5.parse
+      parse: data => JSON5.parse(data)
     }
   })
   .then(() => {
