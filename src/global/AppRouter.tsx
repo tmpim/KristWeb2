@@ -3,7 +3,7 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { Alert } from "antd";
 
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 
 import { DashboardPage } from "@pages/dashboard/DashboardPage";
 import { WalletsPage } from "@pages/wallets/WalletsPage";
@@ -106,6 +106,43 @@ export function AppRouter(): JSX.Element {
         </Route>
       )
     ))}
+
+    {/* Redirects from KristWeb v1 router */}
+    <Redirect from="/overview"    to="/" />
+    <Redirect from="/addressbook" to="/contacts" />
+    <Redirect from="/friends"     to="/contacts" />
+    <Redirect from="/address/:address"                to="/network/addresses/:address" />
+    <Redirect from="/address/:address/transaction"    to="/network/addresses/:address/transactions" />
+    <Redirect from="/address/:address/transactions"   to="/network/addresses/:address/transactions" />
+    <Redirect from="/address/:address/name"           to="/network/addresses/:address/names" />
+    <Redirect from="/address/:address/names"          to="/network/addresses/:address/names" />
+    <Redirect from="/addresses/:address"              to="/network/addresses/:address" />
+    <Redirect from="/addresses/:address/transaction"  to="/network/addresses/:address/transactions" />
+    <Redirect from="/addresses/:address/transactions" to="/network/addresses/:address/transactions" />
+    <Redirect from="/addresses/:address/name"         to="/network/addresses/:address/names" />
+    <Redirect from="/addresses/:address/names"        to="/network/addresses/:address/names" />
+    <Redirect from="/transaction"       to="/me/transactions" exact />
+    <Redirect from="/transaction/make"  to="/send" />
+    <Redirect from="/transaction/all"   to="/network/transactions" />
+    <Redirect from="/transaction/:id"   to="/network/transactions/:id" />
+    <Redirect from="/transactions"      to="/me/transactions" exact />
+    <Redirect from="/transactions/make" to="/send" />
+    <Redirect from="/transactions/all"  to="/network/transactions" />
+    <Redirect from="/transactions/:id"  to="/network/transactions/:id" />
+    <Redirect from="/block"         to="/network/blocks" exact />
+    <Redirect from="/block/latest"  to="/network/blocks" />
+    <Redirect from="/block/lowest"  to="/network/blocks/lowest" />
+    <Redirect from="/block/:id"     to="/network/blocks/:id" />
+    <Redirect from="/blocks"        to="/network/blocks" exact />
+    <Redirect from="/blocks/latest" to="/network/blocks" />
+    <Redirect from="/blocks/lowest" to="/network/blocks/lowest" />
+    <Redirect from="/blocks/:id"    to="/network/blocks/:id" />
+    <Redirect from="/name"        to="/me/names" exact />
+    <Redirect from="/name/all"    to="/network/names" />
+    <Redirect from="/name/:name"  to="/network/names/:name" />
+    <Redirect from="/names"       to="/me/names" exact />
+    <Redirect from="/names/all"   to="/network/names" />
+    <Redirect from="/names/:name" to="/network/names/:name" />
 
     <Route path="*"><NotFoundPage /></Route>
   </Switch>;
