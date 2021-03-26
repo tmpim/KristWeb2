@@ -408,7 +408,6 @@
     "autoRefreshNamePage": "Auto-refresh name page",
 
     "subMenuAdvanced": "Advanced settings",
-    "modalAuth": "Always prompt for master password with a modal dialog",
     "alwaysIncludeMined": "Always include mined transactions in transaction listings (may require refresh)",
     "copyNameSuffixes": "Include suffix when copying names",
     "addressCopyButtons": "Show copy buttons next to all addresses",

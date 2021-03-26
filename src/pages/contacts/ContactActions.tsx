@@ -50,7 +50,6 @@ export function ContactActions({
         key="leftButton"
         encrypt
         onAuthed={() => openEditContact(contact)}
-        popoverPlacement="left"
       >
         {React.cloneElement(leftButton as React.ReactElement<any>, {
           className: "ant-btn-left"
@@ -69,7 +68,6 @@ export function ContactActions({
         <Menu.Item key="1">
           <AuthorisedAction
             onAuthed={() => openSendTx(undefined, contact.address)}
-            popoverPlacement="left"
           >
             <div><SendOutlined /> {tStr("actionsSendTransaction")}</div>
           </AuthorisedAction>

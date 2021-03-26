@@ -288,3 +288,24 @@
 .ant-tooltip {
   pointer-events: none !important;
 }
+
+.ant-modal {
+  @media (max-width: @screen-md) {
+    // Move modals closer to the top on mobile, to improve accessibility
+    top: @layout-header-height;
+
+    .ant-modal-header {
+      padding: @padding-sm @padding-md;
+    }
+
+    .ant-modal-close-x {
+      width: 47px;
+      height: 47px;
+      line-height: 47px;
+    }
+
+    .ant-modal-footer {
+      padding: @padding-xs;
+    }
+  }
+}

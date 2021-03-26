@@ -41,7 +41,6 @@ export function NameActions({
       <Menu.Item key="1">
         <AuthorisedAction
           onAuthed={() => openSendTx(undefined, nameWithSuffix)}
-          popoverPlacement="left"
         >
           <div><SwapOutlined /> {t("names.actionsTransferKrist")}</div>
         </AuthorisedAction>
@@ -53,7 +52,6 @@ export function NameActions({
       <Menu.Item key="2">
         <AuthorisedAction
           onAuthed={() => openNameEdit("update", name.name, name.a)}
-          popoverPlacement="left"
         >
           <div><EditOutlined /> {t("names.actionsUpdateARecord")}</div>
         </AuthorisedAction>
@@ -63,7 +61,6 @@ export function NameActions({
       <Menu.Item key="3" danger>
         <AuthorisedAction
           onAuthed={() => openNameEdit("transfer", name.name)}
-          popoverPlacement="left"
         >
           <div><SendOutlined /> {t("names.actionsTransferName")}</div>
         </AuthorisedAction>
@@ -89,7 +86,6 @@ export function NameActions({
       // Send transaction button (not own name)
       <AuthorisedAction
         onAuthed={() => openSendTx(undefined, nameWithSuffix)}
-        popoverPlacement="left"
       >
         <Button
           className="table-actions name-actions"

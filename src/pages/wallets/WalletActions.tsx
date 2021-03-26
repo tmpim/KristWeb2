@@ -68,7 +68,6 @@ export function WalletActions({
         key="leftButton"
         encrypt
         onAuthed={() => openEditWallet(wallet)}
-        popoverPlacement="left"
       >
         {/* Tooltip was removed for now as an optimisation */}
         {/* <Tooltip title={t("myWallets.actionsEditTooltip")}> */}
@@ -89,10 +88,7 @@ export function WalletActions({
       <Menu onClick={onMenuClick}>
         {/* Send tx button */}
         <Menu.Item key="1">
-          <AuthorisedAction
-            onAuthed={() => openSendTx(wallet)}
-            popoverPlacement="left"
-          >
+          <AuthorisedAction onAuthed={() => openSendTx(wallet)}>
             <div><SendOutlined /> {t("myWallets.actionsSendTransaction")}</div>
           </AuthorisedAction>
         </Menu.Item>

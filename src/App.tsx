@@ -5,18 +5,19 @@ import { Suspense } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 
 import { Provider } from "react-redux";
-import { initStore } from "./store/init";
+import { initStore } from "@store/init";
 
 // Set up localisation
-import "./utils/i18n";
+import "@utils/i18n";
 
 // FIXME: Apparently the import order of my CSS is important. Who knew!
 import "./App.less";
 
-import { AppLoading } from "./global/AppLoading";
-import { AppServices } from "./global/AppServices";
-import { WebsocketProvider } from "./global/ws/WebsocketProvider";
-import { LocaleContext } from "./global/LocaleContext";
+import { AppLoading } from "@global/AppLoading";
+import { AppServices } from "@global/AppServices";
+import { WebsocketProvider } from "@global/ws/WebsocketProvider";
+import { LocaleContext } from "@global/LocaleContext";
+import { AuthProvider } from "@comp/auth/AuthContext";
 
 import { AppLayout } from "@layout/AppLayout";
 
@@ -36,14 +37,16 @@ function App(): JSX.Element {
   return <Suspense fallback={<AppLoading />}>
     <Provider store={store}>
       <LocaleContext>
-        <WebsocketProvider>
-          <Router>
-            <AppLayout />
+        <AuthProvider>
+          <WebsocketProvider>
+            <Router>
+              <AppLayout />
 
-            {/* Services, etc. */}
-            <AppServices />
-          </Router>
-        </WebsocketProvider>
+              {/* Services, etc. */}
+              <AppServices />
+            </Router>
+          </WebsocketProvider>
+        </AuthProvider>
       </LocaleContext>
     </Provider>
   </Suspense>;

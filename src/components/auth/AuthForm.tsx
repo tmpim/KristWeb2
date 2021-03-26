@@ -1,9 +1,8 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { useState, useRef, useMemo, useCallback, FC, Ref } from "react";
-import { Popover, Button, Input, Form } from "antd";
-import { TooltipPlacement } from "antd/lib/tooltip";
+import { useState, useMemo, useCallback, Ref } from "react";
+import { Button, Input, Form } from "antd";
 
 import { useTFns, translateError } from "@utils/i18n";
 
@@ -16,77 +15,17 @@ interface FormValues {
   masterPassword: string;
 }
 
-interface Props {
-  encrypt?: boolean;
-  onSubmit: () => void;
-  placement?: TooltipPlacement;
-}
-
-export const AuthMasterPasswordPopover: FC<Props> = ({
-  encrypt,
-  onSubmit,
-  placement,
-  children
-}) => {
-  const { tStr } = useTFns("masterPassword.");
-
-  const inputRef = useRef<Input>(null);
-
-  const onVisibleChange = useCallback(() =>
-    setTimeout(() => inputRef.current?.focus(), 20), [inputRef]);
-
-  return <Popover
-    trigger="click"
-    overlayClassName="authorised-action-popover"
-    title={tStr(encrypt ? "popoverTitleEncrypt" : "popoverTitle")}
-    placement={placement}
-    onVisibleChange={onVisibleChange}
-    content={() => <AuthForm
-      encrypt={encrypt}
-      onSubmit={onSubmit}
-      inputRef={inputRef}
-    />}
-  >
-    {children}
-  </Popover>;
-};
-
-interface AuthFormProps {
-  encrypt?: boolean;
-  onSubmit: () => void;
-  inputRef: Ref<Input>;
-}
-
-function AuthForm({
-  encrypt,
-  onSubmit,
-  inputRef
-}: AuthFormProps): JSX.Element {
-  const { tStr } = useTFns("masterPassword.");
-
-  const { form, submit } = useAuthForm({ encrypt, onSubmit, inputRef });
-
-  return <>
-    {form}
-
-    {/* Submit button */}
-    <Button type="primary" size="small" onClick={submit}>
-      {tStr("popoverAuthoriseButton")}
-    </Button>
-  </>;
-}
-
 interface AuthFormRes {
   form: JSX.Element;
   submit: () => Promise<void>;
   reset: () => void;
 }
 
-export function useAuthForm({
-  encrypt,
-  onSubmit,
-  inputRef
-}: AuthFormProps): AuthFormRes {
+export function useAuthForm(
+  encrypt: boolean | undefined,
+  onSubmit: () => void,
+  inputRef: Ref<Input>
+): AuthFormRes {
   const { t, tStr, tKey } = useTFns("masterPassword.");
 
   const { salt, tester } = useMasterPassword();

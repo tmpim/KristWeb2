@@ -56,7 +56,6 @@ export function SettingsPage(): JSX.Element {
         subKey="Advanced"
         icon={<SettingOutlined />}
         settings={[
-          booleanSetting("modalAuth"),
           booleanSetting("alwaysIncludeMined"),
           booleanSetting("copyNameSuffixes"),
           booleanSetting("addressCopyButtons"),

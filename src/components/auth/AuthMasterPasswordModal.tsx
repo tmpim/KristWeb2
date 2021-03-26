@@ -6,7 +6,7 @@ import { Modal, Input } from "antd";
 
 import { useTFns } from "@utils/i18n";
 
-import { useAuthForm } from "./AuthMasterPasswordPopover";
+import { useAuthForm } from "./AuthForm";
 
 interface Props {
   visible: boolean;
@@ -24,7 +24,7 @@ export function AuthMasterPasswordModal({
   const { t, tStr } = useTFns("masterPassword.");
   const inputRef = useRef<Input>(null);
 
-  const { form, submit, reset } = useAuthForm({ encrypt, onSubmit, inputRef });
+  const { form, submit, reset } = useAuthForm(encrypt, onSubmit, inputRef);
 
   return <Modal
     title={tStr("dialogTitle")}

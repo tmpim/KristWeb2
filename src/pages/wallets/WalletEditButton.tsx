@@ -16,11 +16,7 @@ export const WalletEditButton: FC<Props> = ({ wallet, children }): JSX.Element =
   const [editWalletVisible, setEditWalletVisible] = useState(false);
 
   return <>
-    <AuthorisedAction
-      encrypt
-      onAuthed={() => setEditWalletVisible(true)}
-      popoverPlacement="left"
-    >
+    <AuthorisedAction encrypt onAuthed={() => setEditWalletVisible(true)}>
       {children}
     </AuthorisedAction>
 
