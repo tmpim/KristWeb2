@@ -14,7 +14,12 @@
 
     user-select: none;
 
+    padding: @padding-xs 0;
+    min-height: 40px;
     height: auto;
+
+    line-height: @line-height-base;
+    white-space: normal;
 
     &:last-child { border-bottom: none; }
   }
@@ -27,6 +32,16 @@
   .menu-item-description {
     color: @text-color-secondary;
     font-size: @font-size-sm;
+  }
+
+  @media (max-width: @screen-md) {
+    // Make the menu full-width on mobile
+    width: 100vw;
+    margin: 0 -@padding-lg;
+
+    .ant-menu-sub > .ant-menu-item {
+      padding-left: @padding-sm !important;
+    }
   }
 }
 
