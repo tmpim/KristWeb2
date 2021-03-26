@@ -8,7 +8,7 @@ import { useMasterPassword } from "@wallets";
 import { AuthMasterPasswordModal } from "./AuthMasterPasswordModal";
 import { SetMasterPasswordModal } from "./SetMasterPasswordModal";
 
-type PromptAuthFn = (encrypt: boolean | undefined, onAuthed?: () => void) => void;
+export type PromptAuthFn = (encrypt: boolean | undefined, onAuthed?: () => void) => void;
 export const AuthContext = createContext<PromptAuthFn | undefined>(undefined);
 
 interface ModalProps {
@@ -27,10 +27,16 @@ export const AuthProvider: FC = ({ children }) => {
   const [modalProps, setModalProps] = useState<ModalProps>({ encrypt: false });
 
   const promptAuth: PromptAuthFn = useCallback((encrypt, onAuthed) => {
+    if (isAuthed) {
+      // Pass-through auth directly if already authed.
+      onAuthed?.();
+      return;
+    }
+
     setModalProps({ encrypt, onAuthed });
     setModalVisible(true);
     setClicked(true);
-  }, []);
+  }, [isAuthed]);
 
   const submit = useCallback(() => {
     setModalVisible(false);

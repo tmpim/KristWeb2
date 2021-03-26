@@ -2,11 +2,11 @@
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React, { FC, useContext } from "react";
+import { message } from "antd";
 
-import { useSelector } from "react-redux";
-import { RootState } from "@store";
+import i18n from "@utils/i18n";
 
-import { AuthContext } from "./AuthContext";
+import { AuthContext, PromptAuthFn } from "./AuthContext";
 
 interface Props {
   encrypt?: boolean;
@@ -15,7 +15,6 @@ interface Props {
 }
 
 export const AuthorisedAction: FC<Props> = ({ encrypt, onAuthed, children }) => {
-  const isAuthed = useSelector((s: RootState) => s.masterPassword.isAuthed);
   const promptAuth = useContext(AuthContext);
 
   // This is used to pass the 'onClick' prop down to the child. The child MUST
@@ -25,17 +24,12 @@ export const AuthorisedAction: FC<Props> = ({ encrypt, onAuthed, children }) => 
   const child = React.Children.only(children) as React.ReactElement;
 
   // Wrap the single child element and override onClick
-  if (isAuthed) {
-    // Already authed, run onAuthed immediately
-    return React.cloneElement(child, { onClick: (e: MouseEvent) => {
-      e.preventDefault();
-      onAuthed?.();
-    }});
-  } else {
-    // Not authed, prompt for either set password or auth password
-    return React.cloneElement(child, { onClick: (e: MouseEvent) => {
-      e.preventDefault();
-      promptAuth?.(encrypt, onAuthed);
-    }});
-  }
+  return React.cloneElement(child, { onClick: (e: MouseEvent) => {
+    e.preventDefault();
+    promptAuth?.(encrypt, onAuthed);
+  }});
 };
+
+export const useAuth = (): PromptAuthFn =>
+  useContext(AuthContext) || (() =>
+    message.error(i18n.t("masterPassword.earlyAuthError")));

@@ -5,12 +5,12 @@ import { useMemo } from "react";
 import { Button, Dropdown, Menu } from "antd";
 import { DownOutlined, SwapOutlined, SendOutlined, EditOutlined } from "@ant-design/icons";
 
-import { useTranslation } from "react-i18next";
+import { useTFns } from "@utils/i18n";
 
 import { KristName } from "@api/types";
 import { useNameSuffix } from "@utils/currency";
 
-import { AuthorisedAction } from "@comp/auth/AuthorisedAction";
+import { useAuth } from "@comp/auth";
 import { OpenEditNameFn } from "./NameEditModalLink";
 import { OpenSendTxFn } from "@comp/transactions/SendTransactionModalLink";
 
@@ -29,45 +29,11 @@ export function NameActions({
   openNameEdit,
   openSendTx
 }: Props): JSX.Element {
-  const { t } = useTranslation();
+  const { tStr } = useTFns("names.");
+  const promptAuth = useAuth();
 
   const nameSuffix = useNameSuffix();
   const nameWithSuffix = `${name.name}.${nameSuffix}`;
-
-  // The dropdown menu, used if we own the name
-  const buttonMenu = useMemo(() => isOwn
-    ? <Menu>
-      {/* Transfer Krist button */}
-      <Menu.Item key="1">
-        <AuthorisedAction
-          onAuthed={() => openSendTx(undefined, nameWithSuffix)}
-        >
-          <div><SwapOutlined /> {t("names.actionsTransferKrist")}</div>
-        </AuthorisedAction>
-      </Menu.Item>
-
-      <Menu.Divider />
-
-      {/* Update A record */}
-      <Menu.Item key="2">
-        <AuthorisedAction
-          onAuthed={() => openNameEdit("update", name.name, name.a)}
-        >
-          <div><EditOutlined /> {t("names.actionsUpdateARecord")}</div>
-        </AuthorisedAction>
-      </Menu.Item>
-
-      {/* Transfer name */}
-      <Menu.Item key="3" danger>
-        <AuthorisedAction
-          onAuthed={() => openNameEdit("transfer", name.name)}
-        >
-          <div><SendOutlined /> {t("names.actionsTransferName")}</div>
-        </AuthorisedAction>
-      </Menu.Item>
-    </Menu>
-    : undefined,
-  [t, isOwn, name.a, name.name, nameWithSuffix, openSendTx, openNameEdit]);
 
   const actions = useMemo(() => isOwn
     ? (
@@ -75,27 +41,51 @@ export function NameActions({
       <Dropdown
         className="table-actions name-actions"
         trigger={["click"]}
-        overlay={buttonMenu!}
+        overlay={() => (
+          <Menu>
+            {/* Transfer Krist button */}
+            <Menu.Item key="1" icon={<SwapOutlined />}
+              onClick={() => promptAuth(false, () =>
+                openSendTx(undefined, nameWithSuffix))}>
+              {tStr("actionsTransferKrist")}
+            </Menu.Item>
+
+            <Menu.Divider />
+
+            {/* Update A record */}
+            <Menu.Item key="2" icon={<EditOutlined />}
+              onClick={() => promptAuth(false, () =>
+                openNameEdit("update", name.name, name.a))}>
+              {tStr("actionsUpdateARecord")}
+            </Menu.Item>
+
+            {/* Transfer name */}
+            <Menu.Item key="3" danger icon={<SendOutlined />}
+              onClick={() => promptAuth(false, () =>
+                openNameEdit("transfer", name.name))}>
+              {tStr("actionsTransferName")}
+            </Menu.Item>
+          </Menu>
+        )}
       >
         <Button>
-          {t("names.actions")} <DownOutlined />
+          {tStr("actions")} <DownOutlined />
         </Button>
       </Dropdown>
     )
     : (
       // Send transaction button (not own name)
-      <AuthorisedAction
-        onAuthed={() => openSendTx(undefined, nameWithSuffix)}
+      <Button
+        className="table-actions name-actions"
+        icon={<SendOutlined />}
+        onClick={() => promptAuth(false, () =>
+          openSendTx(undefined, nameWithSuffix))}
       >
-        <Button
-          className="table-actions name-actions"
-          icon={<SendOutlined />}
-        >
-          {t("names.actionsSendKrist")}
-        </Button>
-      </AuthorisedAction>
+        {tStr("actionsSendKrist")}
+      </Button>
     ),
-  [t, buttonMenu, isOwn, nameWithSuffix, openSendTx]);
+  [tStr, isOwn, nameWithSuffix, openSendTx, name.a, name.name,
+    openNameEdit, promptAuth]);
 
   return actions;
 }

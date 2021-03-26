@@ -2,7 +2,7 @@
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { useEffect, useState, Dispatch, SetStateAction } from "react";
-import { Button, Menu } from "antd";
+import { Button, Menu, Space } from "antd";
 import { PlusOutlined, ImportOutlined, ExportOutlined } from "@ant-design/icons";
 
 import { useTFns } from "@utils/i18n";
@@ -31,7 +31,7 @@ function WalletsPageExtraButtons({
 }: ExtraButtonsProps): JSX.Element {
   const { tStr } = useTFns("myWallets.");
 
-  return <>
+  return <Space wrap>
     {/* Manage backups */}
     <ManageBackupsDropdown
       setImportVisible={setImportVisible}
@@ -49,7 +49,7 @@ function WalletsPageExtraButtons({
     <AuthorisedAction encrypt onAuthed={() => setAddWalletVisible(true)}>
       <Button ghost>{tStr("addExistingWallet")}</Button>
     </AuthorisedAction>
-  </>;
+  </Space>;
 }
 
 export function useWalletsPageActions(): JSX.Element {

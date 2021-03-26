@@ -124,7 +124,8 @@
     "popoverAuthoriseButton": "Authorise",
     "popoverDescription": "Enter your master password to decrypt your wallets.",
     "popoverDescriptionEncrypt": "Enter your master password to encrypt and decrypt your wallets.",
-    "forcedAuthWarning": "You were automatically logged in by an insecure debug setting."
+    "forcedAuthWarning": "You were automatically logged in by an insecure debug setting.",
+    "earlyAuthError": "The app has not loaded fully yet, please try again."
   },
 
   "myWallets": {

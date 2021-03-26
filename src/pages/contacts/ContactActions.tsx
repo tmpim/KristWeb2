@@ -1,7 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import React, { useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { Modal, Dropdown, Menu } from "antd";
 import {
   EditOutlined, DeleteOutlined, ExclamationCircleOutlined, SendOutlined
@@ -9,7 +9,7 @@ import {
 
 import { useTFns } from "@utils/i18n";
 
-import { AuthorisedAction } from "@comp/auth/AuthorisedAction";
+import { useAuth } from "@comp/auth";
 import { OpenEditContactFn } from "./ContactEditButton";
 import { OpenSendTxFn } from "@comp/transactions/SendTransactionModalLink";
 
@@ -27,6 +27,7 @@ export function ContactActions({
   openSendTx,
 }: Props): JSX.Element {
   const { t, tStr } = useTFns("addressBook.");
+  const promptAuth = useAuth();
 
   const showContactDeleteConfirm = useCallback((): void => {
     Modal.confirm({
@@ -44,33 +45,15 @@ export function ContactActions({
   const memoDropdown = useMemo(() => <Dropdown.Button
     className="table-actions contact-actions"
 
-    buttonsRender={([leftButton, rightButton]) => [
-      // Edit contact button
-      <AuthorisedAction
-        key="leftButton"
-        encrypt
-        onAuthed={() => openEditContact(contact)}
-      >
-        {React.cloneElement(leftButton as React.ReactElement<any>, {
-          className: "ant-btn-left"
-        })}
-      </AuthorisedAction>,
-
-      // Dropdown button
-      rightButton
-    ]}
-
+    onClick={() => promptAuth(true, () => openEditContact(contact))}
     trigger={["click"]}
-
-    overlay={(
+    overlay={() => (
       <Menu>
         {/* Send tx button */}
-        <Menu.Item key="1">
-          <AuthorisedAction
-            onAuthed={() => openSendTx(undefined, contact.address)}
-          >
-            <div><SendOutlined /> {tStr("actionsSendTransaction")}</div>
-          </AuthorisedAction>
+        <Menu.Item key="1" icon={<SendOutlined />}
+          onClick={() => promptAuth(false, () =>
+            openSendTx(undefined, contact.address))}>
+          {tStr("actionsSendTransaction")}
         </Menu.Item>
 
         <Menu.Divider />
@@ -85,7 +68,8 @@ export function ContactActions({
     {/* Edit button */}
     <EditOutlined />
   </Dropdown.Button>, [
-    tStr, contact, showContactDeleteConfirm, openEditContact, openSendTx
+    tStr, contact, promptAuth, openSendTx, openEditContact,
+    showContactDeleteConfirm
   ]);
 
   return memoDropdown;
