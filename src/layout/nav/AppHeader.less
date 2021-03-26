@@ -168,8 +168,47 @@
   .site-header-settings {
     border-left: 1px solid @kw-border-color-darker;
 
-    .anticon {
-      margin-right: 0;
+    // Make the whole button clickable, especially for mobile
+    >.ant-menu-item {
+      padding: 0;
+
+      .anticon {
+        padding: 0 20px;
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+.ant-dropdown.site-header-top-dropdown-menu {
+  // Make the top menu dropdown full-width and slightly larger on mobile
+  @media (max-width: @screen-md) {
+    position: absolute;
+
+    top: @layout-header-height !important;
+    left: 0 !important;
+    right: 0 !important;
+
+    border-radius: 0;
+
+    .ant-dropdown-menu-item {
+      padding: 8px 16px;
+      font-size: @font-size-base;
+
+      // If there's a direct div child, it's probably a descendent of an
+      // AuthorisedAction. Grow it to be full-width, so the click trigger is
+      // correct.
+      // FIXME: This is a hack.
+      >div {
+        margin: -8px -16px;
+        padding: 8px 16px;
+      }
+
+      .anticon:first-child {
+        margin-right: 16px;
+        font-size: @font-size-base;
+        vertical-align: -0.175em;
+      }
     }
   }
 }

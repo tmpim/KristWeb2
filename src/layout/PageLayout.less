@@ -16,12 +16,45 @@
         color: inherit;
       }
     }
+
+    // Hide extra table pagination on mobile
+    @media (max-width: @screen-md) {
+      .ant-pagination {
+        display: none;
+      }
+    }
   }
 
   .page-layout-contents {
     height: calc(100% - @kw-page-header-height);
 
     padding: @padding-lg;
+
+    // Make tables full-width on mobile (though most should be replaced with
+    // custom views)
+    @media (max-width: @screen-md) {
+      >.ant-table-wrapper {
+        .ant-table {
+          margin: 0 -24px;
+        }
+
+        .ant-pagination {
+          justify-content: center;
+
+          .ant-pagination-total-text {
+            display: none;
+          }
+
+          .ant-pagination-item, .ant-pagination-prev{
+            margin-right: 3px;
+          }
+
+          .ant-pagination-next  {
+            margin-right: 0;
+          }
+        }
+      }
+    }
   }
 
   &.page-layout-no-top-padding {

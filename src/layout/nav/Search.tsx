@@ -2,7 +2,7 @@
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { useState, useMemo, useRef, useEffect, useCallback, MutableRefObject, Dispatch, SetStateAction, ReactNode } from "react";
-import { AutoComplete, Input } from "antd";
+import { AutoComplete, Input, Grid } from "antd";
 import { RefSelectProps } from "antd/lib/select";
 
 import { useTranslation } from "react-i18next";
@@ -54,6 +54,9 @@ async function performAutocomplete(
 export function Search(): JSX.Element {
   const { t } = useTranslation();
   const history = useHistory();
+
+  // Used to change the placeholder depending on the screen width
+  const bps = Grid.useBreakpoint();
 
   const [value, setValue] = useState("");
   const [results, setResults] = useState<SearchResult | undefined>();
@@ -394,7 +397,9 @@ export function Search(): JSX.Element {
       options={options}
     >
       <Input.Search
-        placeholder={t("nav.search.placeholderShortcut", { shortcut: `${ctrl}+K` })}
+        placeholder={bps.md
+          ? t("nav.search.placeholderShortcut", { shortcut: `${ctrl}+K` })
+          : t("nav.search.placeholderShort")}
         onSearch={onInputSearch}
 
         role="searchbox"

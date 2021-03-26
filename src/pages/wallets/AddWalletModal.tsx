@@ -259,7 +259,7 @@ export function AddWalletModal({
     >
       <Row gutter={[24, 0]}>
         {/* Wallet label */}
-        <Col span={12}>
+        <Col span={24} md={12}>
           <Form.Item
             name="label"
             label={t("addWallet.walletLabel")}
@@ -276,7 +276,7 @@ export function AddWalletModal({
         </Col>
 
         {/* Wallet category */}
-        <Col span={12}>
+        <Col span={24} md={12}>
           <Form.Item name="category" label={t("addWallet.walletCategory")}>
             <SelectWalletCategory
               onNewCategory={category => form.setFieldsValue({ category })}

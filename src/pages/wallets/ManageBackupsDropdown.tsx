@@ -1,7 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { useState } from "react";
+import { Dispatch, SetStateAction} from "react";
 import { Button, Dropdown, Menu } from "antd";
 import {
   DatabaseOutlined, DownOutlined, ImportOutlined, ExportOutlined
@@ -12,14 +12,16 @@ import { useTFns } from "@utils/i18n";
 import { AuthorisedAction } from "@comp/auth/AuthorisedAction";
 import { useMasterPassword } from "@wallets";
 
-import { ImportBackupModal } from "../backup/ImportBackupModal";
-import { ExportBackupModal } from "../backup/ExportBackupModal";
+interface Props {
+  setImportVisible: Dispatch<SetStateAction<boolean>>;
+  setExportVisible: Dispatch<SetStateAction<boolean>>;
+}
 
-export function ManageBackupsDropdown(): JSX.Element {
+export function ManageBackupsDropdown({
+  setImportVisible,
+  setExportVisible
+}: Props): JSX.Element {
   const { tStr } = useTFns("myWallets.");
-
-  const [importVisible, setImportVisible] = useState(false);
-  const [exportVisible, setExportVisible] = useState(false);
 
   // Used to disable the export button if a master password hasn't been set up
   const { hasMasterPassword, salt, tester } = useMasterPassword();
@@ -49,8 +51,5 @@ export function ManageBackupsDropdown(): JSX.Element {
         {tStr("manageBackups")} <DownOutlined />
       </Button>
     </Dropdown>
-
-    <ImportBackupModal visible={importVisible} setVisible={setImportVisible} />
-    <ExportBackupModal visible={exportVisible} setVisible={setExportVisible} />
   </>;
 }

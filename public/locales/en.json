@@ -13,6 +13,7 @@
     "search": {
       "placeholder": "Search the Krist network",
       "placeholderShortcut": "Search the Krist network ({{shortcut}})",
+      "placeholderShort": "Search...",
       "rateLimitHit": "Please slow down.",
       "noResults": "No results.",
 
@@ -40,7 +41,8 @@
     "send": "Send",
     "request": "Request",
 
-    "settings": "Settings"
+    "settings": "Settings",
+    "more": "More"
   },
 
   "sidebar": {
