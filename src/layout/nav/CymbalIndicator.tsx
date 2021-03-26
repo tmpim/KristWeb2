@@ -26,7 +26,10 @@ export const CymbalIcon = (props: any): JSX.Element =>
 export function CymbalIndicator(): JSX.Element | null {
   const allSettings: SettingsState = useSelector((s: RootState) => s.settings, shallowEqual);
   const { addressList } = useWallets();
-  const serverChanged = useMemo(() => localStorage.getItem("syncNode") !== packageJson.defaultSyncNode, []);
+  const serverChanged = useMemo(() => {
+    const l = localStorage.getItem("syncNode");
+    return l && l !== packageJson.defaultSyncNode;
+  }, []);
 
   const on = allSettings.walletFormats
     || addressList.length > ADDRESS_LIST_LIMIT

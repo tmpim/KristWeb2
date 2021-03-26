@@ -14,10 +14,11 @@ import "./utils/i18n";
 import "./App.less";
 
 import { AppLoading } from "./global/AppLoading";
-import { CheckStatus } from "./pages/CheckStatus";
 import { AppServices } from "./global/AppServices";
 import { WebsocketProvider } from "./global/ws/WebsocketProvider";
 import { LocaleContext } from "./global/LocaleContext";
+
+import { AppLayout } from "@layout/AppLayout";
 
 import Debug from "debug";
 const debug = Debug("kristweb:app");
@@ -37,7 +38,7 @@ function App(): JSX.Element {
       <LocaleContext>
         <WebsocketProvider>
           <Router>
-            <CheckStatus />
+            <AppLayout />
 
             {/* Services, etc. */}
             <AppServices />

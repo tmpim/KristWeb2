@@ -191,8 +191,6 @@
     "columnTime": "Temps"
   },
 
-  "status": "KristWeb 2 est encore en développement. Si vous n'êtes pas un donneur, alors vous ne devriez pas être ici. N'hébergez pas ce site Web.",
-
   "addWallet": {
     "dialogTitle": "Ajouter un portefeuille",
     "dialogTitleCreate": "Créer un portefeuille",
@@ -792,7 +790,7 @@
     "errorNameNotFound": "Le nom du destinataire est introuvable.",
 
     "errorUnknown": "Erreur inconnue lors de l'envoi de la transaction. Voir console pour plus de détails.",
-    
+
     "payLargeConfirmHalf": "Voulez-vous vraiment en envoyer <1 />? C'est plus de la moitié de votre solde!",
     "payLargeConfirmAll": "Voulez-vous vraiment envoyer <1 />? Ceci est votre solde en entier!",
 
