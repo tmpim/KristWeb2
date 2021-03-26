@@ -1,7 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { useEffect, useState, Dispatch, SetStateAction} from "react";
+import { useEffect, useState, Dispatch, SetStateAction } from "react";
 import { Button, Menu } from "antd";
 import { PlusOutlined, ImportOutlined, ExportOutlined } from "@ant-design/icons";
 
@@ -52,7 +52,7 @@ function WalletsPageExtraButtons({
   </>;
 }
 
-export function useWalletsPageActions(): JSX.Element | null {
+export function useWalletsPageActions(): JSX.Element {
   const { tStr } = useTFns("myWallets.");
 
   const [createWalletVisible, setCreateWalletVisible] = useState(false);
