@@ -72,17 +72,6 @@
 
       // Fix background overlapping border
       border-bottom: 1px solid @kw-border-color-darker;
-
-      @media (max-width: @screen-md) {
-        .anticon {
-          // For some reason, the button slightly overflows the header and
-          // leaves a gap at the top. This is a silly patch for that to make the
-          // whole region clickable again.
-          // FIXME: This is a hack.
-          position: relative;
-          top: -2px;
-        }
-      }
     }
   }
 
@@ -187,15 +176,6 @@
         line-height: @layout-header-height;
         padding: 0 20px;
         margin-right: 0;
-
-        @media (max-width: @screen-md) {
-          // For some reason, the button slightly overflows the header and
-          // leaves a gap at the top. This is a silly patch for that to make the
-          // whole region clickable again.
-          // FIXME: This is a hack.
-          position: relative;
-          top: -2px;
-        }
       }
     }
   }
