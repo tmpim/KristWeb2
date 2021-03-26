@@ -39,9 +39,9 @@ export function TopMenu(): JSX.Element {
         <Menu.Divider />
 
         {/* Settings item */}
-        <Menu.Item icon={<SettingOutlined />}>
+        <Menu.Item>
           <ConditionalLink to="/settings" matchTo aria-label={tStr("settings")}>
-            {tStr("settings")}
+            <div><SettingOutlined />{tStr("settings")}</div>
           </ConditionalLink>
         </Menu.Item>
       </Menu>}
