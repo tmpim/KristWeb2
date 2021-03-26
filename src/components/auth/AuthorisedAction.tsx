@@ -2,11 +2,14 @@
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import React, { FC, useState } from "react";
+import { Grid } from "antd";
 import { TooltipPlacement } from "antd/lib/tooltip";
 
 import { useMasterPassword } from "@wallets";
+import { useBooleanSetting } from "@utils/settings";
 
 import { AuthMasterPasswordPopover } from "./AuthMasterPasswordPopover";
+import { AuthMasterPasswordModal } from "./AuthMasterPasswordModal";
 import { SetMasterPasswordModal } from "./SetMasterPasswordModal";
 
 import "./AuthorisedAction.less";
@@ -27,6 +30,11 @@ export const AuthorisedAction: FC<Props> = ({ encrypt, onAuthed, popoverPlacemen
   // Don't render the modal and popover unless we absolutely have to
   const [clicked, setClicked] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [authModalVisible, setAuthModalVisible] = useState(false);
+
+  // Determine whether to use a popover or a modal for auth
+  const bps = Grid.useBreakpoint();
+  const alwaysModal = useBooleanSetting("modalAuth");
 
   // This is used to pass the 'onClick' prop down to the child. The child MUST
   // support the onClick prop.
@@ -41,8 +49,7 @@ export const AuthorisedAction: FC<Props> = ({ encrypt, onAuthed, popoverPlacemen
     return React.cloneElement(child, { onClick: (e: MouseEvent) => {
       e.preventDefault();
       debug("authorised action occurred: was already authed");
-
-      if (onAuthed) onAuthed();
+      onAuthed?.();
     }});
   } else if (!hasMasterPassword) {
     // The user does not yet have a master password, prompt them to create one:
@@ -51,7 +58,7 @@ export const AuthorisedAction: FC<Props> = ({ encrypt, onAuthed, popoverPlacemen
         e.preventDefault();
         debug("authorised action postponed: no master password set");
 
-        if (!clicked) setClicked(true);
+        setClicked(true);
         setModalVisible(true);
       }})}
 
@@ -62,18 +69,40 @@ export const AuthorisedAction: FC<Props> = ({ encrypt, onAuthed, popoverPlacemen
           debug("authorised action occurred: master password now set, continuing with action");
 
           setModalVisible(false);
-          if (onAuthed) onAuthed();
+          onAuthed?.();
+        }}
+      />}
+    </>;
+  } else if (!bps.md || alwaysModal) {
+    // The user has a master password set but is not logged in, prompt them to
+    // enter it. Show a modal on mobile:
+    return <>
+      {React.cloneElement(child, { onClick: (e: MouseEvent) => {
+        e.preventDefault();
+        debug("authorised action postponed: no master password set");
+
+        setClicked(true);
+        setAuthModalVisible(true);
+      }})}
+
+      {clicked && <AuthMasterPasswordModal
+        visible={authModalVisible}
+        onCancel={() => setAuthModalVisible(false)}
+        onSubmit={() => {
+          debug("authorised action occurred: master password now set, continuing with action");
+
+          setAuthModalVisible(false);
+          onAuthed?.();
         }}
       />}
     </>;
   } else {
-    // The user has a master password set but is not logged in, prompt them to
-    // enter it:
+    // Show a popover on desktop:
     return <AuthMasterPasswordPopover
       encrypt={encrypt}
       onSubmit={() => {
         debug("authorised action occurred: master password provided");
-        if (onAuthed) onAuthed();
+        onAuthed?.();
       }}
       placement={popoverPlacement}
     >

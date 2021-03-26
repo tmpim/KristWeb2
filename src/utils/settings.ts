@@ -32,6 +32,8 @@ export interface SettingsState {
   // ===========================================================================
   // ADVANCED SETTINGS
   // ===========================================================================
+  /** Always prompt for master password with a modal dialog. */
+  readonly modalAuth: boolean;
   /** Always include mined transactions by default in transaction listings. */
   readonly alwaysIncludeMined: boolean;
   /** Whether or not to include the name suffix when copying a name. */
@@ -77,6 +79,7 @@ export const DEFAULT_SETTINGS: SettingsState = {
   autoRefreshAddressPage: true,
   autoRefreshNamePage: true,
 
+  modalAuth: true,
   alwaysIncludeMined: false,
   copyNameSuffixes: true,
   addressCopyButtons: false,
