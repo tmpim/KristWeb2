@@ -29,3 +29,10 @@
     box-shadow: 0 0 0 3px rgba(@kw-red, 0.3);
   }
 }
+
+.site-header-element.connection-indicator-el {
+  // Hide the connection indicator entirely on very small screens
+  @media (max-width: 350px) {
+    display: none !important;
+  }
+}

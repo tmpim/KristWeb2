@@ -21,7 +21,7 @@ export function ConnectionIndicator(): JSX.Element {
   const { t } = useTranslation();
   const connectionState = useSelector((s: RootState) => s.websocket.connectionState);
 
-  return <div className="site-header-element">
+  return <div className="site-header-element connection-indicator-el">
     <Tooltip title={t(CONN_STATE_TOOLTIPS[connectionState])} placement="bottom">
       <div className={"connection-indicator connection-" + connectionState} />
     </Tooltip>
