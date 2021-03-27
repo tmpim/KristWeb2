@@ -1,10 +1,11 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { useState, useEffect, Dispatch, SetStateAction } from "react";
+import { useState, useEffect, useMemo, Dispatch, SetStateAction } from "react";
 import { Table, TablePaginationConfig } from "antd";
+import { ColumnsType } from "antd/lib/table";
 
-import { useTranslation } from "react-i18next";
+import { useTFns, TStrFn } from "@utils/i18n";
 import { Link } from "react-router-dom";
 
 import { KristBlock } from "@api/types";
@@ -30,8 +31,88 @@ interface Props {
   setPagination?: Dispatch<SetStateAction<TablePaginationConfig>>;
 }
 
+function getColumns(
+  tStr: TStrFn,
+  dateColumnWidth: number,
+  lowest: boolean | undefined
+): ColumnsType<KristBlock> {
+  return [
+    // Height
+    {
+      title: tStr("columnHeight"),
+      dataIndex: "height", key: "height",
+
+      render: height => (
+        <Link to={`/network/blocks/${encodeURIComponent(height)}`}>
+          {height.toLocaleString()}
+        </Link>
+      ),
+      width: 100
+    },
+
+    // Miner address
+    {
+      title: tStr("columnAddress"),
+      dataIndex: "address", key: "address",
+
+      render: address => address && (
+        <ContextualAddress
+          className="blocks-table-address"
+          address={address}
+          allowWrap
+        />
+      ),
+
+      sorter: true
+    },
+
+    // Hash
+    {
+      title: tStr("columnHash"),
+      dataIndex: "hash", key: "hash",
+
+      render: hash => <BlockHash hash={hash} />,
+
+      sorter: true,
+      defaultSortOrder: lowest ? "ascend" : undefined
+    },
+
+    // Value
+    {
+      title: tStr("columnValue"),
+      dataIndex: "value", key: "value",
+
+      render: value => <KristValue value={value} />,
+      width: 100,
+
+      sorter: true
+    },
+
+    // Difficulty
+    {
+      title: tStr("columnDifficulty"),
+      dataIndex: "difficulty", key: "difficulty",
+
+      render: difficulty => difficulty.toLocaleString(),
+
+      sorter: true
+    },
+
+    // Time
+    {
+      title: tStr("columnTime"),
+      dataIndex: "time", key: "time",
+      render: time => <DateTime date={time} />,
+      width: dateColumnWidth,
+
+      sorter: true,
+      defaultSortOrder: lowest ? undefined : "descend"
+    }
+  ];
+}
+
 export function BlocksTable({ refreshingID, lowest, setError, setPagination }: Props): JSX.Element {
-  const { t } = useTranslation();
+  const { tStr, tKey } = useTFns("blocks.");
 
   const [loading, setLoading] = useState(true);
   const [res, setRes] = useState<LookupBlocksResponse>();
@@ -42,11 +123,15 @@ export function BlocksTable({ refreshingID, lowest, setError, setPagination }: P
 
   const { paginationTableProps, hotkeys } = useMalleablePagination(
     res, res?.blocks,
-    "blocks.tableTotal",
+    tKey("tableTotal"),
     options, setOptions, setPagination
   );
 
   const dateColumnWidth = useDateColumnWidth();
+
+  const columns = useMemo(() => getColumns(
+    tStr, dateColumnWidth, lowest
+  ), [tStr, dateColumnWidth, lowest]);
 
   // Fetch the blocks from the API, mapping the table options
   useEffect(() => {
@@ -71,79 +156,7 @@ export function BlocksTable({ refreshingID, lowest, setError, setPagination }: P
 
     {...paginationTableProps}
 
-    columns={[
-      // Height
-      {
-        title: t("blocks.columnHeight"),
-        dataIndex: "height", key: "height",
-
-        render: height => (
-          <Link to={`/network/blocks/${encodeURIComponent(height)}`}>
-            {height.toLocaleString()}
-          </Link>
-        ),
-        width: 100
-      },
-
-      // Miner address
-      {
-        title: t("blocks.columnAddress"),
-        dataIndex: "address", key: "address",
-
-        render: address => address && (
-          <ContextualAddress
-            className="blocks-table-address"
-            address={address}
-            allowWrap
-          />
-        ),
-
-        sorter: true
-      },
-
-      // Hash
-      {
-        title: t("blocks.columnHash"),
-        dataIndex: "hash", key: "hash",
-
-        render: hash => <BlockHash hash={hash} />,
-
-        sorter: true,
-        defaultSortOrder: lowest ? "ascend" : undefined
-      },
-
-      // Value
-      {
-        title: t("blocks.columnValue"),
-        dataIndex: "value", key: "value",
-
-        render: value => <KristValue value={value} />,
-        width: 100,
-
-        sorter: true
-      },
-
-      // Difficulty
-      {
-        title: t("blocks.columnDifficulty"),
-        dataIndex: "difficulty", key: "difficulty",
-
-        render: difficulty => difficulty.toLocaleString(),
-
-        sorter: true
-      },
-
-      // Time
-      {
-        title: t("blocks.columnTime"),
-        dataIndex: "time", key: "time",
-        render: time => <DateTime date={time} />,
-        width: dateColumnWidth,
-
-        sorter: true,
-        defaultSortOrder: lowest ? undefined : "descend"
-      }
-    ]}
+    columns={columns}
   />;
 
   return <>

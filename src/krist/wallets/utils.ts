@@ -1,11 +1,15 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
+import { useMemo } from "react";
+
 import { useSelector, shallowEqual } from "react-redux";
 import { RootState } from "@store";
 
 import { Wallet, WalletNew, WalletMap, WalletFormatName, applyWalletFormat } from ".";
 import { makeV2Address } from "../addressAlgo";
+
+import { localeSort } from "@utils";
 
 /** Finds a wallet in the wallet map by the given Krist address. */
 export function findWalletByAddress(
@@ -58,6 +62,27 @@ export function useWallets(): WalletsHookResponse {
   const joinedAddressList = addressList.join(",");
 
   return { wallets, walletAddressMap, addressList, joinedAddressList };
+}
+
+export interface WalletCategoriesHookResponse {
+  categories: string[];
+  joinedCategoryList: string;
+}
+
+export function useWalletCategories(): WalletCategoriesHookResponse {
+  const wallets = useSelector((s: RootState) => s.wallets.wallets, shallowEqual);
+
+  const categories = useMemo(() => {
+    const cats = [...new Set(Object.values(wallets)
+      .filter(w => w.category !== undefined && w.category !== "")
+      .map(w => w.category) as string[])];
+    localeSort(cats);
+    return cats;
+  }, [wallets]);
+
+  const joinedCategoryList = categories.join(",");
+
+  return { categories, joinedCategoryList };
 }
 
 /** Almost anywhere you'd want to apply a wallet format, you'd also want to

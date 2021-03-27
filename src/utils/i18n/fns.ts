@@ -1,7 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { i18n } from "i18next";
 import { useTranslation, TFunction } from "react-i18next";
 import { TranslatedError } from "./errors";
@@ -22,6 +22,8 @@ export function useTranslationFns(prefix?: string): TFns {
   const tStr = useCallback((key: string) => t(tKey(key)), [t, tKey]);
   const tErr = useCallback((key: string) => new TranslatedError(tKey(key)), [tKey]);
 
-  return { t, tKey, tStr, tErr, i18n };
+  return useMemo(() => ({ t, tKey, tStr, tErr, i18n }), [
+    t, i18n, tKey, tStr, tErr
+  ]);
 }
 export const useTFns = useTranslationFns;

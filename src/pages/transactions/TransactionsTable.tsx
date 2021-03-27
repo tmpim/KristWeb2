@@ -1,11 +1,12 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { useState, useEffect, Dispatch, SetStateAction } from "react";
+import { useState, useEffect, useCallback, useMemo, Dispatch, SetStateAction } from "react";
 import classNames from "classnames";
 import { Table, TablePaginationConfig } from "antd";
+import { ColumnsType } from "antd/lib/table";
 
-import { useTranslation } from "react-i18next";
+import { useTFns, TStrFn } from "@utils/i18n";
 import { Link } from "react-router-dom";
 
 import { KristTransaction } from "@api/types";
@@ -75,6 +76,112 @@ function getLookupSearchType(listingType: ListingType): "address" | "name" | "me
   }
 }
 
+function getColumns(
+  tStr: TStrFn,
+  dateColumnWidth: number
+): ColumnsType<KristTransaction> {
+  return [
+    // ID
+    {
+      title: tStr("columnID"),
+      dataIndex: "id", key: "id",
+
+      render: id => (
+        <Link to={`/network/transactions/${encodeURIComponent(id)}`}>
+          {id.toLocaleString()}
+        </Link>
+      ),
+      width: 100
+
+      // Don't allow sorting by ID to save a bit of width in the columns;
+      // it's equivalent to sorting by time anyway
+    },
+    // Type
+    {
+      title: tStr("columnType"),
+      dataIndex: "type", key: "type",
+      render: (_, tx) => <TransactionType transaction={tx} />
+    },
+
+    // From
+    {
+      title: tStr("columnFrom"),
+      dataIndex: "from", key: "from",
+
+      render: (from, tx) => from && tx.type !== "mined" && (
+        <ContextualAddress
+          className="transactions-table-address"
+          address={from}
+          metadata={tx.metadata}
+          allowWrap
+          source
+        />
+      ),
+
+      sorter: true
+    },
+    // To
+    {
+      title: tStr("columnTo"),
+      dataIndex: "to", key: "to",
+
+      render: (to, tx) => to && tx.type !== "name_purchase" && tx.type !== "name_a_record" && (
+        <ContextualAddress
+          className="transactions-table-address"
+          address={to}
+          metadata={tx.metadata}
+          allowWrap
+        />
+      ),
+
+      sorter: true
+    },
+
+    // Value
+    {
+      title: tStr("columnValue"),
+      dataIndex: "value", key: "value",
+
+      render: (value, tx) => TYPES_SHOW_VALUE.includes(tx.type) && (
+        <KristValue value={value} />
+      ),
+      width: 100,
+
+      sorter: true
+    },
+
+    // Name
+    {
+      title: tStr("columnName"),
+      dataIndex: "name", key: "name",
+
+      render: name => <KristNameLink name={name} />,
+
+      sorter: true
+    },
+
+    // Metadata
+    {
+      title: tStr("columnMetadata"),
+      dataIndex: "metadata", key: "metadata",
+
+      render: (_, transaction) => <TransactionConciseMetadata transaction={transaction} />,
+      width: 260
+    },
+
+    // Time
+    {
+      title: tStr("columnTime"),
+      dataIndex: "time", key: "time",
+      render: time => <DateTime date={time} />,
+      width: dateColumnWidth,
+
+      sorter: true,
+      defaultSortOrder: "descend"
+    }
+  ];
+}
+
 export function TransactionsTable({
   listingType,
   refreshingID,
@@ -82,7 +189,7 @@ export function TransactionsTable({
   includeMined,
   setError, setPagination
 }: Props): JSX.Element {
-  const { t } = useTranslation();
+  const { tStr, tKey } = useTFns("transactions.");
 
   const [loading, setLoading] = useState(true);
   const [res, setRes] = useState<LookupTransactionsResponse>();
@@ -93,7 +200,7 @@ export function TransactionsTable({
 
   const { paginationTableProps, hotkeys } = useMalleablePagination(
     res, res?.transactions,
-    "transactions.tableTotal",
+    tKey("tableTotal"),
     options, setOptions, setPagination
   );
 
@@ -102,8 +209,12 @@ export function TransactionsTable({
     listingType !== ListingType.WALLETS;
   const highlightVerified = useBooleanSetting("transactionsHighlightVerified");
 
+  const columns = useMemo(() => getColumns(
+    tStr, dateColumnWidth
+  ), [tStr, dateColumnWidth]);
+
   // Used to highlight own transactions
-  const { walletAddressMap } = useWallets();
+  const { walletAddressMap, joinedAddressList } = useWallets();
 
   // Fetch the transactions from the API, mapping the table options
   useEffect(() => {
@@ -133,7 +244,7 @@ export function TransactionsTable({
 
   debug("results? %b  res.transactions.length: %d  res.count: %d  res.total: %d", !!res, res?.transactions?.length, res?.count, res?.total);
 
-  function getRowClasses(tx: KristTransaction): string {
+  const getRowClasses = useCallback((tx: KristTransaction): string => {
     return classNames({
       // Highlight own transactions
       "transaction-row-own": highlightOwn
@@ -144,7 +255,8 @@ export function TransactionsTable({
       "transaction-row-verified": highlightVerified
         && (!!getVerified(tx.from) || !!getVerified(tx.to)),
     });
-  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [highlightOwn, highlightVerified, joinedAddressList]);
 
   const tbl = <Table<KristTransaction>
     className="transactions-table"
@@ -159,106 +271,7 @@ export function TransactionsTable({
     // Highlight own transactions and verified addresses
     rowClassName={getRowClasses}
 
-    columns={[
-      // ID
-      {
-        title: t("transactions.columnID"),
-        dataIndex: "id", key: "id",
-
-        render: id => (
-          <Link to={`/network/transactions/${encodeURIComponent(id)}`}>
-            {id.toLocaleString()}
-          </Link>
-        ),
-        width: 100
-
-        // Don't allow sorting by ID to save a bit of width in the columns;
-        // it's equivalent to sorting by time anyway
-      },
-      // Type
-      {
-        title: t("transactions.columnType"),
-        dataIndex: "type", key: "type",
-        render: (_, tx) => <TransactionType transaction={tx} />
-      },
-
-      // From
-      {
-        title: t("transactions.columnFrom"),
-        dataIndex: "from", key: "from",
-
-        render: (from, tx) => from && tx.type !== "mined" && (
-          <ContextualAddress
-            className="transactions-table-address"
-            address={from}
-            metadata={tx.metadata}
-            allowWrap
-            source
-          />
-        ),
-
-        sorter: true
-      },
-      // To
-      {
-        title: t("transactions.columnTo"),
-        dataIndex: "to", key: "to",
-
-        render: (to, tx) => to && tx.type !== "name_purchase" && tx.type !== "name_a_record" && (
-          <ContextualAddress
-            className="transactions-table-address"
-            address={to}
-            metadata={tx.metadata}
-            allowWrap
-          />
-        ),
-
-        sorter: true
-      },
-
-      // Value
-      {
-        title: t("transactions.columnValue"),
-        dataIndex: "value", key: "value",
-
-        render: (value, tx) => TYPES_SHOW_VALUE.includes(tx.type) && (
-          <KristValue value={value} />
-        ),
-        width: 100,
-
-        sorter: true
-      },
-
-      // Name
-      {
-        title: t("transactions.columnName"),
-        dataIndex: "name", key: "name",
-
-        render: name => <KristNameLink name={name} />,
-
-        sorter: true
-      },
-
-      // Metadata
-      {
-        title: t("transactions.columnMetadata"),
-        dataIndex: "metadata", key: "metadata",
-
-        render: (_, transaction) => <TransactionConciseMetadata transaction={transaction} />,
-        width: 260
-      },
-
-      // Time
-      {
-        title: t("transactions.columnTime"),
-        dataIndex: "time", key: "time",
-        render: time => <DateTime date={time} />,
-        width: dateColumnWidth,
-
-        sorter: true,
-        defaultSortOrder: "descend"
-      }
-    ]}
+    columns={columns}
   />;
 
   return <>
