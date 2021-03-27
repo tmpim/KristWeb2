@@ -3,7 +3,9 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { useState, useCallback, useMemo, useContext, createContext, FC, ReactNode } from "react";
 import { Menu, Grid, Dropdown } from "antd";
-import { MoreOutlined, SettingOutlined } from "@ant-design/icons";
+import {
+  MoreOutlined, SettingOutlined, SendOutlined, DownloadOutlined
+} from "@ant-design/icons";
 
 import { useTFns } from "@utils/i18n";
 
@@ -34,6 +36,24 @@ export function TopMenu(): JSX.Element {
       trigger={["click"]}
       overlayClassName="site-header-top-dropdown-menu"
       overlay={<Menu>
+        {/* Send Krist */}
+        <Menu.Item>
+          <ConditionalLink to="/send" matchTo aria-label={tStr("sendLong")}>
+            <div><SendOutlined />{tStr("sendLong")}</div>
+          </ConditionalLink>
+        </Menu.Item>
+
+        {/* Request Krist */}
+        <Menu.Item>
+          <ConditionalLink to="/request" matchTo aria-label={tStr("requestLong")}>
+            <div><DownloadOutlined />{tStr("requestLong")}</div>
+          </ConditionalLink>
+        </Menu.Item>
+
+        {/* Only show the extra divider if there are options */}
+        {options && <Menu.Divider />}
+
+        {/* Page-specified options */}
         {options}
 
         <Menu.Divider />
@@ -59,9 +79,9 @@ export function TopMenu(): JSX.Element {
       selectable={false} forceSubMenuRender={true}
       className="site-header-settings"
     >
-      {!bps.md && options
+      {!bps.md
         ? (
-          // Menu button, if there are options available
+          // Menu button for mobile
           <Menu.Item key="1" title={tStr("more")}>
             {menu}
           </Menu.Item>
@@ -73,7 +93,7 @@ export function TopMenu(): JSX.Element {
           </Menu.Item>
         )}
     </Menu>
-  ), [tStr, bps, options, menu]);
+  ), [tStr, bps, menu]);
 
   return btn;
 }

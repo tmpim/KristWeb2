@@ -24,4 +24,17 @@
       }
     }
   }
+
+  @media (max-width: @screen-sm) {
+    // Make the "Purchase name" button full width on mobile
+    .ant-page-header-heading-extra {
+      width: 100%;
+
+      .ant-btn {
+        display: block;
+        width: 100%;
+        margin-top: @margin-sm;
+      }
+    }
+  }
 }

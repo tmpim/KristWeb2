@@ -40,14 +40,21 @@ export function AppHeader({ sidebarCollapsed, setSidebarCollapsed }: Props): JSX
     {/* Logo */}
     {bps.md && <Brand />}
 
-    {/* Send and receive buttons */}
+    {/* Send and request buttons */}
     {bps.md && <Menu theme="dark" mode="horizontal" selectable={false} forceSubMenuRender={true} className="site-header-nav">
+      {/* Send Krist */}
       <Menu.Item key="1" icon={<SendOutlined />}>
         <ConditionalLink to="/send" matchTo aria-label={t("nav.send")}>
           {t("nav.send")}
         </ConditionalLink>
       </Menu.Item>
-      <Menu.Item key="2" className="nyi" icon={<DownloadOutlined />}>{t("nav.request")}</Menu.Item>
+
+      {/* Request Krist */}
+      <Menu.Item key="2" className="nyi" icon={<DownloadOutlined />}>
+        <ConditionalLink to="/request" matchTo aria-label={t("nav.request")}>
+          {t("nav.request")}
+        </ConditionalLink>
+      </Menu.Item>
     </Menu>}
 
     {/* Spacer to push search box to the right */}

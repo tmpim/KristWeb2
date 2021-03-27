@@ -39,7 +39,9 @@
     },
 
     "send": "Send",
+    "sendLong": "Send Krist",
     "request": "Request",
+    "requestLong": "Request Krist",
 
     "settings": "Settings",
     "more": "More"
