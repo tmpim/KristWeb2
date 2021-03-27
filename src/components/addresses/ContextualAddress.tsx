@@ -6,7 +6,6 @@ import classNames from "classnames";
 import { Tooltip } from "antd";
 
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
 
 import { KristAddress } from "@api/types";
 import { Wallet, useWallets } from "@wallets";
@@ -33,6 +32,7 @@ interface Props {
   allowWrap?: boolean;
   neverCopyable?: boolean;
   nonExistent?: boolean;
+  noLink?: boolean;
   className?: string;
 }
 
@@ -46,6 +46,7 @@ export function ContextualAddress({
   allowWrap,
   neverCopyable,
   nonExistent,
+  noLink,
   className
 }: Props): JSX.Element {
   const { t } = useTranslation();
@@ -113,6 +114,7 @@ export function ContextualAddress({
         address={address}
         source={!!source}
         hideNameAddress={!!hideNameAddress}
+        noLink={!!noLink}
 
         name={cmName}
         recipient={cmRecipient}
@@ -122,14 +124,18 @@ export function ContextualAddress({
     )
     : (verified
       // Display the verified address if possible
-      ? <VerifiedAddressLink address={address} verified={verified} />
+      ? <VerifiedAddressLink
+        address={address}
+        verified={verified}
+        noLink={noLink}
+      />
       : (
         // Display the regular address or label
         <ConditionalLink
           to={"/network/addresses/" + encodeURIComponent(address)}
           matchTo
           matchExact
-          condition={!nonExistent}
+          condition={!nonExistent && !noLink}
         >
           <AddressContent
             walletLabel={walletLabel}
@@ -139,7 +145,7 @@ export function ContextualAddress({
         </ConditionalLink>
       )
     ), [
-    hideNameAddress, nonExistent, source, nameSuffix,
+    hideNameAddress, nonExistent, noLink, source, nameSuffix,
     address, walletLabel, contactLabel, verified,
     cmName, cmRecipient, cmReturn, cmReturnName, hasMetaname,
   ]);
@@ -187,6 +193,7 @@ interface AddressMetanameProps {
   address: string;
   source: boolean;
   hideNameAddress: boolean;
+  noLink: boolean;
 
   name?: string;
   recipient?: string;
@@ -199,6 +206,7 @@ export function AddressMetaname({
   address,
   source,
   hideNameAddress,
+  noLink,
 
   name: cmName,
   recipient: cmRecipient,
@@ -215,7 +223,12 @@ export function AddressMetaname({
     return verified
       ? (
         // Verified address
-        <VerifiedAddressLink address={address} verified={verified} parens />
+        <VerifiedAddressLink
+          address={address}
+          verified={verified}
+          parens
+          noLink={noLink}
+        />
       )
       : (
         // Regular address
@@ -224,6 +237,7 @@ export function AddressMetaname({
             to={"/network/addresses/" + encodeURIComponent(address)}
             matchTo
             matchExact
+            condition={!noLink}
           >
             ({address})
           </ConditionalLink>
@@ -238,6 +252,7 @@ export function AddressMetaname({
         className="address-name"
         name={nameWithoutSuffix!}
         text={rawMetaname}
+        noLink={noLink}
       />
 
       {/* Display the original address too */}
@@ -247,8 +262,13 @@ export function AddressMetaname({
     </>
     : (
       // Display the raw metaname, but link to the owner address
-      <Link to={"/network/addresses/" + encodeURIComponent(address)}>
+      <ConditionalLink
+        to={"/network/addresses/" + encodeURIComponent(address)}
+        matchTo
+        matchExact
+        condition={!noLink}
+      >
         <span className="address-raw-metaname">{rawMetaname}</span>
-      </Link>
+      </ConditionalLink>
     );
 }

@@ -6,7 +6,7 @@ import { FC } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
 
 interface Props {
-  to: string;
+  to?: string;
   condition?: boolean;
 
   replace?: boolean;

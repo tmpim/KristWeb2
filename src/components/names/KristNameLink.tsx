@@ -4,7 +4,7 @@
 import classNames from "classnames";
 import { Typography } from "antd";
 
-import { Link } from "react-router-dom";
+import { ConditionalLink } from "@comp/ConditionalLink";
 
 import { useNameSuffix } from "@utils/currency";
 import { useBooleanSetting } from "@utils/settings";
@@ -35,12 +35,13 @@ export function KristNameLink({ name, text, noLink, neverCopyable, ...props }: P
   const classes = classNames("krist-name", props.className);
 
   return <Text className={classes} copyable={copyable}>
-    {noLink
-      ? content
-      : (
-        <Link to={"/network/names/" + encodeURIComponent(name)}>
-          {content}
-        </Link>
-      )}
+    <ConditionalLink
+      to={"/network/names/" + encodeURIComponent(name)}
+      matchTo
+      matchExact
+      condition={!noLink}
+    >
+      {content}
+    </ConditionalLink>
   </Text>;
 }

@@ -1,21 +1,23 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import classNames from "classnames";
 import { Row, Col, Tooltip, Grid } from "antd";
+import { RightOutlined } from "@ant-design/icons";
 
-import { useTranslation, Trans } from "react-i18next";
+import { useTFns } from "@utils/i18n";
+
 import { Link } from "react-router-dom";
 
 import { KristTransaction } from "@api/types";
-import { WalletAddressMap } from "@wallets";
-import { DateTime } from "../DateTime";
-import { KristValue } from "../krist/KristValue";
-import { KristNameLink } from "../names/KristNameLink";
-import { ContextualAddress } from "../addresses/ContextualAddress";
-import { getTransactionType, TransactionType, INTERNAL_TYPES_SHOW_VALUE } from "./TransactionType";
+import { WalletAddressMap, Wallet } from "@wallets";
 
-const MAX_A_LENGTH = 24;
+import { DateTime } from "../DateTime";
+
+import * as Parts from "./TransactionItemParts";
+
+import {
+  getTransactionType, TransactionType, InternalTransactionType
+} from "./TransactionType";
 
 interface Props {
   transaction: KristTransaction;
@@ -24,26 +26,23 @@ interface Props {
   wallets: WalletAddressMap;
 }
 
-export function TransactionARecord({ metadata }: { metadata: string | undefined | null }): JSX.Element {
-  const { t } = useTranslation();
+interface ItemProps {
+  type: InternalTransactionType;
 
-  return metadata
-    ? <span className="transaction-a-record-value">
-      <Tooltip title={metadata}>
-        {metadata.length > MAX_A_LENGTH
-          ? <>{metadata.substring(0, MAX_A_LENGTH)}&hellip;</>
-          : metadata}
-      </Tooltip>
-    </span>
-    : (
-      <span className="transaction-a-record-removed">
-        {t("transactionSummary.itemARecordRemoved")}
-      </span>
-    );
+  tx: KristTransaction;
+  txTime: Date;
+  txLink: string;
+
+  fromWallet?: Wallet;
+  toWallet?: Wallet;
+
+  hideNameAddress: boolean;
 }
 
-export function TransactionItem({ transaction: tx, wallets }: Props): JSX.Element {
-  const { t } = useTranslation();
+export function TransactionItem({
+  transaction: tx,
+  wallets
+}: Props): JSX.Element {
   const bps = Grid.useBreakpoint();
 
   // Whether or not the from/to addresses are a wallet we own
@@ -53,20 +52,39 @@ export function TransactionItem({ transaction: tx, wallets }: Props): JSX.Elemen
   const type = getTransactionType(tx, fromWallet, toWallet);
 
   const txTime = new Date(tx.time);
-  const isNew = (new Date().getTime() - txTime.getTime()) < 360000;
-
   const txLink = "/network/transactions/" + encodeURIComponent(tx.id);
 
   const hideNameAddress = !bps.xl;
 
-  const classes = classNames("card-list-item", "transaction-summary-item", {
-    "new": isNew
-  });
+  // Return a different element (same data, different layout) depending on
+  // whether this is mobile or desktop
+  return bps.sm
+    ? <TransactionItemDesktop
+      type={type}
+      tx={tx} txTime={txTime} txLink={txLink}
+      fromWallet={fromWallet} toWallet={toWallet}
+      hideNameAddress={hideNameAddress}
+    />
+    : <TransactionItemMobile
+      type={type}
+      tx={tx} txTime={txTime} txLink={txLink}
+      fromWallet={fromWallet} toWallet={toWallet}
+      hideNameAddress={hideNameAddress}
+    />;
+}
 
-  return <Row className={classes}>
+function TransactionItemDesktop({
+  type,
+  tx, txTime, txLink,
+  fromWallet, toWallet,
+  hideNameAddress
+}: ItemProps): JSX.Element {
+  const { t, tKey } = useTFns("transactionSummary.");
+
+  return <Row className="card-list-item transaction-summary-item">
     <Col span={8} xl={7} xxl={6} className="transaction-left">
       {/* Transaction type and link to transaction */}
-      <Tooltip title={t("transactionSummary.itemID", { id: tx.id })}>
+      <Tooltip title={t(tKey("itemID"), { id: tx.id })}>
         <TransactionType type={type} link={txLink} />
       </Tooltip>
 
@@ -77,69 +95,75 @@ export function TransactionItem({ transaction: tx, wallets }: Props): JSX.Elemen
     </Col>
 
     <Col className="transaction-middle">
-      {/* Transaction name */}
-      {(type === "name_a_record" || type === "name_purchased") && (
-        <span className="transaction-name"><Trans t={t} i18nKey="transactionSummary.itemName">
-          <span className="transaction-field">Name:</span>
-          <KristNameLink name={tx.name || ""} className="transaction-name" />
-        </Trans></span>
-      )}
+      {/* Name and A record */}
+      <Parts.TransactionName tKey={tKey} type={type} name={tx.name} />
+      <Parts.TransactionARecord tKey={tKey} type={type} metadata={tx.metadata} />
 
-      {/* Transaction A record */}
-      {type === "name_a_record" && (
-        <span className="transaction-a-record"><Trans t={t} i18nKey="transactionSummary.itemARecord">
-          <span className="transaction-field">A record:</span>
-          <TransactionARecord metadata={tx.metadata} />
-        </Trans></span>
-      )}
+      {/* To */}
+      <Parts.TransactionTo
+        tKey={tKey}
+        type={type} tx={tx}
+        fromWallet={fromWallet} toWallet={toWallet}
+        hideNameAddress={hideNameAddress}
+      />
 
-      {/* Transaction to */}
-      {type !== "name_a_record" && (
-        <span className="transaction-to"><Trans t={t} i18nKey="transactionSummary.itemTo">
-          <span className="transaction-field">To:</span>
-          {type === "name_purchased"
-            ? <ContextualAddress
-              address={tx.from || "UNKNOWN"}
-              wallet={fromWallet}
-            />
-            : <ContextualAddress
-              address={tx.to}
-              wallet={toWallet}
-              metadata={tx.metadata}
-              hideNameAddress={hideNameAddress}
-            />}
-        </Trans></span>
-      )}
-
-      {/* Transaction from */}
-      {type !== "name_a_record" && type !== "name_purchased" && type !== "mined" && (
-        <span className="transaction-from"><Trans t={t} i18nKey="transactionSummary.itemFrom">
-          <span className="transaction-field">From:</span>
-          <ContextualAddress
-            address={tx.from || "UNKNOWN"}
-            wallet={fromWallet}
-            metadata={tx.metadata}
-            source
-            hideNameAddress={hideNameAddress}
-          />
-        </Trans></span>
-      )}
+      {/* From */}
+      <Parts.TransactionFrom
+        tKey={tKey}
+        type={type} tx={tx}
+        fromWallet={fromWallet}
+        hideNameAddress={hideNameAddress}
+      />
     </Col>
 
     <Col className="transaction-right">
-      {INTERNAL_TYPES_SHOW_VALUE.includes(type)
-        ? (
-          // Transaction value
-          <KristValue value={tx.value} highlightZero />
-        )
-        : tx.type === "name_transfer" && (
-          // Transaction name
-          <KristNameLink
-            name={tx.name || ""}
-            className="transaction-name"
-            neverCopyable
-          />
-        )}
+      {/* Value / name */}
+      <Parts.TransactionPrimaryValue type={type} tx={tx} />
     </Col>
   </Row>;
+}
+
+function TransactionItemMobile({
+  type,
+  tx, txTime, txLink,
+  fromWallet, toWallet,
+  hideNameAddress
+}: ItemProps): JSX.Element {
+  const { tKey } = useTFns("transactionSummary.");
+
+  return <Link to={txLink} className="card-list-item transaction-summary-item transaction-summary-item-mobile">
+    {/* Type and primary value */}
+    <div className="transaction-mobile-top">
+      <TransactionType type={type} />
+      <Parts.TransactionPrimaryValue type={type} tx={tx} />
+    </div>
+
+    {/* Name and A record */}
+    <Parts.TransactionName tKey={tKey} type={type} name={tx.name} noLink />
+    <Parts.TransactionARecord tKey={tKey} type={type} metadata={tx.metadata} />
+
+    {/* To */}
+    <Parts.TransactionTo
+      tKey={tKey}
+      type={type} tx={tx}
+      fromWallet={fromWallet} toWallet={toWallet}
+      hideNameAddress={hideNameAddress}
+      noLink
+    />
+
+    {/* From */}
+    <Parts.TransactionFrom
+      tKey={tKey}
+      type={type} tx={tx}
+      fromWallet={fromWallet}
+      hideNameAddress={hideNameAddress}
+      noLink
+    />
+
+    {/* Time */}
+    <DateTime date={txTime} timeAgo small secondary />
+
+    {/* Right chevron */}
+    <RightOutlined className="transaction-mobile-right" />
+  </Link>;
 }

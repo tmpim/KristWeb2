@@ -37,6 +37,7 @@ interface Props {
   address: string;
   verified: VerifiedAddress;
   parens?: boolean;
+  noLink?: boolean;
   className?: string;
 }
 
@@ -44,6 +45,7 @@ export function VerifiedAddressLink({
   address,
   verified,
   parens,
+  noLink,
   className
 }: Props): JSX.Element {
   const classes = classNames("address-verified", className, {
@@ -56,6 +58,7 @@ export function VerifiedAddressLink({
         to={"/network/addresses/" + encodeURIComponent(address)}
         matchTo
         matchExact
+        condition={!noLink}
       >
         {parens && <>(</>}
         <span className="address-verified-label">

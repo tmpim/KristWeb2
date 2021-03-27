@@ -33,6 +33,8 @@
     // Make tables full-width on mobile (though most should be replaced with
     // custom views)
     @media (max-width: @screen-md) {
+      padding: @padding-md;
+
       >.ant-table-wrapper {
         .ant-table {
           margin: 0 -@padding-lg;
@@ -54,6 +56,10 @@
           }
         }
       }
+    }
+
+    @media (max-width: @screen-sm) {
+      padding: @padding-sm;
     }
   }
 

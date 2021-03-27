@@ -123,4 +123,30 @@
       }
     }
   }
+
+  @media (max-width: @screen-sm) {
+    .ant-card-head {
+      padding: 0 @padding-md;
+
+      .ant-card-head-title {
+        padding-top: @padding-md;
+      }
+    }
+
+    .ant-card-body {
+      padding: @padding-md;
+    }
+
+    .card-more {
+      height: 32px;
+      margin-bottom: -6px;
+
+      a {
+        display: inline;
+        line-height: 32px;
+        vertical-align: middle;
+        margin-bottom: 0;
+      }
+    }
+  }
 }

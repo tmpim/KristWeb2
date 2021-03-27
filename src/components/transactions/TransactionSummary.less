@@ -6,19 +6,44 @@
 .transaction-summary-item {
   flex-flow: nowrap;
 
+  .date-time {
+    color: @text-color-secondary;
+    font-size: 90%;
+
+    @media (max-width: @screen-xl) {
+      font-size: 85%;
+    }
+  }
+
+  .transaction-field {
+    font-weight: bold;
+    white-space: nowrap;
+    color: @text-color-secondary;
+  }
+
+  .transaction-a-record-value {
+    font-family: monospace;
+    font-size: 90%;
+    color: @text-color-secondary;
+  }
+
+  .transaction-a-record-removed {
+    font-style: italic;
+    font-size: 90%;
+    color: @text-color-secondary;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .transaction-name {
+    font-weight: bold;
+  }
+
   .transaction-left {
     display: flex;
     flex-direction: column;
     justify-content: center;
-
-    .transaction-time {
-      color: @text-color-secondary;
-      font-size: 90%;
-
-      @media (max-width: @screen-xl) {
-        font-size: 85%;
-      }
-    }
   }
 
   .transaction-middle {
@@ -29,27 +54,6 @@
     justify-content: center;
 
     overflow: hidden;
-
-    .transaction-field {
-      font-weight: bold;
-      white-space: nowrap;
-      color: @text-color-secondary;
-    }
-
-    .transaction-a-record-value {
-      font-family: monospace;
-      font-size: 90%;
-      color: @text-color-secondary;
-    }
-
-    .transaction-a-record-removed {
-      font-style: italic;
-      font-size: 90%;
-      color: @text-color-secondary;
-
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
   }
 
   .transaction-right {
@@ -59,9 +63,50 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  }
 
-    .transaction-name {
-      font-weight: bold;
+  &.transaction-summary-item-mobile {
+    display: block;
+    margin-bottom: @padding-xs;
+
+    color: @text-color;
+    font-size: @font-size-sm;
+
+    position: relative;
+
+    .transaction-mobile-top {
+      font-size: @font-size-base;
+      margin-bottom: @padding-xss;
+
+      .transaction-type {
+        font-size: @font-size-base;
+      }
+
+      .transaction-primary-value {
+        display: inline-block;
+        margin-left: @padding-xs;
+      }
+    }
+
+    .transaction-to, .transaction-from {
+      display: block;
+    }
+
+    .date-time {
+      font-size: @font-size-sm;
+    }
+
+    .transaction-mobile-right {
+      display: flex;
+      align-items: center;
+
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: @padding-md;
+
+      font-size: 32px;
+      color: fade(@text-color-secondary, 50%);
     }
   }
 }

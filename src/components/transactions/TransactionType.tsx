@@ -4,7 +4,8 @@
 import classNames from "classnames";
 
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+
+import { ConditionalLink } from "@comp/ConditionalLink";
 
 import { KristTransaction, KristTransactionType } from "@api/types";
 import { Wallet, useWallets } from "@wallets";
@@ -22,7 +23,11 @@ export const TYPES_SHOW_VALUE: KristTransactionType[] = [
   "transfer", "mined", "name_purchase"
 ];
 
-export function getTransactionType(tx: KristTransaction, from?: Wallet, to?: Wallet): InternalTransactionType {
+export function getTransactionType(
+  tx: KristTransaction,
+  from?: Wallet,
+  to?: Wallet
+): InternalTransactionType {
   switch (tx.type) {
   case "transfer":
     if (tx.from && tx.to && tx.from === tx.to) return "bumped";
@@ -55,7 +60,14 @@ interface OwnProps {
 }
 type Props = React.HTMLProps<HTMLSpanElement> & OwnProps;
 
-export function TransactionType({ type, transaction, from, to, link, className }: Props): JSX.Element {
+export function TransactionType({
+  type,
+  transaction,
+  from,
+  to,
+  link,
+  className
+}: Props): JSX.Element {
   const { t } = useTranslation();
   const { walletAddressMap } = useWallets();
 
@@ -73,8 +85,13 @@ export function TransactionType({ type, transaction, from, to, link, className }
   });
 
   return <span className={classes}>
-    {link
-      ? <Link to={link}>{contents}</Link>
-      : <a>{contents}</a>}
+    <ConditionalLink
+      to={link}
+      matchTo
+      matchExact
+      condition={!link}
+    >
+      {contents}
+    </ConditionalLink>
   </span>;
 }
