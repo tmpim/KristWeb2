@@ -149,6 +149,7 @@ export function BlocksTable({ refreshingID, lowest, setError, setPagination }: P
   const tbl = <Table<KristBlock>
     className="blocks-table"
     size="small"
+    scroll={{ x: true }}
 
     loading={loading}
     dataSource={res?.blocks || []}

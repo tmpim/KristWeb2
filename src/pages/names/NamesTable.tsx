@@ -221,6 +221,7 @@ export function NamesTable({
   const tbl = <Table<KristName>
     className="names-table"
     size="small"
+    scroll={{ x: true }}
 
     loading={loading}
     dataSource={res?.names || []}

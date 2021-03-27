@@ -261,6 +261,7 @@ export function TransactionsTable({
   const tbl = <Table<KristTransaction>
     className="transactions-table"
     size="small"
+    scroll={{ x: true }}
 
     loading={loading}
     dataSource={res?.transactions || []}

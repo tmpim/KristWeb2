@@ -78,6 +78,7 @@ export function ContactsTable({
 
   return <Table
     size="small"
+    scroll={{ x: true }}
 
     dataSource={Object.values(contacts)}
     rowKey="id"
