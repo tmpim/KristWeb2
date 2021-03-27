@@ -1,7 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Modal, Form, Input, message, notification } from "antd";
 
 import { useTFns } from "@utils/i18n";
@@ -104,6 +104,20 @@ export function AddContactModal({
     setAddress(values.address || "");
   }
 
+  const initialValues = useMemo(() => ({
+    label: editing?.label ?? undefined,
+    address: editing?.address ?? initialAddress
+  }), [
+    initialAddress, editing?.label, editing?.address
+  ]);
+
+  // Refresh the form if the initial values have changed
+  useEffect(() => {
+    if (!form || (!initialAddress && !editing?.address)) return;
+    form.setFieldsValue(initialValues);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form, initialAddress, editing?.label, editing?.address]);
+
   return <Modal
     visible={visible}
 
@@ -122,10 +136,7 @@ export function AddContactModal({
 
       name={editing ? "editContactForm" : "addContactForm"}
 
-      initialValues={{
-        label: editing?.label ?? undefined,
-        address: editing?.address ?? initialAddress
-      }}
+      initialValues={initialValues}
 
       onValuesChange={onValuesChange}
       onFinish={onSubmit}

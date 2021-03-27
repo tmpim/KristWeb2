@@ -1,67 +1,148 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { Button } from "antd";
+import { useEffect } from "react";
+import { Button, Menu, Space } from "antd";
 import { SendOutlined, SwapOutlined, EditOutlined } from "@ant-design/icons";
 
-import { useTranslation } from "react-i18next";
+import { useTFns } from "@utils/i18n";
 
 import { KristName } from "@api/types";
-import { Wallet } from "@wallets";
-import { SendTransactionModalLink } from "@comp/transactions/SendTransactionModalLink";
-import { NameEditModalLink } from "./mgmt/NameEditModalLink";
+
+import { useTopMenuOptions } from "@layout/nav/TopMenu";
+import { useAuth } from "@comp/auth";
+import { OpenEditNameFn } from "./mgmt/NameEditModalLink";
+import { OpenSendTxFn } from "@comp/transactions/SendTransactionModalLink";
 
 interface Props {
   name: KristName;
   nameWithSuffix: string;
-  myWallet?: Wallet;
+  myWallet: boolean;
+
+  openNameEdit: OpenEditNameFn;
+  openSendTx: OpenSendTxFn;
 }
 
-export function NameButtonRow({ name, nameWithSuffix, myWallet }: Props): JSX.Element {
-  const { t } = useTranslation();
+export function NameButtonRow({
+  name,
+  nameWithSuffix,
+  myWallet,
 
-  return <>
-    {/* Send/transfer Krist button */}
-    <SendTransactionModalLink to={nameWithSuffix}>
-      <Button
-        type="primary"
-        icon={myWallet
-          ? <SwapOutlined />
-          : <SendOutlined />}
+  openNameEdit,
+  openSendTx
+}: Props): JSX.Element {
+  const { t, tStr, tKey } = useTFns("name.");
+
+  const promptAuth = useAuth();
+
+  const [usingTopMenu, set, unset] = useTopMenuOptions();
+  useEffect(() => {
+    set(<>
+      {/* Send/transfer Krist */}
+      <Menu.Item
+        icon={myWallet ? <SwapOutlined /> : <SendOutlined />}
+        onClick={() => promptAuth(false, () =>
+          openSendTx(undefined, nameWithSuffix))}
       >
         {t(
-          myWallet
-            ? "name.buttonTransferKrist"
-            : "name.buttonSendKrist",
+          tKey(myWallet ? "buttonTransferKrist" : "buttonSendKrist"),
           { name: nameWithSuffix }
         )}
-      </Button>
-    </SendTransactionModalLink>
+      </Menu.Item>
+
+      {myWallet && <Menu.Divider />}
+
+      {/* Update A record */}
+      {myWallet && (
+        <Menu.Item
+          icon={<EditOutlined />}
+          onClick={() => promptAuth(false, () =>
+            openNameEdit("update", name.name, name.a))}
+        >
+          {tStr("buttonARecord")}
+        </Menu.Item>
+      )}
+
+      {/* Transfer name record */}
+      {myWallet && (
+        <Menu.Item
+          icon={<SendOutlined />}
+          danger
+          onClick={() => promptAuth(false, () =>
+            openNameEdit("transfer", name.name))}
+        >
+          {tStr("buttonTransferName")}
+        </Menu.Item>
+      )}
+    </>);
+    return unset;
+  }, [
+    t, tStr, tKey, set, unset, nameWithSuffix, openSendTx, openNameEdit,
+    name.name, name.a, myWallet, promptAuth
+  ]);
+
+  return <>
+    {/* Only display the buttons on desktop */}
+    {!usingTopMenu && <Buttons
+      name={name}
+      nameWithSuffix={nameWithSuffix}
+      myWallet={myWallet}
+
+      openNameEdit={openNameEdit}
+      openSendTx={openSendTx}
+    />}
+  </>;
+}
+
+function Buttons({
+  name,
+  nameWithSuffix,
+  myWallet,
+
+  openNameEdit,
+  openSendTx
+}: Props): JSX.Element {
+  const { t, tStr, tKey } = useTFns("name.");
+
+  const promptAuth = useAuth();
+
+  return <Space wrap>
+    {/* Send/transfer Krist button */}
+    <Button
+      type="primary"
+      icon={myWallet
+        ? <SwapOutlined />
+        : <SendOutlined />}
+      onClick={() => promptAuth(false, () =>
+        openSendTx(undefined, nameWithSuffix))}
+    >
+      {t(
+        tKey(myWallet ? "buttonTransferKrist" : "buttonSendKrist"),
+        { name: nameWithSuffix }
+      )}
+    </Button>
 
     {/* If we're the name owner, show the management buttons */}
     {/* Update A record button */}
     {myWallet && (
-      <NameEditModalLink
-        mode="update"
-        name={name.name}
-        aRecord={name.a}
+      <Button
+        icon={<EditOutlined />}
+        onClick={() => promptAuth(false, () =>
+          openNameEdit("update", name.name, name.a))}
       >
-        <Button icon={<EditOutlined />}>
-          {t("name.buttonARecord")}
-        </Button>
-      </NameEditModalLink>
+        {tStr("buttonARecord")}
+      </Button>
     )}
 
     {/* Transfer name button */}
     {myWallet && (
-      <NameEditModalLink
-        mode="transfer"
-        name={name.name}
+      <Button
+        danger
+        onClick={() => promptAuth(false, () =>
+          openNameEdit("transfer", name.name))}
       >
-        <Button danger>
-          {t("name.buttonTransferName")}
-        </Button>
-      </NameEditModalLink>
+        {tStr("buttonTransferName")}
+      </Button>
     )}
-  </>;
+  </Space>;
 }

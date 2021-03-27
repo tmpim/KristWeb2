@@ -36,7 +36,7 @@ export const ContactEditButton: FC<Props> = ({
   </>;
 };
 
-export type OpenEditContactFn = (contact: Contact) => void;
+export type OpenEditContactFn = (address?: string, contact?: Contact) => void;
 export type ContactEditHookRes = [
   OpenEditContactFn,
   JSX.Element | null,
@@ -46,16 +46,23 @@ export type ContactEditHookRes = [
 export function useEditContactModal(): ContactEditHookRes {
   const [opened, setOpened] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [address, setAddress] = useState<string>();
   const [contact, setContact] = useState<Contact>();
 
-  const open = useCallback((contact: Contact) => {
+  const open = useCallback((address?: string, contact?: Contact) => {
+    setAddress(address);
     setContact(contact);
     setVisible(true);
     setOpened(true);
   }, []);
 
   const modal = opened
-    ? <AddContactModal editing={contact} visible={visible} setVisible={setVisible} />
+    ? <AddContactModal
+      address={address}
+      editing={contact}
+      visible={visible}
+      setVisible={setVisible}
+    />
     : null;
 
   return [open, modal, setVisible];

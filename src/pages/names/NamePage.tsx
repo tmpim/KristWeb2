@@ -27,7 +27,10 @@ import { useBooleanSetting } from "@utils/settings";
 
 import { NameButtonRow } from "./NameButtonRow";
 import { NameTransactionsCard } from "./NameTransactionsCard";
-import { NameEditModalLink } from "./mgmt/NameEditModalLink";
+
+import { useAuth } from "@comp/auth";
+import { useNameEditModal } from "./mgmt/NameEditModalLink";
+import { useSendTransactionModal } from "@comp/transactions/SendTransactionModalLink";
 
 import "./NamePage.less";
 
@@ -57,6 +60,10 @@ function PageContents({
 
   const nameCopyText = copyNameSuffixes ? nameWithSuffix : name.name;
 
+  const promptAuth = useAuth();
+  const [openNameEdit, nameEditModal] = useNameEditModal();
+  const [openSendTx, sendTxModal] = useSendTransactionModal();
+
   return <>
     {/* Name and buttons */}
     <Row className="top-name-row">
@@ -69,7 +76,10 @@ function PageContents({
       <NameButtonRow
         name={name}
         nameWithSuffix={nameWithSuffix}
-        myWallet={myWallet}
+        myWallet={!!myWallet}
+
+        openNameEdit={openNameEdit}
+        openSendTx={openSendTx}
       />
     </Row>
 
@@ -131,15 +141,12 @@ function PageContents({
             titleKey="name.aRecord"
             titleExtra={myWallet && <>
               <Tooltip title={t("name.aRecordEditTooltip")}>
-                <NameEditModalLink
-                  mode="update"
-                  name={name.name}
-                  aRecord={name.a}
-                >
-                  <Typography.Link className="name-a-record-edit">
-                    <EditOutlined />
-                  </Typography.Link>
-                </NameEditModalLink>
+                <Typography.Link
+                  className="name-a-record-edit"
+                  onClick={() => promptAuth(false, () =>
+                    openNameEdit("update", name.name, name.a))}>
+                  <EditOutlined />
+                </Typography.Link>
               </Tooltip>
             </>}
             value={<NameARecordLink a={name.a} />}
@@ -168,6 +175,9 @@ function PageContents({
         />
       </Col>
     </Row>
+
+    {nameEditModal}
+    {sendTxModal}
   </>;
 }
 

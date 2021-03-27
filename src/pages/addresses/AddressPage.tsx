@@ -27,6 +27,10 @@ import { AddressNamesCard } from "./AddressNamesCard";
 
 import { getVerified, VerifiedDescription } from "@comp/addresses/VerifiedAddress";
 
+import { useEditWalletModal } from "@pages/wallets/WalletEditButton";
+import { useEditContactModal } from "@pages/contacts/ContactEditButton";
+import { useSendTransactionModal } from "@comp/transactions/SendTransactionModalLink";
+
 import "./AddressPage.less";
 
 const { Text } = Typography;
@@ -54,6 +58,10 @@ function PageContents({ address, lastTransactionID }: PageContentsProps): JSX.El
   const showVerifiedDesc = verified?.description || verified?.website ||
     verified?.isActive === false;
 
+  const [openEditWallet, editWalletModal] = useEditWalletModal();
+  const [openEditContact, editContactModal] = useEditContactModal();
+  const [openSendTx, sendTxModal] = useSendTransactionModal();
+
   return <>
     {/* Address and buttons */}
     <Row className="top-address-row">
@@ -64,9 +72,13 @@ function PageContents({ address, lastTransactionID }: PageContentsProps): JSX.El
 
       {/* Buttons (e.g. Send Krist, Add contact) */}
       <AddressButtonRow
-        address={address}
+        address={address.address}
         myWallet={myWallet}
         myContact={myContact}
+
+        openEditWallet={openEditWallet}
+        openEditContact={openEditContact}
+        openSendTx={openSendTx}
       />
     </Row>
 
@@ -150,6 +162,10 @@ function PageContents({ address, lastTransactionID }: PageContentsProps): JSX.El
         <AddressNamesCard address={address.address} />
       </Col>
     </Row>
+
+    {sendTxModal}
+    {editWalletModal}
+    {editContactModal}
   </>;
 }
 
