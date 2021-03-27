@@ -41,7 +41,7 @@ async function performAutocomplete(
 
   try {
     await Promise.all([
-      fetchResults ? search(query).then(r => setResults(query, r)) : undefined,
+      fetchResults ? search(query.toLowerCase()).then(r => setResults(query, r)) : undefined,
       fetchExtended ? searchExtended(query).then(r => setExtendedResults(query, r)) : undefined,
     ]);
   } catch (err) {

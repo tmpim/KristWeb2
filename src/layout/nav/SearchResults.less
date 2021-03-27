@@ -64,9 +64,18 @@
   .search-result-extended-info {
     font-size: @font-size-sm;
 
+    white-space: normal;
+
     .anticon {
       color: @primary-color;
       margin-right: @padding-xs;
+    }
+  }
+
+  // Hide some result information on very small screens
+  @media (max-width: 300px) {
+    .result-right {
+      display: none;
     }
   }
 }
@@ -86,5 +95,17 @@
     &:hover .search-result-extended, &-option-active:not(&-disabled) .search-result-extended {
       background: @select-item-active-bg;
     }
+  }
+
+  // Make the search results dropdown full-width on mobile
+  @media (max-width: @screen-sm) {
+    position: fixed;
+
+    top: @layout-header-height !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100vw !important;
+
+    border-radius: 0;
   }
 }
