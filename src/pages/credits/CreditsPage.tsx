@@ -10,6 +10,7 @@ import { Translators } from "./Translators";
 import { DateTime } from "@comp/DateTime";
 
 import { getAuthorInfo, useHostInfo } from "@utils";
+import { useBreakpoint } from "@utils/hooks";
 
 import "./CreditsPage.less";
 
@@ -25,6 +26,8 @@ export function CreditsPage(): JSX.Element {
 
   const { authorName, authorURL } = getAuthorInfo();
   const host = useHostInfo();
+
+  const bps = useBreakpoint();
 
   // Replaced by webpack DefinePlugin and git-revision-webpack-plugin
   const gitVersion: string = __GIT_VERSION__;
@@ -58,7 +61,8 @@ export function CreditsPage(): JSX.Element {
       className="credits-version-info"
       size="small"
       bordered
-      column={2}
+      column={{ xs: 1, sm: 1, md: 2 }}
+      layout={bps.sm ? "horizontal" : "vertical"}
     >
       {/* Git describe version */}
       <Descriptions.Item label={t("credits.versionInfo.version")}>

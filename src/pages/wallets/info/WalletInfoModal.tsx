@@ -1,7 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { useState, useCallback, Dispatch, SetStateAction } from "react";
+import { useState, useCallback, useMemo, Dispatch, SetStateAction } from "react";
 import { Modal, Button, DescriptionsProps } from "antd";
 
 import { useTranslation } from "react-i18next";
@@ -10,6 +10,8 @@ import { Wallet } from "@wallets";
 import { WalletDescBasicInfo } from "./WalletDescBasicInfo";
 import { WalletDescSyncedInfo } from "./WalletDescSyncedInfo";
 import { WalletDescAdvancedInfo } from "./WalletDescAdvancedInfo";
+
+import { useBreakpoint } from "@utils/hooks";
 
 import "./WalletInfoModal.less";
 
@@ -30,14 +32,16 @@ export function WalletInfoModal({
   visible, setVisible
 }: Props): JSX.Element {
   const { t } = useTranslation();
+  const bps = useBreakpoint();
 
   const closeModal = () => setVisible(false);
 
-  const descProps: DescriptionsProps = {
+  const descProps: DescriptionsProps = useMemo(() => ({
     column: 1,
     size: "small",
-    bordered: true
-  };
+    bordered: true,
+    layout: bps.sm ? "horizontal" : "vertical"
+  }), [bps.sm]);
 
   return <Modal
     visible={visible}
