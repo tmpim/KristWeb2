@@ -131,10 +131,11 @@ function WalletMobileItemActions({
   );
 
   const addressLink = `/network/addresses/${encodeURIComponent(wallet.address)}`;
+  const addressExists = !!wallet.firstSeen;
 
   return <Menu selectable={false}>
     {/* View address */}
-    <Menu.Item key="1" icon={<ProfileOutlined />}
+    <Menu.Item key="1" disabled={!addressExists} icon={<ProfileOutlined />}
       onClick={() => history.push(addressLink)}>
       {tStr("actionsViewAddress")}
     </Menu.Item>
