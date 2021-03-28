@@ -5,7 +5,9 @@ import { useMemo, ReactNode } from "react";
 import { List } from "antd";
 import { PaginationConfig } from "antd/lib/pagination";
 
-import { PaginationChangeFn } from "@utils/table/table";
+import { PaginationChangeFn, LookupFilterOptionsBase } from "@utils/table/table";
+import { useSortModal, SetOpenSortModalFn, SortOptions } from "./SortModal";
+
 import { useBreakpoint } from "@utils/hooks";
 
 interface MobileListHookRes {
@@ -16,18 +18,34 @@ interface MobileListHookRes {
 export type RenderItem<T> = (item: T, index: number) => ReactNode;
 
 /** Returns a mobile-specific list view if the screen is small enough. */
-export function useMobileList<T>(
+export function useMobileList<T, FieldsT extends string>(
   loading: boolean,
   res: T[],
   rowKey: string,
+
   paginationConfig: Omit<PaginationConfig, "position"> | false | undefined,
   paginationChange: PaginationChangeFn,
+
+  sortOptions: SortOptions<FieldsT>,
+  defaultOrderBy: FieldsT,
+  defaultOrder: "ASC" | "DESC",
+
+  options: LookupFilterOptionsBase<FieldsT>,
+  setOptions: (opts: LookupFilterOptionsBase<FieldsT>) => void,
+  setOpenSortModal: SetOpenSortModalFn | undefined,
+
   renderItem: (item: T, index: number) => ReactNode
 ): MobileListHookRes {
   const bps = useBreakpoint();
   const isMobile = !bps.md;
 
   console.log(paginationConfig);
+  console.log(options);
+
+  const sortModal = useSortModal(
+    sortOptions, defaultOrderBy, defaultOrder,
+    options, setOptions, setOpenSortModal
+  );
 
   const pagination: PaginationConfig = useMemo(() => ({
     ...paginationConfig,
@@ -38,19 +56,23 @@ export function useMobileList<T>(
   const list = useMemo(() => {
     if (!isMobile) return null;
 
-    return <List
-      loading={loading}
-      dataSource={res}
-      rowKey={rowKey}
+    return <>
+      <List
+        loading={loading}
+        dataSource={res}
+        rowKey={rowKey}
 
-      className="table-mobile-list-view"
+        className="table-mobile-list-view"
 
-      itemLayout="vertical"
-      pagination={pagination}
+        itemLayout="vertical"
+        pagination={pagination}
 
-      renderItem={renderItem}
-    />;
-  }, [isMobile, loading, res, rowKey, pagination, renderItem]);
+        renderItem={renderItem}
+      />
+
+      {sortModal}
+    </>;
+  }, [isMobile, loading, res, rowKey, pagination, renderItem, sortModal]);
 
   return { isMobile, list };
 }

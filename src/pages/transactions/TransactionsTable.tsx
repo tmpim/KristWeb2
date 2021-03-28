@@ -12,11 +12,11 @@ import { Link } from "react-router-dom";
 import { KristTransaction } from "@api/types";
 import {
   lookupTransactions, LookupTransactionsOptions, LookupTransactionsResponse,
-  LookupTransactionType
+  LookupTransactionType, SortableTransactionFields
 } from "@api/lookup";
 import {
   useMalleablePagination, useTableHistory, useDateColumnWidth, useMobileList,
-  PaginationTableProps, RenderItem
+  PaginationTableProps, RenderItem, SortOptions, SetOpenSortModalFn
 } from "@utils/table/table";
 
 import { ListingType } from "./TransactionsPage";
@@ -63,6 +63,7 @@ interface Props {
 
   setError?: Dispatch<SetStateAction<Error | undefined>>;
   setPagination?: Dispatch<SetStateAction<TablePaginationConfig>>;
+  setOpenSortModal?: SetOpenSortModalFn;
 }
 
 /** Map the search listing types to their API endpoint name */
@@ -157,9 +158,7 @@ function getColumns(
       title: tStr("columnName"),
       dataIndex: "name", key: "name",
 
-      render: name => <KristNameLink name={name} />,
-
-      sorter: true
+      render: name => <KristNameLink name={name} />
     },
 
     // Metadata
@@ -184,20 +183,28 @@ function getColumns(
   ];
 }
 
+const sortOptions: SortOptions<SortableTransactionFields> = [
+  { sortKey: "from", i18nKey: "transactionsFrom" },
+  { sortKey: "to", i18nKey: "transactionsTo" },
+  { sortKey: "value", i18nKey: "transactionsValue" },
+  { sortKey: "time", i18nKey: "transactionsTime" }
+];
+const defaultOrderBy = "time"; // Equivalent to sorting by ID
+const defaultOrder = "DESC";
+
 export function TransactionsTable({
   listingType,
   refreshingID,
   addresses, name, query,
   includeMined,
-  setError, setPagination
+  setError, setPagination, setOpenSortModal
 }: Props): JSX.Element {
   const { tKey } = useTFns("transactions.");
 
   const [loading, setLoading] = useState(true);
   const [res, setRes] = useState<LookupTransactionsResponse>();
   const { options, setOptions } = useTableHistory<LookupTransactionsOptions>({
-    orderBy: "time", // Equivalent to sorting by ID
-    order: "DESC"
+    orderBy: defaultOrderBy, order: defaultOrder
   });
 
   const { paginationTableProps, paginationChange, hotkeys } = useMalleablePagination(
@@ -249,8 +256,9 @@ export function TransactionsTable({
 
   const { isMobile, list } = useMobileList(
     loading, res?.transactions || [], "id",
-    paginationTableProps.pagination,
-    paginationChange,
+    paginationTableProps.pagination, paginationChange,
+    sortOptions, defaultOrderBy, defaultOrder,
+    options, setOptions, setOpenSortModal,
     renderMobileItem
   );
 

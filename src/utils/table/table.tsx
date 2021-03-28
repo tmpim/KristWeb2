@@ -327,3 +327,4 @@ export function useDateColumnWidth(): number {
 }
 
 export * from "./mobileList";
+export * from "./SortModal";

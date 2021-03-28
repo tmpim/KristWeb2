@@ -42,6 +42,7 @@
     "sendLong": "Send Krist",
     "request": "Request",
     "requestLong": "Request Krist",
+    "sort": "Sort results",
 
     "settings": "Settings",
     "more": "More"
@@ -1118,6 +1119,25 @@
       "modalTitle": "Skip v1 migration",
       "modalContent": "If you forgot your master password for KristWeb v1, then you will not be able to migrate your wallets. You will never be asked again. Are you sure you want to skip migration?",
       "buttonSkip": "Skip"
+    }
+  },
+
+  "sortModal": {
+    "title": "Sort results",
+
+    "sortBy": "Sort by",
+    "sortOrder": "Sort order",
+    "sortAscending": "Ascending",
+    "sortDescending": "Descending",
+
+    "buttonReset": "Reset",
+
+    "options": {
+      "transactionsFrom": "From",
+      "transactionsTo": "To",
+      "transactionsValue": "Value",
+      "transactionsName": "Name",
+      "transactionsTime": "Time"
     }
   }
 }

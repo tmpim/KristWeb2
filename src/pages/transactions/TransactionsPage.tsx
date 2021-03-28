@@ -1,7 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Switch } from "antd";
 
 import { useTranslation, TFunction } from "react-i18next";
@@ -21,6 +21,7 @@ import { useWallets } from "@wallets";
 import { useSubscription } from "@global/ws/WebsocketSubscription";
 import { useBooleanSetting } from "@utils/settings";
 import { useLinkedPagination } from "@utils/table/table";
+import { useTopMenuOptions } from "@layout/nav/TopMenu";
 import { useHistoryState } from "@utils/hooks";
 import { KristNameLink } from "@comp/names/KristNameLink";
 
@@ -209,6 +210,9 @@ export function TransactionsPage({ listingType }: Props): JSX.Element {
     ? getRefreshID(listingType, includeMined, nodeState, subscribedRefreshID)
     : 0;
 
+  const [,, unset, setOpenSortModal] = useTopMenuOptions();
+  useEffect(() => unset, [unset]);
+
   // Memoise the table so that it only updates the props (thus triggering a
   // re-fetch of the transactions) when something relevant changes
   const memoTable = useMemo(() => (
@@ -224,13 +228,14 @@ export function TransactionsPage({ listingType }: Props): JSX.Element {
 
       setError={setError}
       setPagination={setPagination}
+      setOpenSortModal={setOpenSortModal}
     />
   ), [
     listingType,
     usedAddresses, name, query,
     usedRefreshID,
     includeMined,
-    setError, setPagination
+    setError, setPagination, setOpenSortModal
   ]);
 
   // Alter the page titles depending on the listing type
