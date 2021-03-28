@@ -11,6 +11,36 @@
     border-bottom: 1px solid @border-color-split;
   }
 
+  .mobile-item-collapse {
+    background: transparent;
+    transition: background @animation-duration-base @ease-in-out;
+
+
+    &.card-list-item { padding: 0; }
+
+    // Move the padding from the mobile-item to the collapse header, to make the
+    // clickable area the full size
+    .ant-collapse-header {
+      padding: @padding-sm @padding-md;
+
+      // Darken the background when expanded
+      &[aria-expanded=true] {
+        background: @kw-darker;
+      }
+    }
+
+    .ant-collapse-content > .ant-collapse-content-box {
+      // Make the actions menu flush
+      padding: 0;
+
+      .ant-menu {
+        .ant-menu-item {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
   .ant-list-pagination {
     display: grid;
     justify-content: center;

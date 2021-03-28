@@ -212,6 +212,8 @@
     "columnLabel": "Label",
     "columnAddress": "Address",
 
+    "actionsViewAddress": "View address",
+    "actionsViewName": "View name",
     "actionsEditTooltip": "Edit contact",
     "actionsSendTransaction": "Send Krist",
     "actionsDelete": "Delete contact",

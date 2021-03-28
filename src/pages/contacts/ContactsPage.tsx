@@ -13,6 +13,8 @@ import { ContactsTable } from "./ContactsTable";
 import { useEditContactModal } from "./ContactEditButton";
 import { useSendTransactionModal } from "@comp/transactions/SendTransactionModalLink";
 
+import "./ContactsPage.less";
+
 /** Contact count subtitle */
 function ContactsPageSubtitle(): JSX.Element {
   const { t, tStr, tKey } = useTFns("addressBook.");
@@ -36,6 +38,7 @@ export function ContactsPage(): JSX.Element {
     siteTitleKey="addressBook.title" titleKey="addressBook.title"
     subTitle={<ContactsPageSubtitle />}
     extra={extra}
+    className="contacts-page"
   >
     <ContactsTable
       openEditContact={openEditContact}

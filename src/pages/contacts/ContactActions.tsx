@@ -7,7 +7,8 @@ import {
   EditOutlined, DeleteOutlined, ExclamationCircleOutlined, SendOutlined
 } from "@ant-design/icons";
 
-import { useTFns } from "@utils/i18n";
+import { TFunction } from "react-i18next";
+import { useTFns, TStrFn } from "@utils/i18n";
 
 import { useAuth } from "@comp/auth";
 import { OpenEditContactFn } from "./ContactEditButton";
@@ -29,18 +30,10 @@ export function ContactActions({
   const { t, tStr } = useTFns("addressBook.");
   const promptAuth = useAuth();
 
-  const showContactDeleteConfirm = useCallback((): void => {
-    Modal.confirm({
-      icon: <ExclamationCircleOutlined />,
-
-      title: tStr("actionsDeleteConfirm"),
-
-      onOk: () => deleteContact(contact),
-      okText: t("dialog.yes"),
-      okType: "danger",
-      cancelText: t("dialog.no")
-    });
-  }, [t, tStr, contact]);
+  const showContactDeleteConfirm = useCallback(
+    () => showContactDeleteConfirmModal(t, tStr, contact),
+    [t, tStr, contact]
+  );
 
   const memoDropdown = useMemo(() => <Dropdown.Button
     className="table-actions contact-actions"
@@ -73,4 +66,21 @@ export function ContactActions({
   ]);
 
   return memoDropdown;
+}
+
+export function showContactDeleteConfirmModal(
+  t: TFunction,
+  tStr: TStrFn,
+  contact: Contact
+): void {
+  Modal.confirm({
+    icon: <ExclamationCircleOutlined />,
+
+    title: tStr("actionsDeleteConfirm"),
+
+    onOk: () => deleteContact(contact),
+    okText: t("dialog.yes"),
+    okType: "danger",
+    cancelText: t("dialog.no")
+  });
 }

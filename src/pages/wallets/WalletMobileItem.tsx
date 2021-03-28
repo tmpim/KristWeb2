@@ -102,7 +102,7 @@ export function WalletMobileItem({
     wallet.firstSeen, wallet.balance, wallet.names
   ]);
 
-  return <Collapse ghost className="card-list-item wallet-mobile-item">
+  return <Collapse ghost className="card-list-item mobile-item-collapse wallet-mobile-item">
     <Collapse.Panel key={wallet.id} showArrow={false} header={itemHead}>
       <WalletMobileItemActions
         wallet={wallet}

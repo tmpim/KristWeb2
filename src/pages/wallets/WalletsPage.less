@@ -6,21 +6,6 @@
 
 .wallets-page .table-mobile-list-view {
   .wallet-mobile-item {
-    background: transparent;
-    transition: background @animation-duration-base @ease-in-out;
-
-    // Move the padding from the mobile-item to the collapse header, to make the
-    // clickable area the full size
-    &.card-list-item { padding: 0; }
-    .ant-collapse-header {
-      padding: @padding-sm @padding-md;
-
-      // Darken the background when expanded
-      &[aria-expanded=true] {
-        background: @kw-darker;
-      }
-    }
-
     .wallet-label {
       display: block;
       font-size: 120%;
@@ -47,17 +32,6 @@
       display: inline-block;
       margin: 0 @padding-xs;
       color: @text-color-secondary;
-    }
-
-    .ant-collapse-content-box {
-      // Make the actions menu flush
-      padding: 0;
-
-      .ant-menu {
-        .ant-menu-item {
-          margin-bottom: 0;
-        }
-      }
     }
   }
 }
