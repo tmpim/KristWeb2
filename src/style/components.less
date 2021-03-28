@@ -37,11 +37,15 @@
   @media (max-width: @screen-md) {
     // Make the menu full-width on mobile
     width: 100vw;
-    margin: 0 -@padding-lg;
+    margin: 0 -@padding-md;
 
     .ant-menu-sub > .ant-menu-item {
       padding-left: @padding-sm !important;
     }
+  }
+
+  @media (max-width: @screen-sm) {
+    margin: 0 -@padding-sm;
   }
 }
 

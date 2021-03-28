@@ -15,7 +15,7 @@ import { WalletMap, useWallets } from "@wallets";
 
 import { SmallResult } from "@comp/results/SmallResult";
 
-import { trailingThrottleState } from "@utils/promiseThrottle";
+import { trailingThrottleState } from "@utils";
 
 import Debug from "debug";
 const debug = Debug("kristweb:transactions-card");

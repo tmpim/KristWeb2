@@ -8,7 +8,7 @@ import { useTFns } from "@utils/i18n";
 
 import { ADDRESS_LIST_LIMIT } from "@wallets";
 import { Contact, useContacts, addContact, editContact } from "@contacts";
-import { useNameSuffix, getNameParts } from "@utils/currency";
+import { useNameSuffix, getNameParts } from "@utils/krist";
 
 import { AddressPicker } from "@comp/addresses/picker/AddressPicker";
 

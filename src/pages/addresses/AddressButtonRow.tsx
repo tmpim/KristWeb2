@@ -7,7 +7,7 @@ import { SendOutlined, SwapOutlined, UserAddOutlined, EditOutlined } from "@ant-
 
 import { useTFns } from "@utils/i18n";
 
-import { isV1Address } from "@utils/currency";
+import { isV1Address } from "@utils/krist";
 
 import { Wallet } from "@wallets";
 import { Contact } from "@contacts";

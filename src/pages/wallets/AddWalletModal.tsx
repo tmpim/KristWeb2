@@ -7,8 +7,8 @@ import { ReloadOutlined } from "@ant-design/icons";
 
 import { useTranslation, Trans } from "react-i18next";
 
-import { generatePassword } from "@utils";
-import { useAddressPrefix } from "@utils/currency";
+import { generatePassword } from "@utils/crypto";
+import { useAddressPrefix } from "@utils/krist";
 
 import { FakeUsernameInput } from "@comp/auth/FakeUsernameInput";
 import { CopyInputButton } from "@comp/CopyInputButton";

@@ -85,13 +85,16 @@ export function TransactionType({
   });
 
   return <span className={classes}>
-    <ConditionalLink
-      to={link}
-      matchTo
-      matchExact
-      condition={!link}
-    >
-      {contents}
-    </ConditionalLink>
+    {link
+      ? (
+        <ConditionalLink
+          to={link}
+          matchTo
+          matchExact
+        >
+          {contents}
+        </ConditionalLink>
+      )
+      : contents}
   </span>;
 }

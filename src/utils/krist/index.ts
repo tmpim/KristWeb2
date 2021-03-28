@@ -1,11 +1,6 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-@import (reference) "../App.less";
-
-.optional-field {
-  &.optional-field-unset {
-    color: @text-color-secondary;
-    font-style: italic;
-  }
-}
+export * from "./addressAlgo";
+export * from "./commonmeta";
+export * from "./currency";

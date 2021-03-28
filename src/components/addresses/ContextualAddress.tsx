@@ -10,8 +10,7 @@ import { useTranslation } from "react-i18next";
 import { KristAddress } from "@api/types";
 import { Wallet, useWallets } from "@wallets";
 import { Contact, useContacts } from "@contacts";
-import { parseCommonMeta, CommonMeta } from "@utils/commonmeta";
-import { useNameSuffix, stripNameSuffix } from "@utils/currency";
+import { parseCommonMeta, CommonMeta, useNameSuffix, stripNameSuffix } from "@utils/krist";
 import { useBooleanSetting } from "@utils/settings";
 
 import { KristNameLink } from "../names/KristNameLink";
@@ -133,8 +132,7 @@ export function ContextualAddress({
         // Display the regular address or label
         <ConditionalLink
           to={"/network/addresses/" + encodeURIComponent(address)}
-          matchTo
-          matchExact
+          matchTo matchExact
           condition={!nonExistent && !noLink}
         >
           <AddressContent
@@ -235,8 +233,7 @@ export function AddressMetaname({
         <span className="address-original">
           <ConditionalLink
             to={"/network/addresses/" + encodeURIComponent(address)}
-            matchTo
-            matchExact
+            matchTo matchExact
             condition={!noLink}
           >
             ({address})

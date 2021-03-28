@@ -1,10 +1,18 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-
-/** This is ant-design's Result component, but without importing 54 kB of
- * images that we don't even use */
-
+// -----------------------------------------------------------------------------
+// This is ant-design's Result component, but without importing 54 kB of images
+// that we don't even use.
+//
+// This file is based off of hte following source code from ant-design, which is
+// licensed under the MIT license:
+//
+// https://github.com/ant-design/ant-design/blob/077443696ba0fb708f2af81f5eb665b908d8be66/components/result/index.tsx
+//
+// For the full terms of the MIT license used by ant-design, see:
+// https://github.com/ant-design/ant-design/blob/master/LICENSE
+// -----------------------------------------------------------------------------
 import React from "react";
 import classNames from "classnames";
 

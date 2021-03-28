@@ -3,7 +3,7 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import base64 from "base64-arraybuffer";
 
-import { toHex, fromHex } from "./";
+import { toHex, fromHex } from "..";
 
 // -----------------------------------------------------------------------------
 // SHA256

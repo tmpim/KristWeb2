@@ -5,6 +5,8 @@ import { FC } from "react";
 
 import { Link, useRouteMatch } from "react-router-dom";
 
+import "./styles/ConditionalLink.less";
+
 interface Props {
   to?: string;
   condition?: boolean;
@@ -56,8 +58,8 @@ export const ConditionalLink: FC<Props> = ({
       </Link>
     )
     : (
-      <a className="conditional-link-disabled" {...props}>
+      <span className="conditional-link-disabled" {...props}>
         {children}
-      </a>
+      </span>
     );
 };

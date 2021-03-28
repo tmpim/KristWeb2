@@ -16,7 +16,7 @@ import { KristMOTD, KristMOTDBase } from "@api/types";
 import {
   recalculateWallets, useWallets, useMasterPasswordOnly
 } from "@wallets";
-import { useAddressPrefix } from "@utils/currency";
+import { useAddressPrefix } from "@utils/krist";
 
 import Debug from "debug";
 const debug = Debug("kristweb:sync-motd");

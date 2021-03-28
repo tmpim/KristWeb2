@@ -7,7 +7,7 @@ import { SorterResult } from "antd/lib/table/interface";
 import usePagination from "antd/lib/table/hooks/usePagination";
 
 import { useTranslation, TFunction } from "react-i18next";
-import { useIntegerSetting, useBooleanSetting } from "./settings";
+import { useIntegerSetting, useBooleanSetting } from "../settings";
 
 import { GlobalHotKeys } from "react-hotkeys";
 
@@ -34,6 +34,8 @@ export const handleLookupTableChange = <ResultT, FieldsT extends string>(
   setPaginationPos?: Dispatch<SetStateAction<TablePaginationConfig>>
 ) =>
     (pagination: TablePaginationConfig, _: unknown, sorter: SorterResult<ResultT> | SorterResult<ResultT>[]): void => {
+      debug("pagination onChange", pagination, _, sorter);
+
       if (!pagination?.pageSize)
         debug("pagination doesn't have pageSize!", pagination?.pageSize, pagination);
 
@@ -86,6 +88,12 @@ export const getTablePaginationConfig = <ResponseT extends LookupResponseBase>(
     showTotal: total => t(totalKey, { count: total || 0 }),
   });
 
+export type PaginationChangeFn = (
+  current: number | undefined,
+  pageSize: number | undefined
+) => void;
+
+export type PaginationTableProps<ResultT> = Pick<TableProps<ResultT>, "onChange" | "pagination">;
 export function useMalleablePagination<
   ResultT,
   ResponseT extends LookupResponseBase,
@@ -98,8 +106,9 @@ export function useMalleablePagination<
   setOptions: (opts: LookupFilterOptionsBase<FieldsT>) => void,
   setPagination?: Dispatch<SetStateAction<TablePaginationConfig>>
 ): {
-  paginationTableProps: Pick<TableProps<ResultT>, "onChange" | "pagination">;
+  paginationTableProps: PaginationTableProps<ResultT>;
   hotkeys: JSX.Element | null;
+  paginationChange: PaginationChangeFn;
 } {
   const { t } = useTranslation();
 
@@ -118,20 +127,25 @@ export function useMalleablePagination<
   });
   const paginationConfig = getTablePaginationConfig(t, res, totalKey, currentPageSize, paginationPos);
   debug(defaultPageSize, currentPageSize, currentPage, paginationPos, paginationConfig);
+
+  const onChange: PaginationChangeFn = useCallback((current, rawPageSize) => {
+    // Can't use onChange directly here unfortunately
+    debug("linked pagination called onChange with %d, %d", current, rawPageSize);
+
+    const pageSize = rawPageSize || defaultPageSize;
+
+    setPaginationPos({ current, pageSize });
+    setOptions({
+      ...options,
+      limit: pageSize,
+      offset: pageSize * ((current || 1) - 1)
+    });
+  }, [options, setOptions, defaultPageSize]);
+
   const [mergedPagination] = usePagination(
     results?.length || 0,
     paginationConfig,
-    (current, pageSize) => {
-      // Can't use onChange directly here unfortunately
-      debug("linked pagination called onChange with %d, %d", current, pageSize);
-
-      setPaginationPos({ current, pageSize });
-      setOptions({
-        ...options,
-        limit: pageSize,
-        offset: pageSize * ((current || 1) - 1)
-      });
-    }
+    onChange
   );
 
   const { hotkeys } = usePaginationHotkeys(
@@ -154,6 +168,7 @@ export function useMalleablePagination<
       onChange: handleLookupTableChange(defaultPageSize, setOptions, setPaginationPos),
       pagination: paginationConfig
     },
+    paginationChange: onChange,
     hotkeys
   };
 }
@@ -310,3 +325,5 @@ export function useDateColumnWidth(): number {
   const showNativeDates = useBooleanSetting("showNativeDates");
   return showNativeDates ? 250 : 200;
 }
+
+export * from "./mobileList";

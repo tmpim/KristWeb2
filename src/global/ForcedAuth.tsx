@@ -6,7 +6,7 @@ import { useTranslation, TFunction } from "react-i18next";
 
 import { authMasterPassword, useMasterPassword } from "@wallets";
 
-import { useMountEffect } from "@utils";
+import { useMountEffect } from "@utils/hooks";
 
 async function forceAuth(t: TFunction, salt: string, tester: string): Promise<void> {
   try {

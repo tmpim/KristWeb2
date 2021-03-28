@@ -56,8 +56,7 @@ export function VerifiedAddressLink({
     <Tooltip title={address}>
       <ConditionalLink
         to={"/network/addresses/" + encodeURIComponent(address)}
-        matchTo
-        matchExact
+        matchTo matchExact
         condition={!noLink}
       >
         {parens && <>(</>}

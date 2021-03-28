@@ -4,7 +4,7 @@
 
 import { Wallet } from "@wallets";
 import { Contact } from "@contacts";
-import { NameParts } from "@utils/currency";
+import { NameParts } from "@utils/krist";
 
 import { KristValue } from "@comp/krist/KristValue";
 

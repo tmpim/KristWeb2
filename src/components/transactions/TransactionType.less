@@ -4,21 +4,31 @@
 @import (reference) "../../App.less";
 
 .transaction-type {
-  a {
+  &, a {
     user-select: none;
 
     font-weight: bold;
     color: @text-color-secondary;
   }
 
-  &-transferred a, &-name_transferred a { color: @kw-primary; }
-  &-sent a, &-name_sent a, &-name_purchased a { color: @kw-orange; }
-  &-received a, &-mined a, &-name_received a { color: @kw-green; }
-  &-name_a_record a { color: @kw-purple; }
-  &-bumped a { color: @kw-text-tertiary; }
+  &-transferred, &-name_transferred {
+    &, a { color: @kw-primary; }
+  }
+  &-sent, &-name_sent, &-name_purchased {
+    &, a { color: @kw-orange; }
+  }
+  &-received, &-mined, &-name_received {
+    &, a { color: @kw-green; }
+  }
+  &-name_a_record {
+    &, a { color: @kw-purple; }
+  }
+  &-bumped {
+    &, a { color: @kw-text-tertiary; }
+  }
 
-  &-no-link a {
-    cursor: default;
+  &-no-link {
+    &, a { cursor: default; }
   }
 
   @media (max-width: @screen-xl) {

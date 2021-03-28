@@ -11,7 +11,7 @@ import { useBooleanSetting } from "@utils/settings";
 import dayjs from "dayjs";
 import TimeAgo from "react-timeago";
 
-import "./DateTime.less";
+import "./styles/DateTime.less";
 
 import Debug from "debug";
 const debug = Debug("kristweb:date-time");

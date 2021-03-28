@@ -7,7 +7,7 @@ import { CopyConfig } from "./types";
 
 import { useTranslation } from "react-i18next";
 
-import "./OptionalField.less";
+import "./styles/OptionalField.less";
 
 const { Text } = Typography;
 

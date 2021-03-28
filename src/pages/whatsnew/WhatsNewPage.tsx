@@ -12,7 +12,7 @@ import { RootState } from "@store";
 
 import * as api from "@api";
 import { WhatsNewResponse, Commit } from "./types";
-import { getAuthorInfo } from "@utils/credits";
+import { getAuthorInfo } from "@utils";
 
 import { PageLayout } from "@layout/PageLayout";
 

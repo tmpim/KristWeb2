@@ -20,8 +20,8 @@ import { TransactionsTable } from "./TransactionsTable";
 import { useWallets } from "@wallets";
 import { useSubscription } from "@global/ws/WebsocketSubscription";
 import { useBooleanSetting } from "@utils/settings";
-import { useLinkedPagination } from "@utils/table";
-import { useHistoryState } from "@utils";
+import { useLinkedPagination } from "@utils/table/table";
+import { useHistoryState } from "@utils/hooks";
 import { KristNameLink } from "@comp/names/KristNameLink";
 
 import "./TransactionsPage.less";

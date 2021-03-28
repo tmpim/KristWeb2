@@ -1,0 +1,43 @@
+// Copyright (c) 2020-2021 Drew Lemmy
+// This file is part of KristWeb 2 under AGPL-3.0.
+// Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
+@import (reference) "../App.less";
+
+.table-mobile-list-view {
+  .ant-list-items .card-list-item {
+    padding: @padding-sm @padding-md;
+    margin-bottom: 0;
+
+    border-bottom: 1px solid @border-color-split;
+  }
+
+  .ant-list-pagination {
+    display: grid;
+    justify-content: center;
+
+    margin-bottom: @margin-lg;
+
+    .ant-pagination-total-text {
+      display: block;
+      text-align: center;
+    }
+
+    .ant-pagination-item, .ant-pagination-prev {
+      margin-right: 3px;
+    }
+
+    .ant-pagination-next {
+      margin-right: 0;
+    }
+  }
+
+  @media (max-width: @screen-md) {
+    // Make the list full-width
+    width: 100vw;
+    margin: 0 -@padding-md;
+  }
+
+  @media (max-width: @screen-sm) {
+    margin: 0 -@padding-sm;
+  }
+}

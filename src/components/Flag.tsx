@@ -4,7 +4,7 @@
 import { HTMLProps } from "react";
 import classNames from "classnames";
 
-import "./Flag.css";
+import "./styles/Flag.css";
 
 interface Props extends HTMLProps<HTMLSpanElement> {
   name?: string;

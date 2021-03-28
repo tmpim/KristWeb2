@@ -16,7 +16,7 @@ import { RootState } from "@store";
 import { WalletAddressMap, useWallets } from "@wallets";
 import { NameOptionGroup, fetchNames } from "./lookupNames";
 
-import { useNameSuffix } from "@utils/currency";
+import { useNameSuffix } from "@utils/krist";
 import shallowEqual from "shallowequal";
 
 import { throttle } from "lodash-es";

@@ -6,7 +6,7 @@ import { Form, Input, InputNumber, Button } from "antd";
 import { useTranslation } from "react-i18next";
 
 import { useWallets } from "@wallets";
-import { useCurrency } from "@utils/currency";
+import { useCurrency } from "@utils/krist";
 
 import { KristSymbol } from "@comp/krist/KristSymbol";
 

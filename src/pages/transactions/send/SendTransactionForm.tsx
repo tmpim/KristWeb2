@@ -14,7 +14,7 @@ import { RootState } from "@store";
 import { setLastTxFrom } from "@actions/WalletsActions";
 
 import { useWallets, Wallet } from "@wallets";
-import { useMountEffect } from "@utils";
+import { useMountEffect } from "@utils/hooks";
 import { sha256 } from "@utils/crypto";
 import { useBooleanSetting, useIntegerSetting } from "@utils/settings";
 

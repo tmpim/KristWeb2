@@ -5,7 +5,7 @@ import { Alert } from "antd";
 
 import { useTranslation, Trans } from "react-i18next";
 
-import { getAuthorInfo } from "@utils/credits";
+import { getAuthorInfo } from "@utils";
 
 export function InDevBanner(): JSX.Element {
   const { t } = useTranslation();

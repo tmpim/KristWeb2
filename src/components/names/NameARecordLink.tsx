@@ -3,7 +3,7 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import classNames from "classnames";
 
-import { useNameSuffix, stripNameSuffix } from "@utils/currency";
+import { useNameSuffix, stripNameSuffix } from "@utils/krist";
 
 import { KristNameLink } from "./KristNameLink";
 

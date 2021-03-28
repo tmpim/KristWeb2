@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 import { useWallets, Wallet } from "@wallets";
 import {
   useNameSuffix, BARE_NAME_REGEX, MAX_NAME_LENGTH, isValidName
-} from "@utils/currency";
+} from "@utils/krist";
 
 import { checkName } from "./checkName";
 import { handlePurchaseError } from "./handleErrors";

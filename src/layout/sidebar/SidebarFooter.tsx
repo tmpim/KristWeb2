@@ -3,7 +3,7 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { useTranslation, Trans } from "react-i18next";
 
-import { getAuthorInfo, useHostInfo } from "@utils/credits";
+import { getAuthorInfo, useHostInfo } from "@utils";
 
 import { ConditionalLink } from "@comp/ConditionalLink";
 

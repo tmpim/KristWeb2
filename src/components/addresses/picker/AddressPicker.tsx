@@ -16,7 +16,7 @@ import {
   useAddressPrefix, useNameSuffix,
   isValidAddress, getNameParts,
   getNameRegex, getAddressRegexV2
-} from "@utils/currency";
+} from "@utils/krist";
 
 import { getCategoryHeader } from "./Header";
 import { getAddressItem } from "./Item";

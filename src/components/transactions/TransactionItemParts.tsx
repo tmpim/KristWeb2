@@ -169,6 +169,7 @@ export function TransactionPrimaryValue({
             name={tx.name || ""}
             className="transaction-name"
             neverCopyable
+            noLink
           />
         )
         : null

@@ -12,7 +12,7 @@ import { KristBlock } from "@api/types";
 import { lookupBlocks, LookupBlocksOptions, LookupBlocksResponse } from "@api/lookup";
 import {
   useMalleablePagination, useTableHistory, useDateColumnWidth
-} from "@utils/table";
+} from "@utils/table/table";
 
 import { ContextualAddress } from "@comp/addresses/ContextualAddress";
 import { BlockHash } from "./BlockHash";

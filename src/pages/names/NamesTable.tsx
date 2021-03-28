@@ -11,7 +11,7 @@ import { KristName } from "@api/types";
 import { lookupNames, LookupNamesOptions, LookupNamesResponse } from "@api/lookup";
 import {
   useMalleablePagination, useTableHistory, useDateColumnWidth
-} from "@utils/table";
+} from "@utils/table/table";
 
 import { useWallets, WalletAddressMap } from "@wallets";
 import { NameActions } from "./mgmt/NameActions";

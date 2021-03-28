@@ -2,7 +2,7 @@
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { useState, useMemo, useRef, useEffect, useCallback, MutableRefObject, Dispatch, SetStateAction, ReactNode } from "react";
-import { AutoComplete, Input, Grid } from "antd";
+import { AutoComplete, Input } from "antd";
 import { RefSelectProps } from "antd/lib/select";
 
 import { useTranslation } from "react-i18next";
@@ -10,6 +10,7 @@ import { useHistory } from "react-router-dom";
 
 import { GlobalHotKeys } from "react-hotkeys";
 import { ctrl } from "@utils";
+import { useBreakpoint } from "@utils/hooks";
 
 import { RateLimitError } from "@api";
 import { SearchResult, search, searchExtended, SearchExtendedResult } from "@api/search";
@@ -56,7 +57,7 @@ export function Search(): JSX.Element {
   const history = useHistory();
 
   // Used to change the placeholder depending on the screen width
-  const bps = Grid.useBreakpoint();
+  const bps = useBreakpoint();
 
   const [value, setValue] = useState("");
   const [results, setResults] = useState<SearchResult | undefined>();

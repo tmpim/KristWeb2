@@ -2,8 +2,8 @@
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { useState } from "react";
-import { useMountEffect } from "./";
-import packageJson from "../../package.json";
+import { useMountEffect } from "@utils/hooks";
+import packageJson from "../../../package.json";
 
 export function getAuthorInfo(): { authorName: string; authorURL: string; gitURL: string } {
   const authorName = packageJson.author || "Lemmmy";
@@ -28,7 +28,7 @@ export function useHostInfo(): HostInfo | undefined {
       try {
         // Add the host information if host.json exists
         const hostFile = "host-attribution"; // Trick webpack into dynamic importing
-        const hostData = await import("../__data__/" + hostFile + ".json");
+        const hostData = await import("../../__data__/" + hostFile + ".json");
         setHost(hostData);
       } catch (ignored) {
         // Ignored

@@ -7,7 +7,7 @@ import { useSelector, shallowEqual } from "react-redux";
 import { RootState } from "@store";
 
 import { Wallet, WalletNew, WalletMap, WalletFormatName, applyWalletFormat } from ".";
-import { makeV2Address } from "../addressAlgo";
+import { makeV2Address } from "@utils/krist";
 
 import { localeSort } from "@utils";
 

@@ -15,11 +15,13 @@ import {
   LookupTransactionType
 } from "@api/lookup";
 import {
-  useMalleablePagination, useTableHistory, useDateColumnWidth
-} from "@utils/table";
+  useMalleablePagination, useTableHistory, useDateColumnWidth, useMobileList,
+  PaginationTableProps, RenderItem
+} from "@utils/table/table";
 
 import { ListingType } from "./TransactionsPage";
 
+import { TransactionItem } from "@comp/transactions/TransactionItem";
 import { TransactionType, TYPES_SHOW_VALUE } from "@comp/transactions/TransactionType";
 import { ContextualAddress } from "@comp/addresses/ContextualAddress";
 import { getVerified } from "@comp/addresses/VerifiedAddress";
@@ -189,7 +191,7 @@ export function TransactionsTable({
   includeMined,
   setError, setPagination
 }: Props): JSX.Element {
-  const { tStr, tKey } = useTFns("transactions.");
+  const { tKey } = useTFns("transactions.");
 
   const [loading, setLoading] = useState(true);
   const [res, setRes] = useState<LookupTransactionsResponse>();
@@ -198,23 +200,16 @@ export function TransactionsTable({
     order: "DESC"
   });
 
-  const { paginationTableProps, hotkeys } = useMalleablePagination(
+  const { paginationTableProps, paginationChange, hotkeys } = useMalleablePagination(
     res, res?.transactions,
     tKey("tableTotal"),
     options, setOptions, setPagination
   );
 
-  const dateColumnWidth = useDateColumnWidth();
+  const { walletAddressMap, joinedAddressList } = useWallets();
   const highlightOwn = useBooleanSetting("transactionsHighlightOwn") &&
     listingType !== ListingType.WALLETS;
   const highlightVerified = useBooleanSetting("transactionsHighlightVerified");
-
-  const columns = useMemo(() => getColumns(
-    tStr, dateColumnWidth
-  ), [tStr, dateColumnWidth]);
-
-  // Used to highlight own transactions
-  const { walletAddressMap, joinedAddressList } = useWallets();
 
   // Fetch the transactions from the API, mapping the table options
   useEffect(() => {
@@ -244,6 +239,61 @@ export function TransactionsTable({
 
   debug("results? %b  res.transactions.length: %d  res.count: %d  res.total: %d", !!res, res?.transactions?.length, res?.count, res?.total);
 
+  const renderMobileItem: RenderItem<KristTransaction> = useCallback(tx => (
+    <TransactionItem
+      transaction={tx}
+      wallets={walletAddressMap}
+    />
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  ), [joinedAddressList]);
+
+  const { isMobile, list } = useMobileList(
+    loading, res?.transactions || [], "id",
+    paginationTableProps.pagination,
+    paginationChange,
+    renderMobileItem
+  );
+
+  return <>
+    {isMobile && list
+      ? list
+      : <DesktopView
+        loading={loading}
+        res={res}
+
+        paginationTableProps={paginationTableProps}
+
+        highlightOwn={highlightOwn}
+        highlightVerified={highlightVerified}
+      />}
+    {hotkeys}
+  </>;
+}
+
+interface DesktopViewProps {
+  loading: boolean;
+  res?: LookupTransactionsResponse;
+
+  paginationTableProps: PaginationTableProps<KristTransaction>;
+
+  highlightOwn: boolean;
+  highlightVerified: boolean;
+}
+
+function DesktopView({
+  loading, res,
+  paginationTableProps,
+  highlightOwn, highlightVerified
+}: DesktopViewProps): JSX.Element {
+  const { tStr } = useTFns("transactions.");
+
+  const { walletAddressMap, joinedAddressList } = useWallets();
+  const dateColumnWidth = useDateColumnWidth();
+
+  const columns = useMemo(() => getColumns(
+    tStr, dateColumnWidth
+  ), [tStr, dateColumnWidth]);
+
   const getRowClasses = useCallback((tx: KristTransaction): string => {
     return classNames({
       // Highlight own transactions
@@ -258,7 +308,7 @@ export function TransactionsTable({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [highlightOwn, highlightVerified, joinedAddressList]);
 
-  const tbl = <Table<KristTransaction>
+  return <Table<KristTransaction>
     className="transactions-table"
     size="small"
     scroll={{ x: true }}
@@ -274,9 +324,4 @@ export function TransactionsTable({
 
     columns={columns}
   />;
-
-  return <>
-    {tbl}
-    {hotkeys}
-  </>;
 }

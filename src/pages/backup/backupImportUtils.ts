@@ -12,7 +12,7 @@ import {
 } from "@wallets";
 import { ContactMap, Contact, addContact, editContactLabel } from "@contacts";
 
-import { isValidAddress, getNameParts } from "@utils/currency";
+import { isValidAddress, getNameParts } from "@utils/krist";
 
 import Debug from "debug";
 const debug = Debug("kristweb:backup-import-utils");

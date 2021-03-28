@@ -18,7 +18,7 @@ import { MOTDCard } from "./MOTDCard";
 import { TipsCard } from "./TipsCard";
 
 import { useSyncNode } from "@api";
-import { getAuthorInfo } from "@utils/credits";
+import { getAuthorInfo } from "@utils";
 import { SyncDetailedWork } from "@global/ws/SyncDetailedWork";
 
 import "./DashboardPage.less";

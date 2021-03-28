@@ -5,8 +5,7 @@ import { store } from "@app";
 
 import { TranslatedError } from "@utils/i18n";
 
-import { aesGcmDecrypt } from "@utils/crypto";
-import { decryptCryptoJS } from "@utils/CryptoJS";
+import { aesGcmDecrypt, decryptCryptoJS } from "@utils/crypto";
 
 import {
   Backup, BackupFormatType, isBackupKristWebV1, isBackupKristWebV2

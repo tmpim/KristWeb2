@@ -9,7 +9,7 @@ import { Supporters } from "./Supporters";
 import { Translators } from "./Translators";
 import { DateTime } from "@comp/DateTime";
 
-import { getAuthorInfo, useHostInfo } from "@utils/credits";
+import { getAuthorInfo, useHostInfo } from "@utils";
 
 import "./CreditsPage.less";
 

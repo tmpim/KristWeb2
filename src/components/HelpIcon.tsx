@@ -7,7 +7,7 @@ import { QuestionCircleOutlined } from "@ant-design/icons";
 
 import { useTranslation } from "react-i18next";
 
-import "./HelpIcon.less";
+import "./styles/HelpIcon.less";
 
 interface Props {
   text?: string;

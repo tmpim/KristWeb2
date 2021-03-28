@@ -8,7 +8,7 @@ import { DownOutlined, SwapOutlined, SendOutlined, EditOutlined } from "@ant-des
 import { useTFns } from "@utils/i18n";
 
 import { KristName } from "@api/types";
-import { useNameSuffix } from "@utils/currency";
+import { useNameSuffix } from "@utils/krist";
 
 import { useAuth } from "@comp/auth";
 import { OpenEditNameFn } from "./NameEditModalLink";

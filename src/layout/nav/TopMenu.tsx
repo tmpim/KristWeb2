@@ -2,7 +2,7 @@
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { useState, useCallback, useMemo, useContext, createContext, FC, ReactNode } from "react";
-import { Menu, Grid, Dropdown } from "antd";
+import { Menu, Dropdown } from "antd";
 import {
   MoreOutlined, SettingOutlined, SendOutlined, DownloadOutlined
 } from "@ant-design/icons";
@@ -10,6 +10,7 @@ import {
 import { useTFns } from "@utils/i18n";
 
 import { ConditionalLink } from "@comp/ConditionalLink";
+import { useBreakpoint } from "@utils/hooks";
 
 import Debug from "debug";
 const debug = Debug("kristweb:top-menu");
@@ -26,7 +27,7 @@ export const TopMenuContext = createContext<TopMenuCtxRes>({});
 
 export function TopMenu(): JSX.Element {
   const { tStr } = useTFns("nav.");
-  const bps = Grid.useBreakpoint();
+  const bps = useBreakpoint();
 
   const ctxRes = useContext(TopMenuContext);
   const options = ctxRes?.options;
@@ -110,7 +111,7 @@ export const TopMenuProvider: FC = ({ children }) => {
 };
 
 export function useTopMenuOptions(): [boolean, SetMenuOptsFn, () => void] {
-  const bps = Grid.useBreakpoint();
+  const bps = useBreakpoint();
   const { setMenuOptions } = useContext(TopMenuContext);
 
   const set = useCallback((opts: Opts) => {

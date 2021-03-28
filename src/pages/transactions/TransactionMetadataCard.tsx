@@ -6,8 +6,7 @@ import { Card, Table, TableProps, Typography } from "antd";
 
 import { useTranslation } from "react-i18next";
 
-import { parseCommonMeta } from "@utils/commonmeta";
-import { useNameSuffix } from "@utils/currency";
+import { parseCommonMeta, useNameSuffix } from "@utils/krist";
 
 import { HelpIcon } from "@comp/HelpIcon";
 import { useBooleanSetting } from "@utils/settings";

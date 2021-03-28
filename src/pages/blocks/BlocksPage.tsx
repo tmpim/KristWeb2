@@ -11,7 +11,7 @@ import { APIErrorResult } from "@comp/results/APIErrorResult";
 import { BlocksTable } from "./BlocksTable";
 
 import { useBooleanSetting } from "@utils/settings";
-import { useLinkedPagination } from "@utils/table";
+import { useLinkedPagination } from "@utils/table/table";
 
 interface Props {
   lowest?: boolean;

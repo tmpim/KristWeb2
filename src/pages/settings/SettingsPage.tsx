@@ -3,7 +3,9 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { FC } from "react";
 import { Menu } from "antd";
-import { BugOutlined, GlobalOutlined, ReloadOutlined, SettingOutlined } from "@ant-design/icons";
+import {
+  BugOutlined, GlobalOutlined, ReloadOutlined, SettingOutlined
+} from "@ant-design/icons";
 
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -12,6 +14,8 @@ import { PageLayout, PageLayoutProps } from "@layout/PageLayout";
 import { SettingsGroup, booleanSetting, integerSetting } from "./SettingsGroup";
 import { SettingBoolean } from "./SettingBoolean";
 import { getLanguageItems } from "./translations/LanguageItem";
+
+import { SettingsBackups } from "./SettingsBackups";
 
 import "./SettingsPage.less";
 
@@ -39,6 +43,9 @@ export function SettingsPage(): JSX.Element {
       <Menu.SubMenu key="sub-language" icon={<GlobalOutlined />} title={t("settings.menuLanguage")}>
         {getLanguageItems()}
       </Menu.SubMenu>
+
+      {/* Backups */}
+      <SettingsBackups />
 
       {/* Auto-refresh settings */}
       <SettingsGroup

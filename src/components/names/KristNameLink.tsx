@@ -6,7 +6,7 @@ import { Typography } from "antd";
 
 import { ConditionalLink } from "@comp/ConditionalLink";
 
-import { useNameSuffix } from "@utils/currency";
+import { useNameSuffix } from "@utils/krist";
 import { useBooleanSetting } from "@utils/settings";
 
 const { Text } = Typography;
@@ -37,8 +37,7 @@ export function KristNameLink({ name, text, noLink, neverCopyable, ...props }: P
   return <Text className={classes} copyable={copyable}>
     <ConditionalLink
       to={"/network/names/" + encodeURIComponent(name)}
-      matchTo
-      matchExact
+      matchTo matchExact
       condition={!noLink}
     >
       {content}

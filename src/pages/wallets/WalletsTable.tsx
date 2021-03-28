@@ -18,7 +18,7 @@ import { OpenSendTxFn } from "@comp/transactions/SendTransactionModalLink";
 import { OpenWalletInfoFn } from "./info/WalletInfoModal";
 
 import { keyedNullSort } from "@utils";
-import { useDateColumnWidth } from "@utils/table";
+import { useDateColumnWidth } from "@utils/table/table";
 
 interface Props {
   openEditWallet: OpenEditWalletFn;

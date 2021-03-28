@@ -7,7 +7,7 @@ import { FileExcelOutlined } from "@ant-design/icons";
 import { FileDrop } from "react-file-drop";
 
 import { useTranslation } from "react-i18next";
-import { useMountEffect } from "@utils";
+import { useMountEffect } from "@utils/hooks";
 
 import { useSelector } from "react-redux";
 import { RootState } from "@store";

@@ -11,7 +11,7 @@ import {
   decryptAddresses, DecryptErrorGone, DecryptErrorFailed,
   ValidDecryptedAddresses
 } from "@wallets";
-import { useNameSuffix } from "@utils/currency";
+import { useNameSuffix } from "@utils/krist";
 
 import { transferNames, updateNames } from "@api/names";
 import { useAuthFailedModal } from "@api/AuthFailed";

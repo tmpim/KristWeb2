@@ -1,6 +1,20 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
+// -----------------------------------------------------------------------------
+// This is based on the ant Typography copyable, but with some features removed,
+// and without the overhead of the Typography Base component. The ResizeObserver
+// in Typography seems to add a significant amount to render times when there
+// are a lot of Text elements on the screen (for example, a table listing).
+//
+// This file is based off of the following source code from ant-design, which is
+// licensed under the MIT license:
+//
+// https://github.com/ant-design/ant-design/blob/077443696ba0fb708f2af81f5eb665b908d8be66/components/typography/Base.tsx
+//
+// For the full terms of the MIT license used by ant-design, see:
+// https://github.com/ant-design/ant-design/blob/master/LICENSE
+// -----------------------------------------------------------------------------
 import { useState, useEffect, useRef } from "react";
 import classNames from "classnames";
 import { Tooltip } from "antd";
@@ -11,12 +25,7 @@ import { useTranslation } from "react-i18next";
 import { CopyConfig } from "./types";
 import copy from "copy-to-clipboard";
 
-import "./SmallCopyable.less";
-
-// This is based on the ant Typography copyable, but with some features removed,
-// and without the overhead of the Typography Base component. The ResizeObserver
-// in Typography seems to add a significant amount to render times when there
-// are a lot of Text elements on the screen (for example, a table listing).
+import "./styles/SmallCopyable.less";
 
 // Force 'text' to be set (don't traverse the children at all)
 type Props = CopyConfig & {

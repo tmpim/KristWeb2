@@ -2,6 +2,7 @@
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 @import (reference) "../../App.less";
+@import "../../style/table.less";
 
 .transactions-page {
   .transactions-mined-switch {
@@ -11,6 +12,11 @@
 
     .ant-switch {
       margin-right: @margin-sm;
+    }
+
+    @media (max-width: @screen-md) {
+      justify-content: center;
+      margin-bottom: @margin-sm;
     }
   }
 

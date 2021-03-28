@@ -5,7 +5,7 @@ import classNames from "classnames";
 
 import { useTranslation } from "react-i18next";
 
-import "./Statistic.less";
+import "./styles/Statistic.less";
 
 interface Props {
   title?: string;

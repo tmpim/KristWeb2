@@ -8,7 +8,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@store";
 import { setTip } from "@actions/MiscActions";
 
-import { mod, useMountEffect } from "@utils";
+import { mod } from "@utils";
+import { useMountEffect } from "@utils/hooks";
 import { useTFns } from "@utils/i18n";
 
 import Markdown from "markdown-to-jsx";

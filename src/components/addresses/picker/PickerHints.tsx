@@ -6,7 +6,7 @@ import { useState, useEffect, useMemo, useRef } from "react";
 import {
   isValidAddress, getNameParts,
   useAddressPrefix, useNameSuffix
-} from "@utils/currency";
+} from "@utils/krist";
 import { useWallets } from "@wallets";
 
 import * as api from "@api";

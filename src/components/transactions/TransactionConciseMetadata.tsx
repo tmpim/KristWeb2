@@ -4,7 +4,7 @@
 import classNames from "classnames";
 
 import { KristTransaction } from "@api/types";
-import { useNameSuffix, stripNameFromMetadata } from "@utils/currency";
+import { useNameSuffix, stripNameFromMetadata } from "@utils/krist";
 
 import "./TransactionConciseMetadata.less";
 

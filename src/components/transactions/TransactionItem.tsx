@@ -1,7 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { Row, Col, Tooltip, Grid } from "antd";
+import { Row, Col, Tooltip, } from "antd";
 import { RightOutlined } from "@ant-design/icons";
 
 import { useTFns } from "@utils/i18n";
@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 
 import { KristTransaction } from "@api/types";
 import { WalletAddressMap, Wallet } from "@wallets";
+import { useBreakpoint } from "@utils/hooks";
 
 import { DateTime } from "../DateTime";
 
@@ -42,8 +43,8 @@ interface ItemProps {
 export function TransactionItem({
   transaction: tx,
   wallets
-}: Props): JSX.Element {
-  const bps = Grid.useBreakpoint();
+}: Props): JSX.Element | null {
+  const bps = useBreakpoint();
 
   // Whether or not the from/to addresses are a wallet we own
   const fromWallet = tx.from ? wallets[tx.from] : undefined;
@@ -58,7 +59,7 @@ export function TransactionItem({
 
   // Return a different element (same data, different layout) depending on
   // whether this is mobile or desktop
-  return bps.sm
+  return bps.sm || bps.sm === undefined // bps can be undefined sometimes
     ? <TransactionItemDesktop
       type={type}
       tx={tx} txTime={txTime} txLink={txLink}

@@ -41,7 +41,7 @@
 
     border-right: 1px solid @kw-border-color-darker;
 
-    a {
+    .conditional-link-disabled, a {
       color: @text-color;
       text-align: center;
 
@@ -209,6 +209,10 @@
         margin-right: 16px;
         font-size: @font-size-base;
         vertical-align: -0.175em;
+      }
+
+      .conditional-link-disabled {
+        color: @text-color;
       }
     }
   }

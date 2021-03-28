@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 
 import packageJson from "../../../package.json";
 
-import { useMountEffect } from "@utils";
+import { useMountEffect } from "@utils/hooks";
 
 interface Supporter {
   name: string;

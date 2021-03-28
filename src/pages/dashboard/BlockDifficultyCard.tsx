@@ -12,9 +12,9 @@ import { useTranslation, Trans } from "react-i18next";
 import { Line } from "react-chartjs-2";
 
 import * as api from "@api";
-import { estimateHashRate } from "@utils/currency";
+import { estimateHashRate } from "@utils/krist";
 import { KristConstants } from "@api/types";
-import { trailingThrottleState } from "@utils/promiseThrottle";
+import { trailingThrottleState } from "@utils";
 
 import { SmallResult } from "@comp/results/SmallResult";
 import { Statistic } from "@comp/Statistic";

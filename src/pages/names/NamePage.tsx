@@ -21,7 +21,7 @@ import { KristName } from "@api/types";
 import { LookupTransactionType as LookupTXType } from "@api/lookup";
 
 import { useWallets } from "@wallets";
-import { useNameSuffix } from "@utils/currency";
+import { useNameSuffix } from "@utils/krist";
 import { useSubscription } from "@global/ws/WebsocketSubscription";
 import { useBooleanSetting } from "@utils/settings";
 
