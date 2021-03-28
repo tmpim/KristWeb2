@@ -32,6 +32,7 @@ interface Props {
   neverCopyable?: boolean;
   nonExistent?: boolean;
   noLink?: boolean;
+  noTooltip?: boolean;
   className?: string;
 }
 
@@ -46,6 +47,7 @@ export function ContextualAddress({
   neverCopyable,
   nonExistent,
   noLink,
+  noTooltip,
   className
 }: Props): JSX.Element {
   const { t } = useTranslation();
@@ -90,7 +92,7 @@ export function ContextualAddress({
 
   // If the address definitely doesn't exist, show the 'not yet initialised'
   // tooltip on hover instead.
-  const showTooltip = !verified &&
+  const showTooltip = !noTooltip && !verified &&
     ((hideNameAddress && !!hasMetaname) || !!walletLabel || !!contactLabel);
   const tooltipTitle = nonExistent
     ? t("contextualAddressNonExistentTooltip")

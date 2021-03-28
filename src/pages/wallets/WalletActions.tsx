@@ -8,7 +8,8 @@ import {
   SendOutlined
 } from "@ant-design/icons";
 
-import { useTFns } from "@utils/i18n";
+import { TFunction } from "react-i18next";
+import { useTFns, TStrFn } from "@utils/i18n";
 
 import { useAuth } from "@comp/auth";
 import { OpenEditWalletFn } from "./WalletEditButton";
@@ -33,19 +34,10 @@ export function WalletActions({
   const { t, tStr } = useTFns("myWallets.");
   const promptAuth = useAuth();
 
-  const showWalletDeleteConfirm = useCallback((): void => {
-    Modal.confirm({
-      icon: <ExclamationCircleOutlined />,
-
-      title: tStr("actionsDeleteConfirm"),
-      content: tStr("actionsDeleteConfirmDescription"),
-
-      onOk: () => deleteWallet(wallet),
-      okText: t("dialog.yes"),
-      okType: "danger",
-      cancelText: t("dialog.no")
-    });
-  }, [t, tStr, wallet]);
+  const showWalletDeleteConfirm = useCallback(
+    () => showWalletDeleteConfirmModal(t, tStr, wallet),
+    [t, tStr, wallet]
+  );
 
   const memoDropdown = useMemo(() => <Dropdown.Button
     className="table-actions wallet-actions"
@@ -84,4 +76,22 @@ export function WalletActions({
   ]);
 
   return memoDropdown;
+}
+
+export function showWalletDeleteConfirmModal(
+  t: TFunction,
+  tStr: TStrFn,
+  wallet: Wallet
+): void {
+  Modal.confirm({
+    icon: <ExclamationCircleOutlined />,
+
+    title: tStr("actionsDeleteConfirm"),
+    content: tStr("actionsDeleteConfirmDescription"),
+
+    onOk: () => deleteWallet(wallet),
+    okText: t("dialog.yes"),
+    okType: "danger",
+    cancelText: t("dialog.no")
+  });
 }

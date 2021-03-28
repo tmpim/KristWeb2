@@ -14,6 +14,8 @@ import { useEditWalletModal } from "./WalletEditButton";
 import { useSendTransactionModal } from "@comp/transactions/SendTransactionModalLink";
 import { useWalletInfoModal } from "./info/WalletInfoModal";
 
+import "./WalletsPage.less";
+
 /** Extract the subtitle into its own component to avoid re-rendering the
  * entire page when a wallet is added. */
 function WalletsPageSubtitle(): JSX.Element {
@@ -39,6 +41,7 @@ export function WalletsPage(): JSX.Element {
     siteTitleKey="myWallets.title" titleKey="myWallets.title"
     subTitle={<WalletsPageSubtitle />}
     extra={extra}
+    className="wallets-page"
   >
     <WalletsTable
       openEditWallet={openEditWallet}

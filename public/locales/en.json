@@ -150,11 +150,13 @@
     "nameCount_plural": "{{count, number}} names",
     "nameCountEmpty": "No names",
     "firstSeen": "First seen {{date}}",
+    "firstSeenMobile": "First seen: <1 />",
 
     "walletCount": "{{count, number}} wallet",
     "walletCount_plural": "{{count, number}} wallets",
     "walletCountEmpty": "No wallets",
 
+    "actionsViewAddress": "View address",
     "actionsEditTooltip": "Edit wallet",
     "actionsSendTransaction": "Send Krist",
     "actionsWalletInfo": "Wallet info",

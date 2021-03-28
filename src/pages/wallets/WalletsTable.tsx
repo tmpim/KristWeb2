@@ -1,7 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { useMemo } from "react";
+import { useMemo, useCallback } from "react";
 import { Table, Tooltip, Tag } from "antd";
 import { ColumnsType } from "antd/lib/table";
 
@@ -13,12 +13,16 @@ import { DateTime } from "@comp/DateTime";
 
 import { useWallets, useWalletCategories, Wallet } from "@wallets";
 import { WalletActions } from "./WalletActions";
+import { WalletMobileItem } from "./WalletMobileItem";
+
 import { OpenEditWalletFn } from "./WalletEditButton";
 import { OpenSendTxFn } from "@comp/transactions/SendTransactionModalLink";
 import { OpenWalletInfoFn } from "./info/WalletInfoModal";
 
 import { keyedNullSort } from "@utils";
-import { useDateColumnWidth } from "@utils/table/table";
+import {
+  useDateColumnWidth, useSimpleMobileList, RenderItem
+} from "@utils/table/table";
 
 interface Props {
   openEditWallet: OpenEditWalletFn;
@@ -131,9 +135,44 @@ export function WalletsTable({
   openSendTx,
   openWalletInfo
 }: Props): JSX.Element {
+  const { wallets } = useWallets();
+  const walletValues = Object.values(wallets);
+
+  const renderMobileItem: RenderItem<Wallet> = useCallback(wallet => (
+    <WalletMobileItem
+      wallet={wallet}
+      openEditWallet={openEditWallet}
+      openSendTx={openSendTx}
+      openWalletInfo={openWalletInfo}
+    />
+  ), [openEditWallet, openSendTx, openWalletInfo]);
+
+  const { isMobile, list } = useSimpleMobileList(
+    false, walletValues, "id", "balance", true, renderMobileItem
+  );
+
+  return isMobile && list
+    ? list
+    : <DesktopView
+      wallets={walletValues}
+      openEditWallet={openEditWallet}
+      openSendTx={openSendTx}
+      openWalletInfo={openWalletInfo}
+    />;
+}
+
+interface DesktopViewProps extends Props {
+  wallets: Wallet[];
+}
+
+function DesktopView({
+  wallets,
+  openEditWallet,
+  openSendTx,
+  openWalletInfo
+}: DesktopViewProps): JSX.Element {
   const { tStr } = useTFns("myWallets.");
 
-  const { wallets } = useWallets();
   const { categories, joinedCategoryList } = useWalletCategories();
 
   const dateColumnWidth = useDateColumnWidth();
@@ -151,7 +190,7 @@ export function WalletsTable({
     size="small"
     scroll={{ x: true }}
 
-    dataSource={Object.values(wallets)}
+    dataSource={wallets}
     rowKey="id"
 
     pagination={{
