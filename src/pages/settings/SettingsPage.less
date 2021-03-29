@@ -4,9 +4,27 @@
 @import (reference) "../../App.less";
 
 .settings-page {
+  .big-menu.ant-menu.ant-menu-inline {
+    .ant-menu-item {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .menu-item-setting {
+        margin: -@padding-xs 0;
+        padding: @padding-xs 0;
+      }
+    }
+  }
+
   .settings-language-item {
     // ant-design adds `width: calc(100% + 1px)` to menu items for some reason
     width: 100%;
+
+    &.ant-menu-item {
+      flex-direction: row !important;
+      justify-content: flex-start !important;
+    }
 
     &.settings-language-item-current {
       background: lighten(@kw-darker, 5%);
@@ -46,19 +64,6 @@
       width: auto;
       margin-right: @margin-sm;
       margin-bottom: @padding-xs;
-    }
-  }
-
-  .big-menu.ant-menu.ant-menu-inline {
-    .ant-menu-item {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-
-      .menu-item-setting {
-        margin: -@padding-xs 0;
-        padding: @padding-xs 0;
-      }
     }
   }
 }
