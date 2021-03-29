@@ -6,6 +6,8 @@ import { useCallback } from "react";
 import { Trans } from "react-i18next";
 import { useTFns } from "@utils/i18n";
 
+import { Link } from "react-router-dom";
+
 import { KristBlock } from "@api/types";
 
 import { KristValue } from "@comp/krist/KristValue";
@@ -31,7 +33,9 @@ export function BlockMobileItem({ block }: Props): JSX.Element {
     </span>
   ), [block.difficulty]);
 
-  return <div className="card-list-item block-mobile-item">
+  const blockLink = `/network/blocks/${encodeURIComponent(block.height)}`;
+
+  return <Link to={blockLink} className="card-list-item block-mobile-item">
     {/* Block value */}
     <div className="block-value">
       <KristValue value={block.value} />
@@ -76,5 +80,5 @@ export function BlockMobileItem({ block }: Props): JSX.Element {
     <div className="block-mined">
       <DateTime date={block.time} />
     </div>
-  </div>;
+  </Link>;
 }
