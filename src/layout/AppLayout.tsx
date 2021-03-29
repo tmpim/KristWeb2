@@ -26,7 +26,10 @@ export function AppLayout(): JSX.Element {
       />
 
       <Layout>
-        <Sidebar collapsed={!bps.md && sidebarCollapsed} />
+        <Sidebar
+          collapsed={!bps.md && sidebarCollapsed}
+          setCollapsed={setSidebarCollapsed}
+        />
 
         {/* Fade out the background when the sidebar is open on mobile */}
         {!bps.md && <div

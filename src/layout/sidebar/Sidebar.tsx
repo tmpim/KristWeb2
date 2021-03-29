@@ -1,7 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { useState, useEffect } from "react";
+import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { Layout, Menu, MenuItemProps } from "antd";
 import { HomeOutlined, WalletOutlined, TeamOutlined, BankOutlined, TagsOutlined, SketchOutlined, BuildOutlined, StockOutlined } from "@ant-design/icons";
 
@@ -53,7 +53,15 @@ function getSidebarItems(t: TFunction, group?: string) {
     ));
 }
 
-export function Sidebar({ collapsed }: { collapsed: boolean }): JSX.Element {
+interface Props {
+  collapsed: boolean;
+  setCollapsed: Dispatch<SetStateAction<boolean>>;
+}
+
+export function Sidebar({
+  collapsed,
+  setCollapsed
+}: Props): JSX.Element {
   const { t } = useTranslation();
 
   const location = useLocation();
@@ -64,6 +72,11 @@ export function Sidebar({ collapsed }: { collapsed: boolean }): JSX.Element {
       ? location.pathname === "/"
       : location.pathname.startsWith(i.to))?.to);
   }, [location]);
+
+  useEffect(() => {
+    // Close the sidebar if we switch page
+    setCollapsed(true);
+  }, [setCollapsed, location.pathname]);
 
   return <Sider
     width={240}
