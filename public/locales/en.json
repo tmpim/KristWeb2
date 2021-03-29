@@ -128,7 +128,15 @@
     "popoverDescription": "Enter your master password to decrypt your wallets.",
     "popoverDescriptionEncrypt": "Enter your master password to encrypt and decrypt your wallets.",
     "forcedAuthWarning": "You were automatically logged in by an insecure debug setting.",
-    "earlyAuthError": "The app has not loaded fully yet, please try again."
+    "earlyAuthError": "The app has not loaded fully yet, please try again.",
+
+    "reset": {
+      "modalTitle": "Reset master password"
+    },
+
+    "change": {
+      "modalTitle": "Change master password"
+    }
   },
 
   "myWallets": {
