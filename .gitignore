@@ -24,3 +24,5 @@ yarn-debug.log*
 yarn-error.log*
 
 /src/__data__/host*.json
+
+.sentryclirc

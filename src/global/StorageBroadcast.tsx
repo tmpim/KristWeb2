@@ -8,6 +8,9 @@ import * as contactActions from "@actions/ContactsActions";
 import { getWalletKey, parseWallet, syncWallet } from "@wallets";
 import { getContactKey, parseContact } from "@contacts";
 
+// Required for Safari
+import "broadcastchannel-polyfill";
+
 import Debug from "debug";
 const debug = Debug("kristweb:storage-broadcast");
 
