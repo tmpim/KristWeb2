@@ -47,7 +47,7 @@ export function CreditsPage(): JSX.Element {
     </Trans></div>
 
     {/* Hosted by */}
-    { host &&
+    {host &&
       <div><Trans t={t} i18nKey="credits.hostedBy">
         Hosted by
         <a href={host.host.url} target="_blank" rel="noopener noreferrer">
