@@ -29,6 +29,7 @@ jobs:
     - name: Build
       run: yarn run full-build
       env:
+        SENTRY_ENABLED: true
         SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_TOKEN }}
         SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
         SENTRY_URL: ${{ secrets.SENTRY_URL }}
