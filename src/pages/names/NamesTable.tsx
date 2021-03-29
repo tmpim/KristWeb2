@@ -8,13 +8,19 @@ import { ColumnsType } from "antd/lib/table";
 import { useTFns, TStrFn } from "@utils/i18n";
 
 import { KristName } from "@api/types";
-import { lookupNames, LookupNamesOptions, LookupNamesResponse } from "@api/lookup";
 import {
-  useMalleablePagination, useTableHistory, useDateColumnWidth
+  lookupNames, LookupNamesOptions, LookupNamesResponse,
+  SortableNameFields
+} from "@api/lookup";
+import {
+  useMalleablePagination, useTableHistory, useDateColumnWidth, useMobileList,
+  PaginationTableProps, RenderItem, SortOptions, SetOpenSortModalFn
 } from "@utils/table/table";
 
 import { useWallets, WalletAddressMap } from "@wallets";
 import { NameActions } from "./mgmt/NameActions";
+import { NameMobileItem } from "./NameMobileItem";
+
 import { OpenEditNameFn } from "./mgmt/NameEditModalLink";
 import { OpenSendTxFn } from "@comp/transactions/SendTransactionModalLink";
 import { useNameTableLock } from "./tableLock";
@@ -26,21 +32,6 @@ import { DateTime } from "@comp/DateTime";
 
 import Debug from "debug";
 const debug = Debug("kristweb:names-table");
-
-interface Props {
-  // Number used to trigger a refresh of the names listing
-  refreshingID?: number;
-
-  // Whether or not to sort by newest first by default
-  sortNew?: boolean;
-
-  addresses?: string[];
-  setError?: Dispatch<SetStateAction<Error | undefined>>;
-  setPagination?: Dispatch<SetStateAction<TablePaginationConfig>>;
-
-  openNameEdit: OpenEditNameFn;
-  openSendTx: OpenSendTxFn;
-}
 
 function getColumns(
   tStr: TStrFn,
@@ -157,6 +148,32 @@ function getColumns(
   ];
 }
 
+const sortOptions: SortOptions<SortableNameFields> = [
+  { sortKey: "name", i18nKey: "namesName" },
+  { sortKey: "owner", i18nKey: "namesOwner" },
+  { sortKey: "original_owner", i18nKey: "namesOriginalOwner" },
+  { sortKey: "a", i18nKey: "namesARecord" },
+  { sortKey: "unpaid", i18nKey: "namesUnpaid" },
+  { sortKey: "registered", i18nKey: "namesRegistered" },
+  { sortKey: "updated", i18nKey: "namesUpdated" }
+];
+
+interface Props {
+  // Number used to trigger a refresh of the names listing
+  refreshingID?: number;
+
+  // Whether or not to sort by newest first by default
+  sortNew?: boolean;
+
+  addresses?: string[];
+  setError?: Dispatch<SetStateAction<Error | undefined>>;
+  setPagination?: Dispatch<SetStateAction<TablePaginationConfig>>;
+
+  openNameEdit: OpenEditNameFn;
+  openSendTx: OpenSendTxFn;
+  setOpenSortModal?: SetOpenSortModalFn;
+}
+
 export function NamesTable({
   refreshingID,
 
@@ -165,34 +182,27 @@ export function NamesTable({
   addresses,
   setError,
   setPagination,
+  setOpenSortModal,
 
   openNameEdit,
   openSendTx
 }: Props): JSX.Element {
-  const { tStr, tKey } = useTFns("names.");
+  const { tKey } = useTFns("names.");
+
+  const defaultOrderBy = sortNew ? "registered" : "name";
+  const defaultOrder = sortNew ? "DESC" : "ASC";
 
   const [loading, setLoading] = useState(true);
   const [res, setRes] = useState<LookupNamesResponse>();
   const { options, setOptions } = useTableHistory<LookupNamesOptions>({
-    orderBy: sortNew ? "registered" : "name",
-    order: sortNew ? "DESC" : "ASC"
+    orderBy: defaultOrderBy, order: defaultOrder
   });
 
-  const { paginationTableProps, hotkeys } = useMalleablePagination(
+  const { paginationTableProps, paginationChange, hotkeys } = useMalleablePagination(
     res, res?.names,
     tKey("tableTotal"),
     options, setOptions, setPagination
   );
-
-  const dateColumnWidth = useDateColumnWidth();
-
-  // Used to change the actions depending on whether or not we own the name
-  const { walletAddressMap, joinedAddressList } = useWallets();
-
-  const columns = useMemo(() => getColumns(
-    tStr, dateColumnWidth, sortNew, walletAddressMap, openNameEdit, openSendTx
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  ), [tStr, dateColumnWidth, sortNew, joinedAddressList, openNameEdit, openSendTx]);
 
   // Used to pause the table lookups when performing a bulk name edit
   const locked = useNameTableLock();
@@ -215,10 +225,74 @@ export function NamesTable({
 
   debug("results? %b  res.names.length: %d  res.count: %d  res.total: %d", !!res, res?.names?.length, res?.count, res?.total);
 
+  const renderMobileItem: RenderItem<KristName> = useCallback(name => (
+    <NameMobileItem
+      name={name}
+      openNameEdit={openNameEdit}
+      openSendTx={openSendTx}
+    />
+  ), [openNameEdit, openSendTx]);
+
+  const { isMobile, list } = useMobileList(
+    loading, res?.names || [], "name",
+    paginationTableProps.pagination, paginationChange,
+    sortOptions, defaultOrderBy, defaultOrder,
+    options, setOptions, setOpenSortModal,
+    renderMobileItem
+  );
+
+  return <>
+    {isMobile && list
+      ? list
+      : <DesktopView
+        loading={loading}
+        res={res}
+
+        sortNew={sortNew}
+
+        paginationTableProps={paginationTableProps}
+
+        openNameEdit={openNameEdit}
+        openSendTx={openSendTx}
+      />}
+    {hotkeys}
+  </>;
+}
+
+interface DesktopViewProps {
+  loading: boolean;
+  res?: LookupNamesResponse;
+
+  sortNew: boolean | undefined;
+
+  paginationTableProps: PaginationTableProps<KristName>;
+
+  openNameEdit: OpenEditNameFn;
+  openSendTx: OpenSendTxFn;
+}
+
+function DesktopView({
+  loading, res,
+  sortNew,
+  paginationTableProps,
+  openNameEdit, openSendTx
+}: DesktopViewProps): JSX.Element {
+  const { tStr } = useTFns("names.");
+
+  const dateColumnWidth = useDateColumnWidth();
+
+  // Used to change the actions depending on whether or not we own the name
+  const { walletAddressMap, joinedAddressList } = useWallets();
+
+  const columns = useMemo(() => getColumns(
+    tStr, dateColumnWidth, sortNew, walletAddressMap, openNameEdit, openSendTx
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  ), [tStr, dateColumnWidth, sortNew, joinedAddressList, openNameEdit, openSendTx]);
+
   const getRowClasses = useCallback((name: KristName): string =>
     name.unpaid > 0 ? "name-row-unpaid" : "", []);
 
-  const tbl = <Table<KristName>
+  return <Table<KristName>
     className="names-table"
     size="small"
     scroll={{ x: true }}
@@ -233,9 +307,4 @@ export function NamesTable({
 
     columns={columns}
   />;
-
-  return <>
-    {tbl}
-    {hotkeys}
-  </>;
 }

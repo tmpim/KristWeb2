@@ -1,7 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Button } from "antd";
 import { TagsOutlined } from "@ant-design/icons";
 
@@ -23,6 +23,7 @@ import { useSendTransactionModal } from "@comp/transactions/SendTransactionModal
 
 import { useWallets } from "@wallets";
 import { useBooleanSetting } from "@utils/settings";
+import { useTopMenuOptions } from "@layout/nav/TopMenu";
 
 import "./NamesPage.less";
 
@@ -92,6 +93,9 @@ export function NamesPage({ listingType, sortNew }: Props): JSX.Element {
       : lastNameTransactionID)
     : 0;
 
+  const [,, unset, setOpenSortModal] = useTopMenuOptions();
+  useEffect(() => unset, [unset]);
+
   // Memoise the table so that it only updates the props (thus triggering a
   // re-fetch of the names) when something relevant changes
   const memoTable = useMemo(() => (
@@ -103,9 +107,11 @@ export function NamesPage({ listingType, sortNew }: Props): JSX.Element {
 
       openNameEdit={openNameEdit}
       openSendTx={openSendTx}
+      setOpenSortModal={setOpenSortModal}
     />
   ), [
-    usedAddresses, sortNew, usedRefreshID, setError, openSendTx, openNameEdit
+    usedAddresses, sortNew, usedRefreshID, setError, openSendTx, openNameEdit,
+    setOpenSortModal
   ]);
 
   const siteTitle = getSiteTitle(t, listingType, address);

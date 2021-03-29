@@ -602,7 +602,18 @@
     "columnARecord": "A Record",
     "columnUnpaid": "Unpaid Blocks",
 
+    "mobileOwner": "<0>Owner:</0> <1 />",
+    "mobileOriginalOwner": "<0>Original owner:</0> <1 />",
+    "mobileRegistered": "Registered: <1 />",
+    "mobileUpdated": "Updated: <1 />",
+    "mobileARecordTag": "A",
+    "mobileUnpaidTag": "{{count, number}} block",
+    "mobileUnpaidTag_plural": "{{count, number}} blocks",
+
     "actions": "Actions",
+    "actionsViewName": "View name",
+    "actionsViewOwner": "View owner's address",
+    "actionsViewOriginalOwner": "View original owner's address",
     "actionsSendKrist": "Send Krist",
     "actionsTransferKrist": "Transfer Krist",
     "actionsUpdateARecord": "Update A record",
@@ -1141,7 +1152,15 @@
       "transactionsTo": "To",
       "transactionsValue": "Value",
       "transactionsName": "Name",
-      "transactionsTime": "Time"
+      "transactionsTime": "Time",
+
+      "namesName": "Name",
+      "namesOwner": "Owner",
+      "namesOriginalOwner": "Original Owner",
+      "namesARecord": "A Record",
+      "namesUnpaid": "Unpaid Blocks",
+      "namesRegistered": "Registered Time",
+      "namesUpdated": "Updated Time"
     }
   }
 }

@@ -49,23 +49,6 @@ const LISTING_TYPE_MAP: Record<ListingType, LookupTransactionType> = {
   [7]: LookupTransactionType.SEARCH,
 };
 
-interface Props {
-  listingType: ListingType;
-
-  // Number used to trigger a refresh of the transactions listing
-  refreshingID?: number;
-
-  addresses?: string[];
-  name?: string;
-  query?: string;
-
-  includeMined?: boolean;
-
-  setError?: Dispatch<SetStateAction<Error | undefined>>;
-  setPagination?: Dispatch<SetStateAction<TablePaginationConfig>>;
-  setOpenSortModal?: SetOpenSortModalFn;
-}
-
 /** Map the search listing types to their API endpoint name */
 function getLookupSearchType(listingType: ListingType): "address" | "name" | "metadata" | undefined {
   switch (listingType) {
@@ -191,6 +174,23 @@ const sortOptions: SortOptions<SortableTransactionFields> = [
 ];
 const defaultOrderBy = "time"; // Equivalent to sorting by ID
 const defaultOrder = "DESC";
+
+interface Props {
+  listingType: ListingType;
+
+  // Number used to trigger a refresh of the transactions listing
+  refreshingID?: number;
+
+  addresses?: string[];
+  name?: string;
+  query?: string;
+
+  includeMined?: boolean;
+
+  setError?: Dispatch<SetStateAction<Error | undefined>>;
+  setPagination?: Dispatch<SetStateAction<TablePaginationConfig>>;
+  setOpenSortModal?: SetOpenSortModalFn;
+}
 
 export function TransactionsTable({
   listingType,
