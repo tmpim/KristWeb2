@@ -1,0 +1,51 @@
+// Copyright (c) 2020-2021 Drew Lemmy
+// This file is part of KristWeb 2 under AGPL-3.0.
+// Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
+@import (reference) "../../App.less";
+@import "../../style/table.less";
+
+.blocks-page .table-mobile-list-view {
+  .block-mobile-item {
+    .block-height {
+      display: block;
+      font-size: 120%;
+    }
+
+    .block-value {
+      float: right;
+      font-size: 120%;
+    }
+
+    .block-field {
+      font-weight: bold;
+      white-space: nowrap;
+      color: @text-color-secondary;
+    }
+
+    .block-technical-row {
+      display: block;
+
+      .block-mobile-hash, .block-difficulty {
+        font-size: 90%;
+      }
+
+      .block-mobile-hash-value {
+        color: @text-color;
+        font-family: monospace;
+      }
+
+      .sep:before {
+        content: "\2013";
+
+        display: inline-block;
+        margin: 0 @padding-xs;
+        color: @text-color-secondary;
+      }
+    }
+
+    .block-mined {
+      color: @text-color-secondary;
+      font-size: @font-size-sm;
+    }
+  }
+}

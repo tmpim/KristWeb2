@@ -671,6 +671,11 @@
     "columnDifficulty": "Difficulty",
     "columnTime": "Time",
 
+    "mobileHeight": "Block #{{height, number}}",
+    "mobileMiner": "<0>Miner: </0> <1 />",
+    "mobileHash": "<0>Hash: </0> <1 />",
+    "mobileDifficulty": "<0>Difficulty: </0> <1 />",
+
     "tableTotal": "{{count, number}} block",
     "tableTotal_plural": "{{count, number}} blocks",
     "tableTotalEmpty": "No blocks"
@@ -1160,7 +1165,13 @@
       "namesARecord": "A Record",
       "namesUnpaid": "Unpaid Blocks",
       "namesRegistered": "Registered Time",
-      "namesUpdated": "Updated Time"
+      "namesUpdated": "Updated Time",
+
+      "blocksMiner": "Miner",
+      "blocksHash": "Hash",
+      "blocksValue": "Value",
+      "blocksDifficulty": "Difficulty",
+      "blocksTime": "Time"
     }
   }
 }

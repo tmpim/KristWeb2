@@ -263,7 +263,7 @@ interface DesktopViewProps {
   loading: boolean;
   res?: LookupNamesResponse;
 
-  sortNew: boolean | undefined;
+  sortNew?: boolean;
 
   paginationTableProps: PaginationTableProps<KristName>;
 
