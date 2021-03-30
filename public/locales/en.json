@@ -164,6 +164,9 @@
     "walletCount_plural": "{{count, number}} wallets",
     "walletCountEmpty": "No wallets",
 
+    "noWalletsHint": "No wallets yet",
+    "noWalletsText": "Add or create a wallet by clicking the <1 /> menu in the top right!",
+
     "actionsViewAddress": "View address",
     "actionsEditTooltip": "Edit wallet",
     "actionsSendTransaction": "Send Krist",

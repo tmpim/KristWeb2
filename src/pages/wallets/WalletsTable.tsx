@@ -14,6 +14,7 @@ import { DateTime } from "@comp/DateTime";
 import { useWallets, useWalletCategories, Wallet } from "@wallets";
 import { WalletActions } from "./WalletActions";
 import { WalletMobileItem } from "./WalletMobileItem";
+import { NoWalletsMobileResult } from "./NoWalletsMobileResult";
 
 import { OpenEditWalletFn } from "./WalletEditButton";
 import { OpenSendTxFn } from "@comp/transactions/SendTransactionModalLink";
@@ -135,6 +136,8 @@ export function WalletsTable({
   openSendTx,
   openWalletInfo
 }: Props): JSX.Element {
+  const { tStr } = useTFns("myWallets.");
+
   const { wallets } = useWallets();
   const walletValues = Object.values(wallets);
 
@@ -152,7 +155,9 @@ export function WalletsTable({
   );
 
   return isMobile && list
-    ? list
+    ? (walletValues.length > 0
+      ? list // Show some help text for creating wallets on mobile:
+      : <NoWalletsMobileResult />)
     : <DesktopView
       wallets={walletValues}
       openEditWallet={openEditWallet}
