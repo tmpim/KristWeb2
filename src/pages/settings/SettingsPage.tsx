@@ -4,7 +4,7 @@
 import { FC } from "react";
 import { Menu } from "antd";
 import {
-  BugOutlined, GlobalOutlined, ReloadOutlined, SettingOutlined
+  BugOutlined, GlobalOutlined, ReloadOutlined, SettingOutlined, LockOutlined
 } from "@ant-design/icons";
 
 import { useTranslation } from "react-i18next";
@@ -80,7 +80,17 @@ export function SettingsPage(): JSX.Element {
           booleanSetting("clearTransactionForm"),
           integerSetting("sendTransactionDelay"),
           integerSetting("defaultPageSize"),
-          booleanSetting("tableHotkeys"),
+          booleanSetting("tableHotkeys")
+        ]}
+      />
+
+      {/* Privacy settings */}
+      <SettingsGroup
+        subKey="Privacy"
+        icon={<LockOutlined />}
+        settings={[
+          booleanSetting("errorReporting"),
+          booleanSetting("messageOnErrorReport")
         ]}
       />
 

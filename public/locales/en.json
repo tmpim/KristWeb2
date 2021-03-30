@@ -89,6 +89,7 @@
     "description": "A critical error has occurred in KristWeb, so this page was terminated. See console for details.",
     "sentryNote": "This error was automatically reported."
   },
+  "errorReported": "An error was automatically reported. See console for details.",
 
   "loading": "Loading...",
 
@@ -465,6 +466,10 @@
     "sendTransactionDelay": "Time to wait, in milliseconds, before allowing another transaction to be sent",
     "defaultPageSize": "Default page size for table listings",
     "tableHotkeys": "Enable table navigation hotkeys (left and right arrows)",
+
+    "subMenuPrivacy": "Privacy",
+    "errorReporting": "Enable automatic error reporting (requires refresh)",
+    "messageOnErrorReport": "Show a notification when an error is automatically reported (requires refresh)",
 
     "subMenuDebug": "Debug settings",
     "advancedWalletFormats": "Advanced wallet formats",

@@ -66,6 +66,14 @@ export interface SettingsState {
   readonly importOverwrite: boolean;
 
   // ===========================================================================
+  // PRIVACY SETTINGS
+  // ===========================================================================
+  /** Enable automatic error reporting. */
+  readonly errorReporting: boolean;
+  /** Show a notification when an error is automatically reported. */
+  readonly messageOnErrorReport: boolean;
+
+  // ===========================================================================
   // DEBUG SETTINGS
   // ===========================================================================
   /** Whether or not advanced wallet formats are enabled. */
@@ -93,6 +101,9 @@ export const DEFAULT_SETTINGS: SettingsState = {
   defaultPageSize: 15,
   tableHotkeys: true,
   importOverwrite: true,
+
+  errorReporting: true,
+  messageOnErrorReport: false,
 
   walletFormats: false
 };
