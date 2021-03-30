@@ -15,7 +15,7 @@ import { SettingsGroup, booleanSetting, integerSetting } from "./SettingsGroup";
 import { SettingBoolean } from "./SettingBoolean";
 import { getLanguageItems } from "./translations/LanguageItem";
 
-import { SettingsBackups } from "./SettingsBackups";
+import { useSettingsManage } from "./manage/SettingsManage";
 
 import "./SettingsPage.less";
 
@@ -37,6 +37,8 @@ export const SettingsPageLayout: FC<SettingsPageLayoutProps> = ({ pageName, chil
 export function SettingsPage(): JSX.Element {
   const { t } = useTranslation();
 
+  const [manageSettings, manageSettingsCtx] = useSettingsManage();
+
   return <SettingsPageLayout>
     <Menu mode="inline" className="big-menu" selectable={false}>
       {/* Language selector */}
@@ -44,8 +46,9 @@ export function SettingsPage(): JSX.Element {
         {getLanguageItems()}
       </Menu.SubMenu>
 
-      {/* Backups */}
-      <SettingsBackups />
+      {/* Backups, master password */}
+      {manageSettings}
+      {manageSettingsCtx}
 
       {/* Auto-refresh settings */}
       <SettingsGroup

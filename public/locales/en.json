@@ -131,7 +131,14 @@
     "earlyAuthError": "The app has not loaded fully yet, please try again.",
 
     "reset": {
-      "modalTitle": "Reset master password"
+      "modalTitle": "Reset master password",
+      "description": "Are you sure you want to reset your master password? <strong>All your wallets will be deleted.</strong> Make sure to <3>export a backup</3> first!",
+      "buttonConfirm": "Reset & delete",
+
+      "modalTitle2": "DELETE ALL WALLETS",
+      "description2": "Are you REALLY sure you want to <strong>DELETE ALL YOUR WALLETS</strong>?",
+      "buttonConfirm2": "Yes, I'm sure [{{n}}]",
+      "buttonConfirmFinal": "Yes, I'm sure!"
     },
 
     "change": {
@@ -423,6 +430,10 @@
     "subMenuBackups": "Manage backups",
     "importBackup": "Import wallets",
     "exportBackup": "Export wallets",
+
+    "subMenuMasterPassword": "Master password",
+    "changeMasterPassword": "Change master password",
+    "resetMasterPassword": "Reset master password",
 
     "subMenuAutoRefresh": "Auto-refresh",
     "autoRefreshTables": "Auto-refresh tables",

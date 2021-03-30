@@ -8,6 +8,7 @@ export * from "./functions/editWallet";
 export * from "./functions/syncWallets";
 export * from "./functions/decryptWallet";
 export * from "./functions/recalculateWallets";
+export * from "./functions/resetMasterPassword";
 export * from "./masterPassword";
 export * from "./walletStorage";
 export * from "./utils";
