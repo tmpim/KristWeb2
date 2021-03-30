@@ -9,6 +9,7 @@ import { TranslatedError } from "@utils/i18n";
 import { Contact, ContactMap } from ".";
 import { broadcastDeleteContact } from "@global/StorageBroadcast";
 
+import * as Sentry from "@sentry/react";
 import Debug from "debug";
 const debug = Debug("kristweb:contact-storage");
 
@@ -38,7 +39,13 @@ export function parseContact(id: string, data: string | null): Contact {
 
     return contact;
   } catch (e) {
-    console.error(e);
+    Sentry.withScope(scope => {
+      scope.setTag("contact-id", id);
+      scope.setTag("contact-data", data);
+
+      Sentry.captureException(e);
+      console.error(e);
+    });
 
     if (e.name === "SyntaxError") // Invalid JSON
       throw new TranslatedError("masterPassword.errorStorageCorrupt");

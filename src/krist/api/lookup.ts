@@ -8,6 +8,8 @@ import {
   LookupFilterOptionsBase, LookupResponseBase, getFilterOptionsQuery
 } from "@utils/table/table";
 
+import { criticalError } from "@utils";
+
 // =============================================================================
 // Addresses
 // =============================================================================
@@ -35,7 +37,7 @@ export async function lookupAddresses(
 
     return data.addresses;
   } catch (err) {
-    console.error(err);
+    criticalError(err);
   }
 
   return {};

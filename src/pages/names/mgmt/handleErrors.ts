@@ -9,12 +9,16 @@ import { APIError } from "@api";
 import { AuthFailedError, ShowAuthFailedFn } from "@api/AuthFailed";
 
 import { WalletAddressMap, Wallet } from "@wallets";
+import { Mode } from "./NameEditModal";
+
+import { criticalError } from "@utils";
 
 // Convert API errors to friendlier errors
 export async function handleEditError(
   { t, tKey, tStr, tErr }: TFns,
   showAuthFailed: ShowAuthFailedFn,
   walletAddressMap: WalletAddressMap,
+  mode: Mode,
   err: Error
 ): Promise<void> {
   const onError = (err: Error) => notification.error({
@@ -43,7 +47,7 @@ export async function handleEditError(
   }
 
   // Pass through any other unknown errors
-  console.error(err);
+  criticalError(err, { tags: { "name-mgmt": "edit", "name-edit": mode } });
   onError(err);
 }
 
@@ -71,6 +75,6 @@ export async function handlePurchaseError(
   }
 
   // Pass through any other unknown errors
-  console.error(err);
+  criticalError(err, { tags: { "name-mgmt": "purchase" } });
   onError(err);
 }

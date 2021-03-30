@@ -77,7 +77,7 @@ export function NameEditModal({
   // Wrap the handleError function
   const onError = handleEditError.bind(
     handleEditError,
-    tFns, showAuthFailed, walletAddressMap
+    tFns, showAuthFailed, walletAddressMap, mode
   );
 
   // Actually perform the bulk name edit

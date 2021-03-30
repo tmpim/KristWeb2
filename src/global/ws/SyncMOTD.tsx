@@ -18,6 +18,8 @@ import {
 } from "@wallets";
 import { useAddressPrefix } from "@utils/krist";
 
+import { criticalError } from "@utils";
+
 import Debug from "debug";
 const debug = Debug("kristweb:sync-motd");
 
@@ -65,14 +67,15 @@ export function SyncMOTD(): JSX.Element | null {
   // Update the MOTD when the sync node changes, and on startup
   useEffect(() => {
     if (connectionState !== "connected") return;
-    updateMOTD().catch(console.error);
+    updateMOTD().catch(criticalError);
   }, [syncNode, connectionState]);
 
   // When the currency's address prefix changes, or our master password appears,
   // recalculate the addresses if necessary
   useEffect(() => {
     if (!addressPrefix || !masterPassword) return;
-    recalculateWallets(masterPassword, wallets, addressPrefix).catch(console.error);
+    recalculateWallets(masterPassword, wallets, addressPrefix)
+      .catch(criticalError);
   }, [addressPrefix, masterPassword, wallets]);
 
   return null;

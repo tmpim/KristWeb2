@@ -9,6 +9,8 @@ import { useTranslation } from "react-i18next";
 
 import { Wallet, decryptWallet, useMasterPasswordOnly } from "@wallets";
 
+import { criticalError } from "@utils";
+
 import * as api from "./";
 
 // Used to carry around information on which address failed auth
@@ -81,9 +83,9 @@ function ModalContents({ wallet }: { wallet: Wallet }): JSX.Element {
       // Perform the fetch
       api.post<AlertAPIResponse>("/addresses/alert", { privatekey })
         .then(res => setAlert(res.alert))
-        .catch(console.error)
+        .catch(criticalError)
         .finally(() => setLoading(false));
-    })().catch(console.error);
+    })().catch(criticalError);
   }, [wallet, masterPassword]);
 
   return <Spin spinning={loading}>

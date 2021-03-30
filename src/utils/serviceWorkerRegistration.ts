@@ -16,6 +16,7 @@
 
 import { isLocalhost } from "./";
 
+import { criticalError } from "@utils";
 import Debug from "debug";
 const debug = Debug("kristweb:service-worker");
 
@@ -116,7 +117,7 @@ function registerValidSW(swUrl: string, config?: Config) {
       };
     })
     .catch((error) => {
-      console.error("Error during service worker registration:", error);
+      criticalError("Error during service worker registration:", error);
     });
 }
 
@@ -157,7 +158,7 @@ export function unregister(): void {
         registration.unregister();
       })
       .catch((error) => {
-        console.error(error.message);
+        criticalError(error.message);
       });
   }
 }

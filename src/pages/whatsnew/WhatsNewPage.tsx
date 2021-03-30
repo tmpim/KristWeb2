@@ -12,7 +12,7 @@ import { RootState } from "@store";
 
 import * as api from "@api";
 import { WhatsNewResponse, Commit } from "./types";
-import { getAuthorInfo } from "@utils";
+import { getAuthorInfo, criticalError } from "@utils";
 
 import { PageLayout } from "@layout/PageLayout";
 
@@ -43,7 +43,7 @@ export function WhatsNewPage(): JSX.Element {
     // Fetch the 'whats new' and commits from the Krist sync node
     api.get<WhatsNewResponse>("whatsnew")
       .then(setKristData)
-      .catch(console.error) // TODO: show errors to the user
+      .catch(criticalError) // TODO: show errors to the user
       .finally(() => setLoading(false));
   }, [syncNode]);
 

@@ -7,6 +7,7 @@ import { Tooltip } from "antd";
 
 import { TimeagoFormatterContext } from "@global/LocaleContext";
 import { useBooleanSetting } from "@utils/settings";
+import { criticalError } from "@utils";
 
 import dayjs from "dayjs";
 import TimeAgo from "react-timeago";
@@ -53,7 +54,7 @@ export function DateTime({
     realDate.toISOString();
   } catch (err) {
     debug("error parsing date %s", date);
-    console.error(err);
+    criticalError(err);
     return <>INVALID DATE</>;
   }
 

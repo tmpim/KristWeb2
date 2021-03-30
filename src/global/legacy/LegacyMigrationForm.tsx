@@ -17,6 +17,8 @@ import { IncrProgressFn, InitProgressFn } from "@pages/backup/ImportProgress";
 import { backupVerifyPassword, backupImport } from "@pages/backup/backupImport";
 import { BackupResults } from "@pages/backup/backupResults";
 
+import { criticalError } from "@utils";
+
 import Debug from "debug";
 const debug = Debug("kristweb:legacy-migration-form");
 
@@ -81,7 +83,7 @@ export function useLegacyMigrationForm(
         setMasterPasswordError(translateError(t, err));
       } else {
         // Any other import error
-        console.error(err);
+        criticalError(err);
         notification.error({ message: tStr("errorUnknown") });
       }
     } finally {

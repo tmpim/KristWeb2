@@ -19,6 +19,7 @@ import LRU from "lru-cache";
 
 import * as SearchResults from "./SearchResults";
 
+import * as Sentry from "@sentry/react";
 import Debug from "debug";
 const debug = Debug("kristweb:search");
 
@@ -47,8 +48,15 @@ async function performAutocomplete(
     ]);
   } catch (err) {
     // Most likely error is `rate_limit_hit`:
-    if (err instanceof RateLimitError) onRateLimitHit();
-    else console.error(err);
+    if (err instanceof RateLimitError) {
+      onRateLimitHit();
+    } else {
+      Sentry.withScope(scope => {
+        scope.setTag("search-query", query);
+        Sentry.captureException(err);
+        console.error(err);
+      });
+    }
   }
 }
 

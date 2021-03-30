@@ -11,6 +11,8 @@ import { useTranslation } from "react-i18next";
 import { syncWallets, useWallets, ADDRESS_LIST_LIMIT } from "@wallets";
 import { useContacts } from "@contacts";
 
+import { criticalError } from "@utils";
+
 import Debug from "debug";
 const debug = Debug("kristweb:sync-wallets");
 
@@ -28,7 +30,7 @@ export function SyncWallets(): JSX.Element | null {
     syncWallets()
       .then(() => debug("synced"))
       .catch(err => {
-        console.error(err);
+        criticalError(err);
         notification.error({
           message: t("syncWallets.errorMessage"),
           description: t("syncWallets.errorDescription"),

@@ -12,6 +12,8 @@ import { store } from "@app";
 import * as api from "@api";
 import { KristWorkDetailed } from "@api/types";
 
+import { criticalError } from "@utils";
+
 import Debug from "debug";
 const debug = Debug("kristweb:sync-work");
 
@@ -28,8 +30,7 @@ export function SyncDetailedWork(): JSX.Element | null {
   const { lastBlockID } = useSelector((s: RootState) => s.node);
 
   useEffect(() => {
-    // TODO: show errors to the user?
-    updateDetailedWork().catch(console.error);
+    updateDetailedWork().catch(criticalError);
   }, [lastBlockID]);
 
   return null;

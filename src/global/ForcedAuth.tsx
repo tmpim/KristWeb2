@@ -7,6 +7,7 @@ import { useTranslation, TFunction } from "react-i18next";
 import { authMasterPassword, useMasterPassword } from "@wallets";
 
 import { useMountEffect } from "@utils/hooks";
+import { criticalError } from "@utils";
 
 async function forceAuth(t: TFunction, salt: string, tester: string): Promise<void> {
   try {
@@ -16,7 +17,7 @@ async function forceAuth(t: TFunction, salt: string, tester: string): Promise<vo
     await authMasterPassword(salt, tester, password);
     message.warning(t("masterPassword.forcedAuthWarning"));
   } catch (e) {
-    console.error(e);
+    criticalError(e);
   }
 }
 

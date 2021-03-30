@@ -21,6 +21,8 @@ import {
   useMasterPasswordOnly
 } from "@wallets";
 
+import { criticalError } from "@utils";
+
 const { Text } = Typography;
 const { useBreakpoint } = Grid;
 
@@ -137,7 +139,7 @@ export function AddWalletModal({
         closeModal();
       }
     } catch (err) {
-      console.error(err);
+      criticalError(err);
       notification.error({
         message: t("addWallet.errorUnexpectedTitle"),
         description: editing

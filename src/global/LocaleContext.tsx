@@ -13,6 +13,8 @@ import dayjs from "dayjs";
 import { Formatter } from "react-timeago";
 import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
 
+import { criticalError } from "@utils";
+
 import Debug from "debug";
 const debug = Debug("kristweb:locale-context");
 
@@ -55,7 +57,7 @@ export const LocaleContext: FC = ({ children }): JSX.Element => {
         debug("got dayjs locale %s", dayjsLocale);
         dayjs.locale(dayjsLocale);
       })
-      .catch(console.error);
+      .catch(criticalError);
   }, [lang, langCode, languages]);
 
   // Load the timeago locale if available
@@ -80,7 +82,7 @@ export const LocaleContext: FC = ({ children }): JSX.Element => {
         debug("got timeago locale %s", timeagoLocale);
         setTimeagoFormatter({ formatter: buildFormatter(strings.default) });
       })
-      .catch(console.error);
+      .catch(criticalError);
   }, [lang, langCode, languages]);
 
   // Load the antd locale if available
@@ -105,7 +107,7 @@ export const LocaleContext: FC = ({ children }): JSX.Element => {
         debug("got antd locale %s", antLocaleCode);
         setAntLocale({ locale: locale.default });
       })
-      .catch(console.error);
+      .catch(criticalError);
   }, [lang, langCode, languages]);
 
   return <TimeagoFormatterContext.Provider value={timeagoFormatter?.formatter}>

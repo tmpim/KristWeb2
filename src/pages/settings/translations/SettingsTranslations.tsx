@@ -22,6 +22,8 @@ import { MissingKeysTable } from "./MissingKeysTable";
 import { SmallResult } from "@comp/results/SmallResult";
 import { SettingsPageLayout } from "../SettingsPage";
 
+import { criticalError } from "@utils";
+
 const { Title } = Typography;
 
 export function SettingsTranslations(): JSX.Element {
@@ -43,7 +45,7 @@ export function SettingsTranslations(): JSX.Element {
   useMountEffect(() => {
     analyseLanguages()
       .then(setAnalysed)
-      .catch(console.error)
+      .catch(criticalError)
       .finally(() => setLoading(false));
   });
 

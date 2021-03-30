@@ -9,6 +9,7 @@ import { TranslatedError } from "@utils/i18n";
 import { Wallet, WalletMap } from ".";
 import { broadcastDeleteWallet } from "@global/StorageBroadcast";
 
+import * as Sentry from "@sentry/react";
 import Debug from "debug";
 const debug = Debug("kristweb:wallet-storage");
 
@@ -44,7 +45,13 @@ export function parseWallet(id: string, data: string | null): Wallet {
 
     return wallet;
   } catch (e) {
-    console.error(e);
+    Sentry.withScope(scope => {
+      scope.setTag("wallet-id", id);
+      scope.setTag("wallet-data", data);
+
+      Sentry.captureException(e);
+      console.error(e);
+    });
 
     if (e.name === "SyntaxError") // Invalid JSON
       throw new TranslatedError("masterPassword.errorStorageCorrupt");

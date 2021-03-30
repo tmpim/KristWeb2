@@ -5,6 +5,8 @@ import { localStorageAvailable } from "./localStorage";
 
 import { openCompatCheckModal } from "./CompatCheckModal";
 
+import { criticalError } from "@utils";
+
 import Debug from "debug";
 const debug = Debug("kristweb:compat-check");
 
@@ -43,7 +45,7 @@ async function runCompatChecks(): Promise<CompatCheck[]> {
         throw new Error("check returned false");
     } catch (err) {
       debug("compatibility check %s failed", check.name);
-      console.error(err);
+      criticalError(err);
       failed.push(check);
     }
   }

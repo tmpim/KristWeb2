@@ -2,6 +2,7 @@
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import * as Sentry from "@sentry/react";
+import { CaptureContext } from "@sentry/types";
 import { Integrations } from "@sentry/tracing";
 
 declare const __GIT_VERSION__: string;
@@ -17,3 +18,11 @@ Sentry.init({
   // We recommend adjusting this value in production
   tracesSampleRate: 1.0
 });
+
+export function criticalError(
+  err: Error | string,
+  captureContext?: CaptureContext
+): void {
+  Sentry.captureException(err, captureContext);
+  console.error(err);
+}

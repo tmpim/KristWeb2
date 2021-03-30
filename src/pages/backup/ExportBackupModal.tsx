@@ -16,6 +16,8 @@ import { CopyInputButton } from "@comp/CopyInputButton";
 import dayjs from "dayjs";
 import { saveAs } from "file-saver";
 
+import { criticalError } from "@utils";
+
 interface Props {
   visible?: boolean;
   setVisible: Dispatch<SetStateAction<boolean>>;
@@ -44,7 +46,7 @@ export function ExportBackupModal({
 
     backupExport()
       .then(setCode)
-      .catch(console.error);
+      .catch(criticalError);
   }, [visible, wallets]);
 
   function saveToFile() {

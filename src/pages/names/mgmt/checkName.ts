@@ -4,6 +4,7 @@
 import { Dispatch, SetStateAction } from "react";
 
 import * as api from "@api";
+import { criticalError } from "@utils";
 
 interface CheckNameResponse {
   available: boolean;
@@ -18,7 +19,7 @@ export async function checkName(
     const { available } = await api.get<CheckNameResponse>(url);
     setNameAvailable(available);
   } catch (err) {
-    console.error(err);
+    criticalError(err);
     setNameAvailable(undefined);
   }
 }

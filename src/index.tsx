@@ -4,7 +4,7 @@
 import "@utils/errors";
 import "@utils/setup";
 import { i18nLoader } from "@utils/i18n";
-import { isLocalhost } from "@utils";
+import { isLocalhost, criticalError } from "@utils";
 
 import ReactDOM from "react-dom";
 
@@ -57,7 +57,7 @@ main().catch(err => {
   if (err?.message === "compat checks failed") return;
 
   debug("critical error in index.tsx");
-  console.error(err);
+  criticalError(err);
 
   notification.error({
     message: "Critical error",
