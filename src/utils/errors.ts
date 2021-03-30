@@ -11,17 +11,19 @@ declare const __GIT_VERSION__: string;
 const gitVersion: string = __GIT_VERSION__;
 
 const ls = localStorage.getItem("settings.errorReporting");
-const errorReporting = process.env.DISABLE_SENTRY !== "true" &&
+export const errorReporting = process.env.DISABLE_SENTRY !== "true" &&
   (ls === null || ls === "true");
-const messageOnErrorReport = localStorage.getItem("settings.messageOnErrorReport") === "true";
+export const messageOnErrorReport = localStorage.getItem("settings.messageOnErrorReport") === "true";
 
 Sentry.init({
-  dsn: "https://51a018424102449b88f94c795cf62bb7@sentry.lemmmy.pw/2",
+  dsn: errorReporting
+    ? "https://51a018424102449b88f94c795cf62bb7@sentry.lemmmy.pw/2"
+    : undefined,
   release: "kristweb2-react@" + gitVersion,
   integrations: [new Integrations.BrowserTracing()],
 
   // Disable Sentry error reporting if the setting is disabled:
-  tracesSampleRate: errorReporting ? 1 : 0,
+  tracesSampleRate: errorReporting ? 0.2 : 0,
 
   beforeSend(event) {
     // Don't send an error event if error reporting is disabled

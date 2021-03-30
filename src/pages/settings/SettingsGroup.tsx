@@ -1,7 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import React from "react";
+import React, { ComponentType, ReactNode } from "react";
 import { Menu } from "antd";
 
 import { useTFns } from "@utils/i18n";
@@ -11,7 +11,7 @@ import { SettingBoolean } from "./SettingBoolean";
 import { SettingInteger } from "./SettingInteger";
 
 export interface SettingDesc<T> {
-  component: React.ComponentType<{
+  component: ComponentType<{
     setting: SettingName<T>;
     title?: string;
     titleKey?: string;
@@ -22,11 +22,13 @@ export interface SettingDesc<T> {
   setting: SettingName<T>;
 }
 
+export type GroupItem<T> = SettingDesc<T> | ReactNode;
+
 interface Props {
   subKey: string;
-  icon?: React.ReactNode;
+  icon?: ReactNode;
 
-  settings: SettingDesc<any>[];
+  settings: GroupItem<any>[];
 }
 
 export const booleanSetting = (setting: SettingName<boolean>): SettingDesc<boolean> =>
@@ -52,15 +54,19 @@ export function SettingsGroup({
   >
     {/* Render each setting */}
     {settings.map(s => (
-      <Menu.Item key={`${subKey}/${s.setting}`}>
-        {React.createElement(s.component, {
-          setting: s.setting,
-          titleKey: tKey(s.setting),
-          descriptionKey: i18n.exists(tKey(s.setting + "Description"))
-            ? tKey(s.setting + "Description")
-            : undefined
-        })}
-      </Menu.Item>
+      s && typeof s === "object" && "setting" in s
+        ? (
+          <Menu.Item key={`${subKey}/${s.setting}`}>
+            {React.createElement(s.component, {
+              setting: s.setting,
+              titleKey: tKey(s.setting),
+              descriptionKey: i18n.exists(tKey(s.setting + "Description"))
+                ? tKey(s.setting + "Description")
+                : undefined
+            })}
+          </Menu.Item>
+        )
+        : s // Render a ReactNode directly
     ))}
   </Menu.SubMenu>;
 }

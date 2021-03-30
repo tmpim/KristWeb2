@@ -7,6 +7,7 @@ import { Alert } from "antd";
 import { useTFns } from "@utils/i18n";
 
 import * as Sentry from "@sentry/react";
+import { errorReporting } from "@utils";
 
 interface Props {
   name: string;
@@ -37,8 +38,11 @@ function ErrorFallback(): JSX.Element {
     description={<>
       <p>{tStr("description")}</p>
 
-      {/* TODO: Hide this if Sentry is disabled */}
-      <p style={{ marginBottom: 0}}>{tStr("sentryNote")}</p>
+      {/* If Sentry error reporting is enabled, add a message saying the error
+        * was automatically reported. */}
+      {errorReporting && (
+        <p style={{ marginBottom: 0}}>{tStr("sentryNote")}</p>
+      )}
     </>}
   />;
 }

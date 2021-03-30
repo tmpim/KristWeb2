@@ -5,8 +5,11 @@ import { Typography, Descriptions, Divider } from "antd";
 import { useTranslation, Trans } from "react-i18next";
 
 import { PageLayout } from "@layout/PageLayout";
+
 import { Supporters } from "./Supporters";
 import { Translators } from "./Translators";
+import { Privacy } from "./Privacy";
+
 import { DateTime } from "@comp/DateTime";
 
 import { getAuthorInfo, useHostInfo } from "@utils";
@@ -97,6 +100,10 @@ export function CreditsPage(): JSX.Element {
     {/* Translators */}
     <Divider>{t("credits.translatorsTitle")}</Divider>
     <Translators />
+
+    {/* Privacy */}
+    <Divider>{t("credits.privacyTitle")}</Divider>
+    <Privacy />
 
     <Divider>{t("credits.tmpim")}</Divider>
     <a href="https://tmpim.pw" target="_blank" rel="noopener noreferrer">
