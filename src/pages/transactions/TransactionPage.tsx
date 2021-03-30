@@ -124,7 +124,7 @@ function PageContents({ transaction }: { transaction: KristTransaction }): JSX.E
       </Col>}
 
       {/* Raw data */}
-      {<Col span={24} xl={14} xxl={12}>
+      {<Col span={24} xl={10} xxl={12}>
         <TransactionRawDataCard transaction={transaction} />
       </Col>}
     </Row>
