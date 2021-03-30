@@ -13,6 +13,7 @@ import "@utils/i18n";
 // FIXME: Apparently the import order of my CSS is important. Who knew!
 import "./App.less";
 
+import { ErrorBoundary } from "@global/ErrorBoundary";
 import { AppLoading } from "@global/AppLoading";
 import { AppServices } from "@global/AppServices";
 import { WebsocketProvider } from "@global/ws/WebsocketProvider";
@@ -34,22 +35,24 @@ function App(): JSX.Element {
     store = initStore();
   }
 
-  return <Suspense fallback={<AppLoading />}>
-    <Provider store={store}>
-      <LocaleContext>
-        <AuthProvider>
-          <WebsocketProvider>
-            <Router>
-              <AppLayout />
+  return <ErrorBoundary name="top-level-app">
+    <Suspense fallback={<AppLoading />}>
+      <Provider store={store}>
+        <LocaleContext>
+          <AuthProvider>
+            <WebsocketProvider>
+              <Router>
+                <AppLayout />
 
-              {/* Services, etc. */}
-              <AppServices />
-            </Router>
-          </WebsocketProvider>
-        </AuthProvider>
-      </LocaleContext>
-    </Provider>
-  </Suspense>;
+                {/* Services, etc. */}
+                <AppServices />
+              </Router>
+            </WebsocketProvider>
+          </AuthProvider>
+        </LocaleContext>
+      </Provider>
+    </Suspense>
+  </ErrorBoundary>;
 }
 
 export default App;

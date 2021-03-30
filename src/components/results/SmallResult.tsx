@@ -5,7 +5,7 @@
 // This is ant-design's Result component, but without importing 54 kB of images
 // that we don't even use.
 //
-// This file is based off of hte following source code from ant-design, which is
+// This file is based off of the following source code from ant-design, which is
 // licensed under the MIT license:
 //
 // https://github.com/ant-design/ant-design/blob/077443696ba0fb708f2af81f5eb665b908d8be66/components/result/index.tsx

@@ -84,6 +84,12 @@
   },
 
   "error": "Error",
+  "errorBoundary": {
+    "title": "Critical error",
+    "description": "A critical error has occurred in KristWeb, so this page was terminated. See console for details.",
+    "sentryNote": "This error was automatically reported."
+  },
+
   "loading": "Loading...",
 
   "copy": "Copy to clipboard",

@@ -1,9 +1,8 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { Alert } from "antd";
-
 import { Switch, Route, Redirect } from "react-router-dom";
+import { ErrorBoundary } from "@global/ErrorBoundary";
 
 import { DashboardPage } from "@pages/dashboard/DashboardPage";
 import { WalletsPage } from "@pages/wallets/WalletsPage";
@@ -100,9 +99,9 @@ export function AppRouter(): JSX.Element {
       component && (
         <Route exact path={path} key={key}>
           {/* Try to catch errors on a route without crashing everything */}
-          <Alert.ErrorBoundary>
+          <ErrorBoundary name="app-router">
             {component}
-          </Alert.ErrorBoundary>
+          </ErrorBoundary>
         </Route>
       )
     ))}
