@@ -11,7 +11,7 @@ import { useCurrency } from "@utils/krist";
 import { KristSymbol } from "@comp/krist/KristSymbol";
 
 interface Props {
-  from: string;
+  from?: string;
   setAmount: (amount: number) => void;
   tabIndex?: number;
 }
@@ -31,6 +31,7 @@ export function AmountInput({
   const { currency_symbol } = useCurrency();
 
   function onClickMax() {
+    if (!from) return;
     const currentWallet = walletAddressMap[from];
     setAmount(currentWallet?.balance || 0);
   }
@@ -66,6 +67,9 @@ export function AmountInput({
               if (value < 1)
                 throw t("sendTransaction.errorAmountTooLow");
 
+              // Nothing to validate if there's no `from` field (request screen)
+              if (!from) return;
+
               const currentWallet = walletAddressMap[from];
               if (!currentWallet) return;
               if (value > (currentWallet.balance || 0))
@@ -88,9 +92,9 @@ export function AmountInput({
       </span>
 
       {/* Max value button */}
-      <Button onClick={onClickMax}>
+      {from && <Button onClick={onClickMax}>
         {t("sendTransaction.buttonMax")}
-      </Button>
+      </Button>}
     </Input.Group>
   </Form.Item>;
 }

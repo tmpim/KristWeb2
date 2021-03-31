@@ -25,7 +25,7 @@ import { handleTransactionError } from "./handleErrors";
 import { useAuthFailedModal } from "@api/AuthFailed";
 
 import { AddressPicker } from "@comp/addresses/picker/AddressPicker";
-import { AmountInput } from "./AmountInput";
+import { AmountInput } from "../../../components/transactions/AmountInput";
 import { SendTransactionConfirmModalContents } from "./SendTransactionConfirmModal";
 
 import awaitTo from "await-to-js";
