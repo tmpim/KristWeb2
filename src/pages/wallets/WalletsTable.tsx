@@ -136,8 +136,6 @@ export function WalletsTable({
   openSendTx,
   openWalletInfo
 }: Props): JSX.Element {
-  const { tStr } = useTFns("myWallets.");
-
   const { wallets } = useWallets();
   const walletValues = Object.values(wallets);
 
