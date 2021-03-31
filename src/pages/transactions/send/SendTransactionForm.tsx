@@ -18,9 +18,10 @@ import { useMountEffect } from "@utils/hooks";
 import { sha256 } from "@utils/crypto";
 import { useBooleanSetting, useIntegerSetting } from "@utils/settings";
 
-import { APIError, useSyncNode } from "@api";
+import { useSyncNode } from "@api";
 import { KristTransaction } from "@api/types";
 import { makeTransaction } from "@api/transactions";
+import { handleTransactionError } from "./handleErrors";
 import { useAuthFailedModal } from "@api/AuthFailed";
 
 import { AddressPicker } from "@comp/addresses/picker/AddressPicker";
@@ -46,6 +47,8 @@ export interface FormValues {
 interface Props {
   from?: Wallet | string;
   to?: string;
+  amount?: number;
+  metadata?: string;
   form: FormInstance<FormValues>;
   triggerSubmit: () => Promise<void>;
 }
@@ -53,6 +56,8 @@ interface Props {
 function SendTransactionForm({
   from: rawInitialFrom,
   to: initialTo,
+  amount: initialAmount,
+  metadata: initialMetadata,
   form,
   triggerSubmit
 }: Props): JSX.Element {
@@ -106,21 +111,21 @@ function SendTransactionForm({
   const initialValues = useMemo(() => ({
     from: initialFrom,
     to: initialTo,
-    amount: 1,
-    metadata: ""
+    amount: initialAmount || 1,
+    metadata: initialMetadata || ""
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }), [
     rawInitialFrom,
     initialFrom,
-    initialTo
+    initialTo,
+    initialAmount,
+    initialMetadata
   ]);
 
-  // If the to/from change, refresh the form
+  // If the initial values change, refresh the form
   useEffect(() => {
-    if (!form || (!rawInitialFrom && !initialTo)) return;
-    form.setFieldsValue(initialValues);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [form, rawInitialFrom, to]);
+    form?.setFieldsValue(initialValues);
+  }, [form, initialValues]);
 
   return <Form
     // The form instance is managed by the parent, so that it has control over
@@ -194,6 +199,8 @@ function SendTransactionForm({
 interface TransactionFormHookProps {
   from?: Wallet | string;
   to?: string;
+  amount?: number;
+  metadata?: string;
   onError?: (err: Error) => void;
   onSuccess?: (transaction: KristTransaction) => void;
   allowClearOnSend?: boolean;
@@ -210,6 +217,8 @@ interface TransactionFormHookResponse {
 export function useTransactionForm({
   from: initialFrom,
   to: initialTo,
+  amount: initialAmount,
+  metadata: initialMetadata,
   onError,
   onSuccess,
   allowClearOnSend
@@ -276,33 +285,8 @@ export function useTransactionForm({
   }
 
   // Convert API errors to friendlier errors
-  function handleError(err: Error, from?: Wallet): void {
-    // Construct a TranslatedError pre-keyed to sendTransaction
-    const tErr = (key: string) => new TranslatedError("sendTransaction." + key);
-
-    switch (err.message) {
-    case "missing_parameter":
-    case "invalid_parameter":
-      switch ((err as APIError).parameter) {
-      case "to":
-        return onError?.(tErr("errorParameterTo"));
-      case "amount":
-        return onError?.(tErr("errorParameterAmount"));
-      case "metadata":
-        return onError?.(tErr("errorParameterMetadata"));
-      }
-      break;
-    case "insufficient_funds":
-      return onError?.(tErr("errorInsufficientFunds"));
-    case "name_not_found":
-      return onError?.(tErr("errorNameNotFound"));
-    case "auth_failed":
-      return showAuthFailed(from!);
-    }
-
-    // Pass through any other unknown errors
-    onError?.(err);
-  }
+  const handleError = handleTransactionError.bind(handleTransactionError,
+    onError, showAuthFailed);
 
   async function onSubmit() {
     setIsSubmitting(true);
@@ -374,6 +358,8 @@ export function useTransactionForm({
     <SendTransactionForm
       from={initialFrom}
       to={initialTo}
+      amount={initialAmount}
+      metadata={initialMetadata}
       form={form}
       triggerSubmit={onSubmit}
     />

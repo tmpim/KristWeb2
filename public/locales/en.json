@@ -1017,7 +1017,9 @@
     "errorNotificationTitle": "Transaction failed",
     "successNotificationTitle": "Transaction successful",
     "successNotificationContent": "You sent <1 /> from <3 /> to <5 />.",
-    "successNotificationButton": "View transaction"
+    "successNotificationButton": "View transaction",
+
+    "errorInvalidQuery": "The query parameters were invalid, they were ignored."
   },
 
   "authFailed": {

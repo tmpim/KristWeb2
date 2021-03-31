@@ -18,6 +18,7 @@ import { KristTransaction } from "@api/types";
 
 import { useTransactionForm } from "./SendTransactionForm";
 import { NotifSuccessContents, NotifSuccessButton } from "./Success";
+import { useSendTxQuery } from "./QueryParamsHook";
 
 import "./SendTransactionPage.less";
 
@@ -28,8 +29,12 @@ export function SendTransactionPage(): JSX.Element {
   // The success or error alert
   const [alert, setAlert] = useState<JSX.Element | null>(null);
 
+  // Get any pre-filled values from the query parameters
+  const { to, amount, metadata } = useSendTxQuery();
+
   // Create the transaction form
   const { isSubmitting, triggerSubmit, txForm } = useTransactionForm({
+    to, amount, metadata,
     onSuccess: tx => setAlert(<AlertSuccess tx={tx} />),
     onError: err => setAlert(<AlertError err={err} />)
   });
