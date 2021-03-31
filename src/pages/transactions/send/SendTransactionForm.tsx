@@ -25,7 +25,7 @@ import { handleTransactionError } from "./handleErrors";
 import { useAuthFailedModal } from "@api/AuthFailed";
 
 import { AddressPicker } from "@comp/addresses/picker/AddressPicker";
-import { AmountInput } from "../../../components/transactions/AmountInput";
+import { AmountInput } from "@comp/transactions/AmountInput";
 import { SendTransactionConfirmModalContents } from "./SendTransactionConfirmModal";
 
 import awaitTo from "await-to-js";
@@ -35,7 +35,7 @@ const debug = Debug("kristweb:send-transaction-form");
 
 // This is from https://github.com/tmpim/Krist/blob/a924f3f/src/controllers/transactions.js#L102
 // except `+` is changed to `*`.
-const METADATA_REGEXP = /^[\x20-\x7F\n]*$/i;
+export const METADATA_REGEXP = /^[\x20-\x7F\n]*$/i;
 
 export interface FormValues {
   from: string;

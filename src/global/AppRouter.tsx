@@ -9,6 +9,7 @@ import { WalletsPage } from "@pages/wallets/WalletsPage";
 import { ContactsPage } from "@pages/contacts/ContactsPage";
 
 import { SendTransactionPage } from "@pages/transactions/send/SendTransactionPage";
+import { RequestPage } from "@pages/transactions/request/RequestPage";
 
 import { AddressPage } from "@pages/addresses/AddressPage";
 import { BlocksPage } from "@pages/blocks/BlocksPage";
@@ -47,6 +48,7 @@ export const APP_ROUTES: AppRoute[] = [
 
   // Payments
   { path: "/send", name: "sendTransaction", component: <SendTransactionPage /> },
+  { path: "/request", name: "request", component: <RequestPage /> },
 
   // Network explorer
   { path: "/network/addresses/:address", name: "address", component: <AddressPage /> },

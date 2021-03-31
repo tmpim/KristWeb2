@@ -1,6 +1,7 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
+import { ReactNode } from "react";
 import { Form, Input, InputNumber, Button } from "antd";
 
 import { useTranslation } from "react-i18next";
@@ -13,12 +14,22 @@ import { KristSymbol } from "@comp/krist/KristSymbol";
 interface Props {
   from?: string;
   setAmount: (amount: number) => void;
+
+  label?: ReactNode;
+  required?: boolean;
+  disabled?: boolean;
+
   tabIndex?: number;
 }
 
 export function AmountInput({
   from,
   setAmount,
+
+  label,
+  required,
+  disabled,
+
   tabIndex,
   ...props
 }: Props): JSX.Element {
@@ -36,9 +47,11 @@ export function AmountInput({
     setAmount(currentWallet?.balance || 0);
   }
 
+  const amountRequired = required === undefined || !!required;
+
   return <Form.Item
-    label={t("sendTransaction.labelAmount")}
-    required
+    label={label}
+    required={amountRequired}
     {...props}
   >
     <Input.Group compact style={{ display: "flex" }}>
@@ -57,13 +70,19 @@ export function AmountInput({
 
         validateFirst
         rules={[
-          { required: true, message: t("sendTransaction.errorAmountRequired") },
-          { type: "number", message: t("sendTransaction.errorAmountNumber") },
+          { required: amountRequired,
+            message: t("sendTransaction.errorAmountRequired") },
+          { type: "number",
+            message: t("sendTransaction.errorAmountNumber") },
 
           // Validate that the number isn't higher than the selected wallet's
-          // balance
+          // balance, if it is present
           {
             async validator(_, value): Promise<void> {
+              // If the field isn't required, don't complain if it's empty
+              if (!required && typeof value !== "number")
+                return;
+
               if (value < 1)
                 throw t("sendTransaction.errorAmountTooLow");
 
@@ -83,6 +102,7 @@ export function AmountInput({
           min={1}
           style={{ width: "100%", height: 32 }}
           tabIndex={tabIndex}
+          disabled={disabled}
         />
       </Form.Item>
 
@@ -92,7 +112,7 @@ export function AmountInput({
       </span>
 
       {/* Max value button */}
-      {from && <Button onClick={onClickMax}>
+      {from && <Button onClick={onClickMax} disabled={disabled}>
         {t("sendTransaction.buttonMax")}
       </Button>}
     </Input.Group>

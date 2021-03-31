@@ -50,7 +50,7 @@ export function AppHeader({ sidebarCollapsed, setSidebarCollapsed }: Props): JSX
       </Menu.Item>
 
       {/* Request Krist */}
-      <Menu.Item key="2" className="nyi" icon={<DownloadOutlined />}>
+      <Menu.Item key="2" icon={<DownloadOutlined />}>
         <ConditionalLink to="/request" matchTo aria-label={t("nav.request")}>
           {t("nav.request")}
         </ConditionalLink>

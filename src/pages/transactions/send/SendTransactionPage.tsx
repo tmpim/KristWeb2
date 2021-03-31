@@ -23,7 +23,6 @@ import { useSendTxQuery } from "./QueryParamsHook";
 import "./SendTransactionPage.less";
 
 export function SendTransactionPage(): JSX.Element {
-  // TODO: use this page for pre-filled transaction links?
   const { t } = useTranslation();
 
   // The success or error alert

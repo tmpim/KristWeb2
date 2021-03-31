@@ -1022,6 +1022,19 @@
     "errorInvalidQuery": "The query parameters were invalid, they were ignored."
   },
 
+  "request": {
+    "title": "Request Krist",
+    "siteTitle": "Request Krist",
+
+    "labelTo": "Request recipient",
+    "labelAmount": "Request amount",
+    "labelMetadata": "Request metadata",
+    "placeholderMetadata": "Metadata",
+
+    "generatedLink": "Generated link",
+    "generatedLinkHint": "Send this link to somebody to request a payment from them."
+  },
+
   "authFailed": {
     "title": "Auth failed",
     "message": "You do not own this address.",
