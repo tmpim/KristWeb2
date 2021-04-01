@@ -49,7 +49,6 @@ export function broadcastDeleteContact(id: string): void {
 /** Component that manages a BroadcastChannel responsible for dispatching wallet
  * storage events (add, edit, delete) across tabs. */
 export function StorageBroadcast(): JSX.Element | null {
-  // TODO: is it safe to register this here?
   debug("registering storage broadcast event listener");
   channel.onmessage = e => {
     debug("received storage broadcast:", e);

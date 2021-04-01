@@ -83,7 +83,6 @@ export class WebsocketConnection {
   private handleDisconnect(err?: Error) {
     if (this.reconnectionTimer) window.clearTimeout(this.reconnectionTimer);
 
-    // TODO: show errors to the user?
     this.setConnectionState("disconnected");
     debug("failed to connect to server, reconnecting in %d ms", this.connectDebounce, err);
 

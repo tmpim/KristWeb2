@@ -10,7 +10,7 @@ import { KristNameLink } from "./KristNameLink";
 import "./NameARecordLink.less";
 
 function forceURL(link: string): string {
-  // TODO: this is rather crude
+  // FIXME: this is rather crude
   if (!link.startsWith("http")) return "https://" + link;
   return link;
 }

@@ -106,8 +106,6 @@ export async function backupImport(
 
   // The app master password is required to import wallets. The backup import
   // is usually done through an authenticated action anyway.
-  // TODO: When adding legacy wallet imports, use the 'previous' master
-  //       password as the new one. Add a screen to change it at any point.
   if (!appMasterPassword)
     throw new TranslatedError("import.appMasterPasswordRequired");
 
