@@ -33,12 +33,12 @@ const sidebarItems: SidebarItemProps[] = [
   { icon: <TeamOutlined />,   name: "addressBook",  to: "/contacts" },
   { icon: <BankOutlined />,   name: "transactions", to: "/me/transactions" },
   { icon: <TagsOutlined />,   name: "names",        to: "/me/names" },
-  { icon: <SketchOutlined />, name: "mining",       to: "/mining", nyi: true },
+  // { icon: <SketchOutlined />, name: "mining",       to: "/mining", nyi: true },
 
   { group: "network", icon: <BuildOutlined />, name: "blocks",       to: "/network/blocks" },
   { group: "network", icon: <BankOutlined />,  name: "transactions", to: "/network/transactions" },
   { group: "network", icon: <TagsOutlined />,  name: "names",        to: "/network/names" },
-  { group: "network", icon: <StockOutlined />, name: "statistics",   to: "/network/statistics", nyi: true },
+  // { group: "network", icon: <StockOutlined />, name: "statistics",   to: "/network/statistics", nyi: true },
 ];
 
 function getSidebarItems(t: TFunction, group?: string) {
