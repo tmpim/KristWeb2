@@ -78,12 +78,12 @@ export function LegacyMigrationModal({
     // Remove the 'Cancel' button
     footer={<>
       {/* Forgot password button */}
-      <Button
+      {!loading && !results && <Button
         danger
         onClick={openForgotPasswordModal}
       >
         {tStr("buttonForgotPassword")}
-      </Button>
+      </Button>}
 
       {/* Submit button */}
       <Button

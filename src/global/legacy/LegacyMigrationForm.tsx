@@ -10,6 +10,7 @@ import { useTFns, translateError } from "@utils/i18n";
 import { store } from "@app";
 
 import { getMasterPasswordInput } from "@comp/auth/MasterPasswordInput";
+import { useAuth } from "@comp/auth/AuthorisedAction";
 import { setMasterPassword } from "@wallets";
 
 import { BackupKristWebV1 } from "@pages/backup/backupFormats";
@@ -40,6 +41,7 @@ export function useLegacyMigrationForm(
   const { t, tStr, tKey } = useTFns("legacyMigration.");
 
   const [form] = Form.useForm();
+  const promptAuth = useAuth();
 
   const [masterPasswordError, setMasterPasswordError] = useState<string>();
 
@@ -60,9 +62,35 @@ export function useLegacyMigrationForm(
       const hasMP = store.getState().masterPassword.hasMasterPassword;
       if (!hasMP) {
         debug("no existing master password, initialising with provided one");
-        await setMasterPassword(values.masterPassword);
+        await setMasterPassword(masterPassword);
+        await beginImport(masterPassword);
+      } else {
+        // A master password is already set up. In case they are different, the
+        // old wallets will need to be re-encrypted with the new password. The
+        // backupImport function grabs the master password from the store, so we
+        // must prompt for auth first before continuing.
+        debug("existing master password, prompting for auth");
+        promptAuth(true, () => beginImport(masterPassword));
+      }
+    } catch (err) {
+      debug("legacy migration error block 1");
+      console.error(err);
+      if (err.message === "import.masterPasswordRequired"
+        || err.message === "import.masterPasswordIncorrect") {
+        // Master password incorrect error
+        setMasterPasswordError(translateError(t, err));
+      } else {
+        // Any other import error
+        criticalError(err);
+        notification.error({ message: tStr("errorUnknown") });
       }
 
+      setLoading(false);
+    }
+  }
+
+  async function beginImport(masterPassword: string) {
+    try {
       // Perform the import
       const results = await backupImport(
         backup, masterPassword, false,
@@ -77,16 +105,11 @@ export function useLegacyMigrationForm(
 
       setResults(results);
     } catch (err) {
-      if (err.message === "import.masterPasswordRequired"
-        || err.message === "import.masterPasswordIncorrect") {
-        // Master password incorrect error
-        setMasterPasswordError(translateError(t, err));
-      } else {
-        // Any other import error
-        criticalError(err);
-        notification.error({ message: tStr("errorUnknown") });
-      }
+      debug("legacy migration error block 2");
+      criticalError(err);
+      notification.error({ message: tStr("errorUnknown") });
     } finally {
+      debug("finally setLoading false");
       setLoading(false);
     }
   }
