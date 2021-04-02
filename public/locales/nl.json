@@ -1180,8 +1180,10 @@
     "modalTitle": "KristWeb v1 migratie",
     "description": "Welkom bij KristWeb v2! Het lijkt erop dat u KristWeb v1 eerder op dit domein heeft gebruikt. <br /> <br /><strong>Voer uw hoofdwachtwoord in om uw portemonnee naar het nieuwe formaat te migreren.</strong> U hoeft dit maar één keer te doen.",
 
-    "walletCount": "<1>{{count, number}}</1> wallets gedetecteerd",
-    "contactCount": "<1>{{count, number}}</1> contacten gedetecteerd",
+    "walletCount": "<1>{{count, number}}</1> wallet gedetecteerd",
+    "walletCount_plural": "<1>{{count, number}}</1> wallets gedetecteerd",
+    "contactCount": "<1>{{count, number}}</1> contact gedetecteerd",
+    "contactCount_plural": "<1>{{count, number}}</1> contacten gedetecteerd",
 
     "masterPasswordLabel": "Hoofdwachtwoord",
     "masterPasswordPlaceholder": "Hoofdwachtwoord",
