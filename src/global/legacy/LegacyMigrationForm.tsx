@@ -45,6 +45,9 @@ export function useLegacyMigrationForm(
 
   const [masterPasswordError, setMasterPasswordError] = useState<string>();
 
+  const foundWalletCount = Object.keys(backup.wallets).length;
+  const foundContactCount = Object.keys(backup.friends).length;
+
   async function onFinish() {
     const values = await form.validateFields();
     const { masterPassword } = values;
@@ -125,7 +128,21 @@ export function useLegacyMigrationForm(
     onFinish={onFinish}
   >
     {/* Description */}
-    <p><Trans t={t} i18nKey={tKey("description")}></Trans></p>
+    <p>
+      <Trans t={t} i18nKey={tKey("description")}></Trans>
+    </p>
+
+    {/* Found wallet and contact count */}
+    {foundWalletCount > 0 && <p className="text-green">
+      <Trans t={t} i18nKey={tKey("walletCount")} count={foundWalletCount}>
+        Detected <b>{{ count: foundWalletCount }}</b> wallets
+      </Trans>
+    </p>}
+    {foundContactCount > 0 && <p className="text-green">
+      <Trans t={t} i18nKey={tKey("contactCount")} count={foundContactCount}>
+        Detected <b>{{ count: foundContactCount }}</b> contacts
+      </Trans>
+    </p>}
 
     {/* Password input */}
     <Form.Item
