@@ -1125,7 +1125,7 @@
 
     "successMessage": "Name updated successfully",
     "successMessage_plural": "Names updated successfully",
-    "successDescription": "Updated <1>{{count, number}}</1> names.",
+    "successDescription": "Updated <1>{{count, number}}</1> name.",
     "successDescription_plural": "Updated <1>{{count, number}}</1> names.",
 
     "progress": "Updating <1>{{count, number}}</1> name...",
@@ -1180,8 +1180,10 @@
     "modalTitle": "KristWeb v1 migration",
     "description": "Welcome to KristWeb v2! It looks like you have used KristWeb v1 on this domain before.<br /><br /><strong>Please enter your master password to migrate your wallets to the new format.</strong> You will only have to do this once.",
 
-    "walletCount": "Detected <1>{{count, number}}</1> wallets",
-    "contactCount": "Detected <1>{{count, number}}</1> contacts",
+    "walletCount": "Detected <1>{{count, number}}</1> wallet",
+    "walletCount_plural": "Detected <1>{{count, number}}</1> wallets",
+    "contactCount": "Detected <1>{{count, number}}</1> contact",
+    "contactCount_plural": "Detected <1>{{count, number}}</1> contacts",
 
     "masterPasswordLabel": "Master password",
     "masterPasswordPlaceholder": "Master password",
