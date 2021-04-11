@@ -82,6 +82,7 @@ function getColumns(
       // Don't allow sorting by ID to save a bit of width in the columns;
       // it's equivalent to sorting by time anyway
     },
+
     // Type
     {
       title: tStr("columnType"),
@@ -106,6 +107,7 @@ function getColumns(
 
       sorter: true
     },
+
     // To
     {
       title: tStr("columnTo"),

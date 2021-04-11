@@ -3,6 +3,8 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import classNames from "classnames";
 
+import { Link } from "react-router-dom";
+
 import { KristTransaction } from "@api/types";
 import { useNameSuffix, stripNameFromMetadata } from "@utils/krist";
 
@@ -19,15 +21,20 @@ interface Props {
  * Trims the name and metaname from the start of metadata, and truncates it
  * to a specified amount of characters.
  */
-export function TransactionConciseMetadata({ transaction, metadata, limit = 30, className }: Props): JSX.Element | null {
+export function TransactionConciseMetadata({
+  transaction: tx,
+  metadata,
+  limit = 30,
+  className
+}: Props): JSX.Element | null {
   const nameSuffix = useNameSuffix();
 
   // Don't render anything if there's no metadata (after the hooks)
-  const meta = metadata || transaction?.metadata;
+  const meta = metadata || tx?.metadata;
   if (!meta) return null;
 
   // Strip the name from the start of the transaction metadata, if it is present
-  const hasName = transaction && (transaction.sent_name || transaction.sent_metaname);
+  const hasName = tx && (tx.sent_name || tx.sent_metaname);
   const withoutName = hasName
     ? stripNameFromMetadata(nameSuffix, meta)
     : meta;
@@ -40,5 +47,15 @@ export function TransactionConciseMetadata({ transaction, metadata, limit = 30, 
     "transaction-concise-metadata-truncated": wasTruncated
   });
 
-  return <span className={classes}>{truncated}</span>;
+  // Link to the transaction if it is available
+  return tx
+    ? (
+      <Link
+        className={classes}
+        to={`/network/transactions/${encodeURIComponent(tx.id)}`}
+      >
+        {truncated}
+      </Link>
+    )
+    : <span className={classes}>{truncated}</span>;
 }
