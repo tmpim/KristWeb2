@@ -14,7 +14,9 @@ import { Line } from "react-chartjs-2";
 import * as api from "@api";
 import { estimateHashRate } from "@utils/krist";
 import { KristConstants } from "@api/types";
+
 import { trailingThrottleState } from "@utils";
+import { useBooleanSetting } from "@utils/settings";
 
 import { SmallResult } from "@comp/results/SmallResult";
 import { Statistic } from "@comp/Statistic";
@@ -166,6 +168,11 @@ export function BlockDifficultyCard(): JSX.Element {
     fetchWorkOverTime(constants);
   }, [syncNode, lastBlockID, constants, constants.seconds_per_block, fetchWorkOverTime]);
 
+  // Use a date format string appropriate for the user's locale and settings.
+  // Only applies to the tooltip.
+  const showNativeDates = useBooleanSetting("showNativeDates");
+  const tooltipDateFormat = showNativeDates ? "ll LTS" : "YYYY/MM/DD HH:mm:ss";
+
   function chart(): JSX.Element {
     return <Line
       height={CHART_HEIGHT}
@@ -183,7 +190,12 @@ export function BlockDifficultyCard(): JSX.Element {
         ...CHART_OPTIONS_BASE,
 
         scales: {
-          xAxes: [CHART_OPTIONS_X_AXIS],
+          xAxes: [{
+            ...CHART_OPTIONS_X_AXIS,
+            time: {
+              tooltipFormat: tooltipDateFormat
+            }
+          }],
           yAxes: [{
             ...CHART_OPTIONS_Y_AXIS,
             type: chartMode,
