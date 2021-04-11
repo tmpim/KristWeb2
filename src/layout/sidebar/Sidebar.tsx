@@ -1,9 +1,9 @@
 // Copyright (c) 2020-2021 Drew Lemmy
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
-import { useState, useEffect, Dispatch, SetStateAction } from "react";
+import { useState, useEffect, useMemo, Dispatch, SetStateAction } from "react";
 import { Layout, Menu, MenuItemProps } from "antd";
-import { HomeOutlined, WalletOutlined, TeamOutlined, BankOutlined, TagsOutlined, SketchOutlined, BuildOutlined, StockOutlined } from "@ant-design/icons";
+import { HomeOutlined, WalletOutlined, TeamOutlined, BankOutlined, TagsOutlined, BuildOutlined } from "@ant-design/icons";
 
 import { TFunction, useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
@@ -71,34 +71,38 @@ export function Sidebar({
     setSelectedKey(sidebarItems.find(i => i.to === "/"
       ? location.pathname === "/"
       : location.pathname.startsWith(i.to))?.to);
-  }, [location]);
+  }, [location.pathname]);
 
   useEffect(() => {
     // Close the sidebar if we switch page
     setCollapsed(true);
   }, [setCollapsed, location.pathname]);
 
-  return <Sider
-    width={240}
-    className={"site-sidebar " + (collapsed ? "collapsed" : "")}
-  >
-    {/* Service worker update checker, which may appear at the top of the
-      * sidebar if an update is available. */}
-    <ServiceWorkerCheck />
+  const memoSidebar = useMemo(() => (
+    <Sider
+      width={240}
+      className={"site-sidebar " + (collapsed ? "collapsed" : "")}
+    >
+      {/* Service worker update checker, which may appear at the top of the
+        * sidebar if an update is available. */}
+      <ServiceWorkerCheck />
 
-    {/* Total balance */}
-    <SidebarTotalBalance />
+      {/* Total balance */}
+      <SidebarTotalBalance />
 
-    {/* Menu items */}
-    <Menu theme="dark" mode="inline" selectedKeys={selectedKey ? [selectedKey] : undefined}>
-      {getSidebarItems(t)}
+      {/* Menu items */}
+      <Menu theme="dark" mode="inline" selectedKeys={selectedKey ? [selectedKey] : undefined}>
+        {getSidebarItems(t)}
 
-      <Menu.ItemGroup key="g1" title={t("sidebar.network")}>
-        {getSidebarItems(t, "network")}
-      </Menu.ItemGroup>
-    </Menu>
+        <Menu.ItemGroup key="g1" title={t("sidebar.network")}>
+          {getSidebarItems(t, "network")}
+        </Menu.ItemGroup>
+      </Menu>
 
-    {/* Credits footer */}
-    <SidebarFooter />
-  </Sider>;
+      {/* Credits footer */}
+      <SidebarFooter />
+    </Sider>
+  ), [t, collapsed, selectedKey]);
+
+  return memoSidebar;
 }
