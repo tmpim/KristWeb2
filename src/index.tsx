@@ -22,12 +22,12 @@ async function main() {
   debug("performing compat checks");
   await compatCheck();
 
-  if (isLocalhost && !localStorage.getItem("status")) {
-    // Automatically enable debug logging on localhost
-    localStorage.setItem("debug", "kristweb:*");
-    localStorage.setItem("status", "LOCAL");
-    location.reload();
-  }
+  // if (isLocalhost && !localStorage.getItem("status")) {
+  //   // Automatically enable debug logging on localhost
+  //   localStorage.setItem("debug", "kristweb:*");
+  //   localStorage.setItem("status", "LOCAL");
+  //   location.reload();
+  // }
 
   debug("waiting for i18n");
   await i18nLoader;
