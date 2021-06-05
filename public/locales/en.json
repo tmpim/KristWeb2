@@ -342,6 +342,7 @@
     "siteTitle": "Dashboard",
 
     "inDevBanner": "Welcome to the KristWeb v2 private beta! This site is still in development, so most features are currently missing. Please report all bugs on <1>GitHub</1>. Thanks!",
+    "inDevBanner2": "Welcome to the KristWeb v2 public beta! This site is relatively new, so please report any bugs on <1>GitHub</1>. Thanks!",
 
     "walletOverviewCardTitle": "Wallets",
     "walletOverviewTotalBalance": "Total balance",
