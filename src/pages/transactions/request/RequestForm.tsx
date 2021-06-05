@@ -43,15 +43,15 @@ export function RequestForm(): JSX.Element {
     }
 
     const query = new URLSearchParams();
-    query.set("to", encodeURIComponent(values.to));
+    query.set("to", values.to);
 
     // Add the amount if requested
     if (values.hasAmount && values.amount)
-      query.set("amount", encodeURIComponent(values.amount.toString()));
+      query.set("amount", values.amount.toString());
 
     // Add the metadata if requested
     if (values.hasMetadata && values.metadata)
-      query.set("metadata", encodeURIComponent(values.metadata));
+      query.set("metadata", values.metadata);
 
     setGeneratedLink(baseURL + "/send?" + query.toString());
   }, []);
