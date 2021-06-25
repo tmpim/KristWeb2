@@ -72,8 +72,7 @@ export function ContactMobileItemActions({
 
     {/* Edit contact */}
     <Menu.Item key="3" icon={<EditOutlined />}
-      onClick={() => promptAuth(false, () =>
-        openEditContact(undefined, contact))}>
+      onClick={() => openEditContact(undefined, contact)}>
       {tStr("actionsEditTooltip")}
     </Menu.Item>
 

@@ -38,7 +38,7 @@ export function ContactActions({
   const memoDropdown = useMemo(() => <Dropdown.Button
     className="table-actions contact-actions"
 
-    onClick={() => promptAuth(true, () => openEditContact(undefined, contact))}
+    onClick={() => openEditContact(undefined, contact)}
     trigger={["click"]}
     overlay={() => (
       <Menu>
