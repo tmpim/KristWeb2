@@ -28,7 +28,7 @@ const _cleanNameSuffix = (nameSuffix: string | undefined | null): string => {
 export const cleanNameSuffix = memoize(_cleanNameSuffix);
 
 const _getNameRegex = (nameSuffix: string | undefined | null, metadata?: boolean): RegExp =>
-  new RegExp(`^(?:([a-z0-9-_]{1,32})@)?([a-z0-9]{1,64})(\\.${cleanNameSuffix(nameSuffix)})${metadata ? ";?" : "$"}`);
+  new RegExp(`^(?:([a-z0-9-_]{1,32})@)?([a-z0-9]{1,64})(\\.${cleanNameSuffix(nameSuffix)})${metadata ? ";?" : "$"}`, "i");
 export const getNameRegex = memoize(_getNameRegex);
 
 export interface NameParts {
