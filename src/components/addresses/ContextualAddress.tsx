@@ -95,7 +95,7 @@ export function ContextualAddress({
   const showTooltip = !noTooltip && !verified &&
     ((hideNameAddress && !!hasMetaname) || !!walletLabel || !!contactLabel);
   const tooltipTitle = nonExistent
-    ? t("contextualAddressNonExistentTooltip")
+    ? t("contextualAddressNonExistentTooltip2")
     : (showTooltip ? address : undefined);
 
   const copyable = !neverCopyable && addressCopyButtons

@@ -105,6 +105,7 @@
 
   "contextualAddressUnknown": "Unknown",
   "contextualAddressNonExistentTooltip": "This address has not yet been initialised on the Krist network.",
+  "contextualAddressNonExistentTooltip2": "This address has no transaction history yet.",
 
   "typeahead": {
     "emptyLabel": "No matches found.",
@@ -563,6 +564,7 @@
     "resultInvalid": "That does not look like a valid Krist address.",
     "resultNotFoundTitle": "Address not found",
     "resultNotFound": "That address has not yet been initialised on the Krist network.",
+    "resultNotFound2": "That address has no transaction history yet.",
 
     "verifiedCardTitle": "Verified address",
     "verifiedInactive": "This service is not currently active.",

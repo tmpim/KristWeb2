@@ -220,7 +220,7 @@ export function AddressPage(): JSX.Element {
 
           notFoundMessage="address_not_found"
           notFoundTitleKey="address.resultNotFoundTitle"
-          notFoundSubTitleKey="address.resultNotFound"
+          notFoundSubTitleKey="address.resultNotFound2"
         />
       )
       : (kristAddress
