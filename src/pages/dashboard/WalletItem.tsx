@@ -6,12 +6,19 @@ import { Row, Col } from "antd";
 import { Wallet } from "@wallets";
 
 import { KristValue } from "@comp/krist/KristValue";
+import { ContextualAddress } from "@comp/addresses/ContextualAddress";
 
 export function WalletItem({ wallet }: { wallet: Wallet }): JSX.Element {
   return <Row className="card-list-item dashboard-wallet-item">
     <Col className="wallet-left">
       {wallet.label && <span className="wallet-label">{wallet.label}</span>}
-      <span className="wallet-address">{wallet.address}</span>
+      <ContextualAddress
+        className="wallet-address"
+        address={wallet.address}
+        wallet={false}
+        contact={false}
+        nonExistent={!wallet.firstSeen}
+      />
     </Col>
 
     <Col className="wallet-right">
