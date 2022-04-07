@@ -121,6 +121,16 @@ function PageContents({
         </Col>
       )}
 
+      {/* Transferred date, only if different */}
+      {name.transferred && name.registered !== name.transferred && (
+        <Col span={24} md={12} lg={8}>
+          <Statistic
+            titleKey="name.transferred"
+            value={<DateTime date={name.transferred} />}
+          />
+        </Col>
+      )}
+
       {/* Unpaid blocks, only if > 0 */}
       {(name.unpaid && name.unpaid > 0) ? (
         <Col span={24} md={12} lg={8}>

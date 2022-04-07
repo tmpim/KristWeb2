@@ -323,7 +323,7 @@ function usePaginationHotkeys<FieldsT extends string>(
  * settings. */
 export function useDateColumnWidth(): number {
   const showNativeDates = useBooleanSetting("showNativeDates");
-  return showNativeDates ? 250 : 200;
+  return showNativeDates ? 250 : 180;
 }
 
 export * from "./mobileList";

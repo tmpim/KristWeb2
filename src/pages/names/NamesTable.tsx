@@ -131,6 +131,17 @@ function getColumns(
       sorter: true
     },
 
+    // Transferred time
+    {
+      title: tStr("columnTransferred"),
+      dataIndex: "transferred", key: "transferred",
+
+      render: time => <DateTime date={time} />,
+      width: dateColumnWidth,
+
+      sorter: true
+    },
+
     // Actions
     {
       key: "actions",
@@ -155,6 +166,7 @@ const sortOptions: SortOptions<SortableNameFields> = [
   { sortKey: "a", i18nKey: "namesARecord" },
   { sortKey: "unpaid", i18nKey: "namesUnpaid" },
   { sortKey: "registered", i18nKey: "namesRegistered" },
+  { sortKey: "transferred", i18nKey: "namesTransferred" },
   { sortKey: "updated", i18nKey: "namesUpdated" }
 ];
 

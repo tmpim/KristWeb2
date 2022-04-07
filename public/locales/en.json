@@ -646,6 +646,7 @@
     "columnOriginalOwner": "Original Owner",
     "columnRegistered": "Registered",
     "columnUpdated": "Updated",
+    "columnTransferred": "Transferred",
     "columnARecord": "A Record",
     "columnUnpaid": "Unpaid Blocks",
 
@@ -688,6 +689,7 @@
     "originalOwner": "Purchased by",
     "registered": "Registered",
     "updated": "Last updated",
+    "transferred": "Last transferred",
     "unpaid": "Unpaid blocks",
     "unpaidCount": "{{count, number}} block",
     "unpaidCount_plural": "{{count, number}} blocks",
@@ -1229,6 +1231,7 @@
       "namesARecord": "A Record",
       "namesUnpaid": "Unpaid Blocks",
       "namesRegistered": "Registered Time",
+      "namesTransferred": "Transferred Time",
       "namesUpdated": "Updated Time",
 
       "blocksMiner": "Miner",
