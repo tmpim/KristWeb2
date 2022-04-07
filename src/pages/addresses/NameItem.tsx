@@ -13,15 +13,23 @@ import { DateTime } from "@comp/DateTime";
 export function NameItem({ name }: { name: KristName }): JSX.Element {
   const { t } = useTranslation();
 
+  // Display 'purchased' if this is the original owner, otherwise display
+  // 'received'. Note that this is different to checking if `transferred` is set
+  // or not - subjectively I believe if the name is back in the original owner's
+  // hands, it makes more sense to show when they originally purchased it,
+  // rather than when they received it back. This may change in the future.
+  const transferred = name.owner !== name.original_owner;
+
   const nameEl = <KristNameLink name={name.name} />;
   const nameLink = "/network/names/" + encodeURIComponent(name.name);
-  const nameTime = new Date(name.registered);
+  const nameTime = new Date(transferred && name.transferred
+    ? name.transferred : name.registered);
 
   return <Row className="card-list-item address-name-item">
     <div className="name-info">
       {/* Display 'purchased' if this is the original owner, otherwise display
         * 'received'. */}
-      {name.owner === name.original_owner
+      {transferred
         ? <Trans t={t} i18nKey="address.namePurchased">Purchased {nameEl}</Trans>
         : <Trans t={t} i18nKey="address.nameReceived">Received {nameEl}</Trans>}
     </div>

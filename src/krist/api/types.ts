@@ -42,6 +42,7 @@ export interface KristName {
   original_owner?: string;
   registered: string;
   updated?: string | null;
+  transferred?: string | null;
   a?: string | null;
   unpaid: number;
 }
