@@ -29,7 +29,7 @@ export function NameItem({ name }: { name: KristName }): JSX.Element {
     <div className="name-info">
       {/* Display 'purchased' if this is the original owner, otherwise display
         * 'received'. */}
-      {transferred
+      {!transferred
         ? <Trans t={t} i18nKey="address.namePurchased">Purchased {nameEl}</Trans>
         : <Trans t={t} i18nKey="address.nameReceived">Received {nameEl}</Trans>}
     </div>
