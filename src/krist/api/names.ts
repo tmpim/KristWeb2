@@ -52,18 +52,18 @@ export async function transferNames(
 export async function updateNames(
   decryptedAddresses: ValidDecryptedAddresses,
   names: PartialName[],
-  aRecord?: string | null,
+  data?: string | null,
   onProgress?: ProgressCallback
 ): Promise<void> {
   for (const name of names) {
     const { privatekey } = decryptedAddresses[name.owner];
     const onError = wrapAuthFailedError.bind(undefined, name);
 
-    debug("updating name %s a record to %s", name.name, aRecord);
+    debug("updating name %s data to %s", name.name, data);
 
     await api.post(
       `/names/${encodeURIComponent(name.name)}/update`,
-      { a: aRecord?.trim() || null, privatekey }
+      { a: data?.trim() || null, privatekey }
     ).catch(onError);
 
     onProgress?.();

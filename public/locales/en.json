@@ -576,8 +576,8 @@
     "itemFrom": "<0>From:</0> <1 />",
     "itemTo": "<0>To:</0> <1 />",
     "itemName": "<0>Name:</0> <1 />",
-    "itemARecord": "<0>A record:</0> <1 />",
-    "itemARecordRemoved": "(removed)",
+    "itemData": "<0>Data:</0> <1 />",
+    "itemDataRemoved": "(removed)",
     "seeMore": "See all {{count, number}}..."
   },
 
@@ -647,14 +647,14 @@
     "columnRegistered": "Registered",
     "columnUpdated": "Updated",
     "columnTransferred": "Transferred",
-    "columnARecord": "A Record",
+    "columnData": "Data",
     "columnUnpaid": "Unpaid Blocks",
 
     "mobileOwner": "<0>Owner:</0> <1 />",
     "mobileOriginalOwner": "<0>Original owner:</0> <1 />",
     "mobileRegistered": "Registered: <1 />",
     "mobileUpdated": "Updated: <1 />",
-    "mobileARecordTag": "A",
+    "mobileDataTag": "Data",
     "mobileUnpaidTag": "{{count, number}} block",
     "mobileUnpaidTag_plural": "{{count, number}} blocks",
 
@@ -664,7 +664,7 @@
     "actionsViewOriginalOwner": "View original owner's address",
     "actionsSendKrist": "Send Krist",
     "actionsTransferKrist": "Transfer Krist",
-    "actionsUpdateARecord": "Update A record",
+    "actionsUpdateData": "Update data",
     "actionsTransferName": "Transfer name",
 
     "tableTotal": "{{count, number}} name",
@@ -682,7 +682,7 @@
 
     "buttonSendKrist": "Send Krist to {{name}}",
     "buttonTransferKrist": "Transfer Krist to {{name}}",
-    "buttonARecord": "Update A record",
+    "buttonData": "Update data",
     "buttonTransferName": "Transfer name",
 
     "owner": "Owned by",
@@ -693,8 +693,8 @@
     "unpaid": "Unpaid blocks",
     "unpaidCount": "{{count, number}} block",
     "unpaidCount_plural": "{{count, number}} blocks",
-    "aRecord": "A record",
-    "aRecordEditTooltip": "Update A record",
+    "data": "Data",
+    "dataEditTooltip": "Update data",
 
     "cardRecentTransactionsTitle": "Recent transactions",
     "cardHistoryTitle": "Name history",
@@ -769,7 +769,7 @@
     "name": "Name",
     "value": "Value",
     "time": "Time",
-    "aRecord": "A record",
+    "data": "Data",
 
     "cardMetadataTitle": "Metadata",
     "tabCommonMeta": "CommonMeta",
@@ -1112,8 +1112,8 @@
     "modalTitle": "Update names",
 
     "labelNames": "Names",
-    "labelARecord": "A record",
-    "placeholderARecord": "A record (optional)",
+    "labelData": "Data",
+    "placeholderData": "Data (optional)",
 
     "buttonSubmit": "Update names",
 
@@ -1122,7 +1122,7 @@
     "errorWalletGone": "That wallet no longer exists.",
     "errorWalletDecrypt": "The wallet \"{{address}}\" could not be decrypted.",
     "errorParameterNames": "Invalid names.",
-    "errorParameterARecord": "Invalid A record.",
+    "errorParameterData": "Invalid data.",
     "errorNameNotFound": "One or more names could not be found.",
     "errorNotNameOwner": "You are not the owner of one or more names.",
     "errorUnknown": "Unknown error updating names. See console for details.",
@@ -1228,7 +1228,7 @@
       "namesName": "Name",
       "namesOwner": "Owner",
       "namesOriginalOwner": "Original Owner",
-      "namesARecord": "A Record",
+      "namesData": "Data",
       "namesUnpaid": "Unpaid Blocks",
       "namesRegistered": "Registered Time",
       "namesTransferred": "Transferred Time",

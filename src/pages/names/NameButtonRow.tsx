@@ -59,7 +59,7 @@ export function NameButtonRow({
           onClick={() => promptAuth(false, () =>
             openNameEdit("update", name.name, name.a))}
         >
-          {tStr("buttonARecord")}
+          {tStr("buttonData")}
         </Menu.Item>
       )}
 
@@ -130,7 +130,7 @@ function Buttons({
         onClick={() => promptAuth(false, () =>
           openNameEdit("update", name.name, name.a))}
       >
-        {tStr("buttonARecord")}
+        {tStr("buttonData")}
       </Button>
     )}
 

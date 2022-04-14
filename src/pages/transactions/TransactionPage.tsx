@@ -110,7 +110,7 @@ function PageContents({ transaction }: { transaction: KristTransaction }): JSX.E
       {/* A record */}
       {type === "name_a_record" && <Col span={24}>
         <Statistic
-          titleKey="transaction.aRecord"
+          titleKey="transaction.data"
           value={<NameARecordLink a={metadata} />}
         />
       </Col>}

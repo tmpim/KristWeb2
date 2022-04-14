@@ -37,16 +37,16 @@ export function NameMobileItem({
   const { walletAddressMap } = useWallets();
   const isOwn = !!walletAddressMap[name.owner];
 
-  const hasARecord = !!name.a;
+  const hasData = !!name.a;
   const isUnpaid = name.unpaid > 0;
-  const hasTags = hasARecord || isUnpaid;
+  const hasTags = hasData || isUnpaid;
 
   const itemHead = useMemo(() => (
     <div className="name-mobile-item-header">
-      {/* Tags (A record, unpaid blocks) */}
+      {/* Tags (Data, unpaid blocks) */}
       {hasTags && <div className="name-tags">
-        {/* A record */}
-        {hasARecord && <Tag>{tStr("mobileARecordTag")}</Tag>}
+        {/* Data */}
+        {hasData && <Tag>{tStr("mobileDataTag")}</Tag>}
 
         {/* Unpaid blocks */}
         {isUnpaid && (
@@ -96,7 +96,7 @@ export function NameMobileItem({
     </div>
   ), [
     t, tStr, tKey,
-    hasTags, hasARecord, isUnpaid,
+    hasTags, hasData, isUnpaid,
     name.name, name.unpaid, name.owner, name.original_owner,
     name.updated, name.registered
   ]);

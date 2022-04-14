@@ -148,9 +148,9 @@ function PageContents({
       <Row gutter={16} className="name-a-record-row">
         <Col span={24}>
           <Statistic
-            titleKey="name.aRecord"
+            titleKey="name.data"
             titleExtra={myWallet && <>
-              <Tooltip title={t("name.aRecordEditTooltip")}>
+              <Tooltip title={t("name.dataEditTooltip")}>
                 <Typography.Link
                   className="name-a-record-edit"
                   onClick={() => promptAuth(false, () =>

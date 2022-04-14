@@ -35,7 +35,7 @@ export async function handleEditError(
     case "address":
       return onError(tErr("errorParameterRecipient"));
     case "a":
-      return onError(tErr("errorParameterARecord"));
+      return onError(tErr("errorParameterData"));
     }
     break;
   case "name_not_found":

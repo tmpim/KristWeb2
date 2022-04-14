@@ -73,7 +73,7 @@ export function TransactionARecordContent({ metadata }: {
     </span>
     : (
       <span className="transaction-a-record-removed">
-        {tStr("itemARecordRemoved")}
+        {tStr("itemDataRemoved")}
       </span>
     );
 }
@@ -84,8 +84,8 @@ export function TransactionARecord({ tKey, type, metadata }: PartBaseProps & {
   if (type !== "name_a_record") return null;
 
   return <span className="transaction-a-record">
-    <Trans i18nKey={tKey("itemARecord")}>
-      <span className="transaction-field">A record:</span>
+    <Trans i18nKey={tKey("itemData")}>
+      <span className="transaction-field">Data:</span>
       <TransactionARecordContent metadata={metadata} />
     </Trans>
   </span>;

@@ -9,12 +9,6 @@ import { KristNameLink } from "./KristNameLink";
 
 import "./NameARecordLink.less";
 
-function forceURL(link: string): string {
-  // FIXME: this is rather crude
-  if (!link.startsWith("http")) return "https://" + link;
-  return link;
-}
-
 interface Props {
   a?: string;
   className?: string;
@@ -47,12 +41,7 @@ export function NameARecordLink({ a, className }: Props): JSX.Element | null {
     />;
   }
 
-  return <a
-    className={classes}
-    href={forceURL(a)}
-    target="_blank"
-    rel="noreferrer noopener"
-  >
+  return <span className={classes}>
     {a}
-  </a>;
+  </span>;
 }

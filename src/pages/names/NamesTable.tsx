@@ -85,9 +85,9 @@ function getColumns(
       sorter: true
     },
 
-    // A record
+    // Data
     {
-      title: tStr("columnARecord"),
+      title: tStr("columnData"),
       dataIndex: "a", key: "a",
 
       render: a => <TransactionConciseMetadata metadata={a} />,
@@ -163,7 +163,7 @@ const sortOptions: SortOptions<SortableNameFields> = [
   { sortKey: "name", i18nKey: "namesName" },
   { sortKey: "owner", i18nKey: "namesOwner" },
   { sortKey: "original_owner", i18nKey: "namesOriginalOwner" },
-  { sortKey: "a", i18nKey: "namesARecord" },
+  { sortKey: "a", i18nKey: "namesData" },
   { sortKey: "unpaid", i18nKey: "namesUnpaid" },
   { sortKey: "registered", i18nKey: "namesRegistered" },
   { sortKey: "transferred", i18nKey: "namesTransferred" },

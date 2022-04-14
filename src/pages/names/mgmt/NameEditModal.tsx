@@ -34,7 +34,7 @@ interface Props {
   setVisible: Dispatch<SetStateAction<boolean>>;
 
   name?: string;
-  aRecord?: string | null;
+  data?: string | null;
   mode: Mode;
 }
 
@@ -42,7 +42,7 @@ export function NameEditModal({
   visible,
   setVisible,
   name,
-  aRecord,
+  data,
   mode
 }: Props): JSX.Element {
   // Return translated strings with the correct prefix depending on the mode
@@ -69,7 +69,7 @@ export function NameEditModal({
 
   // Create the form. This is usually not rendered during submission.
   const { form, formInstance, resetFields }
-    = useNameEditForm({ name, aRecord, mode, submitting, onSubmit, tFns });
+    = useNameEditForm({ name, data, mode, submitting, onSubmit, tFns });
   // Progress bar for bulk edits
   const { progressBar, onProgress, initProgress, resetProgress }
     = useEditProgress(tFns);
@@ -84,7 +84,7 @@ export function NameEditModal({
   async function handleSubmit(
     names: NameOption[],
     recipient?: string,
-    aRecord?: string
+    data?: string
   ) {
     if (!masterPassword) return;
 
@@ -121,7 +121,7 @@ export function NameEditModal({
       await transferNames(finalAddresses, finalNames, recipient!, onProgress);
     } else if (mode === "update") {
       // Update the names
-      await updateNames(finalAddresses, finalNames, aRecord!, onProgress);
+      await updateNames(finalAddresses, finalNames, data!, onProgress);
     }
 
     // Success! Show notification and close modal
@@ -151,7 +151,7 @@ export function NameEditModal({
       setSubmitting(false);
       return;
     }
-    const { names, recipient, aRecord } = values;
+    const { names, recipient, data } = values;
 
     // Lookup the names list one last time, to associate the name owners
     // to the wallets for decryption, and to show the correct confirmation
@@ -184,7 +184,7 @@ export function NameEditModal({
     // Don't return this promise, so the confirm modal closes immediately
     const triggerSubmit = () => {
       initProgress(count);
-      handleSubmit(filteredNames, recipient, aRecord)
+      handleSubmit(filteredNames, recipient, data)
         .catch(onError)
         .finally(() => {
           setSubmitting(false);

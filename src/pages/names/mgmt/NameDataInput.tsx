@@ -7,24 +7,24 @@ import { useTranslation } from "react-i18next";
 
 const A_RECORD_REGEXP = /^[^\s.?#].[^\s]*/;
 
-export function ARecordInput(): JSX.Element {
+export function NameDataInput(): JSX.Element {
   const { t } = useTranslation();
 
   return <Form.Item
-    name="aRecord"
-    label={t("nameUpdate.labelARecord")}
+    name="data"
+    label={t("nameUpdate.labelData")}
 
     validateFirst
     rules={[{
       async validator(_, value) {
         if (!value) return;
         if (!A_RECORD_REGEXP.test(value) || value.length > 255)
-          throw t("nameUpdate.errorParameterARecord");
+          throw t("nameUpdate.errorParameterData");
       }
     }]}
   >
     <Input
-      placeholder={t("nameUpdate.placeholderARecord")}
+      placeholder={t("nameUpdate.placeholderData")}
       allowClear
       maxLength={255}
     />

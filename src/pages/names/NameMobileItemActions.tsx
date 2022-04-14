@@ -78,7 +78,7 @@ export function NameMobileItemActions({
       <Menu.Item key="5" icon={<EditOutlined />}
         onClick={() => promptAuth(false, () =>
           openNameEdit("update", name.name, name.a))}>
-        {tStr("actionsUpdateARecord")}
+        {tStr("actionsUpdateData")}
       </Menu.Item>
 
       {/* Transfer name */}

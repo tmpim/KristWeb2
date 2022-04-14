@@ -8,13 +8,13 @@ import { NameEditModal, Mode } from "./NameEditModal";
 
 interface Props {
   name?: string;
-  aRecord?: string | null;
+  data?: string | null;
   mode: Mode;
 }
 
 export const NameEditModalLink: FC<Props> = ({
   name,
-  aRecord,
+  data,
   mode,
   children
 }): JSX.Element => {
@@ -30,7 +30,7 @@ export const NameEditModalLink: FC<Props> = ({
       setVisible={setModalVisible}
 
       name={name}
-      aRecord={aRecord}
+      data={data}
       mode={mode}
     />
   </>;
@@ -40,7 +40,7 @@ export const NameEditModalLink: FC<Props> = ({
 export type OpenEditNameFn = (
   mode: Mode,
   name?: string,
-  aRecord?: string | null
+  data?: string | null
 ) => void;
 
 export type NameEditHookRes = [
@@ -52,7 +52,7 @@ export type NameEditHookRes = [
 interface EditState {
   mode: Mode;
   name?: string;
-  aRecord?: string | null;
+  data?: string | null;
 }
 
 export function useNameEditModal(): NameEditHookRes {
@@ -61,8 +61,8 @@ export function useNameEditModal(): NameEditHookRes {
   const [visible, setVisible] = useState(false);
   const [editState, setEditState] = useState<EditState>();
 
-  const open: OpenEditNameFn = useCallback((mode, name, aRecord) => {
-    setEditState({ mode, name, aRecord });
+  const open: OpenEditNameFn = useCallback((mode, name, data) => {
+    setEditState({ mode, name, data });
     setVisible(true);
     setOpened(true);
   }, []);
@@ -74,7 +74,7 @@ export function useNameEditModal(): NameEditHookRes {
         setVisible={setVisible}
 
         name={editState!.name}
-        aRecord={editState!.aRecord}
+        data={editState!.data}
         mode={editState!.mode}
       />
     )

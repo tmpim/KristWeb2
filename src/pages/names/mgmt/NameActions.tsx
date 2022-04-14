@@ -56,7 +56,7 @@ export function NameActions({
             <Menu.Item key="2" icon={<EditOutlined />}
               onClick={() => promptAuth(false, () =>
                 openNameEdit("update", name.name, name.a))}>
-              {tStr("actionsUpdateARecord")}
+              {tStr("actionsUpdateData")}
             </Menu.Item>
 
             {/* Transfer name */}

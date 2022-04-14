@@ -96,7 +96,7 @@ function TransactionItemDesktop({
     </Col>
 
     <Col className="transaction-middle">
-      {/* Name and A record */}
+      {/* Name and data */}
       <Parts.TransactionName tKey={tKey} type={type} name={tx.name} />
       <Parts.TransactionARecord tKey={tKey} type={type} metadata={tx.metadata} />
 

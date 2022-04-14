@@ -10,17 +10,17 @@ import { Mode } from "./NameEditModal";
 
 import { NamePicker } from "./NamePicker";
 import { AddressPicker } from "@comp/addresses/picker/AddressPicker";
-import { ARecordInput } from "./ARecordInput";
+import { NameDataInput } from "./NameDataInput";
 
 interface FormValues {
   names: string[];
   recipient?: string;
-  aRecord?: string;
+  data?: string;
 }
 
 interface Props {
   name?: string;
-  aRecord?: string | null;
+  data?: string | null;
   mode: Mode;
 
   submitting?: boolean;
@@ -37,7 +37,7 @@ interface NameEditFormHookResponse {
 
 export function useNameEditForm({
   name,
-  aRecord,
+  data,
   mode,
 
   submitting,
@@ -68,8 +68,8 @@ export function useNameEditForm({
     names: name ? [name] : [],
 
     // Start with an initial A record if this is the update name modal
-    ...(mode === "update" && aRecord ? { aRecord } : {})
-  }), [mode, name, aRecord]);
+    ...(mode === "update" && data ? { data } : {})
+  }), [mode, name, data]);
 
   // If the initial values change, refresh the form
   useEffect(() => {
@@ -124,7 +124,7 @@ export function useNameEditForm({
       )
       : (
         // Update - A record
-        <ARecordInput />
+        <NameDataInput />
       )}
   </Form>;
 
