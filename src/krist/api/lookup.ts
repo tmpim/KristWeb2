@@ -144,7 +144,8 @@ export async function lookupTransactions(
 // Names
 // =============================================================================
 export type SortableNameFields = "name" | "owner" | "original_owner"
-  | "registered" | "updated" | "transferred" | "a" | "unpaid";
+  | "registered" | "updated" | "transferred" | "transferredOrRegistered" | "a"
+  | "unpaid";
 export type LookupNamesOptions = LookupFilterOptionsBase<SortableNameFields>;
 
 export interface LookupNamesResponse extends LookupResponseBase {

@@ -22,7 +22,7 @@ async function fetchNames(address: string): Promise<LookupNamesResponse> {
   debug("fetching names");
   return lookupNames(
     [address],
-    { limit: 5, orderBy: "registered", order: "DESC" }
+    { limit: 5, orderBy: "transferredOrRegistered", order: "DESC" }
   );
 }
 
