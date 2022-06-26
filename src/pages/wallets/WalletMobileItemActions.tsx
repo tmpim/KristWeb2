@@ -2,13 +2,13 @@
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { useCallback } from "react";
-import { Menu } from "antd";
+import { Menu, notification } from "antd";
 import {
   ProfileOutlined, SendOutlined, EditOutlined, InfoCircleOutlined,
-  DeleteOutlined
+  DeleteOutlined, PlusOutlined
 } from "@ant-design/icons";
 
-import { useTFns } from "@utils/i18n";
+import { translateError, useTFns } from "@utils/i18n";
 
 import { useHistory } from "react-router-dom";
 
@@ -19,6 +19,7 @@ import { OpenEditWalletFn } from "./WalletEditButton";
 import { OpenSendTxFn } from "@comp/transactions/SendTransactionModalLink";
 import { OpenWalletInfoFn } from "./info/WalletInfoModal";
 import { showWalletDeleteConfirmModal } from "./WalletActions";
+import { loginWallet } from "@api/login";
 
 interface Props {
   wallet: Wallet;
@@ -34,7 +35,7 @@ export function WalletMobileItemActions({
   openSendTx,
   openWalletInfo
 }: Props): JSX.Element {
-  const { t, tStr } = useTFns("myWallets.");
+  const { t, tStr, tKey } = useTFns("myWallets.");
 
   const history = useHistory();
   const promptAuth = useAuth();
@@ -74,10 +75,23 @@ export function WalletMobileItemActions({
       {tStr("actionsWalletInfo")}
     </Menu.Item>
 
+    {/* Force create button for wallets that don't yet exist on the
+      * network, calls /login */}
+    {!wallet.firstSeen && <Menu.Item
+      key="3"
+      icon={<PlusOutlined />}
+      onClick={() => promptAuth(false, () => loginWallet(wallet)
+        .catch(e => notification.error({
+          message: translateError(t, e, tKey("login.errorAuthFailed"))
+        })))}
+    >
+      {tStr("actionsWalletForceCreate")}
+    </Menu.Item>}
+
     <Menu.Divider />
 
     {/* Delete wallet */}
-    <Menu.Item key="5" danger icon={<DeleteOutlined />}
+    <Menu.Item key="6" danger icon={<DeleteOutlined />}
       onClick={showWalletDeleteConfirm}>
       {tStr("actionsDelete")}
     </Menu.Item>

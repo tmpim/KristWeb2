@@ -85,7 +85,7 @@ export function WalletActions({
     {/* Edit button */}
     <EditOutlined />
   </Dropdown.Button>, [
-    tStr, wallet, promptAuth,
+    t, tStr, tKey, wallet, promptAuth,
     openEditWallet, openSendTx, openWalletInfo, showWalletDeleteConfirm
   ]);
 
