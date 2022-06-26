@@ -186,6 +186,7 @@
     "actionsEditTooltip": "Edit wallet",
     "actionsSendTransaction": "Send Krist",
     "actionsWalletInfo": "Wallet info",
+    "actionsWalletForceCreate": "Force create",
     "actionsDelete": "Delete wallet",
     "actionsDeleteConfirm": "Are you sure you want to delete this wallet?",
     "actionsDeleteConfirmDescription": "If you haven't backed it up or saved its password, it will be lost forever!",
@@ -223,6 +224,12 @@
 
       "true": "True",
       "false": "False"
+    },
+
+    "login": {
+      "appMasterPasswordRequired": "You must be authenticated to force create wallets.",
+      "errorAuthFailed": "Could not force create the address.",
+      "errorWalletDecrypt": "Your wallet could not be decrypted."
     }
   },
 
