@@ -13,7 +13,6 @@ import { Line } from "react-chartjs-2";
 
 import * as api from "@api";
 import { estimateHashRate } from "@utils/krist";
-import { KristConstants } from "@api/types";
 
 import { trailingThrottleState } from "@utils";
 import { useBooleanSetting } from "@utils/settings";
@@ -113,15 +112,15 @@ const CHART_OPTIONS_Y_AXIS = {
 };
 
 const WORK_THROTTLE = 500;
-async function _fetchWorkOverTime(constants: KristConstants): Promise<{ x: Date; y: number }[]> {
+async function _fetchWorkOverTime(): Promise<{ x: Date; y: number }[]> {
   debug("fetching work over time");
   const data = await api.get<{ work: number[] }>("work/day");
 
   // Convert the array indices to Dates, based on the fact that the array
-  // should contain one block per secondsPerBlock (typically 1440 elements,
-  // one per minute). This can be passed directly into Chart.JS.
+  // should contain one block per 60 seconds (typically 1440 elements).
+  // This can be passed directly into Chart.JS.
   return data.work.map((work, i, arr) => ({
-    x: new Date(Date.now() - ((arr.length - i) * (constants.seconds_per_block * 1000))),
+    x: new Date(Date.now() - ((arr.length - i) * (60 * 1000))),
     y: work
   }));
 }
@@ -165,8 +164,8 @@ export function BlockDifficultyCard(): JSX.Element {
   // changing, which is handled by WebsocketService.
   useEffect(() => {
     if (!syncNode) return;
-    fetchWorkOverTime(constants);
-  }, [syncNode, lastBlockID, constants, constants.seconds_per_block, fetchWorkOverTime]);
+    fetchWorkOverTime();
+  }, [syncNode, lastBlockID, fetchWorkOverTime]);
 
   // Use a date format string appropriate for the user's locale and settings.
   // Only applies to the tooltip.
