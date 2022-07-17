@@ -1,0 +1,235 @@
+{
+  "app": {
+    "name": "KristWeb"
+  },
+
+  "nav": {
+    "connection": {
+      "online": "Çevrimiçi",
+      "offline": "Çevrimdışı",
+      "connecting": "Bağlanılıyor"
+    },
+
+    "search": {
+      "placeholder": "Krist ağını ara",
+      "placeholderShortcut": "Search the Krist network ({{shortcut}})",
+      "placeholderShort": "Ara...",
+      "rateLimitHit": "Lütfen yavaşlayın.",
+      "noResults": "Sonuç yok.",
+
+      "resultAddress": "Adres",
+      "resultName": "İsim",
+      "resultNameOwner": "<1 />'e ait",
+      "resultBlockID": "Blok ID'si",
+      "resultBlockIDMinedBy": "<1 /> tarafından kazıldı",
+      "resultTransactionID": "İşlem ID'si",
+      "resultTransactions": "İşlemler",
+      "resultTransactionsAddress": "<1 /> içeren işlemleri ara",
+      "resultTransactionsAddressResult": "<2 /> içeren <0>{{count, number}}</0> işlem",
+      "resultTransactionsAddressResult_plural": "<2 /> içeren <0>{{count, number}}</0> işlem ",
+      "resultTransactionsAddressResultEmpty": "<1 /> içeren işlem yok",
+      "resultTransactionsName": "<1 /> içeren işlemleri ara",
+      "resultTransactionsNameResult": "<2 />'a <0>{{count, number}}</0> işlem gönderildi",
+      "resultTransactionsNameResult_plural": "<2 />'a <0>{{count, number}}</0> işlem gönderildi",
+      "resultTransactionsNameResultEmpty": "<1 />'e hiçbir işlem gönderilmedi.",
+      "resultTransactionsMetadata": "<1 /> içeren metadata aranıyor",
+      "resultTransactionsMetadataResult": "<2 /> içeren metadataya sahip <0>{{count, number}}</0> işlem",
+      "resultTransactionsMetadataResult_plural": "<2 /> içeren metadataya sahip <0>{{count, number}}</0> işlem",
+      "resultTransactionsMetadataResultEmpty": "<1 /> içeren metadataya sahip hiçbir işlem yok"
+    },
+
+    "send": "Gönder",
+    "sendLong": "Krist gönder",
+    "request": "İste",
+    "requestLong": "Krist iste",
+    "sort": "Sonuçları sırala",
+
+    "settings": "Ayarlar",
+    "more": "Daha fazlası"
+  },
+
+  "sidebar": {
+    "totalBalance": "Toplam Bakiye",
+    "dashboard": "Gösterge Paneli",
+    "myWallets": "Cüzdanlarım",
+    "addressBook": "Adres Defteri",
+    "transactions": "İşlemler",
+    "names": "İsimler",
+    "mining": "Kazma",
+    "network": "Ağ",
+    "blocks": "Bloklar",
+    "statistics": "İstatistikler",
+    "madeBy": "<1>{{authorName}}</1> tarafından yapıldı",
+    "hostedBy": "<1>{{host}}</1> tarafından sunuluyor",
+    "github": "GitHub",
+    "credits": "Emeği geçenler",
+    "whatsNew": "Yenilikler",
+
+    "updateTitle": "Güncelleme mevcut!",
+    "updateDescription": "KristWeb'in yeni bir sürümü mevcut. Lütfen sayfayı yeniden yükleyin.",
+    "updateReload": "Yeniden yükle"
+  },
+
+  "dialog": {
+    "close": "Kapat",
+    "yes": "Evet",
+    "no": "Hayır",
+    "ok": "Tamam",
+    "cancel": "Vazgeç"
+  },
+
+  "pagination": {
+    "justPage": "{{page}}. Sayfa",
+    "pageWithTotal": "{{total}} sayfadan {{page}}. si"
+  },
+
+  "error": "Hata",
+  "errorBoundary": {
+    "title": "Kritik hata",
+    "description": "KristWeb'de kritik bir hata meydana geldi, bu sebepten dolayı bu sayfa sonlandırıldı. Detaylar için konsola bakınız.",
+    "sentryNote": "Bu hata otomatik olarak rapor edilmiştir."
+  },
+  "errorReported": "Bir hata otomatik olarak rapor edildi. Detaylar için konsola bakın.",
+
+  "loading": "Yükleniyor...",
+
+  "copy": "Panoya kopyala",
+  "copied": "Kopyalandı!",
+
+  "pageNotFound": {
+    "resultTitle": "Sayfa bulunamadı",
+    "nyiTitle": "Henüz eklenmedi",
+    "nyiSubTitle": "Bu özellik gelecekte eklenecek!",
+    "buttonGoBack": "Geri dön"
+  },
+
+  "contextualAddressUnknown": "Bilinmiyor",
+  "contextualAddressNonExistentTooltip": "Bu adres daha Krist ağında etkinleştirilmedi.",
+  "contextualAddressNonExistentTooltip2": "Bu adresin daha işlem geçmişi bulunmuyor.",
+
+  "typeahead": {
+    "emptyLabel": "Eşleşme bulunmadı.",
+    "paginationText": "Ek sonuçları göster..."
+  },
+
+  "masterPassword": {
+    "dialogTitle": "Ana şifre",
+    "passwordPlaceholder": "Ana şifre",
+    "passwordConfirmPlaceholder": "Ana şifreyi doğrula",
+    "createPassword": "Şifre oluştur",
+    "logIn": "Giriş yap",
+    "forgotPassword": "Şifremi unuttum",
+    "intro2": "Cüzdanlarınızın özel anahtarlarını şifrelemek için bir <1>ana şifre</1> girin. Cüzdanlarınız tarayıcınızın yerel veritabanında depolanacaktır, ve şifrelerini çözmek için her oturumda bir kez sizden ana şifreniz istenecektir",
+    "learnMore": "daha fazlasını öğren",
+    "errorPasswordRequired": "Şifre gereklidir.",
+    "errorPasswordLength": "En az 1 karakter olmalı.",
+    "errorPasswordUnset": "Ana şifre ayarlanmamış.",
+    "errorPasswordIncorrect": "Yanlış şifre.",
+    "errorPasswordInequal": "Passwords must match.",
+    "errorStorageCorrupt": "Cüzdan veritabanı bozulmuş.",
+    "errorNoPassword": "Ana şifre gereklidir.",
+    "errorUnknown": "Bilinmeyen hata.",
+    "helpWalletStorageTitle": "Yardım: Cüzdan veritabanı",
+    "popoverTitle": "Cüzdanların şifresini çöz",
+    "popoverTitleEncrypt": "Cüzdanları şifrele",
+    "popoverAuthoriseButton": "Onayla",
+    "popoverDescription": "Cüzdanlarınızın şifresini çözmek için ana şifrenizi girin.",
+    "popoverDescriptionEncrypt": "Enter your master password to encrypt and decrypt your wallets.",
+    "forcedAuthWarning": "You were automatically logged in by an insecure debug setting.",
+    "earlyAuthError": "Uygulama henüz tam yüklenmedi, lütfen tekrar deeyin.",
+
+    "reset": {
+      "modalTitle": "Ana şifreyi sıfırla",
+      "description": "Ana şifrenizi sıfırlamak istediğinize emin misiniz? <strong>Bütün cüzdanlarınız silinecektir.</strong> <3>Bir yedeği dışarı aktardığınızdan</3> emin olun!",
+      "buttonConfirm": "Sıfırla & Sil",
+
+      "modalTitle2": "BÜTÜN CÜZDANLARI SİL",
+      "description2": "<strong>BÜTÜN CÜZDANLARINIZI SİLMEK</strong> istediğinizden GERÇEKTEN emin misiniz?",
+      "buttonConfirm2": "Evet, eminim [{{n}}]",
+      "buttonConfirmFinal": "Evet, eminim!"
+    },
+
+    "change": {
+      "modalTitle": "Ana şifreyi değiştir"
+    }
+  },
+
+  "myWallets": {
+    "title": "Cüzdanlar",
+    "manageBackups": "Yedekleri yönet",
+    "importBackup": "Cüzdanları içe aktar",
+    "exportBackup": "Cüzdanları dışa aktar",
+    "createWallet": "Cüzdan oluştur",
+    "addExistingWallet": "Var olan cüzdanı ekle",
+    "searchPlaceholder": "Cüzdanları ara...",
+    "categoryDropdownAll": "Tüm kategoriler",
+    "columnLabel": "Etiket",
+    "columnAddress": "Adres",
+    "columnBalance": "Bakiye",
+    "columnNames": "İsimler",
+    "columnCategory": "Kategori",
+    "columnFirstSeen": "İlk görüldüğü tarih",
+    "nameCount": "{{count, number}} isim",
+    "nameCount_plural": "{{count, number}} isimler",
+    "nameCountEmpty": "İsim bulunmuyor",
+    "firstSeen": "İlk kez {{date}} tarihinde görüldü",
+    "firstSeenMobile": "İlk görüldüğü tarih: <1 />",
+
+    "walletCount": "{{count, number}} cüzdan",
+    "walletCount_plural": "{{count, number}} cüzdan",
+    "walletCountEmpty": "Cüzdan bulunmuyor",
+
+    "noWalletsHint": "Daha hiçbir cüzdan bulunmuyor",
+    "noWalletsText": "Bir cüzdan eklemek veya oluşturmak için sağ üstteki <1 /> menüsüne tıkla!",
+
+    "actionsViewAddress": "Adresi görüntüle",
+    "actionsEditTooltip": "Cüzdanı düzenle",
+    "actionsSendTransaction": "Krist gönder",
+    "actionsWalletInfo": "Cüzdan bilgisi",
+    "actionsWalletForceCreate": "Zorla oluştur",
+    "actionsDelete": "Cüzdanı sil",
+    "actionsDeleteConfirm": "Cüzdanı silmek istediğine emin misin?",
+    "actionsDeleteConfirmDescription": "Eğer cüzdanı yedeklemediysen ya da şifresini kaydetmediysen, sonsuza kadar kaybolacak!",
+
+    "tagDontSave": "Geçici",
+    "tagDontSaveTooltip": "Geçici cüzdan",
+
+    "info": {
+      "title": "Cüzdan bilgisi - {{address}}",
+
+      "titleBasicInfo": "Basit bilgiler",
+      "id": "ID",
+      "label": "Etiket",
+      "category": "Kategori",
+      "username": "Kullanıcı adı",
+      "password": "Şifre",
+      "privatekey": "Özel anahtar",
+      "format": "Format",
+
+      "titleSyncedInfo": "Senkronize edilmiş bilgiler",
+      "address": "Adres",
+      "balance": "Bakiye",
+      "names": "İsim sayısı",
+      "firstSeen": "İlk görüldüğü tarih",
+      "existsOnNetwork": "Ağda var",
+      "lastSynced": "Son senkronize edildiği tarih",
+
+      "titleAdvancedInfo": "Gelişmiş bilgiler",
+      "encPassword": "Şifrelenmiş anahtar",
+      "encPrivatekey": "Şifrelenmiş özel anahtar",
+      "saved": "Kaydedilmiş",
+
+      "revealLink": "Göster",
+      "hideLink": "Gizle",
+
+      "true": "Doğru",
+      "false": "Yanlış"
+    },
+
+    "login": {
+      "appMasterPasswordRequired": "Zorla cüzdan oluşturmak için giriş yapmanız gerekli.",
+      "errorAuthFailed": "Adres zorla oluşturulamadı.",
+      "errorWalletDecrypt": "Cüzdanınızın şifresi çözülemedi."
+    }
+  }
+}
