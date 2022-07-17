@@ -231,5 +231,118 @@
       "errorAuthFailed": "Adres zorla oluşturulamadı.",
       "errorWalletDecrypt": "Cüzdanınızın şifresi çözülemedi."
     }
+  },
+
+  "addressBook": {
+    "title": "Adres defteri",
+
+    "contactCount": "{{count, number}} kişi",
+    "contactCount_plural": "{{count, number}} kişi",
+    "contactCountEmpty": "Kişi bulunmuyor",
+
+    "buttonAddContact": "Kişi ekle",
+
+    "columnLabel": "Etiket",
+    "columnAddress": "Adres",
+
+    "actionsViewAddress": "Adresi görüntüle",
+    "actionsViewName": "İsmi görüntüle",
+    "actionsEditTooltip": "Kişiyi düzenle",
+    "actionsSendTransaction": "Krist gönder",
+    "actionsDelete": "Kişiyi sil",
+    "actionsDeleteConfirm": "Bu kişiyi silmek istediğine emin misin?"
+  },
+
+  "myTransactions": {
+    "title": "İşlemler",
+    "searchPlaceholder": "İşlemleri ara...",
+    "columnFrom": "Kimden",
+    "columnTo": "Kime",
+    "columnValue": "Değer",
+    "columnTime": "Zaman"
+  },
+
+  "addWallet": {
+    "dialogTitle": "Cüzdan ekle",
+    "dialogTitleCreate": "Cüzdan oluştur",
+    "dialogTitleEdit": "Cüzdanı düzenle",
+    "dialogOkAdd": "Ekle",
+    "dialogOkCreate": "Oluştur",
+    "dialogOkEdit": "Kaydet",
+    "dialogAddExisting": "Var olan cüzdanı ekle",
+
+    "walletLabel": "Cüzdan etiketi",
+    "walletLabelPlaceholder": "Cüzdan etiketi (isteğe bağlı)",
+    "walletLabelMaxLengthError": "32 karakterden uzun olamaz",
+    "walletLabelWhitespaceError": "Sadece boşluk olamaz",
+
+    "walletCategory": "Cüzdan kategorisi",
+    "walletCategoryDropdownNone": "Kategori yok",
+    "walletCategoryDropdownNew": "Yeni",
+    "walletCategoryDropdownNewPlaceholder": "Kategori ismi",
+
+    "walletAddress": "Cüzdan adresi",
+    "walletUsername": "Cüzdan kullanıcı adı",
+    "walletUsernamePlaceholder": "Cüzdan kullanıcı adı",
+    "walletPassword": "Cüzdan şifresi",
+    "walletPasswordPlaceholder": "Cüzdan şifresi",
+    "walletPasswordWarning": "Bunu <1>güvenli</1> bir yere kaydettiğinizden emin olun!",
+    "walletPasswordRegenerate": "Yeniden oluştur",
+    "walletPrivatekey": "Cüzdan özel anahtarı",
+    "walletPrivatekeyPlaceholder": "Cüzdan özel anahtarı",
+
+    "advancedOptions": "Gelişmiş ayarlar",
+
+    "walletFormat": "Cüzdan formatı",
+    "walletFormatKristWallet": "KristWallet, KWallet (önerilir)",
+    "walletFormatKristWalletUsernameAppendhashes": "KW-Username (appendhashes)",
+    "walletFormatKristWalletUsername": "KW-Username (pre-appendhashes)",
+    "walletFormatJwalelset": "jwalelset",
+    "walletFormatApi": "Raw/API (gelişmiş kullanıcılar)",
+
+    "walletSave": "Bu cüzdanı KristWeb'e kaydet",
+
+    "messageSuccessAdd": "Cüzdan başarıyla eklendi!",
+    "messageSuccessCreate": "Cüzdan başarıyla oluşturuldu!",
+    "messageSuccessEdit": "Cüzdan başarıyla kaydedildi!",
+
+    "errorPasswordRequired": "Şifre gerekli.",
+    "errorPrivatekeyRequired": "Özel anahtar gerekli.",
+    "errorUnexpectedTitle": "Beklenmeyen hata",
+    "errorUnexpectedDescription": "Cüzdan eklenirken bir hata meydana geldi. Detaylar için konsola bakın.",
+    "errorUnexpectedEditDescription": "Cüzdan düzenlenirken bir hata meydana geldi. Detaylar için konsola bakın.",
+    "errorDuplicateWalletTitle": "Cüzdan zaten var",
+    "errorDuplicateWalletDescription": "Bu adres için zaten bir cüzdana sahipsiniz.",
+    "errorMissingWalletTitle": "Cüzdan bulunamadı",
+    "errorMissingWalletDescription": "Düzenlemeye çalıştığınız cüzdan artık yok.",
+    "errorDecryptTitle": "Yanlış ana şifre",
+    "errorDecryptDescription": "Cüzdan şifresi deşifre edilemedi. Ana şifre doğru mu?",
+    "errorWalletLimitTitle": "Cüzdan sınırına ulaştınız",
+    "errorWalletLimitDescription": "Şu anda daha fazla cüzdan ekleyemezsiniz."
+  },
+
+  "addContact": {
+    "modalTitle": "Kişi ekle",
+    "modalTitleEdit": "Kişiyi düzenle",
+
+    "buttonSubmit": "Ekle",
+    "buttonSubmitEdit": "Kaydet",
+
+    "contactLabel": "Etiket",
+    "contactLabelPlaceholder": "Kişi etiketi (isteğe bağlı)",
+    "contactLabelMaxLengthError": "32 karakterden uzun olamaz",
+    "contactLabelWhitespaceError": "Sadece boşluk olamaz",
+
+    "contactAddressLabel": "Adres veya isim",
+
+    "messageSuccessAdd": "Kişi başarıyla eklendi!",
+    "messageSuccessEdit": "Kişi başarıyla kaydedildi!",
+
+    "errorDuplicateContactTitle": "Kişi zaten var",
+    "errorDuplicateContactDescription": "Bu adres için zaten bir kişiye sahipsiniz.",
+    "errorMissingContactTitle": "Kişi bulunamadı",
+    "errorMissingContactDescription": "Düzenlemeye çalıştığınız kişi artık yok.",
+    "errorContactLimitTitle": "Kişi sınırına ulaştınız",
+    "errorContactLimitDescription": "Şu anda daha fazla kişi ekleyemezsiniz."
   }
 }
