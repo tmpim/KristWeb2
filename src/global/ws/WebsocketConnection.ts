@@ -53,7 +53,7 @@ export class WebsocketConnection {
 
     // Get a websocket token
     const { url } = await api.post<{ url: string }>("ws/start");
-    if (!url.startsWith("wss://krist.ceriat.net/"))
+    if (!url.startsWith("wss://krist.dev/") && !url.startsWith("wss://krist.ceriat.net/"))
       message.warning(i18n.t("purchaseKrist.connection"), 20);
 
     this.setConnectionState("connecting");

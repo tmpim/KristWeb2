@@ -18,7 +18,7 @@ export async function checkName(
     const url = `names/check/${encodeURIComponent(name)}`;
     const { available } = await api.get<CheckNameResponse>(url);
     setNameAvailable(available);
-  } catch (err) {
+  } catch (err: any) {
     criticalError(err);
     setNameAvailable(undefined);
   }

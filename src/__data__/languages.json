@@ -61,8 +61,8 @@
     ]
   },
   "pt": {
-    "name": "Portuguese",
-    "nativeName": "Português",
+    "name": "Portuguese (Brazil)",
+    "nativeName": "Português (Brasil)",
     "country": "br",
     "antLocale": "pt_BR",
     "dayjsLocale": "pt-br",

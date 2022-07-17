@@ -41,10 +41,18 @@ async function runCompatChecks(): Promise<CompatCheck[]> {
   const failed: CompatCheck[] = [];
   for (const check of CHECKS) {
     try {
-      if (!(await check.check()))
-        throw new Error("check returned false");
-    } catch (err) {
+      let result: any;
+      try {
+        result = await check.check();
+      } catch (err: any) {
+        console.error("Compatibility check errored:", check.name, err);
+        throw err;
+      }
+
+      if (!result) throw new Error("check returned false");
+    } catch (err: any) {
       debug("compatibility check %s failed", check.name);
+      console.error("Compatibility check failed:", check.name, err);
       criticalError(err);
       failed.push(check);
     }

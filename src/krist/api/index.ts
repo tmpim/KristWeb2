@@ -46,7 +46,7 @@ export async function request<T>(method: string, endpoint: string, options?: Req
   });
 
   // Present a warning if the request was made over HTTP.
-  if (endpoint !== "ws/start" && method === "POST" && (syncNode.startsWith("http:") || !syncNode.startsWith("https://krist.ceriat.net"))) {
+  if (endpoint !== "ws/start" && method === "POST" && (syncNode.startsWith("http:") || !syncNode.startsWith("https://krist.dev"))) {
     notification.warning({
       message: "INSECURE API REQUEST",
       description: "Your wallet password has been compromised.",

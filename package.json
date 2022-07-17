@@ -9,7 +9,7 @@
     "url": "https://github.com/tmpim/KristWeb2.git"
   },
   "author": "Lemmmy",
-  "defaultSyncNode": "https://krist.ceriat.net",
+  "defaultSyncNode": "https://krist.dev",
   "supportURL": "https://donate.lemmmy.pw",
   "supportersURL": "https://donate.lemmmy.pw/supporters.json",
   "translateURL": "https://github.com/tmpim/KristWeb2/blob/master/README.md#contributing-translations",

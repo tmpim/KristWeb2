@@ -51,5 +51,5 @@ export function criticalError(
   captureContext?: CaptureContext
 ): void {
   Sentry.captureException(err, captureContext);
-  console.error(err);
+  console.error("Critical error: ", err);
 }
