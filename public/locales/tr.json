@@ -344,5 +344,102 @@
     "errorMissingContactDescription": "Düzenlemeye çalıştığınız kişi artık yok.",
     "errorContactLimitTitle": "Kişi sınırına ulaştınız",
     "errorContactLimitDescription": "Şu anda daha fazla kişi ekleyemezsiniz."
+  },
+
+  "dashboard": {
+    "siteTitle": "Gösterge Paneli",
+
+    "inDevBanner": "KristWeb v2 kapalı betasına hoşgeldiniz! Bu site hala geliştirilme aşamasındadır, bundan dolayı çoğu özellik bulunmamaktadır. Lütfen bulduğunuz bütün bugları <1>GitHub</1>'da rapor edin. Teşekkürler!",
+    "inDevBanner2": "KristWeb v2 açık betasına hoşgeldiniz! Bu site nispeten yeni, bu yüzden bulduğunuz herhangi bir bugu <1>GitHub</1>'da rapor edin. Teşekkürler!",
+
+    "walletOverviewCardTitle": "Cüzdanlar",
+    "walletOverviewTotalBalance": "Toplam bakiye",
+    "walletOverviewNames": "İsimler",
+    "walletOverviewNamesCount": "{{count, number}} isim",
+    "walletOverviewNamesCount_plural": "{{count, number}} isim",
+    "walletOverviewNamesCountEmpty": "İsim bulunmuyor",
+    "walletOverviewSeeMore": "Bütün {{count, number}} tanesini gör...",
+    "walletOverviewAddWallets": "Cüzdan ekle...",
+
+    "transactionsCardTitle": "İşlemler",
+    "transactionsError": "İşlemlerinizi alırken bir sorun meydana geldi. Detaylar için konsola bakın.",
+
+    "blockValueCardTitle": "Blok değeri",
+    "blockValueBaseValue": "Base value (<1></1>)",
+    "blockValueBaseValueNames": "{{count, number}} isim",
+    "blockValueBaseValueNames_plural": "{{count, number}} isimler",
+    "blockValueNextDecrease": "<3>{{count, number}} blokta bir</3> <1></1> azalır",
+    "blockValueNextDecrease_plural": "<3>{{count, number}} blokta bir</3> <1></1> azalır",
+    "blockValueReset": "<1>{{count, number}} blokta bir</1> sıfırlanır",
+    "blockValueReset_plural": "<1>{{count, number}} blokta bir</1> sıfırlanır",
+    "blockValueEmptyDescription": "<1>İsim</1> satın alındığında blok değeri artar.",
+
+    "blockDifficultyCardTitle": "Blok zorluğu",
+    "blockDifficultyError": "Blok zorluğunu alırken bir sorun meydana geldi. Detaylar için konsola bakın.",
+    "blockDifficultyHashRate": "Yaklaşık <1 />",
+    "blockDifficultyHashRateTooltip": "Şu andaki işe göre, yaklaşık birleşik ağ kazma hash oranı",
+    "blockDifficultyChartWork": "Blok zorluğu",
+    "blockDifficultyChartLinear": "Doğrusal",
+    "blockDifficultyChartLog": "Logaritmik",
+
+    "motdCardTitle": "Sunucudaki Günün Mesajı",
+    "motdDebugMode": "Bu sunucu resmi olmayan bir geliştirme sunucusudur. Bakiyeler ve işlemler manipule edilebilir. Dikkatli olun.",
+
+    "whatsNewCardTitle": "Yenilikler",
+    "whatsNewButton": "Yenilikler",
+
+    "tipsCardTitle": "Günün ipucu",
+    "tipsPrevious": "Önceki",
+    "tipsNext": "Sonraki",
+    "tips": {
+      "0": "Krist ve KristWeb'deki yenilikleri [Yenilikler](/whatsnew) sayfasından takip edin!",
+      "1": "Masaüstünde ok tuşlarını kullanarak tablolar arasında hızlıca geçiş yapabilirsiniz.",
+      "2": "Tabloları sütun başlıklarına tıklayarak sıralayabilirsiniz.",
+      "3": "[Cüzdanlarım](/wallets) sayfasını tablo başlığındaki filtre tuşuna tıklayarak kategorilere göre sıralayabilirsiniz.",
+      "4": "[Ayarlar sayfası](/settings) KristWeb deneyiminizi kişiselleştirmek için bir çok gelişmiş ayara sahip.",
+      "5": "Yeni [İstek sayfası](/request) ile önceden doldurulmuş işlem linkleri oluşturabilirsiniz.",
+      "6": "[Cüzdanlarınızı](/wallets) yedeklemeyi unutmayın!",
+      "7": "Krist ağını Ctrl+K (macOS'te Cmd+K) klavye kısayolu ile hızlıca arayabilirsiniz.",
+      "8": "Birilerine hızlıca işlem göndermek için [adres defterine](/contacts) kişi ekleyebilirsiniz.",
+      "9": "A 'bumped' transaction is a transaction sent to and from the same address.",
+      "10": "'Blok zorluğu' grafiği alçak zorluklardaki küçük değişiklikleri daha kolay görmek için logaritmik ölçekte gösterilebilir.",
+      "1-status": "You are connected to an unofficial server. Your wallet passwords may be sent to the operator, who can use them to access your wallets on the official server. Please ask a question <1>here</1> for more information.",
+      "11": "Tarih formatınu [gelişmiş ayarlar](/settings)dan değiştirilebilirsiniz.",
+      "12": "[En az kazılmış blok hash'lerini](/network/blocks/lowest) görebilirsiniz.",
+      "13": "En yeni satın alınmış isimleri [Ağ İsimleri sayfası](/network/names/new)nda görebilirsiniz.",
+      "14": "[İsimler](/network/names) satın alındığında blok değeri artar.",
+      "15": "Eğer yanlışlıkla işlem yapmaktan endişeleniyorsanız, [gelişmiş ayarlar](/settings)da bir onay kutucuğunu etkinleştirebilirsiniz."
+    }
+  },
+
+  "credits": {
+    "title": "Emeği geçenler",
+    "madeBy": "<1>{{authorName}}</1> tarafından yapıldı",
+    "hostedBy": "<1>{{host}}</1> tarafından sunuldu",
+    "supportersTitle": "Destekçiler",
+    "supportersDescription": "Bu proje aşağıdaki muhteşem destekçiler sayesinde mümkün oldu:",
+    "supportButton": "KristWeb'i destekle",
+    "translatorsTitle": "Tercümanlar",
+    "translatorsDescription": "Bu proje aşağıdaki muhteşem katkıda bulunanlar sayesinde tercüme edildi:",
+    "translateButton": "KristWeb'i tercüme et",
+    "tmpim": "tmpim tarafından oluşturuldu",
+
+    "versionInfo": {
+      "version": "Sürüm",
+      "commitHash": "Commit",
+      "buildTime": "Build süresi",
+      "variant": "Build varyantı",
+      "license": "Lisans"
+    },
+
+    "privacyTitle": "Gizlilik",
+    "privacy": {
+      "kristServer": "Krist Sunucusu",
+      "kristServerDesc": "<1>Krist Sunucusunun</1> sakladığı tek özel veriler, web sunucusunun kayıtlarının parçası olan IP adresiniz, User-Agent ve Origin'inizdir. Bu bilgiler 30 gün sonra otomatik olarak silinir.",
+      "kristweb": "KristWeb",
+      "kristwebDesc1": "KristWeb otomatik hata raporları için kendi üzerinde sunulan bir <1>Sentry</1> sunucusu kullanır. Bu sistem sizin IP adresiniz, User-Agent, Origin, breadcrumb'larınız, ve otomatik olarak rapor edilen herhangi bir hatanın detaylarını saklar. Bu bilgiler 30 gün sonra otomatik olarak silinir.",
+      "kristwebDesc2": "<1>uBlock Origin</1> <strong>(önerilir)</strong> gibi bir reklam-engelleyici veya takip-engelleyici bir tarayıcı eklentisine sahip iseniz, Sentry sistemimiz zaten eklentiye dahil engel listeleri tarafından engellenir, bu yüzden gizliliğiniz hakkında endişe duymanıza gerek yok. Ayrıca <4>ayarlar sayfası</4>nda hata raporlarını devre dışı bırakablirsiniz. Eğer daha detaylı hata raporları sunarak bize yardımcı olmak istiyorsanız, lütfen takip-engelleyici yazılımınızda KristWeb için bir istisna oluşturmayı düşünün. Bu site reklam sunmaz.",
+      "kristwebDesc3": "Herhangi bir sorunuz veya endişeniz var ise, lütfen geliştiricilerle iletişime geçin."
+    }
   }
 }
