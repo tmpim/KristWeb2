@@ -441,5 +441,80 @@
       "kristwebDesc2": "<1>uBlock Origin</1> <strong>(önerilir)</strong> gibi bir reklam-engelleyici veya takip-engelleyici bir tarayıcı eklentisine sahip iseniz, Sentry sistemimiz zaten eklentiye dahil engel listeleri tarafından engellenir, bu yüzden gizliliğiniz hakkında endişe duymanıza gerek yok. Ayrıca <4>ayarlar sayfası</4>nda hata raporlarını devre dışı bırakablirsiniz. Eğer daha detaylı hata raporları sunarak bize yardımcı olmak istiyorsanız, lütfen takip-engelleyici yazılımınızda KristWeb için bir istisna oluşturmayı düşünün. Bu site reklam sunmaz.",
       "kristwebDesc3": "Herhangi bir sorunuz veya endişeniz var ise, lütfen geliştiricilerle iletişime geçin."
     }
+  },
+
+  "settings": {
+    "siteTitle": "Ayarlar",
+    "title": "Ayarlar",
+
+    "messageSuccess": "Ayar başarıyla değiştirildi!",
+
+    "settingIntegerSave": "Kaydet",
+
+    "menuLanguage": "Dil",
+
+    "subMenuBackups": "Yedekleri yönet",
+    "importBackup": "Cüzdanları içe aktar",
+    "exportBackup": "Cüzdanları dışa aktar",
+
+    "subMenuMasterPassword": "Ana şifre",
+    "changeMasterPassword": "Ana şifreyi değiştir",
+    "resetMasterPassword": "Ana şifreyi sıfırla",
+
+    "subMenuAutoRefresh": "Otomatik yenile",
+    "autoRefreshTables": "Tabloları otomatik yenile",
+    "autoRefreshTablesDescription": "Ağda bir değişiklik algılandığında büyük tablo listelemeleri (ör. işlemler, isimler) otomatik olarak yenilenmeli mi.",
+    "autoRefreshAddressPage": "Adres sayfasını otomatik yenile",
+    "autoRefreshNamePage": "İsim sayfasını otomatik yenile",
+
+    "subMenuAdvanced": "Gelişmiş ayarlar",
+    "alwaysIncludeMined": "Kazılan işlemleri her zaman işlem listelemelerine dahil et (Yenileme gerekebilir)",
+    "copyNameSuffixes": "İsimleri kopyalarken son ekleri dahil et",
+    "addressCopyButtons": "Bütün adreslerin yanında kopyala butonlarını göster",
+    "nameCopyButtons": "Bütün isimlerin yanında kopyala butonlarını göster",
+    "blockHashCopyButtons": "Bütün blok hashlerinin yanında kopyala butonlarını göster",
+    "showRelativeDates": "Show relative dates instead of absolute ones if recent",
+    "showRelativeDatesDescription": "Bütün sitede, bir tarih 7 günden daha önce ise, tarihi göreceli olarak göster (n gün önce)",
+    "showNativeDates": "Tarihleri seçili dilin yerel tarih formatında göster",
+    "showNativeDatesDescription": "Eğer devre dışı bırakılırsa, tarihler her zaman YYYY/AA/GG SS:dd:ss şeklinde gösterilecektir",
+    "transactionsHighlightOwn": "İşlemler tablosunda kendi işlemlerini vurgula",
+    "transactionsHighlightVerified": "İşlemler tablosunda doğrulanmış işlemleri vurgula",
+    "transactionDefaultRaw": "İşlemler sayfasında varsayılan olarak 'CommonMeta' yerine 'Raw' sekmesini aç",
+    "confirmTransactions": "Bütün işlemler için onay iste",
+    "clearTransactionForm": "'Gönder' tuşuna tıkladıktan sonra Gönderme İşlemi formunu boşalt.",
+    "sendTransactionDelay": "yeni bir işlemin gönderilmesine izin verilmeden önce milisaniye olarak beklenecek süre",
+    "defaultPageSize": "Tablo listelemeleri için varsayılan sayfa boyutu",
+    "tableHotkeys": "Tabloda gezinme tuşlarını etkinleştir (sağ ve sol ok tuşları)",
+
+    "subMenuPrivacy": "Gizlilik",
+    "privacyInfo": "Gizlilik bilgileri",
+    "errorReporting": "Otomatik hata rapor edilmesini etkinleştir (yeniden yükleme gerektirir)",
+    "messageOnErrorReport": "Bir hata otomatik olarak rapor edildiğinde bir bildirim göster (yeniden yükleme gerektirir)",
+
+    "subMenuDebug": "Debug ayarları",
+    "advancedWalletFormats": "Gelişmiş cüzdan formatları",
+    "menuTranslations": "Tercümeler",
+
+    "subTitleTranslations": "Tercümeler",
+
+    "translations": {
+      "errorMissingLanguages": "languages.json dosyası eksik. KristWeb doğru bir şekilde derlendi mi?",
+      "errorNoKeys": "Tercüme anahtarı bulunmamaktadır",
+
+      "columnLanguageCode": "Kod",
+      "columnLanguage": "Dil",
+      "columnKeys": "Anahtarlar",
+      "columnMissingKeys": "Eksik anahtarlar",
+      "columnProgress": "İlerleme",
+
+      "tableUntranslatedKeys": "Tercüme edilmemiş anahtarlar",
+      "columnKey": "Anahtar",
+      "columnEnglishString": "İngilizce string",
+
+      "importJSON": "JSON içe aktar",
+      "exportCSV": "CSV dışa aktar",
+
+      "importedLanguageTitle": "İçe aktarılmış dil"
+    }
   }
 }
