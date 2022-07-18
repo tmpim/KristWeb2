@@ -12,9 +12,9 @@ import semverPrerelease from "semver/functions/prerelease";
 
 import { ConditionalLink } from "@comp/ConditionalLink";
 
-import packageJson from "../../../package.json";
+import { getDevState } from "@utils";
 
-declare const __GIT_VERSION__: string;
+import packageJson from "../../../package.json";
 
 const prereleaseTagColours: { [key: string]: string } = {
   "dev": "red",
@@ -22,9 +22,6 @@ const prereleaseTagColours: { [key: string]: string } = {
   "beta": "blue",
   "rc": "green"
 };
-
-const devEnvs = ["development", "local", "test"];
-const dirtyRegex = /-dirty$/;
 
 export function Brand(): JSX.Element {
   const { t } = useTranslation();
@@ -36,11 +33,7 @@ export function Brand(): JSX.Element {
   const patch = semverPatch(version);
   const prerelease = semverPrerelease(version);
 
-  // Determine if the 'dev' tag should be shown
-  // Replaced by webpack DefinePlugin and git-revision-webpack-plugin
-  const gitVersion: string = __GIT_VERSION__;
-  const isDirty = dirtyRegex.test(gitVersion);
-  const isDev = devEnvs.includes(process.env.NODE_ENV || "development");
+  const { isDirty, isDev } = getDevState();
 
   // Convert semver prerelease parts to Bootstrap badge
   const tagContents = isDirty || isDev ? ["dev"] : prerelease;

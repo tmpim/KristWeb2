@@ -5,12 +5,19 @@ import { Alert } from "antd";
 
 import { useTranslation, Trans } from "react-i18next";
 
-import { getAuthorInfo } from "@utils";
+import { getAuthorInfo, getDevState } from "@utils";
 
-export function InDevBanner(): JSX.Element {
+export function InDevBanner(): JSX.Element | null {
   const { t } = useTranslation();
 
   const { gitURL } = getAuthorInfo();
+
+  // This is not a hook, run this after the hooks (to avoid changing hook count)
+  const { isDirty, isDev } = getDevState();
+
+  // Don't show the beta banner unless we are in development mode (push up the
+  // repository link)
+  if (!isDev && !isDirty) return null;
 
   return <Alert
     style={{ marginBottom: 24 }}
