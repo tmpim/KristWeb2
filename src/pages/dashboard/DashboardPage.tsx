@@ -3,6 +3,9 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { Row, Col, Alert } from "antd";
 
+import { useSelector } from "react-redux";
+import { RootState } from "@store";
+
 import { PageLayout } from "@layout/PageLayout";
 
 import { Trans } from "react-i18next";
@@ -28,6 +31,8 @@ export function DashboardPage(): JSX.Element {
   const baseURL = useSyncNode();
   const { gitURL } = getAuthorInfo();
 
+  const miningEnabled = useSelector((s: RootState) => s.node.motd.miningEnabled);
+
   return <PageLayout siteTitleKey="dashboard.siteTitle" className="dashboard-page">
     {/* This was moved away from AppServices to here, as the detailed work
       * data was only used for this page (at least right now). This was, the
@@ -49,14 +54,18 @@ export function DashboardPage(): JSX.Element {
       <Col span={24} lg={14} xxl={12}><TransactionsCard /></Col>
     </Row>
 
-    <Row gutter={16} className="dashboard-main-row">
+    {/* Only show block value and block difficulty details if the server has
+      * mining enabled. */}
+    {miningEnabled && <Row gutter={16} className="dashboard-main-row">
       <Col span={24} xl={6}><BlockValueCard /></Col>
       <Col span={24} xl={18}><BlockDifficultyCard /></Col>
-    </Row>
+    </Row>}
 
     <Row gutter={16} className="dashboard-main-row">
       <Col span={24} xl={12}><MOTDCard /></Col>
       <Col span={24} xl={12}><TipsCard /></Col>
     </Row>
+
+    {/* TODO: Basic network statistics here */}
   </PageLayout>;
 }
