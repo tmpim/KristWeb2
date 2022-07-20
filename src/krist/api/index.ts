@@ -83,4 +83,8 @@ export const post = <T>(endpoint: string, body?: any, options?: RequestOptions):
 
 /** Re-usable syncNode hook, usually for refreshing things when the syncNode
  * changes. */
-export const useSyncNode = (): string => useSelector((s: RootState) => s.node.syncNode);
+export const useSyncNode = (): string =>
+  useSelector((s: RootState) => s.node.syncNode);
+
+export const useMiningEnabled = (): boolean =>
+  useSelector((s: RootState) => s.node.motd.miningEnabled);

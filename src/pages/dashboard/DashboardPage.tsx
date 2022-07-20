@@ -20,7 +20,7 @@ import { BlockDifficultyCard } from "./BlockDifficultyCard";
 import { MOTDCard } from "./MOTDCard";
 import { TipsCard } from "./TipsCard";
 
-import { useSyncNode } from "@api";
+import { useMiningEnabled, useSyncNode } from "@api";
 import { getAuthorInfo } from "@utils";
 import { SyncDetailedWork } from "@global/ws/SyncDetailedWork";
 
@@ -31,7 +31,7 @@ export function DashboardPage(): JSX.Element {
   const baseURL = useSyncNode();
   const { gitURL } = getAuthorInfo();
 
-  const miningEnabled = useSelector((s: RootState) => s.node.motd.miningEnabled);
+  const miningEnabled = useMiningEnabled();
 
   return <PageLayout siteTitleKey="dashboard.siteTitle" className="dashboard-page">
     {/* This was moved away from AppServices to here, as the detailed work

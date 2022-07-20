@@ -37,6 +37,14 @@ export async function updateMOTD(): Promise<void> {
     store.dispatch(nodeActions.setLastBlockID(data.last_block.height));
   }
 
+  // Cache the miningEnabled value to avoid the site dancing on refresh.
+  const miningEnabledStr = data.mining_enabled ? "true" : "false";
+  const miningEnabledCached = localStorage.getItem("miningEnabled");
+  debug("motd mining enabled: %s (cached: %s)", miningEnabledStr, miningEnabledCached);
+  if (miningEnabledCached !== miningEnabledStr) {
+    localStorage.setItem("miningEnabled", miningEnabledStr);
+  }
+
   const motdBase: KristMOTDBase = {
     motd: data.motd,
     motdSet: new Date(data.motd_set),

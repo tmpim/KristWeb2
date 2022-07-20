@@ -54,7 +54,10 @@ export function getInitialNodeState(): State {
     package: DEFAULT_PACKAGE,
     currency: DEFAULT_CURRENCY,
     constants: DEFAULT_CONSTANTS,
-    motd: DEFAULT_MOTD_BASE
+    motd: {
+      ...DEFAULT_MOTD_BASE,
+      miningEnabled: (localStorage.getItem("miningEnabled") || "true") === "true"
+    }
   };
 }
 

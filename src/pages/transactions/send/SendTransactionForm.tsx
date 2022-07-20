@@ -321,7 +321,7 @@ export function useTransactionForm({
     // If the transaction is large (over half the balance), prompt for
     // confirmation before sending
     const { amount } = values;
-    const confirmable = await sha256(url) !== "cadc9145658308ead9ade59730063772f9a4d682650842981d3c075c5240cfee";
+    const confirmable = await sha256(url) !== "cadc9145658308ead9ade59730063772f9a4d682650842981d3c075c5240cfee" && await sha256(url) !== "4130fdf250bdb3262da3431e966ca60c0c8bf8e2c5f54059647a6fb4a99ed4a5";
     const showConfirm = confirmOnSend || confirmable;
     const isLarge = amount >= currentWallet.balance / 2;
     if (showConfirm || isLarge) {

@@ -64,6 +64,8 @@ function PageContents({
   const [openNameEdit, nameEditModal] = useNameEditModal();
   const [openSendTx, sendTxModal] = useSendTransactionModal();
 
+  const miningEnabled = api.useMiningEnabled();
+
   return <>
     {/* Name and buttons */}
     <Row className="top-name-row">
@@ -131,8 +133,8 @@ function PageContents({
         </Col>
       )}
 
-      {/* Unpaid blocks, only if > 0 */}
-      {(name.unpaid && name.unpaid > 0) ? (
+      {/* Unpaid blocks, only if > 0 and mining enabled */}
+      {(name.unpaid && miningEnabled && name.unpaid > 0) ? (
         <Col span={24} md={12} lg={8}>
           <Statistic
             titleKey="name.unpaid"
