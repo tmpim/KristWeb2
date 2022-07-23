@@ -3,6 +3,9 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { store } from "@app";
 
+declare const __GIT_VERSION__: string;
+declare const __PKGBUILD__: string;
+
 export async function backupExport(): Promise<string> {
   const { salt, tester } = store.getState().masterPassword;
   const { wallets } = store.getState().wallets;
@@ -12,8 +15,13 @@ export async function backupExport(): Promise<string> {
   const finalWallets = Object.fromEntries(Object.entries(wallets)
     .filter(([_, w]) => w.dontSave !== true));
 
+  const gitVersion: string = __GIT_VERSION__;
+  const pkgbuild = __PKGBUILD__;
+
   const backup = {
     version: 2,
+    gitVersion,
+    pkgbuild,
 
     // Store these to verify the master password is correct when importing
     salt, tester,

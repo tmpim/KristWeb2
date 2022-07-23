@@ -33,6 +33,7 @@ function App(): JSX.Element {
   if (!store) {
     debug("initialising redux store");
     store = initStore();
+    (window as any).kwReduxStore = store;
   }
 
   return <ErrorBoundary name="top-level-app">
