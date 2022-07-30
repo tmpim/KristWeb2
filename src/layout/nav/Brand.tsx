@@ -45,6 +45,7 @@ export function Brand(): JSX.Element {
 
   return <div className="site-header-brand">
     <ConditionalLink to="/" matchTo matchExact>
+      <img src="/logo.svg" className="logo" />
       {t("app.name")}
       <span className="site-header-brand-version">v{major}.{minor}.{patch}</span>
       {tag}
