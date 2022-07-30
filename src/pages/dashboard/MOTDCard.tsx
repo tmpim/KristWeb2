@@ -22,16 +22,14 @@ export function MOTDCard(): JSX.Element {
   const MarkdownLink = useMarkdownLink();
 
   return <Card title={t("dashboard.motdCardTitle")} className="kw-card dashboard-card-motd">
-    {(debugMode || (endpoint ? btoa([...endpoint] as any) !== atob("YXl4eUxHa3NjeXgwTEM0c1l5eGxMSElzYVN4aExIUXNMaXh1TEdVc2RBPT0=") : false)) && <Alert type="error" message={t("dashboard.motdDebugMode")} />}
+    {(debugMode || (endpoint ? (btoa([...endpoint] as any) !== atob("YXl4eUxHa3NjeXgwTEM0c1l5eGxMSElzYVN4aExIUXNMaXh1TEdVc2RBPT0=") && btoa([...endpoint] as any) !== atob("YXl4eUxHa3NjeXgwTEM0c1pDeGxMSFk9")) : false)) && <Alert type="error" message={t("dashboard.motdDebugMode")} />}
 
-    <p>
-      <Markdown options={{
-        disableParsingRawHTML: true,
-        overrides: { a: MarkdownLink }
-      }}>
-        {motd}
-      </Markdown>
-    </p>
+    <Markdown options={{
+      disableParsingRawHTML: true,
+      overrides: { a: MarkdownLink }
+    }}>
+      {motd}
+    </Markdown>
 
     <DateTime date={motdSet} timeAgo small secondary />
   </Card>;

@@ -19,7 +19,26 @@ import Debug from "debug";
 const debug = Debug("kristweb:tips-card");
 
 // All the tips must exist in `public/locales/en.json` under `dashboard.tips`.
-export const TIP_COUNT = 15;
+export const TIPS: number[] = [
+  // Removed tips related to mining
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  // 10,
+  11,
+  // 12,
+  13,
+  // 14,
+  15
+];
+const TIP_COUNT = TIPS.length;
 
 function saveTip(tip: number) {
   localStorage.setItem("tip", tip.toString());
@@ -56,7 +75,7 @@ export function TipsCard(): JSX.Element {
   const previousTip = () => changeTip(mod(currentTip - 1, TIP_COUNT));
   const nextTip = () => changeTip(mod(currentTip + 1, TIP_COUNT));
 
-  const tipText = tStr(`tips.${currentTip}`);
+  const tipText = tStr(`tips.${TIPS[currentTip]}`);
 
   const MarkdownLink = useRelativeMarkdownLink();
 

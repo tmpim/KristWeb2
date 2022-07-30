@@ -657,6 +657,8 @@
     "columnData": "Data",
     "columnUnpaid": "Unpaid Blocks",
 
+    "rowNew": "New!",
+
     "mobileOwner": "<0>Owner:</0> <1 />",
     "mobileOriginalOwner": "<0>Original owner:</0> <1 />",
     "mobileRegistered": "Registered: <1 />",

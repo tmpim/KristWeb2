@@ -3,6 +3,7 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 export * from "./errors";
 export * from "./misc/credits";
+export * from "./misc/devState";
 export * from "./misc/math";
 export * from "./misc/promiseThrottle";
 export * from "./misc/sort";

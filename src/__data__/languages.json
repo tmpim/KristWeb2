@@ -43,6 +43,10 @@
       {
         "name": "HydroNitrogen",
         "url": "https://github.com/Wendelstein7"
+      },
+      {
+        "name": "BlackDragon",
+        "url": "https://github.com/BlackDragon-B"
       }
     ]
   },
@@ -61,8 +65,8 @@
     ]
   },
   "pt": {
-    "name": "Portuguese",
-    "nativeName": "Português",
+    "name": "Portuguese (Brazil)",
+    "nativeName": "Português (Brasil)",
     "country": "br",
     "antLocale": "pt_BR",
     "dayjsLocale": "pt-br",

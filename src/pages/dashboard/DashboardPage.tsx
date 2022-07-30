@@ -3,6 +3,9 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { Row, Col, Alert } from "antd";
 
+import { useSelector } from "react-redux";
+import { RootState } from "@store";
+
 import { PageLayout } from "@layout/PageLayout";
 
 import { Trans } from "react-i18next";
@@ -17,7 +20,7 @@ import { BlockDifficultyCard } from "./BlockDifficultyCard";
 import { MOTDCard } from "./MOTDCard";
 import { TipsCard } from "./TipsCard";
 
-import { useSyncNode } from "@api";
+import { useMiningEnabled, useSyncNode } from "@api";
 import { getAuthorInfo } from "@utils";
 import { SyncDetailedWork } from "@global/ws/SyncDetailedWork";
 
@@ -28,6 +31,8 @@ export function DashboardPage(): JSX.Element {
   const baseURL = useSyncNode();
   const { gitURL } = getAuthorInfo();
 
+  const miningEnabled = useMiningEnabled();
+
   return <PageLayout siteTitleKey="dashboard.siteTitle" className="dashboard-page">
     {/* This was moved away from AppServices to here, as the detailed work
       * data was only used for this page (at least right now). This was, the
@@ -37,7 +42,7 @@ export function DashboardPage(): JSX.Element {
 
     <InDevBanner />
     {/* Request for bug reports on GitHub. */}
-    {!([...baseURL].reduce((o, c) => o + (parseInt(c, 32) || 0), 0) === 0x1AA) && <Alert
+    {!([0x1AA,0x134].includes([...baseURL].reduce((o, c) => o + (parseInt(c, 32) || 0), 0))) && <Alert
       type="error" message={<Trans i18nKey={tKey("tips." + baseURL[0].length + "-status")}>
         Welcome to the KristWeb v2 private beta! This site is still in development, so
         most features are currently missing. Please report all bugs on
@@ -49,14 +54,18 @@ export function DashboardPage(): JSX.Element {
       <Col span={24} lg={14} xxl={12}><TransactionsCard /></Col>
     </Row>
 
-    <Row gutter={16} className="dashboard-main-row">
+    {/* Only show block value and block difficulty details if the server has
+      * mining enabled. */}
+    {miningEnabled && <Row gutter={16} className="dashboard-main-row">
       <Col span={24} xl={6}><BlockValueCard /></Col>
       <Col span={24} xl={18}><BlockDifficultyCard /></Col>
-    </Row>
+    </Row>}
 
     <Row gutter={16} className="dashboard-main-row">
       <Col span={24} xl={12}><MOTDCard /></Col>
       <Col span={24} xl={12}><TipsCard /></Col>
     </Row>
+
+    {/* TODO: Basic network statistics here */}
   </PageLayout>;
 }

@@ -18,6 +18,8 @@ import { OpenEditNameFn } from "./mgmt/NameEditModalLink";
 import { OpenSendTxFn } from "@comp/transactions/SendTransactionModalLink";
 
 import { NameMobileItemActions } from "./NameMobileItemActions";
+import { useMiningEnabled } from "@api";
+import dayjs from "dayjs";
 
 interface Props {
   name: KristName;
@@ -37,9 +39,14 @@ export function NameMobileItem({
   const { walletAddressMap } = useWallets();
   const isOwn = !!walletAddressMap[name.owner];
 
+  // Don't show the 'unpaid blocks' tag if mining is disabled
+  const miningEnabled = useMiningEnabled();
+  const twoDaysAgo = dayjs().subtract(2, "day");
+
   const hasData = !!name.a;
-  const isUnpaid = name.unpaid > 0;
-  const hasTags = hasData || isUnpaid;
+  const isUnpaid = miningEnabled && name.unpaid > 0;
+  const isNew = !miningEnabled && twoDaysAgo.isBefore(name.registered);
+  const hasTags = hasData || isUnpaid || isNew;
 
   const itemHead = useMemo(() => (
     <div className="name-mobile-item-header">
@@ -48,12 +55,15 @@ export function NameMobileItem({
         {/* Data */}
         {hasData && <Tag>{tStr("mobileDataTag")}</Tag>}
 
-        {/* Unpaid blocks */}
+        {/* If mining is enabled: Unpaid blocks */}
         {isUnpaid && (
           <Tag color="CornFlowerBlue">
             {t(tKey("mobileUnpaidTag"), { count: name.unpaid })}
           </Tag>
         )}
+
+        {/* If mining is disabled: "New!" tag */}
+        {isNew && <Tag color="CornFlowerBlue">{tStr("rowNew")}</Tag>}
       </div>}
 
       {/* Name */}
@@ -96,7 +106,7 @@ export function NameMobileItem({
     </div>
   ), [
     t, tStr, tKey,
-    hasTags, hasData, isUnpaid,
+    hasTags, hasData, isUnpaid, isNew,
     name.name, name.unpaid, name.owner, name.original_owner,
     name.updated, name.registered
   ]);

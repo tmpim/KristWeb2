@@ -105,6 +105,7 @@
 
   "contextualAddressUnknown": "Onbekend",
   "contextualAddressNonExistentTooltip": "Dit adres is nog niet geinitialiseerd op het Krist netwerk.",
+  "contextualAddressNonExistentTooltip2": "Dit adres heeft nog geen transactiegeschiedenis.",
 
   "typeahead": {
     "emptyLabel": "Geen match gevonden.",
@@ -185,6 +186,7 @@
     "actionsEditTooltip": "Wallet bewerken",
     "actionsSendTransaction": "Krist verzenden",
     "actionsWalletInfo": "Wallet informatie",
+    "actionsWalletForceCreate": "Forceer creëren",
     "actionsDelete": "Wallet verwijderen",
     "actionsDeleteConfirm": "Weet je zeker dat je deze wallet wil verwijderen?",
     "actionsDeleteConfirmDescription": "Als je het wallet-sleutel niet hebt opgeslagen of opgeschreven, is deze voor altijd verloren!",
@@ -222,6 +224,12 @@
 
       "true": "Ja",
       "false": "Nee"
+    },
+
+    "login": {
+      "appMasterPasswordRequired": "Je moet geauthenticeerd zijn om het creëren van een wallet te forceren.",
+      "errorAuthFailed": "Kan het adres niet geforceerd creëren.",
+      "errorWalletDecrypt": "Jouw wallet kon niet gedecodeerd worden."
     }
   },
 
@@ -342,6 +350,7 @@
     "siteTitle": "Dashboard",
 
     "inDevBanner": "Welkom bij de privé-bèta van KristWeb v2! Deze site is nog in ontwikkeling, dus de meeste features ontbreken momenteel. Rapporteer alstublieft alle bugs op <1>GitHub</1>. Bedankt!",
+    "inDevBanner2": "Welkom bij de privé-bèta van KristWeb v2! Deze site is nog relatief nieuw, dus rapporteer alstublieft alle bugs op <1>GitHub</1>. Bedankt!",
 
     "walletOverviewCardTitle": "Wallets",
     "walletOverviewTotalBalance": "Totaalbalans",
@@ -562,6 +571,7 @@
     "resultInvalid": "Dat lijkt niet op een correct krist adres.",
     "resultNotFoundTitle": "Adres niet gevonden",
     "resultNotFound": "Dat adres is nog niet geinitialiseerd op het Krist netwerk",
+    "resultNotFound2": "Dat adres heeft nog geen transactiegeschiedenis",
 
     "verifiedCardTitle": "Geverifieerd adres",
     "verifiedInactive": "Deze service is momenteel niet actief.",
@@ -573,8 +583,8 @@
     "itemFrom": "<0>Van:</0> <1 />",
     "itemTo": "<0>Naar:</0> <1 />",
     "itemName": "<0>Naam:</0> <1 />",
-    "itemARecord": "<0>A record:</0> <1 />",
-    "itemARecordRemoved": "(verwijderd)",
+    "itemData": "<0>Data:</0> <1 />",
+    "itemDataRemoved": "(verwijderd)",
     "seeMore": "Zie alle {{count, number}}..."
   },
 
@@ -645,11 +655,14 @@
     "columnUpdated": "Bijgewerkt",
     "columnARecord": "A Record",
     "columnUnpaid": "Onbetaalde blokken",
+    "columnTransferred": "Verplaatst",
+    "columnData": "Data",
 
     "mobileOwner": "<0>Eigenaar:</0> <1 />",
     "mobileOriginalOwner": "<0>Originele eigenaar:</0> <1 />",
     "mobileRegistered": "Geregistreerd: <1 />",
     "mobileUpdated": "Bijgewerkt: <1 />",
+    "mobileDataTag": "Data",
     "mobileARecordTag": "A",
     "mobileUnpaidTag": "{{count, number}} blok",
     "mobileUnpaidTag_plural": "{{count, number}} blokken",
@@ -660,7 +673,7 @@
     "actionsViewOriginalOwner": "Toon het adres van de originele eigenaar",
     "actionsSendKrist": "Verzend Krist",
     "actionsTransferKrist": "Maak Krist over",
-    "actionsUpdateARecord": "Update een A record",
+    "actionsUpdateData": "Werk data bij",
     "actionsTransferName": "Draag naam over",
 
     "tableTotal": "{{count, number}} naam",
@@ -679,17 +692,19 @@
     "buttonSendKrist": "Verzend Krist naar {{name}}",
     "buttonTransferKrist": "Maak Krist over naar {{name}}",
     "buttonARecord": "Werk A record bij",
+    "buttonData": "Werk data bij",
     "buttonTransferName": "Naam overmaken",
 
     "owner": "Eigendom van",
     "originalOwner": "Gekocht door",
     "registered": "Geregistreerd",
     "updated": "Laatst bijgewerkt",
+    "transferred": "Laatst overgedragen",
     "unpaid": "Onbetaalde blokken",
     "unpaidCount": "{{count, number}} blok",
     "unpaidCount_plural": "{{count, number}} blokken",
-    "aRecord": "A record",
-    "aRecordEditTooltip": "A record bijwerken",
+    "data": "Data",
+    "dataEditTooltip": "Werk data bij",
 
     "cardRecentTransactionsTitle": "Recente transacties",
     "cardHistoryTitle": "Naamgeschiedenis",
@@ -764,7 +779,7 @@
     "name": "Naam",
     "value": "Waarde",
     "time": "Tijd",
-    "aRecord": "A record",
+    "data": "Data",
 
     "cardMetadataTitle": "Metagegevens",
     "tabCommonMeta": "CommonMeta",
@@ -1107,8 +1122,8 @@
     "modalTitle": "Namen bijwerken",
 
     "labelNames": "Namen",
-    "labelARecord": "A record",
-    "placeholderARecord": "A record (optioneel)",
+    "labelData": "Data",
+    "placeholderData": "Data (optioneel)",
 
     "buttonSubmit": "Update namen",
 
@@ -1117,7 +1132,7 @@
     "errorWalletGone": "Die wallet bestaat niet meer.",
     "errorWalletDecrypt": "De wallet \"{{adres}}\" kon niet worden gedecodeerd.",
     "errorParameterNames": "Ongeldige namen.",
-    "errorParameterARecord": "Ongeldig A record.",
+    "errorParameterData": "Ongeldige data.",
     "errorNameNotFound": "Een of meer namen zijn niet gevonden.",
     "errorNotNameOwner": "U bent niet de eigenaar van een of meer namen.",
     "errorUnknown": "Onbekende fout bij het updaten van namen. Zie console voor details.",
@@ -1223,9 +1238,11 @@
       "namesName": "Naam",
       "namesOwner": "Eigenaar",
       "namesOriginalOwner": "Originele eigenaar",
+      "namesData": "Data",
       "namesARecord": "A Record",
       "namesUnpaid": "Onbetaalde blokken",
       "namesRegistered": "Geregistreerde tijd",
+      "namesTransferred": "Overgedragen tijd",
       "namesUpdated": "Bijgewerkte tijd",
 
       "blocksMiner": "Mijner",

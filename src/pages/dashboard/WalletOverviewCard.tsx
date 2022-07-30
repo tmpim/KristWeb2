@@ -33,7 +33,7 @@ export function WalletOverviewCard(): JSX.Element {
   topWallets.sort((a: Wallet, b: Wallet) => sort(a, b, "descend"));
   topWallets.reverse();
 
-  const top4Wallets = topWallets.slice(0, 4);
+  const shownWallets = topWallets.slice(0, 5);
 
   return <Card title={t("dashboard.walletOverviewCardTitle")} className="kw-card dashboard-card-wallets">
     {/* Top row (summaries) */}
@@ -58,7 +58,7 @@ export function WalletOverviewCard(): JSX.Element {
     </Row>
 
     {/* Wallet list */}
-    {top4Wallets.map(w => <WalletItem key={w.id} wallet={w} />)}
+    {shownWallets.map(w => <WalletItem key={w.id} wallet={w} />)}
 
     {/* See more link */}
     <Row className="card-more dashboard-wallets-more">

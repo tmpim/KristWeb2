@@ -32,7 +32,7 @@ async function _fetchTransactions(wallets: WalletMap): Promise<LookupTransaction
 
   return lookupTransactions(
     Object.values(wallets).map(w => w.address),
-    { includeMined: true, limit: 5, orderBy: "id", order: "DESC" }
+    { includeMined: true, limit: 6, orderBy: "id", order: "DESC" }
   );
 }
 

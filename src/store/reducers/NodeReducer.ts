@@ -26,7 +26,7 @@ export interface State {
   readonly lastNameTransactionID: number;
   readonly lastOwnNameTransactionID: number;
 
-    // Info from the MOTD
+  // Info from the MOTD
   readonly syncNode: string;
   readonly detailedWork?: KristWorkDetailed;
   readonly package: KristMOTDPackage;
@@ -46,11 +46,18 @@ export function getInitialNodeState(): State {
     lastOwnNameTransactionID: 0,
 
     // Info from the MOTD
-    syncNode: localStorage.getItem("syncNode") || packageJson.defaultSyncNode,
+    syncNode: (() => {
+      const conf = (localStorage.getItem("syncNode") || packageJson.defaultSyncNode);
+      if (conf === "https://krist.ceriat.net") return packageJson.defaultSyncNode;
+      return conf;
+    })(),
     package: DEFAULT_PACKAGE,
     currency: DEFAULT_CURRENCY,
     constants: DEFAULT_CONSTANTS,
-    motd: DEFAULT_MOTD_BASE
+    motd: {
+      ...DEFAULT_MOTD_BASE,
+      miningEnabled: (localStorage.getItem("miningEnabled") || "true") === "true"
+    }
   };
 }
 

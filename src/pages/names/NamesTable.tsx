@@ -3,7 +3,7 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { useState, useEffect, useCallback, useMemo, Dispatch, SetStateAction } from "react";
 import { Table, TablePaginationConfig, Tag } from "antd";
-import { ColumnsType } from "antd/lib/table";
+import { ColumnsType, ColumnType } from "antd/lib/table";
 
 import { useTFns, TStrFn } from "@utils/i18n";
 
@@ -25,10 +25,14 @@ import { OpenEditNameFn } from "./mgmt/NameEditModalLink";
 import { OpenSendTxFn } from "@comp/transactions/SendTransactionModalLink";
 import { useNameTableLock } from "./tableLock";
 
+import { useMiningEnabled } from "@api";
+
 import { KristNameLink } from "@comp/names/KristNameLink";
 import { ContextualAddress } from "@comp/addresses/ContextualAddress";
 import { TransactionConciseMetadata } from "@comp/transactions/TransactionConciseMetadata";
 import { DateTime } from "@comp/DateTime";
+
+import dayjs from "dayjs";
 
 import Debug from "debug";
 const debug = Debug("kristweb:names-table");
@@ -38,6 +42,8 @@ function getColumns(
   dateColumnWidth: number,
   sortNew: boolean | undefined,
   walletAddressMap: WalletAddressMap,
+  miningEnabled: boolean,
+  twoDaysAgo: Date,
   openNameEdit: OpenEditNameFn,
   openSendTx: OpenSendTxFn
 ): ColumnsType<KristName> {
@@ -96,7 +102,7 @@ function getColumns(
     },
 
     // Unpaid blocks
-    {
+    ...(miningEnabled ? [{
       title: tStr("columnUnpaid"),
       dataIndex: "unpaid", key: "unpaid",
 
@@ -106,14 +112,21 @@ function getColumns(
       width: 50,
 
       sorter: true
-    },
+    } as ColumnType<KristName>] : []),
 
     // Registered time
     {
       title: tStr("columnRegistered"),
       dataIndex: "registered", key: "registered",
 
-      render: time => <DateTime date={time} />,
+      render: (time, name) => <>
+        {/* If mining is disabled, show a "New!" badge for names less than 48
+          * hours old */}
+        {!miningEnabled && isNameNew(name, twoDaysAgo) &&
+          <Tag color="CornFlowerBlue">{tStr("rowNew")}</Tag>}
+
+        <DateTime date={time} />
+      </>,
       width: dateColumnWidth,
 
       sorter: true,
@@ -159,7 +172,7 @@ function getColumns(
   ];
 }
 
-const sortOptions: SortOptions<SortableNameFields> = [
+const sortOptionsMiningEnabled: SortOptions<SortableNameFields> = [
   { sortKey: "name", i18nKey: "namesName" },
   { sortKey: "owner", i18nKey: "namesOwner" },
   { sortKey: "original_owner", i18nKey: "namesOriginalOwner" },
@@ -169,6 +182,9 @@ const sortOptions: SortOptions<SortableNameFields> = [
   { sortKey: "transferred", i18nKey: "namesTransferred" },
   { sortKey: "updated", i18nKey: "namesUpdated" }
 ];
+
+const sortOptionsMiningDisabled: SortOptions<SortableNameFields> =
+  sortOptionsMiningEnabled.filter(o => o.sortKey !== "unpaid");
 
 interface Props {
   // Number used to trigger a refresh of the names listing
@@ -218,6 +234,11 @@ export function NamesTable({
 
   // Used to pause the table lookups when performing a bulk name edit
   const locked = useNameTableLock();
+
+  // Don't show the 'unpaid blocks' sort option if mining is disabled
+  const sortOptions = useMiningEnabled()
+    ? sortOptionsMiningEnabled
+    : sortOptionsMiningDisabled;
 
   // Fetch the names from the API, mapping the table options
   useEffect(() => {
@@ -296,13 +317,27 @@ function DesktopView({
   // Used to change the actions depending on whether or not we own the name
   const { walletAddressMap, joinedAddressList } = useWallets();
 
-  const columns = useMemo(() => getColumns(
-    tStr, dateColumnWidth, sortNew, walletAddressMap, openNameEdit, openSendTx
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  ), [tStr, dateColumnWidth, sortNew, joinedAddressList, openNameEdit, openSendTx]);
+  // Don't show the 'unpaid names' column if mining is disabled
+  const miningEnabled = useMiningEnabled();
+  const twoDaysAgo = dayjs().subtract(2, "day").toDate();
 
-  const getRowClasses = useCallback((name: KristName): string =>
-    name.unpaid > 0 ? "name-row-unpaid" : "", []);
+  const columns = useMemo(() => getColumns(
+    tStr, dateColumnWidth, sortNew, walletAddressMap, miningEnabled,
+    twoDaysAgo, openNameEdit, openSendTx
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  ), [tStr, dateColumnWidth, sortNew, joinedAddressList, miningEnabled,
+    twoDaysAgo, openNameEdit, openSendTx]);
+
+  const getRowClasses = useCallback((name: KristName): string => {
+    // If mining is enabled, then show the unpaid highlight based on the actual
+    // unpaid blocks count. Otherwise, show the highlight for 48 hours since
+    // the name was purchased (approximately over the time it takes to mine 500
+    // blocks at a rate of 1 block per 5 minutes)
+    const unpaid = miningEnabled
+      ? name.unpaid > 0
+      : isNameNew(name, twoDaysAgo);
+    return unpaid ? "name-row-unpaid" : "";
+  }, [miningEnabled, twoDaysAgo]);
 
   return <Table<KristName>
     className="names-table"
@@ -319,4 +354,8 @@ function DesktopView({
 
     columns={columns}
   />;
+}
+
+function isNameNew(name: KristName, twoDaysAgo: Date): boolean {
+  return new Date(name.registered) > twoDaysAgo;
 }
