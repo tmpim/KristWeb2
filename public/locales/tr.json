@@ -516,5 +516,250 @@
 
       "importedLanguageTitle": "İçe aktarılmış dil"
     }
+  },
+
+  "breadcrumb": {
+    "dashboard": "Gösterge Paneli",
+    "wallets": "Cüzdanlar",
+
+    "settings": "Ayarlar",
+    "settingsDebug": "Hata ayıklama",
+    "settingsTranslations": "Tercümeler"
+  },
+
+  "ws": {
+    "errorToken": "Krist websocket sunucusuna bağlanırken bir hata meydana geldi.",
+    "errorWS": "Krist websocket sunucusuna bağlanırken bir hata meydana geldi (code <1>{{code}}</1>)."
+  },
+
+  "rateLimitTitle": "İstek limitine ulaşıldı",
+  "rateLimitDescription": "Krist sunucusuna kısa bir süre içince çok fazla istek gönderildi. Bu büyük ihtimalle bir bugdan kaynaklanıyor!",
+
+  "address": {
+    "title": "Adres",
+
+    "walletLabel": "Etiket:",
+    "walletCategory": "Kategori:",
+    "contactLabel": "Kişi:",
+
+    "balance": "Şu anki bakiye",
+    "names": "İsimler",
+    "nameCount": "{{count, number}} isim",
+    "nameCount_plural": "{{count, number}} isim",
+    "nameCountEmpty": "İsim bulunmuyor",
+    "firstSeen": "İlk görüldüğü tarih",
+
+    "buttonSendKrist": "{{address}}'e Krist gönder",
+    "buttonTransferKrist": "Transfer Krist to {{address}}'e Krist transfer et",
+    "buttonAddContact": "Adres defterine ekle",
+    "buttonEditContact": "Kişiyi düzenle",
+    "buttonEditWallet": "Cüzdanı düzenle",
+
+    "tooltipV1Address": "v1 adresleri artık desteklenmediği için v1 adreslerine işlem gönderilemez.",
+
+    "cardRecentTransactionsTitle": "Son işlemler",
+    "cardNamesTitle": "İsimler",
+
+    "transactionsError": "İşlemler alınırken bir sorun meydana geldi. Detaylar için konsola bakın.",
+    "namesError": "İsimler alınırken bir sorun meydana geldi. Detaylar için konsola bakın.",
+
+    "namePurchased": "<1 /> satın alındı",
+    "nameReceived": "<1 /> alındı",
+    "namesSeeMore": "{{count, number}} tane ismin hepsini gör",
+
+    "resultInvalidTitle": "Geçersiz adres",
+    "resultInvalid": "Bu geçerli bir Krist adresi gibi görünmüyor.",
+    "resultNotFoundTitle": "Adres bulunamadı",
+    "resultNotFound": "Bu adres daha Krist ağında etkinleştirilmedi.",
+    "resultNotFound2": "Bu adresin daha işlem geçmişi yok.",
+
+    "verifiedCardTitle": "Doğrulanmış adres",
+    "verifiedInactive": "Bu servis şu anda aktif değil.",
+    "verifiedWebsiteButton": "Web sitesini ziyaret et"
+  },
+
+  "transactionSummary": {
+    "itemID": "İşlem ID'si: {{id}}",
+    "itemFrom": "<0>Kimden:</0> <1 />",
+    "itemTo": "<0>Kime:</0> <1 />",
+    "itemName": "<0>İsim:</0> <1 />",
+    "itemData": "<0>Veri:</0> <1 />",
+    "itemDataRemoved": "(kaldırıldı)",
+    "seeMore": "Bütün {{count, number}} tanenin hepsini gör..."
+  },
+
+  "transactions": {
+    "title": "Ağ İşlemleri",
+    "myTransactionsTitle": "Benim İşlemlerim",
+    "nameHistoryTitle": "İsim Geçmişi",
+    "nameTransactionsTitle": "İsim İşlemleri",
+    "searchTitle": "İşlemlerde Arama",
+
+    "siteTitleWallets": "Benim İşlemlerim",
+    "siteTitleNetworkAll": "Ağ İşlemleri",
+    "siteTitleNetworkAddress": "{{address}}'in İşlemleri",
+    "siteTitleNameHistory": "İsim Geçmişi",
+    "siteTitleNameSent": "İsim İşlemleri",
+    "siteTitleSearch": "İşlemlerde Arama",
+
+    "subTitleSearchAddress": "{{address}}'i içeren",
+    "subTitleSearchName": "{{name}}'i içeren",
+    "subTitleSearchMetadata": "'{{query}}' metadatasını içerem",
+
+    "columnID": "ID",
+    "columnType": "Tür",
+    "columnFrom": "Kimden",
+    "columnTo": "Kime",
+    "columnValue": "Değer",
+    "columnName": "İsim",
+    "columnMetadata": "Metadata",
+    "columnTime": "Zaman",
+
+    "tableTotal": "{{count, number}} öğe",
+    "tableTotal_plural": "{{count, number}} öğe",
+    "tableTotalEmpty": "Öğe bulunmuyor",
+
+    "includeMined": "Kazılmış işlemleri dahil et",
+
+    "resultInvalidTitle": "Geçersiz adres",
+    "resultInvalid": "Bu geçerli bir Krist adresi gibi görünmüyor.",
+
+    "types": {
+      "transferred": "Transfer edilmiş",
+      "sent": "Gönderilmiş",
+      "received": "Alınmış",
+      "mined": "Kazılmış",
+      "name_a_record": "Güncellenmiş isim",
+      "name_transferred": "Taşınmış isim",
+      "name_sent": "Gönderilmiş isim",
+      "name_received": "Alınmış isim",
+      "name_purchased": "Satın alınmış isim",
+      "bumped": "Çarptırılmış",
+      "unknown": "Bilinmeyen"
+    }
+  },
+
+  "names": {
+    "titleWallets": "Benim isimlerim",
+    "titleNetworkAll": "Ağ isimleri",
+    "titleNetworkAddress": "Ağ isimleri",
+
+    "siteTitleWallets": "Benim isimlerim",
+    "siteTitleNetworkAll": "Ağ isimleri",
+    "siteTitleNetworkAddress": "{{address}}'in İsimleri",
+
+    "columnName": "İsim",
+    "columnOwner": "Sahibi",
+    "columnOriginalOwner": "Orjinal Sahibi",
+    "columnRegistered": "Kayıt edildiği tarih",
+    "columnUpdated": "Güncellendiği tarih",
+    "columnTransferred": "Transfer edildiği tarih",
+    "columnData": "Veri",
+    "columnUnpaid": "Ödenmemiş bloklar",
+
+    "mobileOwner": "<0>Sahibi:</0> <1 />",
+    "mobileOriginalOwner": "<0>Orjinal sahibi:</0> <1 />",
+    "mobileRegistered": "Kayıt edildi tarih: <1 />",
+    "mobileUpdated": "Güncellendiği tarih: <1 />",
+    "mobileDataTag": "Veri",
+    "mobileUnpaidTag": "{{count, number}} blok",
+    "mobileUnpaidTag_plural": "{{count, number}} bloklar",
+
+    "actions": "Eylemler",
+    "actionsViewName": "İsmi görüntüle",
+    "actionsViewOwner": "Sahibinin adresini görüntüle",
+    "actionsViewOriginalOwner": "Orjinal sahibinin adresini görüntüle",
+    "actionsSendKrist": "Krist gönder",
+    "actionsTransferKrist": "Krist transfer et",
+    "actionsUpdateData": "Veriyi güncelle",
+    "actionsTransferName": "İsmi transfer et",
+
+    "tableTotal": "{{count, number}} isim",
+    "tableTotal_plural": "{{count, number}} isim",
+    "tableTotalEmpty": "İsim bulunmuyor",
+
+    "resultInvalidTitle": "Geçersiz adres",
+    "resultInvalid": "Bu geçerli bir Krist adresi gibi görünmüyor.",
+
+    "purchaseButton": "İsmi satın al"
+  },
+
+  "name": {
+    "title": "İsim",
+
+    "buttonSendKrist": "{{name}}'e Krist gönder",
+    "buttonTransferKrist": "{{name}}'e Krist transfer et",
+    "buttonData": "Veriyi güncelle",
+    "buttonTransferName": "İsmi transfer et",
+
+    "owner": "Sahibi",
+    "originalOwner": "Satın alan",
+    "registered": "Kayıt edildiği tarih",
+    "updated": "Son güncellendiği tarih",
+    "transferred": "Son transfer edildiği tarih",
+    "unpaid": "Ödenmemiş bloklar",
+    "unpaidCount": "{{count, number}} blok",
+    "unpaidCount_plural": "{{count, number}} blok",
+    "data": "Veri",
+    "dataEditTooltip": "Veriyi güncelle",
+
+    "cardRecentTransactionsTitle": "Son işlemler",
+    "cardHistoryTitle": "İsim geçmişi",
+    "transactionsError": "İşlemler alınırken bir sorun meydana geldi. Detaylar için konsola bakın.",
+    "historyError": "İsim geçmişini alırken bir sorun meydana geldi. Detaylar için konsola bakın.",
+
+    "resultInvalidTitle": "Geçersiz isim",
+    "resultInvalid": "Bu geçerli bir Krist ismi gibi görünmüyor.",
+    "resultNotFoundTitle": "İsim bulunamadı",
+    "resultNotFound": "Bu isim bulunmuyor."
+  },
+
+  "blocks": {
+    "title": "Ağ Blokları",
+    "titleLowest": "En düşük bloklar",
+    "siteTitle": "Ağ blokları",
+    "siteTitleLowest": "En düşük bloklar",
+
+    "columnHeight": "Yükseklik",
+    "columnAddress": "Kazıcı",
+    "columnHash": "Blok hash'i",
+    "columnValue": "Değer",
+    "columnDifficulty": "Zorluk",
+    "columnTime": "Zaman",
+
+    "mobileHeight": "Blok #{{height, number}}",
+    "mobileMiner": "<0>Kazıcı: </0> <1 />",
+    "mobileHash": "<0>Hash: </0> <1 />",
+    "mobileDifficulty": "<0>Zorluk: </0> <1 />",
+
+    "tableTotal": "{{count, number}} blok",
+    "tableTotal_plural": "{{count, number}} blok",
+    "tableTotalEmpty": "Blok bulunmuyor"
+  },
+
+  "block": {
+    "title": "Blok",
+    "siteTitle": "Blok",
+    "siteTitleBlock": "Blok #{{id, number}}",
+    "subTitleBlock": "#{{id, number}}",
+
+    "height": "Yükseklik",
+    "miner": "Kazıcı",
+    "value": "Değer",
+    "time": "Zaman",
+    "hash": "Hash",
+    "difficulty": "Zorluk",
+
+    "previous": "Önceki",
+    "previousTooltip": "Önceki blok (#{{id, number}})",
+    "previousTooltipNone": "Önceki blok",
+    "next": "Sonraki",
+    "nextTooltip": "Sonraki blok (#{{id, number}})",
+    "nextTooltipNone": "Sonraki blok",
+
+    "resultInvalidTitle": "Geçersiz blok yüksekliği",
+    "resultInvalid": "Bu geçerli bir blok yüksekliği gibi görünmüyor.",
+    "resultNotFoundTitle": "Blok bulunamadı",
+    "resultNotFound": "Bu blok bulunmuyor."
   }
 }
