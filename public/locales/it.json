@@ -49,7 +49,7 @@
   },
 
   "sidebar": {
-    "totalBalance": "Bilancio Totale",
+    "totalBalance": "Saldo Totale",
     "dashboard": "Dashboard",
     "myWallets": "I miei portafogli",
     "addressBook": "Rubrica",
@@ -165,7 +165,7 @@
     "categoryDropdownAll": "Tutte le categorie",
     "columnLabel": "Etichetta",
     "columnAddress": "Indirizzo",
-    "columnBalance": "Bilancio",
+    "columnBalance": "Saldo",
     "columnNames": "Nomi",
     "columnCategory": "Categoria",
     "columnFirstSeen": "Visto la prima volta",
@@ -208,7 +208,7 @@
 
       "titleSyncedInfo": "Informazioni sincronizzate",
       "address": "Indirizzo",
-      "balance": "Bilancio",
+      "balance": "Saldo",
       "names": "Quantità nomi",
       "firstSeen": "Visto la prima volta",
       "existsOnNetwork": "Esiste nella rete",
@@ -352,45 +352,45 @@
     "inDevBanner": "Welcome to the KristWeb v2 private beta! This site is still in development, so most features are currently missing. Please report all bugs on <1>GitHub</1>. Thanks!",
     "inDevBanner2": "Welcome to the KristWeb v2 public beta! This site is relatively new, so please report any bugs on <1>GitHub</1>. Thanks!",
 
-    "walletOverviewCardTitle": "Wallets",
-    "walletOverviewTotalBalance": "Total balance",
-    "walletOverviewNames": "Names",
-    "walletOverviewNamesCount": "{{count, number}} name",
-    "walletOverviewNamesCount_plural": "{{count, number}} names",
-    "walletOverviewNamesCountEmpty": "No names",
-    "walletOverviewSeeMore": "See all {{count, number}}...",
-    "walletOverviewAddWallets": "Add wallets...",
+    "walletOverviewCardTitle": "Portafogli",
+    "walletOverviewTotalBalance": "Saldo totale",
+    "walletOverviewNames": "Nomi",
+    "walletOverviewNamesCount": "{{count, number}} nome",
+    "walletOverviewNamesCount_plural": "{{count, number}} nomi",
+    "walletOverviewNamesCountEmpty": "Nessun nome",
+    "walletOverviewSeeMore": "Vedi tutto {{count, number}}...",
+    "walletOverviewAddWallets": "Aggiungi portafoglio...",
 
-    "transactionsCardTitle": "Transactions",
-    "transactionsError": "There was an error fetching your transactions. See the console for details.",
+    "transactionsCardTitle": "Transazioni",
+    "transactionsError": "È stato riscontrato un errore durante il recupero delle transazioni. Vedi la console per i dettagli.",
 
-    "blockValueCardTitle": "Block value",
-    "blockValueBaseValue": "Base value (<1></1>)",
-    "blockValueBaseValueNames": "{{count, number}} name",
-    "blockValueBaseValueNames_plural": "{{count, number}} names",
-    "blockValueNextDecrease": "Decreases by <1></1> in <3>{{count, number}} block</3>",
-    "blockValueNextDecrease_plural": "Decreases by <1></1> in <3>{{count, number}} blocks</3>",
-    "blockValueReset": "Resets in <1>{{count, number}} block</1>",
-    "blockValueReset_plural": "Resets in <1>{{count, number}} blocks</1>",
-    "blockValueEmptyDescription": "The block value increases when <1>names</1> are purchased.",
+    "blockValueCardTitle": "Valore blocco",
+    "blockValueBaseValue": "Valore base (<1></1>)",
+    "blockValueBaseValueNames": "{{count, number}} nome",
+    "blockValueBaseValueNames_plural": "{{count, number}} nomi",
+    "blockValueNextDecrease": "Diminuisce di <1></1> in <3>{{count, number}} blocco</3>",
+    "blockValueNextDecrease_plural": "Diminuisce di <1></1> in <3>{{count, number}} blocchi</3>",
+    "blockValueReset": "Sii reimposta in <1>{{count, number}} blocco</1>",
+    "blockValueReset_plural": "Sii reimposta in <1>{{count, number}} blocchi</1>",
+    "blockValueEmptyDescription": "Il valore del blocco aumenta quando dei <1>nomi</1> vengono acquistati.",
 
-    "blockDifficultyCardTitle": "Block difficulty",
-    "blockDifficultyError": "There was an error fetching the block difficulty. See the console for details.",
-    "blockDifficultyHashRate": "Approx. <1 />",
-    "blockDifficultyHashRateTooltip": "Estimated combined network mining hash rate, based on the current work.",
-    "blockDifficultyChartWork": "Block Difficulty",
-    "blockDifficultyChartLinear": "Linear",
-    "blockDifficultyChartLog": "Logarithmic",
+    "blockDifficultyCardTitle": "Difficoltà blocco",
+    "blockDifficultyError": "È stato riscontrato un errore durante il recupero della difficoltà del blocco. Vedi la console per i dettagli.",
+    "blockDifficultyHashRate": "Circa <1 />",
+    "blockDifficultyHashRateTooltip": "Stima della velocità di mining di hash combinata sulla rete, basata sul lavoro attuale.",
+    "blockDifficultyChartWork": "Difficoltà Blocco",
+    "blockDifficultyChartLinear": "Lineare",
+    "blockDifficultyChartLog": "Logaritmico",
 
-    "motdCardTitle": "Server MOTD",
-    "motdDebugMode": "This server is an unofficial development server. Balances and transactions can be manipulated. Proceed with caution.",
+    "motdCardTitle": "Messaggio del giorno",
+    "motdDebugMode": "Questo server di sviluppo è non è ufficiale. I saldi e le transazioni possono essere manipolati. Procedi con cautela.",
 
-    "whatsNewCardTitle": "What's new",
-    "whatsNewButton": "What's new",
+    "whatsNewCardTitle": "Cosa c'è di nuovo",
+    "whatsNewButton": "Cosa c'è di nuovo",
 
-    "tipsCardTitle": "Tip of the day",
-    "tipsPrevious": "Prev",
-    "tipsNext": "Next",
+    "tipsCardTitle": "Suggerimento",
+    "tipsPrevious": "Prec.",
+    "tipsNext": "Pros.",
     "tips": {
       "0": "Check out what's new in Krist and KristWeb on the [What's New page](/whatsnew)!",
       "1": "You can quickly navigate through tables with the arrow keys on desktop.",
@@ -413,49 +413,49 @@
   },
 
   "credits": {
-    "title": "Credits",
-    "madeBy": "Made by <1>{{authorName}}</1>",
-    "hostedBy": "Hosted by <1>{{host}}</1>",
-    "supportersTitle": "Supporters",
-    "supportersDescription": "This project was made possible by the following amazing supporters:",
-    "supportButton": "Support KristWeb",
-    "translatorsTitle": "Translators",
-    "translatorsDescription": "This project was translated by the following amazing contributors:",
-    "translateButton": "Translate KristWeb",
-    "tmpim": "Created by tmpim",
+    "title": "Crediti",
+    "madeBy": "Creato da <1>{{authorName}}</1>",
+    "hostedBy": "Ospitato da <1>{{host}}</1>",
+    "supportersTitle": "Sostenitori",
+    "supportersDescription": "Questo progetto è stato reso possibile grazie a questi fantastici sostenitori:",
+    "supportButton": "Supporta KristWeb",
+    "translatorsTitle": "Traduttori",
+    "translatorsDescription": "Questo progetto è stato tradotto da questo fantastici contributori:",
+    "translateButton": "Traduci KristWeb",
+    "tmpim": "Creato da tmpim",
 
     "versionInfo": {
-      "version": "Version",
+      "version": "Versione",
       "commitHash": "Commit",
-      "buildTime": "Build time",
-      "variant": "Build variant",
-      "license": "License"
+      "buildTime": "Ora del build",
+      "variant": "Variante build",
+      "license": "Licenza"
     },
 
     "privacyTitle": "Privacy",
     "privacy": {
-      "kristServer": "Krist Server",
-      "kristServerDesc": "The only PII that the <1>Krist Server</1> stores is your IP address, User-Agent and Origin, as part of the webserver logs. This information is automatically purged after 30 days.",
+      "kristServer": "Server Krist",
+      "kristServerDesc": "Le uniche informazioni private che il <1>Server Krist</1> salva sono il tuo indirizzo IP, User-Agent del Browser e Origin, come parte dei log del webserver. Queste informazioni sono automaticamente eliminate dopo 30 giorni.",
       "kristweb": "KristWeb",
-      "kristwebDesc1": "KristWeb uses a self-hosted <1>Sentry</1> server for automatic error reporting. This system stores your IP address, User-Agent, Origin, breadcrumbs, and the details for any errors that get automatically reported. This information is automatically purged after 30 days.",
+      "kristwebDesc1": "KristWeb utilizza un server di <1>Sentry</1> improprio per la segnalazione automatica di errori. Questo sistema salva il tuo indirizzo IP, User-Agent del browser, Origin, breadcrumbs, ed i dettagli di qualsiasi errore che viene automaticamente segnalato. Queste informazioni sono automaticamente eliminate dopo 30 giorni.",
       "kristwebDesc2": "If you have an ad-blocking or tracker-blocking extension such as <1>uBlock Origin</1> <strong>(recommended)</strong>, our Sentry system is already blocked by the built-in lists, so you do not have to worry about your privacy. You can also opt-out of error reporting in the <4>settings page</4>. That said, if you’d like to help us by providing more detailed error reports, then please consider making an exception for KristWeb in your tracker blocker software. This site does not serve ads.",
       "kristwebDesc3": "If you have any questions or concerns, please contact the developers."
     }
   },
 
   "settings": {
-    "siteTitle": "Settings",
-    "title": "Settings",
+    "siteTitle": "Impostazioni",
+    "title": "Impostazioni",
 
-    "messageSuccess": "Setting changed successfully!",
+    "messageSuccess": "Impostazioni salvate correttamente!",
 
-    "settingIntegerSave": "Save",
+    "settingIntegerSave": "Salva",
 
-    "menuLanguage": "Language",
+    "menuLanguage": "Lingua",
 
-    "subMenuBackups": "Manage backups",
-    "importBackup": "Import wallets",
-    "exportBackup": "Export wallets",
+    "subMenuBackups": "Gestisci backup",
+    "importBackup": "Importa portafogli",
+    "exportBackup": "Esporta portafogli",
 
     "subMenuMasterPassword": "Master password",
     "changeMasterPassword": "Change master password",
@@ -520,7 +520,7 @@
 
   "breadcrumb": {
     "dashboard": "Dashboard",
-    "wallets": "Wallets",
+    "Portafogli": "Portafogli",
 
     "settings": "Settings",
     "settingsDebug": "Debug",
@@ -933,7 +933,7 @@
       "errors": "There was <1>{{count, number}} error</1> while importing your backup.",
       "errors_plural": "There were <1>{{count, number}} errors</1> while importing your backup.",
 
-      "treeHeaderWallets": "Wallets",
+      "treeHeaderWallets": "Portafogli",
       "treeHeaderContacts": "Contacts",
 
       "treeWallet": "Wallet {{id}}",
@@ -974,7 +974,7 @@
     "errorInvalidWalletsOnly": "Invalid wallet address.",
     "errorEqual": "Recipient cannot be the same as the sender.",
 
-    "categoryWallets": "Wallets",
+    "categoryWallets": "Portafogli",
     "categoryOtherWallets": "Other wallets",
     "categoryAddressBook": "Address book",
     "categoryExactAddress": "Exact address",
@@ -1155,7 +1155,7 @@
 
     "nameCost": "Cost to purchase: <1 />",
 
-    "labelWallet": "Wallet",
+    "labelWallet": "Portafoglio",
     "labelName": "Name",
     "placeholderName": "Name",
 
