@@ -105,5 +105,19 @@
         "url": "https://github.com/signalhunter"
       }
     ]
+  },
+  "it": {
+    "name": "Italian",
+    "nativeName": "Italiano",
+    "country": "it",
+    "antLocale": "it_IT",
+    "dayjsLocale": "it",
+    "timeagoLocale": "it",
+    "contributors": [
+      {
+        "name": "AlexDevs",
+        "url": "https://alexdevs.me"
+      }
+    ]
   }
 }

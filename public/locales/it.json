@@ -1,0 +1,1251 @@
+{
+  "app": {
+    "name": "KristWeb"
+  },
+
+  "nav": {
+    "connection": {
+      "online": "In linea",
+      "offline": "Non in linea",
+      "connecting": "Connessione in corso..."
+    },
+
+    "search": {
+      "placeholder": "Cerca nella rete Krist",
+      "placeholderShortcut": "Cerca nella rete Krist ({{shortcut}})",
+      "placeholderShort": "Cerca...",
+      "rateLimitHit": "Per favore rallenta.",
+      "noResults": "Nessun risultato.",
+
+      "resultAddress": "Indirizzo",
+      "resultName": "Nome",
+      "resultNameOwner": "Proprietà di <1 />",
+      "resultBlockID": "ID blocco",
+      "resultBlockIDMinedBy": "Minato da <1 />",
+      "resultTransactionID": "ID transazione",
+      "resultTransactions": "Transazioni",
+      "resultTransactionsAddress": "Cerca transazioni che includono <1 />",
+      "resultTransactionsAddressResult": "<0>{{count, number}}</0> transazione include <2 />",
+      "resultTransactionsAddressResult_plural": "<0>{{count, number}}</0> transazioni includono <2 />",
+      "resultTransactionsAddressResultEmpty": "Nessuna transazione che include <1 />",
+      "resultTransactionsName": "Ricerca per transazioni che includono <1 />",
+      "resultTransactionsNameResult": "<0>{{count, number}}</0> transazione inviata a <2 />",
+      "resultTransactionsNameResult_plural": "<0>{{count, number}}</0> transactions sent to <2 />",
+      "resultTransactionsNameResultEmpty": "Nessuna transazione inviata a <1 />",
+      "resultTransactionsMetadata": "Ricerca di metadati che contengono <1 />",
+      "resultTransactionsMetadataResult": "<0>{{count, number}}</0> transazione con metadati che contengono <2 />",
+      "resultTransactionsMetadataResult_plural": "<0>{{count, number}}</0> transazioni con metadati che contengono <2 />",
+      "resultTransactionsMetadataResultEmpty": "Nessuna transazione con metadati che contengono <1 />"
+    },
+
+    "send": "Invia",
+    "sendLong": "Invia Krist",
+    "request": "Richiedi",
+    "requestLong": "Richiedi Krist",
+    "sort": "Ordina risultati",
+
+    "settings": "Impostazioni",
+    "more": "Di più"
+  },
+
+  "sidebar": {
+    "totalBalance": "Bilancio Totale",
+    "dashboard": "Dashboard",
+    "myWallets": "I miei portafogli",
+    "addressBook": "Rubrica",
+    "transactions": "Transazioni",
+    "names": "Nomi",
+    "mining": "Minando",
+    "network": "Rete",
+    "blocks": "Blocchi",
+    "statistics": "Statistiche",
+    "madeBy": "Creato da <1>{{authorName}}</1>",
+    "hostedBy": "Ospitato da <1>{{host}}</1>",
+    "github": "GitHub",
+    "credits": "Crediti",
+    "whatsNew": "Cosa c'è di nuovo",
+
+    "updateTitle": "Aggiornamento disponibile!",
+    "updateDescription": "Una nuova versione di KristWeb è disponibile. Per favore ricarica.",
+    "updateReload": "Ricarica"
+  },
+
+  "dialog": {
+    "close": "Chiudi",
+    "yes": "Sì",
+    "no": "No",
+    "ok": "OK",
+    "cancel": "Annulla"
+  },
+
+  "pagination": {
+    "justPage": "Pagina {{page}}",
+    "pageWithTotal": "Pagina {{page}} di {{total}}"
+  },
+
+  "error": "Errore",
+  "errorBoundary": {
+    "title": "Errore critico",
+    "description": "È stato riscontrato un errore critico in KristWeb e quindi la pagina è stata terminata. Vedi la console per i dettagli.",
+    "sentryNote": "Questo errore è stato segnalato automaticamente"
+  },
+  "errorReported": "Un errore è stato automaticamente segnalato. Vedi la console per dettagli.",
+
+  "loading": "Caricamendo...",
+
+  "copy": "Copiato negli appunti",
+  "copied": "Copiato!",
+
+  "pageNotFound": {
+    "resultTitle": "Pagina non trovata",
+    "nyiTitle": "Non ancora implementato",
+    "nyiSubTitle": "Questa funzionalità non è ancora disponibile",
+    "buttonGoBack": "Torna indietro"
+  },
+
+  "contextualAddressUnknown": "Sconosciuto",
+  "contextualAddressNonExistentTooltip": "Questo indirizzo non è stato ancora inizializzato nella rete Krist.",
+  "contextualAddressNonExistentTooltip2": "Questo indirizzo non ha una cronologia delle transazioni.",
+
+  "typeahead": {
+    "emptyLabel": "Nessuna corrispondenza trovata.",
+    "paginationText": "Mostra risultati aggiuntivi..."
+  },
+
+  "masterPassword": {
+    "dialogTitle": "Password generale",
+    "passwordPlaceholder": "Password generale",
+    "passwordConfirmPlaceholder": "Conferma password generale",
+    "createPassword": "Crea password",
+    "logIn": "Entra",
+    "forgotPassword": "Password dimenticata?",
+    "intro2": "Inserisci una <1>password generale</1> per criptare le chiavi private dei tuoi portafogli. Saranno salvati nel tuo browser e ti sarà chiesto di inserire la password generale per decriptarle ogni sessione.",
+    "learnMore": "Ulteriori informazioni",
+    "errorPasswordRequired": "La password è richiesta.",
+    "errorPasswordLength": "Deve essere almeno un carattere.",
+    "errorPasswordUnset": "La password generale non è stata ancora impostata.",
+    "errorPasswordIncorrect": "Password errata.",
+    "errorPasswordInequal": "Le password devono combaciare.",
+    "errorStorageCorrupt": "Memoria dei portafogli corrotta.",
+    "errorNoPassword": "La password generale è richiesta.",
+    "errorUnknown": "Errore sconosciuto.",
+    "helpWalletStorageTitle": "Aiuto: Memoria portafogli",
+    "popoverTitle": "Decripta portafogli",
+    "popoverTitleEncrypt": "Cripta portafogli",
+    "popoverAuthoriseButton": "Autorizza",
+    "popoverDescription": "Inserisci la tua password generale per decriptare i portafogli.",
+    "popoverDescriptionEncrypt": "Inserisci la tua password generale per criptare e decriptare i portafogli.",
+    "forcedAuthWarning": "Sei entrato automaticamente da un'impostazione di debug non sicura.",
+    "earlyAuthError": "L'applicazione non è stata caricata completamente, ricarica per favore.",
+
+    "reset": {
+      "modalTitle": "Reimposta password generale",
+      "description": "Sei sicuro di voler reimpostare la password generale? <strong>Tutti i tuoi portafogli saranno eliminati.</strong> Assicurati di <3>esportare un backup</3> prima!",
+      "buttonConfirm": "Reimposta ed elimina",
+
+      "modalTitle2": "ELIMINA TUTTI I PORTAFOGLI",
+      "description2": "Sei DAVVERO sicuro di voler <strong>ELIMINARE TUTTI I PORTAFOGLI</strong>?",
+      "buttonConfirm2": "Sì, sono sicuro [{{n}}]",
+      "buttonConfirmFinal": "Sì, sono sicuro!"
+    },
+
+    "change": {
+      "modalTitle": "Cambia password generale"
+    }
+  },
+
+  "myWallets": {
+    "title": "Portafogli",
+    "manageBackups": "Gestisci backup",
+    "importBackup": "Importa portafogli",
+    "exportBackup": "Esporta portafogli",
+    "createWallet": "Crea portafoglio",
+    "addExistingWallet": "Aggiungi portafoglio esistente",
+    "searchPlaceholder": "Cerca portafogli...",
+    "categoryDropdownAll": "Tutte le categorie",
+    "columnLabel": "Etichetta",
+    "columnAddress": "Indirizzo",
+    "columnBalance": "Bilancio",
+    "columnNames": "Nomi",
+    "columnCategory": "Categoria",
+    "columnFirstSeen": "Visto la prima volta",
+    "nameCount": "{{count, number}} nome",
+    "nameCount_plural": "{{count, number}} nami",
+    "nameCountEmpty": "Nessun nome",
+    "firstSeen": "Visto per la prima volta il {{date}}",
+    "firstSeenMobile": "Visto per la prima volta: <1 />",
+
+    "walletCount": "{{count, number}} portafoglio",
+    "walletCount_plural": "{{count, number}} portafogli",
+    "walletCountEmpty": "Nessun portafoglio",
+
+    "noWalletsHint": "Nessun portafoglio",
+    "noWalletsText": "Aggiungi o crea un portafoglio cliccando sul <1 /> menu in alto a destra!",
+
+    "actionsViewAddress": "Mostra indirizzo",
+    "actionsEditTooltip": "Modifica portafoglio",
+    "actionsSendTransaction": "Invia Krist",
+    "actionsWalletInfo": "Informazioni portafoglio",
+    "actionsWalletForceCreate": "Forza creazione",
+    "actionsDelete": "Elimina portafoglio",
+    "actionsDeleteConfirm": "Sei sicuro di voler eliminare questo portafoglio?",
+    "actionsDeleteConfirmDescription": "Se non hai salvato un backup o la password, sarà perduto per sempre!",
+
+    "tagDontSave": "Temp",
+    "tagDontSaveTooltip": "Portafoglio temporaneo",
+
+    "info": {
+      "title": "Informazioni portafoglio - {{address}}",
+
+      "titleBasicInfo": "Informazioni di base",
+      "id": "ID",
+      "label": "Etichetta",
+      "category": "Categoria",
+      "username": "Nome utente",
+      "password": "Password",
+      "privatekey": "Chiave privata",
+      "format": "Formato",
+
+      "titleSyncedInfo": "Informazioni sincronizzate",
+      "address": "Indirizzo",
+      "balance": "Bilancio",
+      "names": "Quantità nomi",
+      "firstSeen": "Visto la prima volta",
+      "existsOnNetwork": "Esiste nella rete",
+      "lastSynced": "Ultima sincronizzazione",
+
+      "titleAdvancedInfo": "Informazioni avanzate",
+      "encPassword": "Password criptata",
+      "encPrivatekey": "Chiave privata criptata",
+      "saved": "Salvato",
+
+      "revealLink": "Mostra",
+      "hideLink": "Nascondi",
+
+      "true": "Vero",
+      "false": "Falso"
+    },
+
+    "login": {
+      "appMasterPasswordRequired": "Devi essere autenticato per forzare la creazione di portafogli.",
+      "errorAuthFailed": "Impossibile forzare la creazione dell'indirizzo.",
+      "errorWalletDecrypt": "Impossibile decriptare il portafoglio."
+    }
+  },
+
+  "addressBook": {
+    "title": "Rubrica",
+
+    "contactCount": "{{count, number}} contatto",
+    "contactCount_plural": "{{count, number}} contatti",
+    "contactCountEmpty": "Nessun contatto",
+
+    "buttonAddContact": "Aggiungi contatto",
+
+    "columnLabel": "Etichetta",
+    "columnAddress": "Indirizzo",
+
+    "actionsViewAddress": "Mostra indirizzo",
+    "actionsViewName": "Mostra nome",
+    "actionsEditTooltip": "Modifica contatto",
+    "actionsSendTransaction": "Invia Krist",
+    "actionsDelete": "Elimina contatto",
+    "actionsDeleteConfirm": "Sei sicuro di voler eliminare questo contatto?"
+  },
+
+  "myTransactions": {
+    "title": "Transazioni",
+    "searchPlaceholder": "Cerca transazioni...",
+    "columnFrom": "Da",
+    "columnTo": "A",
+    "columnValue": "Valore",
+    "columnTime": "Tempo"
+  },
+
+  "addWallet": {
+    "dialogTitle": "Aggiungi portafoglio",
+    "dialogTitleCreate": "Crea portafoglio",
+    "dialogTitleEdit": "Modifica portafoglio",
+    "dialogOkAdd": "Aggiungi",
+    "dialogOkCreate": "Crea",
+    "dialogOkEdit": "Salva",
+    "dialogAddExisting": "Aggiungi portafoglio esistente",
+
+    "walletLabel": "Etichetta portafoglio",
+    "walletLabelPlaceholder": "Etichetta portafoglio (opzionale)",
+    "walletLabelMaxLengthError": "Non più lungo di 32 caratteri",
+    "walletLabelWhitespaceError": "Non può contenere solo spazi",
+
+    "walletCategory": "Categoria portafoglio",
+    "walletCategoryDropdownNone": "Nessuna categoria",
+    "walletCategoryDropdownNew": "Nuovo",
+    "walletCategoryDropdownNewPlaceholder": "Nome categoria",
+
+    "walletAddress": "Indirizzo portafoglio",
+    "walletUsername": "Nome utente portafoglio",
+    "walletUsernamePlaceholder": "Nome utente portafoglio",
+    "walletPassword": "Password portafoglio",
+    "walletPasswordPlaceholder": "Password portafoglio",
+    "walletPasswordWarning": "Assicurati di salvarla da qualche parte <1>sicura</1>!",
+    "walletPasswordRegenerate": "Rigenera",
+    "walletPrivatekey": "Chiave privata portafoglio",
+    "walletPrivatekeyPlaceholder": "Chiave privata portafoglio",
+
+    "advancedOptions": "Opzioni avanzate",
+
+    "walletFormat": "Formato portafoglio",
+    "walletFormatKristWallet": "KristWallet, KWallet (consigliato)",
+    "walletFormatKristWalletUsernameAppendhashes": "KW-Username (appendhashes)",
+    "walletFormatKristWalletUsername": "KW-Username (pre-appendhashes)",
+    "walletFormatJwalelset": "jwalelset",
+    "walletFormatApi": "Raw/API (utenti avanzati)",
+
+    "walletSave": "Salva portafoglio in KristWeb",
+
+    "messageSuccessAdd": "Portafoglio aggiunto con successo!",
+    "messageSuccessCreate": "Portafoglio creato con successo!",
+    "messageSuccessEdit": "Portafoglio salvato con successo!",
+
+    "errorPasswordRequired": "La password è richiesta.",
+    "errorPrivatekeyRequired": "La chiave privata è richiesta.",
+    "errorUnexpectedTitle": "Errore imprevisto",
+    "errorUnexpectedDescription": "È stato riscontrato un errore durante l'aggiunta. Vedi la console per i dettagli.",
+    "errorUnexpectedEditDescription": "È stato riscontrato un errore durante la modifica. Vedi la console per i dettagli.",
+    "errorDuplicateWalletTitle": "Portafoglio già esistente",
+    "errorDuplicateWalletDescription": "Un portafoglio con questo indirizzo è già presente.",
+    "errorMissingWalletTitle": "Portafoglio non trovato",
+    "errorMissingWalletDescription": "Il portafoglio con questo indirizzo non è stato trovato.",
+    "errorDecryptTitle": "Password generale incorretta",
+    "errorDecryptDescription": "Errore durante la decriptazione del portafoglio. Assicurati di aver inserito la password generale corretta.",
+    "errorWalletLimitTitle": "Limite portafogli raggiunto",
+    "errorWalletLimitDescription": "Non puoi aggiungere ulteriori portafogli al momento."
+  },
+
+  "addContact": {
+    "modalTitle": "Aggiungi contatto",
+    "modalTitleEdit": "Modifica contatto",
+
+    "buttonSubmit": "Aggiungi",
+    "buttonSubmitEdit": "Salva",
+
+    "contactLabel": "Etichetta",
+    "contactLabelPlaceholder":"Etichetta contatto (opzionale)",
+    "contactLabelMaxLengthError": "Non più lungo di 32 caratteri",
+    "contactLabelWhitespaceError": "Non può contenere solo spazi",
+
+    "contactAddressLabel": "Indirizzo o nome",
+
+    "messageSuccessAdd": "Contatto aggiunto con successo!",
+    "messageSuccessEdit": "Contatto salvato con successo!",
+
+    "errorDuplicateContactTitle": "Contatto già esistente",
+    "errorDuplicateContactDescription": "Hai già un contatto con questo indirizzo.",
+    "errorMissingContactTitle": "Contatto non trovato",
+    "errorMissingContactDescription": "Il contatto che stai provando a modificare non esiste più.",
+    "errorContactLimitTitle": "Limite contatti raggiunto",
+    "errorContactLimitDescription": "Non puoi aggiungere ulteriori contatti al momento."
+  },
+
+  "dashboard": {
+    "siteTitle": "Dashboard",
+
+    "inDevBanner": "Welcome to the KristWeb v2 private beta! This site is still in development, so most features are currently missing. Please report all bugs on <1>GitHub</1>. Thanks!",
+    "inDevBanner2": "Welcome to the KristWeb v2 public beta! This site is relatively new, so please report any bugs on <1>GitHub</1>. Thanks!",
+
+    "walletOverviewCardTitle": "Wallets",
+    "walletOverviewTotalBalance": "Total balance",
+    "walletOverviewNames": "Names",
+    "walletOverviewNamesCount": "{{count, number}} name",
+    "walletOverviewNamesCount_plural": "{{count, number}} names",
+    "walletOverviewNamesCountEmpty": "No names",
+    "walletOverviewSeeMore": "See all {{count, number}}...",
+    "walletOverviewAddWallets": "Add wallets...",
+
+    "transactionsCardTitle": "Transactions",
+    "transactionsError": "There was an error fetching your transactions. See the console for details.",
+
+    "blockValueCardTitle": "Block value",
+    "blockValueBaseValue": "Base value (<1></1>)",
+    "blockValueBaseValueNames": "{{count, number}} name",
+    "blockValueBaseValueNames_plural": "{{count, number}} names",
+    "blockValueNextDecrease": "Decreases by <1></1> in <3>{{count, number}} block</3>",
+    "blockValueNextDecrease_plural": "Decreases by <1></1> in <3>{{count, number}} blocks</3>",
+    "blockValueReset": "Resets in <1>{{count, number}} block</1>",
+    "blockValueReset_plural": "Resets in <1>{{count, number}} blocks</1>",
+    "blockValueEmptyDescription": "The block value increases when <1>names</1> are purchased.",
+
+    "blockDifficultyCardTitle": "Block difficulty",
+    "blockDifficultyError": "There was an error fetching the block difficulty. See the console for details.",
+    "blockDifficultyHashRate": "Approx. <1 />",
+    "blockDifficultyHashRateTooltip": "Estimated combined network mining hash rate, based on the current work.",
+    "blockDifficultyChartWork": "Block Difficulty",
+    "blockDifficultyChartLinear": "Linear",
+    "blockDifficultyChartLog": "Logarithmic",
+
+    "motdCardTitle": "Server MOTD",
+    "motdDebugMode": "This server is an unofficial development server. Balances and transactions can be manipulated. Proceed with caution.",
+
+    "whatsNewCardTitle": "What's new",
+    "whatsNewButton": "What's new",
+
+    "tipsCardTitle": "Tip of the day",
+    "tipsPrevious": "Prev",
+    "tipsNext": "Next",
+    "tips": {
+      "0": "Check out what's new in Krist and KristWeb on the [What's New page](/whatsnew)!",
+      "1": "You can quickly navigate through tables with the arrow keys on desktop.",
+      "2": "You can click on table headers to sort them.",
+      "3": "You can filter by categories in the [My Wallets](/wallets) page by clicking the filter icon in the table header.",
+      "4": "The [settings page](/settings) has many advanced options to personalise your KristWeb experience.",
+      "5": "Generate pre-filled transaction links with the new [Request page](/request).",
+      "6": "Be sure to backup [your wallets](/wallets)!",
+      "7": "Quickly search the Krist network with the keyboard shortcut Ctrl+K (Cmd+K on macOS).",
+      "8": "Add contacts in the [address book](/contacts) to quickly send them transactions.",
+      "9": "A 'bumped' transaction is a transaction sent to and from the same address.",
+      "10": "The 'block difficulty' chart can be shown with a logarithmic scale to see small changes easier at lower difficulties.",
+      "1-status": "You are connected to an unofficial server. Your wallet passwords may be sent to the operator, who can use them to access your wallets on the official server. Please ask a question <1>here</1> for more information.",
+      "11": "The date format can be changed in the [advanced settings](/settings).",
+      "12": "You can see the [lowest mined block hashes](/network/blocks/lowest).",
+      "13": "The most recently purchased names can be seen on the [Network Names page](/network/names/new).",
+      "14": "The block value increases when [names](/network/names) are purchased.",
+      "15": "If you're worried about accidental transactions, you can enable a confirmation prompt in the [advanced settings](/settings)."
+    }
+  },
+
+  "credits": {
+    "title": "Credits",
+    "madeBy": "Made by <1>{{authorName}}</1>",
+    "hostedBy": "Hosted by <1>{{host}}</1>",
+    "supportersTitle": "Supporters",
+    "supportersDescription": "This project was made possible by the following amazing supporters:",
+    "supportButton": "Support KristWeb",
+    "translatorsTitle": "Translators",
+    "translatorsDescription": "This project was translated by the following amazing contributors:",
+    "translateButton": "Translate KristWeb",
+    "tmpim": "Created by tmpim",
+
+    "versionInfo": {
+      "version": "Version",
+      "commitHash": "Commit",
+      "buildTime": "Build time",
+      "variant": "Build variant",
+      "license": "License"
+    },
+
+    "privacyTitle": "Privacy",
+    "privacy": {
+      "kristServer": "Krist Server",
+      "kristServerDesc": "The only PII that the <1>Krist Server</1> stores is your IP address, User-Agent and Origin, as part of the webserver logs. This information is automatically purged after 30 days.",
+      "kristweb": "KristWeb",
+      "kristwebDesc1": "KristWeb uses a self-hosted <1>Sentry</1> server for automatic error reporting. This system stores your IP address, User-Agent, Origin, breadcrumbs, and the details for any errors that get automatically reported. This information is automatically purged after 30 days.",
+      "kristwebDesc2": "If you have an ad-blocking or tracker-blocking extension such as <1>uBlock Origin</1> <strong>(recommended)</strong>, our Sentry system is already blocked by the built-in lists, so you do not have to worry about your privacy. You can also opt-out of error reporting in the <4>settings page</4>. That said, if you’d like to help us by providing more detailed error reports, then please consider making an exception for KristWeb in your tracker blocker software. This site does not serve ads.",
+      "kristwebDesc3": "If you have any questions or concerns, please contact the developers."
+    }
+  },
+
+  "settings": {
+    "siteTitle": "Settings",
+    "title": "Settings",
+
+    "messageSuccess": "Setting changed successfully!",
+
+    "settingIntegerSave": "Save",
+
+    "menuLanguage": "Language",
+
+    "subMenuBackups": "Manage backups",
+    "importBackup": "Import wallets",
+    "exportBackup": "Export wallets",
+
+    "subMenuMasterPassword": "Master password",
+    "changeMasterPassword": "Change master password",
+    "resetMasterPassword": "Reset master password",
+
+    "subMenuAutoRefresh": "Auto-refresh",
+    "autoRefreshTables": "Auto-refresh tables",
+    "autoRefreshTablesDescription": "Whether or not large table listings (e.g. transactions, names) should automatically refresh when a change is detected on the network.",
+    "autoRefreshAddressPage": "Auto-refresh address page",
+    "autoRefreshNamePage": "Auto-refresh name page",
+
+    "subMenuAdvanced": "Advanced settings",
+    "alwaysIncludeMined": "Always include mined transactions in transaction listings (may require refresh)",
+    "copyNameSuffixes": "Include suffix when copying names",
+    "addressCopyButtons": "Show copy buttons next to all addresses",
+    "nameCopyButtons": "Show copy buttons next to all names",
+    "blockHashCopyButtons": "Show copy buttons next to all block hashes",
+    "showRelativeDates": "Show relative dates instead of absolute ones if recent",
+    "showRelativeDatesDescription": "Everywhere on the site, if a date is less than 7 days ago, it will show as a relative date instead.",
+    "showNativeDates": "Show dates in a native date format from the language",
+    "showNativeDatesDescription": "If disabled, dates will always be shown as YYYY/MM/DD HH:mm:ss",
+    "transactionsHighlightOwn": "Highlight own transactions in the transactions table",
+    "transactionsHighlightVerified": "Highlight verified addresses in the transactions table",
+    "transactionDefaultRaw": "Default to the 'Raw' tab instead of 'CommonMeta' on the transaction page",
+    "confirmTransactions": "Prompt for confirmation for all transactions",
+    "clearTransactionForm": "Clear the Send Transaction form after clicking 'Send'",
+    "sendTransactionDelay": "Time to wait, in milliseconds, before allowing another transaction to be sent",
+    "defaultPageSize": "Default page size for table listings",
+    "tableHotkeys": "Enable table navigation hotkeys (left and right arrows)",
+
+    "subMenuPrivacy": "Privacy",
+    "privacyInfo": "Privacy information",
+    "errorReporting": "Enable automatic error reporting (requires refresh)",
+    "messageOnErrorReport": "Show a notification when an error is automatically reported (requires refresh)",
+
+    "subMenuDebug": "Debug settings",
+    "advancedWalletFormats": "Advanced wallet formats",
+    "menuTranslations": "Translations",
+
+    "subTitleTranslations": "Translations",
+
+    "translations": {
+      "errorMissingLanguages": "The languages.json file seems to be missing. Was KristWeb compiled correctly?",
+      "errorNoKeys": "No translation keys",
+
+      "columnLanguageCode": "Code",
+      "columnLanguage": "Language",
+      "columnKeys": "Keys",
+      "columnMissingKeys": "Missing keys",
+      "columnProgress": "Progress",
+
+      "tableUntranslatedKeys": "Untranslated keys",
+      "columnKey": "Key",
+      "columnEnglishString": "English string",
+
+      "importJSON": "Import JSON",
+      "exportCSV": "Export CSV",
+
+      "importedLanguageTitle": "Imported language"
+    }
+  },
+
+  "breadcrumb": {
+    "dashboard": "Dashboard",
+    "wallets": "Wallets",
+
+    "settings": "Settings",
+    "settingsDebug": "Debug",
+    "settingsTranslations": "Translations"
+  },
+
+  "ws": {
+    "errorToken": "There was an error connecting to the Krist websocket server.",
+    "errorWS": "There was an error connecting to the Krist websocket server (code <1>{{code}}</1>)."
+  },
+
+  "rateLimitTitle": "Rate limit hit",
+  "rateLimitDescription": "Too many requests were sent to the Krist server in a short period of time. This is probably caused by a bug!",
+
+  "address": {
+    "title": "Address",
+
+    "walletLabel": "Label:",
+    "walletCategory": "Category:",
+    "contactLabel": "Contact:",
+
+    "balance": "Current balance",
+    "names": "Names",
+    "nameCount": "{{count, number}} name",
+    "nameCount_plural": "{{count, number}} names",
+    "nameCountEmpty": "No names",
+    "firstSeen": "First seen",
+
+    "buttonSendKrist": "Send Krist to {{address}}",
+    "buttonTransferKrist": "Transfer Krist to {{address}}",
+    "buttonAddContact": "Add to address book",
+    "buttonEditContact": "Edit contact",
+    "buttonEditWallet": "Edit wallet",
+
+    "tooltipV1Address": "Transactions cannot be sent to v1 addresses, as they have been deprecated.",
+
+    "cardRecentTransactionsTitle": "Recent transactions",
+    "cardNamesTitle": "Names",
+
+    "transactionsError": "There was an error fetching the transactions. See the console for details.",
+    "namesError": "There was an error fetching the names. See the console for details.",
+
+    "namePurchased": "Purchased <1 />",
+    "nameReceived": "Received <1 />",
+    "namesSeeMore": "See all {{count, number}}...",
+
+    "resultInvalidTitle": "Invalid address",
+    "resultInvalid": "That does not look like a valid Krist address.",
+    "resultNotFoundTitle": "Address not found",
+    "resultNotFound": "That address has not yet been initialised on the Krist network.",
+    "resultNotFound2": "That address has no transaction history yet.",
+
+    "verifiedCardTitle": "Verified address",
+    "verifiedInactive": "This service is not currently active.",
+    "verifiedWebsiteButton": "Visit website"
+  },
+
+  "transactionSummary": {
+    "itemID": "Transaction ID: {{id}}",
+    "itemFrom": "<0>From:</0> <1 />",
+    "itemTo": "<0>To:</0> <1 />",
+    "itemName": "<0>Name:</0> <1 />",
+    "itemData": "<0>Data:</0> <1 />",
+    "itemDataRemoved": "(removed)",
+    "seeMore": "See all {{count, number}}..."
+  },
+
+  "transactions": {
+    "title": "Network Transactions",
+    "myTransactionsTitle": "My Transactions",
+    "nameHistoryTitle": "Name History",
+    "nameTransactionsTitle": "Name Transactions",
+    "searchTitle": "Transaction Search",
+
+    "siteTitleWallets": "My Transactions",
+    "siteTitleNetworkAll": "Network Transactions",
+    "siteTitleNetworkAddress": "{{address}}'s Transactions",
+    "siteTitleNameHistory": "Name History",
+    "siteTitleNameSent": "Name Transactions",
+    "siteTitleSearch": "Transaction Search",
+
+    "subTitleSearchAddress": "Involving {{address}}",
+    "subTitleSearchName": "Involving {{name}}",
+    "subTitleSearchMetadata": "With metadata '{{query}}'",
+
+    "columnID": "ID",
+    "columnType": "Type",
+    "columnFrom": "From",
+    "columnTo": "To",
+    "columnValue": "Value",
+    "columnName": "Name",
+    "columnMetadata": "Metadata",
+    "columnTime": "Time",
+
+    "tableTotal": "{{count, number}} item",
+    "tableTotal_plural": "{{count, number}} items",
+    "tableTotalEmpty": "No items",
+
+    "includeMined": "Include mined transactions",
+
+    "resultInvalidTitle": "Invalid address",
+    "resultInvalid": "That does not look like a valid Krist address.",
+
+    "types": {
+      "transferred": "Transferred",
+      "sent": "Sent",
+      "received": "Received",
+      "mined": "Mined",
+      "name_a_record": "Updated name",
+      "name_transferred": "Moved name",
+      "name_sent": "Sent name",
+      "name_received": "Received name",
+      "name_purchased": "Purchased name",
+      "bumped": "Bumped",
+      "unknown": "Unknown"
+    }
+  },
+
+  "names": {
+    "titleWallets": "My Names",
+    "titleNetworkAll": "Network Names",
+    "titleNetworkAddress": "Network Names",
+
+    "siteTitleWallets": "My Names",
+    "siteTitleNetworkAll": "Network Names",
+    "siteTitleNetworkAddress": "{{address}}'s Names",
+
+    "columnName": "Name",
+    "columnOwner": "Owner",
+    "columnOriginalOwner": "Original Owner",
+    "columnRegistered": "Registered",
+    "columnUpdated": "Updated",
+    "columnTransferred": "Transferred",
+    "columnData": "Data",
+    "columnUnpaid": "Unpaid Blocks",
+
+    "rowNew": "New!",
+
+    "mobileOwner": "<0>Owner:</0> <1 />",
+    "mobileOriginalOwner": "<0>Original owner:</0> <1 />",
+    "mobileRegistered": "Registered: <1 />",
+    "mobileUpdated": "Updated: <1 />",
+    "mobileDataTag": "Data",
+    "mobileUnpaidTag": "{{count, number}} block",
+    "mobileUnpaidTag_plural": "{{count, number}} blocks",
+
+    "actions": "Actions",
+    "actionsViewName": "View name",
+    "actionsViewOwner": "View owner's address",
+    "actionsViewOriginalOwner": "View original owner's address",
+    "actionsSendKrist": "Send Krist",
+    "actionsTransferKrist": "Transfer Krist",
+    "actionsUpdateData": "Update data",
+    "actionsTransferName": "Transfer name",
+
+    "tableTotal": "{{count, number}} name",
+    "tableTotal_plural": "{{count, number}} names",
+    "tableTotalEmpty": "No names",
+
+    "resultInvalidTitle": "Invalid address",
+    "resultInvalid": "That does not look like a valid Krist address.",
+
+    "purchaseButton": "Purchase name"
+  },
+
+  "name": {
+    "title": "Name",
+
+    "buttonSendKrist": "Send Krist to {{name}}",
+    "buttonTransferKrist": "Transfer Krist to {{name}}",
+    "buttonData": "Update data",
+    "buttonTransferName": "Transfer name",
+
+    "owner": "Owned by",
+    "originalOwner": "Purchased by",
+    "registered": "Registered",
+    "updated": "Last updated",
+    "transferred": "Last transferred",
+    "unpaid": "Unpaid blocks",
+    "unpaidCount": "{{count, number}} block",
+    "unpaidCount_plural": "{{count, number}} blocks",
+    "data": "Data",
+    "dataEditTooltip": "Update data",
+
+    "cardRecentTransactionsTitle": "Recent transactions",
+    "cardHistoryTitle": "Name history",
+    "transactionsError": "There was an error fetching the transactions. See the console for details.",
+    "historyError": "There was an error fetching the name history. See the console for details.",
+
+    "resultInvalidTitle": "Invalid name",
+    "resultInvalid": "That does not look like a valid Krist name.",
+    "resultNotFoundTitle": "Name not found",
+    "resultNotFound": "That name does not exist."
+  },
+
+  "blocks": {
+    "title": "Network Blocks",
+    "titleLowest": "Lowest Blocks",
+    "siteTitle": "Network Blocks",
+    "siteTitleLowest": "Lowest Blocks",
+
+    "columnHeight": "Height",
+    "columnAddress": "Miner",
+    "columnHash": "Block Hash",
+    "columnValue": "Value",
+    "columnDifficulty": "Difficulty",
+    "columnTime": "Time",
+
+    "mobileHeight": "Block #{{height, number}}",
+    "mobileMiner": "<0>Miner: </0> <1 />",
+    "mobileHash": "<0>Hash: </0> <1 />",
+    "mobileDifficulty": "<0>Difficulty: </0> <1 />",
+
+    "tableTotal": "{{count, number}} block",
+    "tableTotal_plural": "{{count, number}} blocks",
+    "tableTotalEmpty": "No blocks"
+  },
+
+  "block": {
+    "title": "Block",
+    "siteTitle": "Block",
+    "siteTitleBlock": "Block #{{id, number}}",
+    "subTitleBlock": "#{{id, number}}",
+
+    "height": "Height",
+    "miner": "Miner",
+    "value": "Value",
+    "time": "Time",
+    "hash": "Hash",
+    "difficulty": "Difficulty",
+
+    "previous": "Prev",
+    "previousTooltip": "Previous block (#{{id, number}})",
+    "previousTooltipNone": "Previous block",
+    "next": "Next",
+    "nextTooltip": "Next block (#{{id, number}})",
+    "nextTooltipNone": "Next block",
+
+    "resultInvalidTitle": "Invalid block height",
+    "resultInvalid": "That does not look like a valid block height.",
+    "resultNotFoundTitle": "Block not found",
+    "resultNotFound": "That block does not exist."
+  },
+
+  "transaction": {
+    "title": "Transaction",
+    "siteTitle": "Transaction",
+    "siteTitleTransaction": "Transaction #{{id, number}}",
+    "subTitleTransaction": "#{{id, number}}",
+
+    "type": "Type",
+    "from": "From",
+    "to": "To",
+    "address": "Address",
+    "name": "Name",
+    "value": "Value",
+    "time": "Time",
+    "data": "Data",
+
+    "cardMetadataTitle": "Metadata",
+    "tabCommonMeta": "CommonMeta",
+    "tabRaw": "Raw",
+
+    "commonMetaError": "CommonMeta parsing failed.",
+    "commonMetaParsed": "Parsed records",
+    "commonMetaParsedHelp": "These values were not directly contained in the transaction metadata, but they were inferred by the CommonMeta parser.",
+    "commonMetaCustom": "Transaction records",
+    "commonMetaCustomHelp": "These values were directly contained in the transaction metadata.",
+    "commonMetaColumnKey": "Key",
+    "commonMetaColumnValue": "Value",
+
+    "cardRawDataTitle": "Raw data",
+    "cardRawDataHelp": "The transaction exactly as it was returned by the Krist API.",
+
+    "rawDataColumnKey": "Key",
+    "rawDataColumnValue": "Value",
+
+    "resultInvalidTitle": "Invalid transaction ID",
+    "resultInvalid": "That does not look like a valid transaction ID.",
+    "resultNotFoundTitle": "Transaction not found",
+    "resultNotFound": "That transaction does not exist."
+  },
+
+  "apiErrorResult": {
+    "resultUnknownTitle": "Unknown error",
+    "resultUnknown": "See console for details."
+  },
+
+  "noWalletsResult": {
+    "title": "No wallets yet",
+    "subTitle": "You currently have no wallets saved in KristWeb, so there is nothing to see here yet. Would you like to add a wallet?",
+    "subTitleSendTransaction": "You currently have no wallets saved in KristWeb, so you can't make a transaction yet. Would you like to add a wallet?",
+    "button": "Add wallets",
+    "buttonNetworkTransactions": "Network transactions",
+    "buttonNetworkNames": "Network names"
+  },
+
+  "backups": {
+    "importButton": "Import backup",
+    "exportButton": "Export backup"
+  },
+
+  "import": {
+    "description": "Paste the backup code (or import from a file below) and enter the corresponding master password. Backups from KristWeb v1 are also supported.",
+
+    "masterPasswordPlaceholder": "Master password",
+    "masterPasswordRequired": "Master password is required.",
+    "masterPasswordIncorrect": "Master password is incorrect.",
+
+    "appMasterPasswordRequired": "You must be authenticated to import wallets.",
+
+    "fromFileButton": "Import from file",
+    "textareaPlaceholder": "Paste backup code here",
+    "textareaRequired": "Backup code is required.",
+    "fileErrorTitle": "Import error",
+    "fileErrorNotText": "The imported file must be a text file.",
+
+    "overwriteCheckboxLabel": "Update existing wallet labels if there are conflicts",
+
+    "modalTitle": "Import backup",
+    "modalButton": "Import",
+
+    "detectedFormat": "<0>Detected format:</0> <2 />",
+    "detectedFormatKristWebV1": "KristWeb v1",
+    "detectedFormatKristWebV2": "KristWeb v2",
+    "detectedFormatInvalid": "Invalid!",
+
+    "progress": "Importing <1>{{count, number}}</1> item...",
+    "progress_plural": "Importing <1>{{count, number}}</1> items...",
+
+    "decodeErrors": {
+      "atob": "The backup could not be decoded as it is not valid base64!",
+      "json": "The backup could not be decoded as it is not valid JSON!",
+      "missingTester": "The backup could not be decoded as it is missing a 'tester' key!",
+      "missingSalt": "The backup could not be decoded as it is missing a 'salt' key!",
+      "invalidTester": "The backup could not be decoded as the 'tester' key is the wrong type!",
+      "invalidSalt": "The backup could not be decoded as the 'salt' key is the wrong type!",
+      "invalidWallets": "The backup could not be decoded as the 'wallets' key is the wrong type!",
+      "invalidFriends": "The backup could not be decoded as the 'friends' key is the wrong type!",
+      "invalidContacts": "The backup could not be decoded as the 'contacts' key is the wrong type!",
+      "unknown": "The backup could not be decoded due to an unknown error. See console for details."
+    },
+
+    "walletMessages": {
+      "success": "Wallet imported successfully.",
+      "successSkipped": "A wallet with the same address ({{address}}) and settings already exists, so it was skipped.",
+      "successUpdated": "A wallet with the same address ({{address}}) already exists. Its label was updated to \"{{label}}\"",
+      "successSkippedNoOverwrite": "A wallet with the same address ({{address}}) already exists, and you chose not to overwrite the label, so it was skipped.",
+      "successImportSkipped": "A wallet with the same address ({{address}}) was already imported, so it was skipped.",
+
+      "warningSyncNode": "This wallet had a custom sync node, which is not supported in KristWeb v2. The sync node was skipped.",
+      "warningIcon": "This wallet had a custom icon, which is not supported in KristWeb v2. The icon was skipped.",
+      "warningLabelInvalid": "The label for this wallet was invalid. The label was skipped.",
+      "warningCategoryInvalid": "The category for this wallet was invalid. The category was skipped.",
+      "warningAdvancedFormat": "This wallet uses an advanced format ({{format}}), which has limited support in KristWeb v2.",
+
+      "errorInvalidTypeString": "This wallet was not a string!",
+      "errorInvalidTypeObject": "This wallet was not an object!",
+      "errorDecrypt": "This wallet could not be decrypted!",
+      "errorPasswordDecrypt": "The password for this wallet could not be decrypted!",
+      "errorDataJSON": "The decrypted data was not valid JSON!",
+      "errorUnknownFormat": "This wallet uses an unknown or unsupported format!",
+      "errorFormatMissing": "This wallet is missing a format!",
+      "errorUsernameMissing": "This wallet is missing a username!",
+      "errorPasswordMissing": "This wallet is missing a password!",
+      "errorPrivateKeyMissing": "This wallet is missing a private key!",
+      "errorMasterKeyMissing": "This wallet is missing a master key!",
+      "errorPrivateKeyMismatch": "This wallet's password did not map to its stored private key!",
+      "errorMasterKeyMismatch": "This wallet's password did not map to its stored master key!",
+      "errorLimitReached": "You reached the wallet limit. You currently cannot add any more wallets.",
+      "errorUnknown": "An unknown error occurred. See console for details."
+    },
+
+    "contactMessages": {
+      "success": "Contact imported successfully.",
+      "successSkipped": "A contact with the same address ({{address}}) and settings already exists, so it was skipped.",
+      "successUpdated": "A contact with the same address ({{address}}) already exists. Its label was updated to \"{{label}}\"",
+      "successSkippedNoOverwrite": "A contact with the same address ({{address}}) already exists, and you chose not to overwrite the label, so it was skipped.",
+      "successImportSkipped": "A contact with the same address ({{address}}) was already imported, so it was skipped.",
+
+      "warningSyncNode": "This contact had a custom sync node, which is not supported in KristWeb v2. The sync node was skipped.",
+      "warningIcon": "This contact had a custom icon, which is not supported in KristWeb v2. The icon was skipped.",
+      "warningLabelInvalid": "The label for this contact was invalid. The label was skipped.",
+
+      "errorInvalidTypeString": "This contact was not a string!",
+      "errorInvalidTypeObject": "This contact was not an object!",
+      "errorDecrypt": "This contact could not be decrypted!",
+      "errorDataJSON": "The decrypted data was not valid JSON!",
+      "errorAddressMissing": "This contact is missing an address!",
+      "errorAddressInvalid": "This contact's address is invalid!",
+      "errorLimitReached": "You reached the contact limit. You currently cannot add any more contacts.",
+      "errorUnknown": "An unknown error occurred. See console for details."
+    },
+
+    "results": {
+      "noneImported": "No new wallets were imported.",
+
+      "walletsImported": "<0>{{count, number}} new wallet</0> was imported.",
+      "walletsImported_plural": "<0>{{count, number}} new wallets</0> were imported.",
+      "walletsSkipped": "{{count, number}} wallet was skipped.",
+      "walletsSkipped_plural": "{{count, number}} wallets were skipped.",
+
+      "contactsImported": "<0>{{count, number}} new contact</0> was imported.",
+      "contactsImported_plural": "<0>{{count, number}} new contacts</0> were imported.",
+      "contactsSkipped": "{{count, number}} contact was skipped.",
+      "contactsSkipped_plural": "{{count, number}} contacts were skipped.",
+
+      "warnings": "There was <1>{{count, number}} warning</1> while importing your backup.",
+      "warnings_plural": "There were <1>{{count, number}} warnings</1> while importing your backup.",
+      "errors": "There was <1>{{count, number}} error</1> while importing your backup.",
+      "errors_plural": "There were <1>{{count, number}} errors</1> while importing your backup.",
+
+      "treeHeaderWallets": "Wallets",
+      "treeHeaderContacts": "Contacts",
+
+      "treeWallet": "Wallet {{id}}",
+      "treeContact": "Contact {{id}}"
+    }
+  },
+
+  "export": {
+    "modalTitle": "Export backup",
+
+    "description": "This secret code contains your wallets and address book contacts. You can use it to import them in another browser, or to back them up. You will still need your master password to import the wallets in the future. <1>Do not share this code with anyone.</1>",
+    "size": "Size: <1 />",
+
+    "buttonSave": "Save to file",
+    "buttonCopy": "Copy to clipboard"
+  },
+
+  "walletLimitMessage": "You have more wallets stored than KristWeb supports. This was either caused by a bug, or you bypassed it intentionally. Expect issues with syncing.",
+  "contactLimitMessage": "You have more contacts stored than KristWeb supports. This was either caused by a bug, or you bypassed it intentionally. Expect issues with syncing.",
+
+  "optionalFieldUnset": "(unset)",
+
+  "addressPicker": {
+    "placeholder": "Choose a recipient",
+    "placeholderWalletsOnly": "Choose a wallet",
+    "placeholderNoWallets": "Address or name",
+    "placeholderNoWalletsNoNames": "Address",
+
+    "hintCurrentBalance": "Current balance: <1 />",
+
+    "errorAddressRequired": "Address is required.",
+    "errorRecipientRequired": "Recipient is required.",
+    "errorWalletRequired": "Wallet is required.",
+
+    "errorInvalidAddress": "Invalid address or name.",
+    "errorInvalidAddressOnly": "Invalid address.",
+    "errorInvalidRecipient": "Invalid recipient. Must be an address or name.",
+    "errorInvalidWalletsOnly": "Invalid wallet address.",
+    "errorEqual": "Recipient cannot be the same as the sender.",
+
+    "categoryWallets": "Wallets",
+    "categoryOtherWallets": "Other wallets",
+    "categoryAddressBook": "Address book",
+    "categoryExactAddress": "Exact address",
+    "categoryExactName": "Exact name",
+
+    "addressHint": "Balance: <1 />",
+    "addressHintWithNames": "Names: <1>{{names, number}}</1>",
+    "nameHint": "Owner: <1 />",
+    "nameHintNotFound": "Name not found.",
+    "walletHint": "Wallet: <1 />"
+  },
+
+  "sendTransaction": {
+    "title": "Send transaction",
+    "siteTitle": "Send transaction",
+
+    "modalTitle": "Send transaction",
+    "modalSubmit": "Send",
+
+    "buttonSubmit": "Send",
+
+    "labelFrom": "From wallet",
+    "labelTo": "To address/name",
+    "labelAmount": "Amount",
+    "labelMetadata": "Metadata",
+    "placeholderMetadata": "Optional metadata",
+
+    "buttonMax": "Max",
+
+    "errorAmountRequired": "Amount is required.",
+    "errorAmountNumber": "Amount must be a number.",
+    "errorAmountTooLow": "Amount must be at least 1.",
+    "errorAmountTooHigh": "Insufficient funds in wallet.",
+
+    "errorMetadataTooLong": "Metadata must be less than 256 characters.",
+    "errorMetadataInvalid": "Metadata contains invalid characters.",
+
+    "errorWalletGone": "That wallet no longer exists.",
+    "errorWalletDecrypt": "Your wallet could not be decrypted.",
+
+    "errorParameterTo": "Invalid recipient.",
+    "errorParameterAmount": "Invalid amount.",
+    "errorParameterMetadata": "Invalid metadata.",
+    "errorInsufficientFunds": "Insufficient funds in wallet.",
+    "errorNameNotFound": "The recipient name could not be found.",
+
+    "errorUnknown": "Unknown error sending transaction. See console for details.",
+
+    "payLargeConfirm": "Are you sure you want to send <1 />?",
+    "payLargeConfirmHalf": "Are you sure you want to send <1 />? This is over half your balance!",
+    "payLargeConfirmAll": "Are you sure you want to send <1 />? This is your entire balance!",
+    "payLargeConfirmDefault": "You are about to send your wallet private key and password to an unofficial Krist server, which will give them access to your Krist on the official server. Are you sure you want to do this?",
+
+    "errorNotificationTitle": "Transaction failed",
+    "successNotificationTitle": "Transaction successful",
+    "successNotificationContent": "You sent <1 /> from <3 /> to <5 />.",
+    "successNotificationButton": "View transaction",
+
+    "errorInvalidQuery": "The query parameters were invalid, they were ignored."
+  },
+
+  "request": {
+    "title": "Request Krist",
+    "siteTitle": "Request Krist",
+
+    "labelTo": "Request recipient",
+    "labelAmount": "Request amount",
+    "labelMetadata": "Request metadata",
+    "placeholderMetadata": "Metadata",
+
+    "generatedLink": "Generated link",
+    "generatedLinkHint": "Send this link to somebody to request a payment from them."
+  },
+
+  "authFailed": {
+    "title": "Auth failed",
+    "message": "You do not own this address.",
+    "messageLocked": "This address was locked.",
+    "alert": "Message from the Krist server:"
+  },
+
+  "whatsNew": {
+    "title": "What's new",
+    "siteTitle": "What's new",
+
+    "titleKrist": "Krist",
+    "titleKristWeb": "KristWeb",
+
+    "tooltipGitHub": "View on GitHub",
+
+    "cardWhatsNewTitle": "What's New",
+    "cardCommitsTitle": "Commits",
+    "cardCommitsSeeMore": "See more",
+
+    "new": "New!"
+  },
+
+  "namePicker": {
+    "placeholder": "Choose a name",
+    "placeholderMultiple": "Choose names",
+
+    "buttonAll": "All",
+
+    "warningTotalLimit": "You seem to have more than 1,000 names, which is not yet supported in KristWeb v2. Please post an issue on GitHub.",
+    "errorLookup": "There was an error fetching the names. See the console for details."
+  },
+
+  "nameTransfer": {
+    "modalTitle": "Transfer names",
+
+    "labelNames": "Names",
+    "labelRecipient": "Recipient",
+
+    "buttonSubmit": "Transfer names",
+
+    "errorNameRequired": "At least one name is required.",
+
+    "errorWalletGone": "That wallet no longer exists.",
+    "errorWalletDecrypt": "The wallet \"{{address}}\" could not be decrypted.",
+    "errorParameterNames": "Invalid names.",
+    "errorParameterRecipient": "Invalid recipient.",
+    "errorNameNotFound": "One or more names could not be found.",
+    "errorNotNameOwner": "You are not the owner of one or more names.",
+    "errorUnknown": "Unknown error transferring names. See console for details.",
+    "errorNotificationTitle": "Name transfer failed",
+
+    "warningMultipleNames": "Are you sure you want to transfer <1>{{count, number}}</1> name to <3 />?",
+    "warningMultipleNames_plural": "Are you sure you want to transfer <1>{{count, number}}</1> names to <3 />?",
+    "warningAllNames": "Are you sure you want to transfer <1>{{count, number}}</1> name to <3 />? This is all your names!",
+    "warningAllNames_plural": "Are you sure you want to transfer <1>{{count, number}}</1> names to <3 />? This is all your names!",
+
+    "successMessage": "Name transferred successfully",
+    "successMessage_plural": "Names transferred successfully",
+    "successDescription": "Transferred <1>{{count, number}}</1> name to <3 />.",
+    "successDescription_plural": "Transferred <1>{{count, number}}</1> names to <3 />.",
+
+    "progress": "Transferring <1>{{count, number}}</1> name...",
+    "progress_plural": "Transferring <1>{{count, number}}</1> names..."
+  },
+
+  "nameUpdate": {
+    "modalTitle": "Update names",
+
+    "labelNames": "Names",
+    "labelData": "Data",
+    "placeholderData": "Data (optional)",
+
+    "buttonSubmit": "Update names",
+
+    "errorNameRequired": "At least one name is required.",
+
+    "errorWalletGone": "That wallet no longer exists.",
+    "errorWalletDecrypt": "The wallet \"{{address}}\" could not be decrypted.",
+    "errorParameterNames": "Invalid names.",
+    "errorParameterData": "Invalid data.",
+    "errorNameNotFound": "One or more names could not be found.",
+    "errorNotNameOwner": "You are not the owner of one or more names.",
+    "errorUnknown": "Unknown error updating names. See console for details.",
+    "errorNotificationTitle": "Name transfer failed",
+
+    "successMessage": "Name updated successfully",
+    "successMessage_plural": "Names updated successfully",
+    "successDescription": "Updated <1>{{count, number}}</1> name.",
+    "successDescription_plural": "Updated <1>{{count, number}}</1> names.",
+
+    "progress": "Updating <1>{{count, number}}</1> name...",
+    "progress_plural": "Updating <1>{{count, number}}</1> names..."
+  },
+
+  "noNamesResult": {
+    "title": "No names yet",
+    "subTitle": "You currently have no names in any of your wallets saved in KristWeb, so there is nothing to see here yet. Would you like to purchase a name?",
+    "button": "Purchase name"
+  },
+
+  "namePurchase": {
+    "modalTitle": "Purchase name",
+
+    "nameCost": "Cost to purchase: <1 />",
+
+    "labelWallet": "Wallet",
+    "labelName": "Name",
+    "placeholderName": "Name",
+
+    "buttonSubmit": "Purchase (<1 />)",
+
+    "errorNameRequired": "Name is required.",
+    "errorInvalidName": "Invalid name.",
+    "errorNameTooLong": "Name is too long.",
+    "errorNameTaken": "That name is already taken!",
+    "errorInsufficientFunds": "Your wallet does not have enough funds to purchase a name.",
+
+    "errorWalletGone": "That wallet no longer exists.",
+    "errorWalletDecrypt": "The wallet \"{{address}}\" could not be decrypted.",
+    "errorUnknown": "Unknown error purchasing name. See console for details.",
+    "errorNotificationTitle": "Name purchase failed",
+
+    "successMessage": "Name purchased successfully",
+    "successNotificationButton": "View name",
+
+    "nameAvailable": "Name is available!"
+  },
+
+  "purchaseKrist": {
+    "modalTitle": "Purchase Krist",
+    "connection": "A connection was just made to an unofficial Krist server. Your passwords and Krist wallets are at risk."
+  },
+
+  "syncWallets": {
+    "errorMessage": "Error syncing wallets",
+    "errorDescription": "There was an error while syncing your wallets. See console for details."
+  },
+
+  "legacyMigration": {
+    "modalTitle": "KristWeb v1 migration",
+    "description": "Welcome to KristWeb v2! It looks like you have used KristWeb v1 on this domain before.<br /><br /><strong>Please enter your master password to migrate your wallets to the new format.</strong> You will only have to do this once.",
+
+    "walletCount": "Detected <1>{{count, number}}</1> wallet",
+    "walletCount_plural": "Detected <1>{{count, number}}</1> wallets",
+    "contactCount": "Detected <1>{{count, number}}</1> contact",
+    "contactCount_plural": "Detected <1>{{count, number}}</1> contacts",
+
+    "masterPasswordLabel": "Master password",
+    "masterPasswordPlaceholder": "Master password",
+
+    "errorPasswordRequired": "Password is required.",
+    "errorPasswordLength": "Must be at least 1 character.",
+    "errorPasswordIncorrect": "Incorrect password.",
+    "errorUnknown": "An unknown error occurred. See console for details.",
+
+    "buttonForgotPassword": "Forgot password",
+    "buttonSubmit": "Begin migration",
+
+    "forgotPassword": {
+      "modalTitle": "Skip v1 migration",
+      "modalContent": "If you forgot your master password for KristWeb v1, then you will not be able to migrate your wallets. You will never be asked again. Are you sure you want to skip migration?",
+      "buttonSkip": "Skip"
+    }
+  },
+
+  "sortModal": {
+    "title": "Sort results",
+
+    "sortBy": "Sort by",
+    "sortOrder": "Sort order",
+    "sortAscending": "Ascending",
+    "sortDescending": "Descending",
+
+    "buttonReset": "Reset",
+
+    "options": {
+      "transactionsFrom": "From",
+      "transactionsTo": "To",
+      "transactionsValue": "Value",
+      "transactionsName": "Name",
+      "transactionsTime": "Time",
+
+      "namesName": "Name",
+      "namesOwner": "Owner",
+      "namesOriginalOwner": "Original Owner",
+      "namesData": "Data",
+      "namesUnpaid": "Unpaid Blocks",
+      "namesRegistered": "Registered Time",
+      "namesTransferred": "Transferred Time",
+      "namesUpdated": "Updated Time",
+
+      "blocksMiner": "Miner",
+      "blocksHash": "Hash",
+      "blocksValue": "Value",
+      "blocksDifficulty": "Difficulty",
+      "blocksTime": "Time"
+    }
+  }
+}
