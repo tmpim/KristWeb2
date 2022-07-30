@@ -78,6 +78,20 @@
       }
     ]
   },
+  "tr": {
+    "name": "Turkish",
+    "nativeName": "Türkçe",
+    "country": "tr",
+    "antLocale": "tr_TR",
+    "dayjsLocale": "tr",
+    "timeagoLocale": "tr",
+    "contributors": [
+      {
+        "name": "SolarFlame5",
+        "url": "https://github.com/Solarflame5"
+      }
+    ]
+  },
   "vi": {
     "name": "Vietnamese",
     "nativeName": "Tiếng Việt",
