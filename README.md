@@ -1,15 +1,10 @@
-# KristWeb v2 [![Donate on PayPal](https://img.shields.io/badge/PayPal-donate-0079C1?logo=paypal&style=flat-square)](https://paypal.me/lemmmy) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/tmpim/KristWeb2/Deploy%20dev%20build?label=dev%20deploy&style=flat-square) ![Codacy grade](https://img.shields.io/codacy/grade/8b0ee8f672554cf39324d31f559ce086?style=flat-square) ![Lines of code](https://img.shields.io/tokei/lines/github/tmpim/KristWeb2?style=flat-square) ![GitHub issues](https://img.shields.io/github/issues/tmpim/KristWeb2?style=flat-square) ![GitHub pull requests](https://img.shields.io/github/issues-pr/tmpim/KristWeb2?style=flat-square) ![GitHub package.json version](https://img.shields.io/github/package-json/v/tmpim/KristWeb2?style=flat-square) ![GitHub](https://img.shields.io/github/license/tmpim/KristWeb2?style=flat-square) 
+# KristWeb v2 [![Donate on PayPal](https://img.shields.io/badge/PayPal-donate-0079C1?logo=paypal&style=flat-square)](https://paypal.me/lemmmy) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/tmpim/KristWeb2/Deploy%20dev%20build?label=dev%20deploy&style=flat-square) ![GitHub issues](https://img.shields.io/github/issues/tmpim/KristWeb2?style=flat-square) ![GitHub pull requests](https://img.shields.io/github/issues-pr/tmpim/KristWeb2?style=flat-square) ![GitHub package.json version](https://img.shields.io/github/package-json/v/tmpim/KristWeb2?style=flat-square) ![GitHub](https://img.shields.io/github/license/tmpim/KristWeb2?style=flat-square) 
 
 <table align="center">
   <tr>
     <td><img src="https://i.imgur.com/kVXMYpX.png" width="360" /></td>
   </tr>
 </table>
-
-<h2 align="center">STILL IN DEVELOPMENT</h2>
-
-*This project is heavily under development. It is currently in the design 
-stages, meaning there is **no useful functionality yet***.
 
 Rewrite of the Krist Web Wallet, in React. This is a fully clientside Krist 
 wallet that only needs to communicate to the Krist node itself. It securely 
@@ -91,6 +86,6 @@ in the future, please consider [donating](https://donate.lemmmy.pw).
 
 ### License
 
-**Copyright (c) 2020-2021 Drew Lemmy**
+**Copyright (c) 2020-2022 Drew Lemmy**
 
 This project is licensed under the AGPL v3 license. See LICENSE.txt for more.
