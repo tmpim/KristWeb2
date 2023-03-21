@@ -53,8 +53,8 @@ export enum ListingType {
 const LISTING_TYPE_TITLES: Record<ListingType, string> = {
   [ListingType.WALLETS]: "transactions.myTransactionsTitle",
 
-  [ListingType.NETWORK_ALL]: "transactions.title",
-  [ListingType.NETWORK_ADDRESS]: "transactions.title",
+  [ListingType.NETWORK_ALL]: "transactions.globalTransactionsTitle",
+  [ListingType.NETWORK_ADDRESS]: "transactions.globalTransactionsTitle",
 
   [ListingType.NAME_HISTORY]: "transactions.nameHistoryTitle",
   [ListingType.NAME_SENT]: "transactions.nameTransactionsTitle",
@@ -81,7 +81,7 @@ function getSiteTitle(t: TFunction, listingType: ListingType, address?: string):
   case ListingType.WALLETS:
     return t("transactions.siteTitleWallets");
   case ListingType.NETWORK_ALL:
-    return t("transactions.siteTitleNetworkAll");
+    return t("transactions.siteTitleNetworkGlobal");
   case ListingType.NETWORK_ADDRESS:
     return t("transactions.siteTitleNetworkAddress", { address });
   case ListingType.NAME_HISTORY:

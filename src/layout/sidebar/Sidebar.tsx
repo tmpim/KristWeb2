@@ -3,7 +3,7 @@
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { useState, useEffect, useMemo, Dispatch, SetStateAction } from "react";
 import { Layout, Menu, MenuItemProps } from "antd";
-import { HomeOutlined, WalletOutlined, TeamOutlined, BankOutlined, TagsOutlined, BuildOutlined } from "@ant-design/icons";
+import { HomeOutlined, WalletOutlined, TeamOutlined, BankOutlined, TagOutlined, TagsOutlined, CreditCardOutlined } from "@ant-design/icons";
 
 import { TFunction, useTranslation } from "react-i18next";
 import { useLocation } from "react-router-dom";
@@ -25,20 +25,17 @@ type SidebarItemProps = MenuItemProps & {
 
   nyi?: boolean;
 
-  group?: "network";
+  group?: "global" | "personal";
 }
 const sidebarItems: SidebarItemProps[] = [
   { icon: <HomeOutlined />,   name: "dashboard",    to: "/" },
-  { icon: <WalletOutlined />, name: "myWallets",    to: "/wallets" },
-  { icon: <TeamOutlined />,   name: "addressBook",  to: "/contacts" },
-  { icon: <BankOutlined />,   name: "transactions", to: "/me/transactions" },
-  { icon: <TagsOutlined />,   name: "names",        to: "/me/names" },
-  // { icon: <SketchOutlined />, name: "mining",       to: "/mining", nyi: true },
+  { group: "personal", icon: <WalletOutlined />,      name: "myWallets",      to: "/wallets" },
+  { group: "personal", icon: <TeamOutlined />,        name: "addressBook",    to: "/contacts" },
+  { group: "personal", icon: <CreditCardOutlined />,  name: "myTransactions", to: "/me/transactions" },
+  { group: "personal", icon: <TagOutlined />,         name: "myNames",        to: "/me/names" },
 
-  { group: "network", icon: <BuildOutlined />, name: "blocks",       to: "/network/blocks" },
-  { group: "network", icon: <BankOutlined />,  name: "transactions", to: "/network/transactions" },
-  { group: "network", icon: <TagsOutlined />,  name: "names",        to: "/network/names" },
-  // { group: "network", icon: <StockOutlined />, name: "statistics",   to: "/network/statistics", nyi: true },
+  { group: "global", icon: <BankOutlined />,  name: "allTransactions", to: "/network/transactions" },
+  { group: "global", icon: <TagsOutlined />,  name: "allNames",        to: "/network/names" },
 ];
 
 function getSidebarItems(t: TFunction, group?: string) {
@@ -94,8 +91,12 @@ export function Sidebar({
       <Menu theme="dark" mode="inline" selectedKeys={selectedKey ? [selectedKey] : undefined}>
         {getSidebarItems(t)}
 
-        <Menu.ItemGroup key="g1" title={t("sidebar.network")}>
-          {getSidebarItems(t, "network")}
+        <Menu.ItemGroup key="g1" title={t("sidebar.personal")}>
+          {getSidebarItems(t, "personal")}
+        </Menu.ItemGroup>
+
+        <Menu.ItemGroup key="g1" title={t("sidebar.global")}>
+          {getSidebarItems(t, "global")}
         </Menu.ItemGroup>
       </Menu>
 

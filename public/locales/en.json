@@ -53,11 +53,14 @@
     "dashboard": "Dashboard",
     "myWallets": "My Wallets",
     "addressBook": "Address Book",
-    "transactions": "Transactions",
-    "names": "Names",
+    "myTransactions": "My Transactions",
+    "myNames": "My Names",
+    "allTransactions": "All Transactions",
+    "allNames": "All Names",
     "mining": "Mining",
-    "network": "Network",
     "blocks": "Blocks",
+    "personal": "Personal",
+    "global": "Global",
     "statistics": "Statistics",
     "madeBy": "Made by <1>{{authorName}}</1>",
     "hostedBy": "Hosted by <1>{{host}}</1>",
@@ -234,7 +237,7 @@
   },
 
   "addressBook": {
-    "title": "Address book",
+    "title": "Address Book",
 
     "contactCount": "{{count, number}} contact",
     "contactCount_plural": "{{count, number}} contacts",
@@ -589,14 +592,14 @@
   },
 
   "transactions": {
-    "title": "Network Transactions",
     "myTransactionsTitle": "My Transactions",
+    "globalTransactionsTitle": "Global Transactions",
     "nameHistoryTitle": "Name History",
     "nameTransactionsTitle": "Name Transactions",
     "searchTitle": "Transaction Search",
 
     "siteTitleWallets": "My Transactions",
-    "siteTitleNetworkAll": "Network Transactions",
+    "siteTitleNetworkGlobal": "Global Transactions",
     "siteTitleNetworkAddress": "{{address}}'s Transactions",
     "siteTitleNameHistory": "Name History",
     "siteTitleNameSent": "Name Transactions",
@@ -641,11 +644,10 @@
 
   "names": {
     "titleWallets": "My Names",
-    "titleNetworkAll": "Network Names",
-    "titleNetworkAddress": "Network Names",
+    "titleNetworkGlobal": "Global Names",
 
     "siteTitleWallets": "My Names",
-    "siteTitleNetworkAll": "Network Names",
+    "siteTitleNetworkGlobal": "Global Names",
     "siteTitleNetworkAddress": "{{address}}'s Names",
 
     "columnName": "Name",

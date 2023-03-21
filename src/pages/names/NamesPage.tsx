@@ -40,8 +40,8 @@ export enum ListingType {
 
 const LISTING_TYPE_TITLES: Record<ListingType, string> = {
   [ListingType.WALLETS]: "names.titleWallets",
-  [ListingType.NETWORK_ALL]: "names.titleNetworkAll",
-  [ListingType.NETWORK_ADDRESS]: "names.titleNetworkAddress"
+  [ListingType.NETWORK_ALL]: "names.titleNetworkGlobal",
+  [ListingType.NETWORK_ADDRESS]: "names.titleNetworkGlobal"
 };
 
 interface ParamTypes {
@@ -58,7 +58,7 @@ function getSiteTitle(t: TFunction, listingType: ListingType, address?: string):
   case ListingType.WALLETS:
     return t("names.siteTitleWallets");
   case ListingType.NETWORK_ALL:
-    return t("names.siteTitleNetworkAll");
+    return t("names.siteTitleNetworkGlobal");
   case ListingType.NETWORK_ADDRESS:
     return t("names.siteTitleNetworkAddress", { address });
   }
