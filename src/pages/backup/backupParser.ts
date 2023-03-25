@@ -5,6 +5,7 @@ import {
   Backup, BackupFormatType,
   BackupKristWebV1, BackupKristWebV2
 } from "./backupFormats";
+import { decode } from "js-base64";
 
 import { TranslatedError } from "@utils/i18n";
 
@@ -14,7 +15,7 @@ import { isPlainObject } from "lodash-es";
 export function decodeBackup(rawData: string): Backup {
   try {
     // All backups are encoded as base64, so decode that first
-    const plainData = window.atob(rawData);
+    const plainData = decode(rawData);
 
     // Attempt to parse JSON
     const data = JSON.parse(plainData);

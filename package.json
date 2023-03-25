@@ -1,6 +1,6 @@
 {
   "name": "kristweb2",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Client-side web wallet for Krist",
   "homepage": "https://krist.club",
   "license": "AGPL-3.0-only",
@@ -36,6 +36,7 @@
     "i18next": "^20.1.0",
     "i18next-browser-languagedetector": "^6.1.0",
     "i18next-http-backend": "^1.2.0",
+    "js-base64": "^3.7.5",
     "json5": "^2.2.0",
     "lodash-es": "^4.17.21",
     "lru-cache": "^6.0.0",

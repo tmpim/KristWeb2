@@ -2,6 +2,7 @@
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { store } from "@app";
+import { encode } from "js-base64";
 
 declare const __GIT_VERSION__: string;
 declare const __PKGBUILD__: string;
@@ -31,6 +32,5 @@ export async function backupExport(): Promise<string> {
   };
 
   // Convert to base64'd JSON
-  const code = window.btoa(JSON.stringify(backup));
-  return code;
+  return encode(JSON.stringify(backup));
 }
