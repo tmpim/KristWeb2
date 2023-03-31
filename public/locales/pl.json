@@ -108,6 +108,7 @@
 
   "contextualAddressUnknown": "Nieznany",
   "contextualAddressNonExistentTooltip": "Ten adres nie został jeszcze zainicjowany w sieci Krist.",
+  "contextualAddressNonExistentTooltip2": "Ten adres nia ma jeszcze historii transakcji.",
 
   "typeahead": {
     "emptyLabel": "Nie znaleziono dopasowań.",
@@ -190,6 +191,7 @@
     "actionsEditTooltip": "Edytuj portfel",
     "actionsSendTransaction": "Wyślij Krist",
     "actionsWalletInfo": "Informacje o portfelu",
+    "actionsWalletForceCreate": "Wymuś utworzenie",
     "actionsDelete": "Usuń portfel",
     "actionsDeleteConfirm": "Czy na pewno chcesz usunąć ten portfel?",
     "actionsDeleteConfirmDescription": "Jeśli nie wykonałeś kopii zapasowej lub nie zapisałeś hasła, zostanie ono utracone na zawsze!",
@@ -227,6 +229,12 @@
 
       "true": "Tak",
       "false": "Nie"
+    },
+
+    "login": {
+      "appMasterPasswordRequired": "Musisz być zalogowany żeby wymusić stworzenie portfela.",
+      "errorAuthFailed": "Nie udało się wymusić stworzenie adresu.",
+      "errorWalletDecrypt": "Twój portfel nie mógł zostać poprawnie odszyfrowany."
     }
   },
 
@@ -348,6 +356,7 @@
     "siteTitle": "Pulpit nawigacyjny",
 
     "inDevBanner": "Witamy w prywatnej wersji beta KristWeb v2! Ta strona jest wciąż w fazie rozwoju, więc obecnie brakuje większości funkcji. Prosimy o zgłaszanie wszystkich błędów na <1> GitHub </1>. Dzięki!",
+    "inDevBanner2": "Witamy w publicznej wersji beta KristWeb v2! Ta strona jest wciąż dość nowa, więc prosimy o zgłaszanie wszystkich błędów na <1> GitHub </1>. Dzięki!",
 
     "walletOverviewCardTitle": "Portfele",
     "walletOverviewTotalBalance": "Saldo całkowite",
@@ -573,6 +582,7 @@
     "resultInvalid": "To nie wygląda na prawidłowy adres Krist.",
     "resultNotFoundTitle": "Adres nie znaleziony",
     "resultNotFound": "Ten adres nie został jeszcze zainicjowany w sieci Krist.",
+    "resultNotFound2": "Ten adres nia ma jeszcze historii transakcji.",																						
 
     "verifiedCardTitle": "Zweryfikowany adres",
     "verifiedInactive": "Ta usługa nie jest obecnie aktywna.",
@@ -584,8 +594,8 @@
     "itemFrom": "<0>Od:</0> <1 />",
     "itemTo": "<0>Do:</0> <1 />",
     "itemName": "<0>Nazwa:</0> <1 />",
-    "itemARecord": "<0>Rekord A:</0> <1 />",
-    "itemARecordRemoved": "(usunięte)",
+    "itemData": "<0>Dane:</0> <1 />",
+    "itemDataRemoved": "(usunięte)",
     "seeMore": "Zobacz wszystkie {{count, number}}..."
   },
 
@@ -655,14 +665,17 @@
     "columnOriginalOwner": "Pierwotny Właściciel",
     "columnRegistered": "Zarejestrowana",
     "columnUpdated": "Zaktualizowana",
-    "columnARecord": "Rekord A",
+    "columnTransferred": "Przeniesiona",
+    "columnData": "Dane",
     "columnUnpaid": "Niewypłacone bloki",
+
+    "rowNew": "Nowa!",
 
     "mobileOwner": "<0>Właściciel:</0> <1 />",
     "mobileOriginalOwner": "<0>Pierwotny właściciel:</0> <1 />",
     "mobileRegistered": "Zarejestrowany: <1 />",
     "mobileUpdated": "Zaktualizowano: <1 />",
-    "mobileARecordTag": "A",
+    "mobileDataTag": "Dane",
     "mobileUnpaidTag_0": "{{count, number}} blok",
     "mobileUnpaidTag_1": "{{count, number}} blocki",
     "mobileUnpaidTag_2": "{{count, number}} blocków",
@@ -673,7 +686,7 @@
     "actionsViewOriginalOwner": "Wyświetl adres pierwotnego właściciela",
     "actionsSendKrist": "Wyślij Krist",
     "actionsTransferKrist": "Przenieś Krist",
-    "actionsUpdateARecord": "Zaktualizuj rekord A",
+    "actionsUpdateData": "Zaktualizuj dane",
     "actionsTransferName": "Przenieś nazwę",
 
     "tableTotal_0": "{{count, number}} nazwa",
@@ -692,19 +705,20 @@
 
     "buttonSendKrist": "Wyślij Krist do {{name}}",
     "buttonTransferKrist": "Przenieś Krist do {{name}}",
-    "buttonARecord": "Zaktualizuj rekord A.",
+    "buttonData": "Zaktualizuj dane",
     "buttonTransferName": "Przenieś nazwę",
 
     "owner": "Posiadana przez",
     "originalOwner": "Kupiona przez",
     "registered": "Zarejestrowana",
     "updated": "Ostatnia aktualizacja",
+    "transferred": "Ostatnie przeniesienie",
     "unpaid": "Niewypłacone bloki",
     "unpaidCount_0": "{{count, number}} blok",
     "unpaidCount_1": "{{count, number}} bloki",
     "unpaidCount_2": "{{count, number}} bloków",
-    "aRecord": "Rekord A",
-    "aRecordEditTooltip": "Zaktualizuj rekord A",
+    "data": "Dane",
+    "dataEditTooltip": "Zaktualizuj dane",
 
     "cardRecentTransactionsTitle": "Ostatnie transakcje",
     "cardHistoryTitle": "Historia nazw",
@@ -780,7 +794,7 @@
     "name": "Nazwa",
     "value": "Wartość",
     "time": "Czas",
-    "aRecord": "Rekord A",
+    "data": "Dane",
 
     "cardMetadataTitle": "Metadane",
     "tabCommonMeta": "CommonMeta",
@@ -1135,8 +1149,8 @@
     "modalTitle": "Zaktualizuj nazwy",
 
     "labelNames": "Nazwy",
-    "labelARecord": "Rekord A",
-    "placeholderARecord": "Rekord A (opcjonalny)",
+    "labelData": "Dane",
+    "placeholderData": "Dane (opcjonalnie)",
 
     "buttonSubmit": "Zaktualizuj nazwy",
 
@@ -1145,7 +1159,7 @@
     "errorWalletGone": "Ten portfel już nie istnieje.",
     "errorWalletDecrypt": "Nie można odszyfrować portfela \"{{address}}\".",
     "errorParameterNames": "Nieprawidłowe nazwy.",
-    "errorParameterARecord": "Nieprawidłowy rekord A.",
+    "errorParameterData": "Nieprawidłowe dane.",
     "errorNameNotFound": "Nie udało się znaleźć co najmniej jednej nazwy.",
     "errorNotNameOwner": "Nie jesteś właścicielem jednej lub więcej nazw.",
     "errorUnknown": "Nieznany błąd podczas aktualizowania nazw. Szczegółowe informacje można znaleźć w konsoli.",
@@ -1256,9 +1270,10 @@
       "namesName": "Nazwa",
       "namesOwner": "Właściciel",
       "namesOriginalOwner": "Pierwotny właściciel",
-      "namesARecord": "Rekord A",
+      "namesData": "Dane",
       "namesUnpaid": "Niewypłacone bloki",
-      "namesRegistered": "Czas rejestracji",
+      "namesRegistered": "Termin rejestracji",
+      "namesTransferred": "Termin przeniesienia",
       "namesUpdated": "Czas aktualizacji",
 
       "blocksMiner": "Wydobył",
