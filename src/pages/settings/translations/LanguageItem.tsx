@@ -50,7 +50,10 @@ export function getLanguageItems(): JSX.Element[] {
   const languages = getLanguages();
   if (!languages) return [];
 
-  return Object.entries(languages)
+  const entries = Object.entries(languages);
+  entries.sort((a, b) => a[1].name.localeCompare(b[1].name));
+
+  return entries
     .map(([code, lang]) => (
       <LanguageItem
         key={"language/" + code}

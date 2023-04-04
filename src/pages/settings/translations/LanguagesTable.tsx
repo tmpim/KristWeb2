@@ -81,7 +81,7 @@ export function LanguagesTable({
         title: t("settings.translations.columnProgress"),
         key: "progress",
         render: (_, row) => (!row.error && row.keys &&
-          <Progress percent={Math.round(Math.min(row.keyCount / (analysed?.enKeyCount || 1), 1) * 100)} />)
+          <Progress percent={Math.floor(Math.min(row.keyCount / (analysed?.enKeyCount || 1), 1) * 100)} />)
       }
     ]}
 

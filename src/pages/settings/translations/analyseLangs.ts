@@ -77,6 +77,7 @@ export async function analyseLanguages(): Promise<AnalysedLanguages | false> {
 
   // Fetch the locale file for each language code
   const langEntries = Object.entries(languages);
+  langEntries.sort((a, b) => a[1].name.localeCompare(b[1].name));
   const languageData = await Promise.allSettled(
     langEntries.map(e => getLanguageData(e[0]))
   );
