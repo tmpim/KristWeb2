@@ -14,7 +14,7 @@ import { ConditionalLink } from "@comp/ConditionalLink";
 
 import { getDevState } from "@utils";
 
-import packageJson from "../../../package.json";
+declare const __GIT_VERSION__: string;
 
 const prereleaseTagColours: { [key: string]: string } = {
   "dev": "red",
@@ -26,12 +26,12 @@ const prereleaseTagColours: { [key: string]: string } = {
 export function Brand(): JSX.Element {
   const { t } = useTranslation();
 
-  const version = packageJson.version;
+  const gitVersion: string = __GIT_VERSION__;
 
-  const major = semverMajor(version);
-  const minor = semverMinor(version);
-  const patch = semverPatch(version);
-  const prerelease = semverPrerelease(version);
+  const major = semverMajor(gitVersion);
+  const minor = semverMinor(gitVersion);
+  const patch = semverPatch(gitVersion);
+  const prerelease = semverPrerelease(gitVersion);
 
   const { isDirty, isDev } = getDevState();
 
