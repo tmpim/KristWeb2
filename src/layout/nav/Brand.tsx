@@ -23,6 +23,8 @@ const prereleaseTagColours: { [key: string]: string } = {
   "rc": "green"
 };
 
+const GIT_RE = /^\d+-g[a-f0-9]{5,32}(?:-dirty)?$/;
+
 export function Brand(): JSX.Element {
   const { t } = useTranslation();
 
@@ -33,10 +35,14 @@ export function Brand(): JSX.Element {
   const patch = semverPatch(gitVersion);
   const prerelease = semverPrerelease(gitVersion);
 
+  const isGit = prerelease ? GIT_RE.test(prerelease.join("")) : false;
+
   const { isDirty, isDev } = getDevState();
 
   // Convert semver prerelease parts to Bootstrap badge
-  const tagContents = isDirty || isDev ? ["dev"] : prerelease;
+  const tagContents = isDirty || isDev
+    ? ["dev"]
+    : (isGit ? null : prerelease);
   let tag = null;
   if (tagContents && tagContents.length) {
     const variant = prereleaseTagColours[tagContents[0]] || undefined;
