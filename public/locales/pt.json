@@ -13,6 +13,7 @@
     "search": {
       "placeholder": "Pesquise na rede Krist",
       "placeholderShortcut": "Pesquise na rede Krist ({{shortcut}})",
+      "placeholderShort": "Pesquisar...",
       "rateLimitHit": "Por favor, se acalme!",
       "noResults": "Sem resultados.",
 
@@ -38,9 +39,13 @@
     },
 
     "send": "Enviar",
+    "sendLong": "Enviar Krist",
     "request": "Pedir",
+    "requestLong": "Pedir Krist",
+    "sort": "Ordenar resultados",
 
-    "settings": "Configurações"
+    "settings": "Configurações",
+    "more": "Mais"
   },
 
   "sidebar": {
@@ -48,6 +53,10 @@
     "dashboard": "Painel",
     "myWallets": "Minhas Carteiras",
     "addressBook": "Contatos",
+    "myTransactions": "Minhas Transações",
+    "myNames": "Meus Nomes",
+    "allTransactions": "Todas as Transações",
+    "allNames": "Todos os Nomes",
     "transactions": "Transações",
     "names": "Nomes",
     "mining": "Mineração",
@@ -58,6 +67,7 @@
     "hostedBy": "Hospedado por <1>{{host}}</1>",
     "github": "GitHub",
     "credits": "Créditos",
+    "whatsNew": "Novidades",
 
     "updateTitle": "Atualização disponível!",
     "updateDescription": "Uma nova versão da KristWeb está disponível, por favor recarregue a página.",
@@ -78,6 +88,12 @@
   },
 
   "error": "Erro",
+  "errorBoundary": {
+    "title": "Erro crítico",
+    "description": "Um erro crítico ocorreu no KristWeb, portanto a página foi encerrada. Consulte o console para detalhes.",
+    "sentryNote": "Esse erro foi reportado automaticamente."
+  },
+  "errorReported": "Um erro foi automaticamente reportado. Veja o console para mais informações.",
   "loading": "Carregando...",
 
   "copy": "Copiar",
@@ -85,11 +101,14 @@
 
   "pageNotFound": {
     "resultTitle": "Página não encontrada",
+    "nyiTitle": "Ainda não implementado",
+    "nyiSubTitle": "Esta funcionalidade chegará em breve!",
     "buttonGoBack": "Voltar"
   },
 
   "contextualAddressUnknown": "Desconhecido",
-  "contextualAddressNonExistentTooltip": "Este endereço ainda não foi configurado na rede Krist",
+  "contextualAddressNonExistentTooltip": "Este endereço ainda não foi configurado na rede Krist.",
+  "contextualAddressNonExistentTooltip2": "Este endereço ainda não tem um histórico de transações.",
 
   "typeahead": {
     "emptyLabel": "Sem resultados.",
@@ -119,12 +138,30 @@
     "popoverAuthoriseButton": "Autorizar",
     "popoverDescription": "Entre a sua senha mestra para decifrar suas carteiras.",
     "popoverDescriptionEncrypt": "Entre a sua senha mestra para cifrar suas carteiras.",
-    "forcedAuthWarning": "Você foi logado automáticamente por uma configuração insegura para depuração."
+    "forcedAuthWarning": "Você foi logado automáticamente por uma configuração insegura para depuração.",
+    "earlyAuthError": "A aplicação não ainda não carregou completamente. Por favor, tente novamente.",
+
+    "reset": {
+      "modalTitle": "Redefinir sua senha mestra",
+      "description": "Você tem certeza que deseja redefinir a sua senha mestra? <strong>Todas as suas carteiras serão apagadas.</strong> Certifique-se de <3>exportar uma cópia de segurança</3> antes!",
+      "buttonConfirm": "Redefinir & apagar",
+
+      "modalTitle2": "APAGAR TODAS AS MINHAS CARTEIRAS",
+      "description2": "Você tem a TOTAL certeza de que irá <strong>APAGAR TODAS AS SUAS CARTEIRAS</strong>?",
+      "buttonConfirm2": "Sim, tenho certeza [{{n}}]",
+      "buttonConfirmFinal": "Sim, tenho certeza!"
+    },
+
+    "change": {
+      "modalTitle": "Alterar senha mestra"
+    }
   },
 
   "myWallets": {
     "title": "Carteiras",
     "manageBackups": "Gerenciar backups",
+    "importBackup": "Importar carteiras",
+    "exportBackup": "Exportar carteiras",
     "createWallet": "Criar carteira",
     "addExistingWallet": "Adicionar carteira existente",
     "searchPlaceholder": "Pesquise por carteiras..",
@@ -139,14 +176,20 @@
     "nameCount_plural": "{{count, number}} nomes",
     "nameCountEmpty": "Nenhum nome",
     "firstSeen": "Apareceu em {{date}}",
+    "firstSeenMobile": "Apareceu em: <1 />",
 
     "walletCount": "{{count, number}} carteira",
     "walletCount_plural": "{{count, number}} carteiras",
     "walletCountEmpty": "Nenhuma carteira",
 
+    "noWalletsHint": "Sem carteiras ainda",
+    "noWalletsText": "Adicione ou crie uma carteira clicando no menu <1 /> no canto superior direito!",
+
+    "actionsViewAddress": "Ver endereço",
     "actionsEditTooltip": "Editar carteira",
     "actionsSendTransaction": "Enviar Krist",
     "actionsWalletInfo": "Informações da carteira",
+    "actionsWalletForceCreate": "Forçar criação",
     "actionsDelete": "Deletar carteira",
     "actionsDeleteConfirm": "Tem certeza que quer deletar essa carteira?",
     "actionsDeleteConfirmDescription": "Se você não fez backup ou salvou sua senha, ela será perdida para sempre!",
@@ -184,7 +227,33 @@
 
       "true": "Sim",
       "false": "Não"
+    },
+
+    "login": {
+      "appMasterPasswordRequired": "Você deve estar autenticado para criar carteiras forçadamente.",
+      "errorAuthFailed": "Não foi possível criar o endereço forçadamente.",
+      "errorWalletDecrypt": "Sua carteira não pôde ser decifrada."
     }
+  },
+
+  "addressBook": {
+    "title": "Agenda de endereços",
+
+    "contactCount": "{{count, number}} contato",
+    "contactCount_plural": "{{count, number}} contatos",
+    "contactCountEmpty": "Sem contatos",
+
+    "buttonAddContact": "Adicionar contato",
+
+    "columnLabel": "Etiqueta",
+    "columnAddress": "Endereço",
+
+    "actionsViewAddress": "Ver endereço",
+    "actionsViewName": "Ver nome",
+    "actionsEditTooltip": "Editar contato",
+    "actionsSendTransaction": "Enviar Krist",
+    "actionsDelete": "Remover contato",
+    "actionsDeleteConfirm": "Você tem certeza de que irá remover esse contato?"
   },
 
   "myTransactions": {
@@ -255,10 +324,37 @@
     "errorWalletLimitDescription": "Você não pode adicionar mais carteiras no momento."
   },
 
+  "addContact": {
+    "modalTitle": "Adicionar contato",
+    "modalTitleEdit": "Editar contato",
+
+    "buttonSubmit": "Adicionar",
+    "buttonSubmitEdit": "Salvar",
+
+    "contactLabel": "Etiqueta",
+    "contactLabelPlaceholder": "Etiqueta do contato (optional)",
+    "contactLabelMaxLengthError": "Máximo de 32 caracteres",
+    "contactLabelWhitespaceError": "Não pode conter apenas espaços",
+
+    "contactAddressLabel": "Endereço ou nome",
+
+    "messageSuccessAdd": "Contato adicionado com êxito!",
+    "messageSuccessEdit": "Contato atualizado com êxito!",
+
+    "errorDuplicateContactTitle": "Contato existente",
+    "errorDuplicateContactDescription": "Você já tem um contato registrado nesse endereço.",
+    "errorMissingContactTitle": "Contato não encontrado",
+    "errorMissingContactDescription": "O contato que você está tentando editar não existe mais.",
+    "errorContactLimitTitle": "Limite de contatos atingido",
+    "errorContactLimitDescription": "Não é possível adicionar mais contatos."
+  },
+
+
   "dashboard": {
     "siteTitle": "Painel",
 
     "inDevBanner": "Bem-vindo à beta particular da KristWeb v2! Este site ainda está em desenvolvimento, então muita funcionalidade está faltando. Por favor informe todos os problemas no <1>GitHub</1>. Obrigado!",
+    "inDevBanner2": "Bem-vindo à beta pública da KristWeb v2! Este site é relativamente novo, então nos informe de qualquer problema no <1>GitHub</1>. Obrigado!",
 
     "walletOverviewCardTitle": "Carteiras",
     "walletOverviewTotalBalance": "Saldo total",
@@ -293,7 +389,31 @@
     "motdCardTitle": "Mensagem do Dia",
     "motdDebugMode": "Esse nó é um servidor de desenvolvimento não-oficial. Saldos e transações podem ser manipulados. Tenha cuidado.",
 
-    "whatsNewCardTitle": "O que há de novo"
+    "whatsNewCardTitle": "O que há de novo",
+    "whatsNewButton": "Novidades",
+
+    "tipsCardTitle": "Dica do dia",
+    "tipsPrevious": "Anterior",
+    "tipsNext": "Próxima",
+    "tips": {
+      "0": "Veja o que há de novo na Krist e KristWeb na [página de novidades](/whatsnew)!",
+      "1": "Você pode navegar rapidamente em tabelas usando as setas do teclado, se estiver em um computador.",
+      "2": "Você pode clicar nos cabeçalhos de uma tabela para ordená-las.",
+      "3": "Você pode filtrar categorias na página de [Minhas Carteiras](/wallets) clicando no ícone de filtro no cabeçalho de uma tabela.",
+      "4": "A [página de configurações](/settings) tem diversas opções avançadas para você personalizar sua experiência no KristWeb.",
+      "5": "Gere links de transação previamente preenchidos pela nova [página de pedidos](/request).",
+      "6": "Não se esqueça de fazer backups das [suas carteiras](/wallets)!",
+      "7": "Pesquise rapidamente na rede Krist com o atalho de teclado Ctrl+K (Cmd+K no macOS).",
+      "8": "Adicione contatos na [agenda de endereços](/contacts) para fazê-los transações rapidamente.",
+      "9": "Uma transação 'batida' é uma que é enviada e recebida do mesmo endereço.",
+      "10": "O gráfico de 'dificuldade de bloco' pode ser exibido com uma escala logarítmica para ver pequenas mudanças em dificuldades menores.",
+      "1-status": "Você está conectado a um servidor de terceiros. As senhas das suas carteiras podem ser enviadas ao operador, que pode usá-las para acessar suas carteiras no servidor oficial. Pergunte <1>aqui</1> para mais informações.",
+      "11": "O formato de data pode ser alterado nas [configurações avançadas](/settings).",
+      "12": "Você pode ver os [mais baixos hashes de bloco minerados](/network/blocks/lowest).",
+      "13": "Os nomes recentemente comprados podem ser vistos na [página de Nomes da Rede](/network/names/new).",
+      "14": "O valor de bloco aumenta quando [nomes](/network/names) são comprados.",
+      "15": "Se você está preocupado em fazer transações acidentais, você pode ativar confirmações nas [configurações avançadas](/settings)."
+    }
   },
 
   "credits": {
@@ -311,7 +431,19 @@
     "versionInfo": {
       "version": "Versão",
       "commitHash": "Commit",
-      "buildTime": "Hora da compilação"
+      "buildTime": "Hora da compilação",
+      "variant": "Variante da compilação",
+      "license": "Licença"
+    },
+
+    "privacyTitle": "Privacidade",
+    "privacy": {
+      "kristServer": "Servidor do Krist",
+      "kristServerDesc": "O único tipo de informação pessoalmente identificável que o <1>servidor do Krist</1> armazena são o seu endereço IP, 'User-Agent' e origem, como parte do registro de servidor. Essa informação é automaticamente eliminada após 30 dias.",
+      "kristweb": "KristWeb",
+      "kristwebDesc1": "O KristWeb utiliza um servidor <1>Sentry</1> hospedado por nós para reportes de erros automáticos. Esse sistema armazena seu endereço IP, 'User-Agent', origem, 'breadcrumbs', e os detalhes dos erros que são automaticamente reportados. Essa informação é automaticamente eliminada após 30 dias.",
+      "kristwebDesc2": "Se você tem uma extensão para bloqueamento de anúncios ou rastreadores como o <1>uBlock Origin</1> <strong>(recomendado)</strong>, nosso sistema Sentry é automaticamente bloqueado pelas listas, portanto você não tem de se preocupar com sua privacidade. Você também pode desativar a denúncia de erros na <4>página de configurações</4>. Dito isso, se gostaria de nos ajudar provendo relatórios de falhas mais detalhados, então considere abrir uma exceção para o KristWeb no seu bloqueador. Esse site não exibe anúncios.",
+      "kristwebDesc3": "Caso tenha qualquer dúvida, por favor, contate os desenvolvedores."
     }
   },
 
@@ -324,6 +456,14 @@
     "settingIntegerSave": "Salvar",
 
     "menuLanguage": "Linguagem",
+
+    "subMenuBackups": "Gerenciar backups",
+    "importBackup": "Importar carteiras",
+    "exportBackup": "Exportar carteiras",
+
+    "subMenuMasterPassword": "Senha mestra",
+    "changeMasterPassword": "Alterar senha mestra",
+    "resetMasterPassword": "Redefinir senha mestra",
 
     "subMenuAutoRefresh": "Reload automático",
     "autoRefreshTables": "Reload automático das tabelas",
@@ -339,8 +479,21 @@
     "blockHashCopyButtons": "Mostrar botões de copiar ao lado de todos os hashes de bloco",
     "showRelativeDates": "Use datas relativas no lugar de absolutas",
     "showRelativeDatesDescription": "No site todo, se menos de 7 dias tiverem passado, uma data relativa será usada no lugar de uma absoluta.",
+    "showNativeDates": "Exibir datas no formato nativo do idioma",
+    "showNativeDatesDescription": "Se desativado, as datas serão mostradas no formato YYYY/MM/DD HH:mm:ss",
+    "transactionsHighlightOwn": "Destacar suas próprias transações na tabela de transações",
+    "transactionsHighlightVerified": "Destacar endereços verificadods na tabela de transações",
     "transactionDefaultRaw": "Abra a guia 'Raw' e não a página 'CommonMeta' na página de transações",
+    "confirmTransactions": "Pedir por confirmação para cada transação",
+    "clearTransactionForm": "Limpar o formulário de Enviar Transação ao clicar em 'Enviar'",
+    "sendTransactionDelay": "Tempo de espera, em milissegundos, antes de permitir que outra transação seja enviada",
     "defaultPageSize": "Tamanho padrão de página para tabelas",
+    "tableHotkeys": "Habilitar atalhos de navegação em tabela (setas de esquerda e direita)",
+
+    "subMenuPrivacy": "Privacidade",
+    "privacyInfo": "Informações sobre privacidade",
+    "errorReporting": "Ativar relatórios de falha automáticos (necessita reinício)",
+    "messageOnErrorReport": "Mostrar uma notificação quando uma falha for automaticamente relatada (necessita reinício)",
 
     "subMenuDebug": "Configurações de depuração",
     "advancedWalletFormats": "Formatos avançados de carteira",
@@ -390,6 +543,7 @@
 
     "walletLabel": "Etiqueta:",
     "walletCategory": "Categoria:",
+    "contactLabel": "Contato:",
 
     "balance": "Saldo",
     "names": "Nomes",
@@ -400,9 +554,11 @@
 
     "buttonSendKrist": "Enviar Krist para {{address}}",
     "buttonTransferKrist": "Transferir Krist para {{address}}",
-    "buttonAddFriend": "Adicionar aos contatos",
-    "buttonEditFriend": "Editar nos contatos",
+    "buttonAddContact": "Adicionar aos contatos",
+    "buttonEditContact": "Editar nos contatos",
     "buttonEditWallet": "Editar carteira",
+
+    "tooltipV1Address": "Novas transações não podem ser feitas para endereços v1, dado que já não esses têm mais suporte.",
 
     "cardRecentTransactionsTitle": "Transações recentes",
     "cardNamesTitle": "Nomes",
@@ -417,7 +573,12 @@
     "resultInvalidTitle": "Endereço inválido",
     "resultInvalid": "Isso não parece um endereço Krist válido.",
     "resultNotFoundTitle": "Endereço não encontrado",
-    "resultNotFound": "Este endereço ainda não foi configurado na rede Krist."
+    "resultNotFound": "Este endereço ainda não foi configurado na rede Krist.",
+    "resultNotFound2": "Este endereço ainda não tem nenhuma transação.",
+
+    "verifiedCardTitle": "Endereço verificado",
+    "verifiedInactive": "Este serviço não está ativo atualmente.",
+    "verifiedWebsiteButton": "Visitar website"
   },
 
   "transactionSummary": {
@@ -425,20 +586,21 @@
     "itemFrom": "<0>De:</0> <1 />",
     "itemTo": "<0>Para:</0> <1 />",
     "itemName": "<0>Nome:</0> <1 />",
-    "itemARecord": "<0>A record:</0> <1 />",
-    "itemARecordRemoved": "(removido)",
+    "itemData": "<0>Dados:</0> <1 />",
+    "itemDataRemoved": "(removido)",
     "seeMore": "Ver todas as {{count, number}}..."
   },
 
   "transactions": {
-    "title": "Transações na Rede",
-    "myTransactionsTitle": "Minas Transações",
+    "myTransactionsTitle": "Minhas Transações",
+    "globalTransactionsTitle": "Transações Globais",
     "nameHistoryTitle": "Histórico de Nomes",
     "nameTransactionsTitle": "Transações de Nomes",
     "searchTitle": "Busca por Transações",
 
     "siteTitleWallets": "Sem Transações",
     "siteTitleNetworkAll": "Transactions na Rede",
+    "siteTitleNetworkGlobal": "Transações Globais",
     "siteTitleNetworkAddress": "Transações do {{address}}",
     "siteTitleNameHistory": "Histórico de Nomes",
     "siteTitleNameSent": "Transações de Nomes",
@@ -483,11 +645,10 @@
 
   "names": {
     "titleWallets": "Meus Nomes",
-    "titleNetworkAll": "Nomes da Rede",
-    "titleNetworkAddress": "Nomes da Rede",
+    "titleNetworkGlobal": "Nomes da Rede",
 
     "siteTitleWallets": "Meus Nomes",
-    "siteTitleNetworkAll": "Nomes na Rede",
+    "siteTitleNetworkGlobal": "Nomes na Rede",
     "siteTitleNetworkAddress": "{{address}} - Nomes",
 
     "columnName": "Nome",
@@ -495,15 +656,37 @@
     "columnOriginalOwner": "Dono Original",
     "columnRegistered": "Registrado",
     "columnUpdated": "Atualizado",
-    "columnARecord": "A Record",
+    "columnTransferred": "Transferido",
+    "columnData": "Dados",
     "columnUnpaid": "Blocos não pagos",
+
+    "rowNew": "Novo!",
+
+    "mobileOwner": "<0>Dono:</0> <1 />",
+    "mobileOriginalOwner": "<0>Dono Original:</0> <1 />",
+    "mobileRegistered": "Registrado: <1 />",
+    "mobileUpdated": "Atualizado: <1 />",
+    "mobileDataTag": "Dados",
+    "mobileUnpaidTag": "{{count, number}} bloco",
+    "mobileUnpaidTag_plural": "{{count, number}} blocos",
+
+    "actions": "Ações",
+    "actionsViewName": "Ver nome",
+    "actionsViewOwner": "Ver endereço do dono",
+    "actionsViewOriginalOwner": "Ver endereço do dono original",
+    "actionsSendKrist": "Enviar Krist",
+    "actionsTransferKrist": "Transferir Krist",
+    "actionsUpdateData": "Atualizar dados",
+    "actionsTransferName": "Transferir nome",
 
     "tableTotal": "{{count, number}} nome",
     "tableTotal_plural": "{{count, number}} nomes",
     "tableTotalEmpty": "Nenhum nome",
 
     "resultInvalidTitle": "Endereço inválido",
-    "resultInvalid": "Isso não parece um endereço Krist válido."
+    "resultInvalid": "Isso não parece um endereço Krist válido.",
+
+    "purchaseButton": "Adquirir nome"
   },
 
   "name": {
@@ -511,7 +694,7 @@
 
     "buttonSendKrist": "Enviar Krist para {{name}}",
     "buttonTransferKrist": "Transferir Krist para {{name}}",
-    "buttonARecord": "Atualizar A record",
+    "buttonData": "Atualizar dados",
     "buttonTransferName": "Transferir nome",
 
     "owner": "Possuído por",
@@ -521,8 +704,8 @@
     "unpaid": "Blocos não-pagos",
     "unpaidCount": "{{count, number}} bloco",
     "unpaidCount_plural": "{{count, number}} blocos",
-    "aRecord": "A record",
-    "aRecordEditTooltip": "Atualizar A record",
+    "data": "Dados",
+    "dataEditTooltip": "Atualizar dados",
 
     "cardRecentTransactionsTitle": "Transações recentes",
     "cardHistoryTitle": "Histórico do nome",
@@ -547,6 +730,11 @@
     "columnValue": "Valor",
     "columnDifficulty": "Dificuldade",
     "columnTime": "Data",
+
+    "mobileHeight": "Bloco #{{height, number}}",
+    "mobileMiner": "<0>Minerador: </0> <1 />",
+    "mobileHash": "<0>Hash: </0> <1 />",
+    "mobileDifficulty": "<0>Dificuldade: </0> <1 />",
 
     "tableTotal": "{{count, number}} bloco",
     "tableTotal_plural": "{{count, number}} blocos",
@@ -592,7 +780,7 @@
     "name": "Nome",
     "value": "Valor",
     "time": "Data",
-    "aRecord": "A Record",
+    "data": "Dados",
 
     "cardMetadataTitle": "Metadados",
     "tabCommonMeta": "CommonMeta",
@@ -704,8 +892,25 @@
       "errorUnknown": "Um erro desconhecido aconteceu. Consulte o console para saber mais."
     },
 
-    "friendMessages": {
-      "errorNYI": "A ferramenta 'Contatos' ainda não foi implmementada, e foi pulada."
+    "contactMessages": {
+      "success": "Contato importado com êxito.",
+      "successSkipped": "Um contato com o endereço ({{address}}) e suas configurações já existem, portanto foi pulado.",
+      "successUpdated": "Um contato com o endereço ({{address}}) já existe. A etiqueta desse foi atualizado para \"{{label}}\"",
+      "successSkippedNoOverwrite": "Um contato com o endereço ({{address}}) já existe, e você escolheu não sobrescrever a etiqueta, portanto ele foi pulado.",
+      "successImportSkipped": "Um contato com o endereço ({{address}}) já estava importando, portanto foi pulado.",
+
+      "warningSyncNode": "Esse contato possui um node de sincronização personalizado, que não tem suporte no KristWeb v2. O node de sincronização foi pulado.",
+      "warningIcon": "Esse contato tinha um ícone personalizado, que não é suportado no KristWeb v2. O ícone foi descartado.",
+      "warningLabelInvalid": "A etiqueta para esse contato era inválida. A etiqueta foi descartada.",
+
+      "errorInvalidTypeString": "Esse contato não era uma string!",
+      "errorInvalidTypeObject": "Esse contato não era um objeto!",
+      "errorDecrypt": "Esse contato não pôde ser decifrado!",
+      "errorDataJSON": "Os dados decifrados não eram JSON válido!",
+      "errorAddressMissing": "Esse contato tem um endereço faltante!",
+      "errorAddressInvalid": "O endereço desse contato é inválido!",
+      "errorLimitReached": "Você atingiu o limite de contatos. Atualmente, não é possível adicionar mais contatos.",
+      "errorUnknown": "Um erro desconhecido aconteceu. Consulte o console para saber mais."
     },
 
     "results": {
@@ -716,10 +921,10 @@
       "walletsSkipped": "{{count, number}} carteira foi pulada.",
       "walletsSkipped_plural": "{{count, number}} carteiras foram puladas.",
 
-      "friendsImported": "<0>{{count, number}} novo contato</0> foi importado.",
-      "friendsImported_plural": "<0>{{count, number}} novos contatos</0> foram importados.",
-      "friendsSkipped": "{{count, number}} amigo foi pulado.",
-      "friendsSkipped_plural": "{{count, number}} amigos foram pulados.",
+      "contactsImported": "<0>{{count, number}} novo contato</0> foi importado.",
+      "contactsImported_plural": "<0>{{count, number}} novos contatos</0> foram importados.",
+      "contactsSkipped": "{{count, number}} contato foi pulado.",
+      "contactsSkipped_plural": "{{count, number}} contatos foram pulados.",
 
       "warnings": "Houve <1>{{count, number}} aviso</1> enquanto seu backup era importado.",
       "warnings_plural": "Houveram <1>{{count, number}} avisos</1> enquanto seu backup era importado.",
@@ -735,16 +940,30 @@
     }
   },
 
-  "walletLimitMessage": "Você tem mais carteiras carregadas que a KristWeb suporta. Ou isso é um bug, ou você ultrapassou o limite intensionalmente. Problemas com a sincronização podem ocorrer.",
+  "export": {
+    "modalTitle": "Exportar backup",
+
+    "description": "Este código secreto contém suas carteiras e sua agenda de contatos. Você pode usá-lo para importar seus dados em outro navegador, ou para fazer uma cópia de segurança. A sua senha mestra ainda será necessária para importar os dados futuramente. <1>Não compartilhe isso com ninguém.</1>",
+    "size": "Tamanho: <1 />",
+
+    "buttonSave": "Salvar como arquivo",
+    "buttonCopy": "Copiar para a área de transferência"
+  },
+
+  "walletLimitMessage": "Você tem mais carteiras carregadas que a KristWeb suporta. Ou isso é um bug, ou você ultrapassou o limite intencionalmente. Problemas com a sincronização podem ocorrer.",
+  "contactLimitMessage": "Você tem mais contatos carregados que a KristWeb suporta. Ou isso é um bug, ou você ultrapassou o limite intencionalmente. Problemas com a sincronização podem ocorrer.",
 
   "optionalFieldUnset": "(nenhum)",
 
   "addressPicker": {
     "placeholder": "Escolha um destinatário",
     "placeholderWalletsOnly": "Escolha a carteira",
+    "placeholderNoWallets": "Endereço ou nome",
+    "placeholderNoWalletsNoNames": "Endereço",
 
-    "hintCurrentBalance": "Saldo: <1 />",
+    "hintCurrentBalance": "Saldo atual: <1 />",
 
+    "errorAddressRequired": "O endereço é necessário.",
     "errorRecipientRequired": "O destinatário é necessário.",
     "errorWalletRequired": "A carteira é necessária.",
 
@@ -763,7 +982,8 @@
     "addressHint": "Saldo: <1 />",
     "addressHintWithNames": "Nomes: <1>{{names, number}}</1>",
     "nameHint": "Dono: <1 />",
-    "nameHintNotFound": "Nome não encontrado."
+    "nameHintNotFound": "Nome não encontrado.",
+    "walletHint": "Carteira: <1 />"
   },
 
   "sendTransaction": {
@@ -802,13 +1022,30 @@
 
     "errorUnknown": "Erro desconhecido fazendo a transação. Consulte o console para saber mais.",
 
+    "payLargeConfirm": "Você tem certeza que quer mandar <1 />?",
     "payLargeConfirmHalf": "Você tem certeza que quer mandar <1 />? É mais que metade do seu saldo!",
     "payLargeConfirmAll": "Você tem certeza que quer mandar <1 />? É o seu saldo inteiro!",
-
+    "payLargeConfirmDefault": "Você está prestes a enviar a senha e chave privada da sua carteira para um servidor Krist terceirizado, o que os dará acesso a sua carteira Krist no servidor oficial. Tem certeza de que irá continuar?",
+    
     "errorNotificationTitle": "Transação falhou",
     "successNotificationTitle": "Transação concluída",
     "successNotificationContent": "Você mandou <1 /> de <3 /> para <5 />.",
-    "successNotificationButton": "Ver transação"
+    "successNotificationButton": "Ver transação",
+
+    "errorInvalidQuery": "Os parâmetros fornecidos eram inválidos, então foram ignorados."
+  },
+
+  "request": {
+    "title": "Pedir Krist",
+    "siteTitle": "Pedir Krist",
+
+    "labelTo": "Destinatário do envio",
+    "labelAmount": "Quantidade do envio",
+    "labelMetadata": "Metadados do envio",
+    "placeholderMetadata": "Metadados",
+
+    "generatedLink": "Link gerado",
+    "generatedLinkHint": "Envie esse link para requisitar saldo de alguém."
   },
 
   "authFailed": {
@@ -831,5 +1068,184 @@
     "cardCommitsTitle": "Commits",
     "cardCommitsSeeMore": "Ver mais",
     "new": "Novidade!"
+  },
+
+  "namePicker": {
+    "placeholder": "Escolha um nome",
+    "placeholderMultiple": "Escolher nomes",
+
+    "buttonAll": "Todos",
+
+    "warningTotalLimit": "Você parece ter mais de 1 mil nomes, o que ainda não é suportado no KristWeb v2. Por favor, crie uma issue no GitHub.",
+    "errorLookup": "Houve um erro durante a coleta dos nomes. Veja o console para mais detalhes."
+  },
+
+  "nameTransfer": {
+    "modalTitle": "Transferir nomes",
+
+    "labelNames": "Nomes",
+    "labelRecipient": "Destinatário",
+
+    "buttonSubmit": "Transferir nomes",
+
+    "errorNameRequired": "Ao menos um nome é necessário.",
+
+    "errorWalletGone": "Essa carteira não existe mais.",
+    "errorWalletDecrypt": "A carteira \"{{address}}\" não pôde ser decifrada.",
+    "errorParameterNames": "Nomes inválidos.",
+    "errorParameterRecipient": "Destinatário inválido.",
+    "errorNameNotFound": "Um ou mais nomes não foram encontrados.",
+    "errorNotNameOwner": "Você não é o dono de um ou mais nomes.",
+    "errorUnknown": "Houve um erro desconhecido ao transferir os nomes. Veja o console para mais detalhes.",
+    "errorNotificationTitle": "Transferência de nomes falhou",
+
+    // Note that the zero and singular cases of these warnings will never be
+    // shown, but they're provided for i18n compatibility.
+    "warningMultipleNames": "Você tem certeza de que irá transferir <1>{{count, number}}</1> nome para <3 />?",
+    "warningMultipleNames_plural": "Você tem certeza de que irá transferir <1>{{count, number}}</1> nomes para <3 />?",
+    "warningAllNames": "Você tem certeza de que irá transferir <1>{{count, number}}</1> nome para <3 />? Esses são todos os seus nomes!",
+    "warningAllNames_plural": "Você tem certeza de que irá transferir <1>{{count, number}}</1> nomes para <3 />? Esses são todos os seus nomes!",
+
+    "successMessage": "Nome transferido com sucesso",
+    "successMessage_plural": "Nomes transferidos com sucesso",
+    "successDescription": "Transferido <1>{{count, number}}</1> nome para <3 />.",
+    "successDescription_plural": "Transferidos <1>{{count, number}}</1> nomes para <3 />.",
+
+    "progress": "Transferindo <1>{{count, number}}</1> nome...",
+    "progress_plural": "Transferindo <1>{{count, number}}</1> nomes..."
+  },
+
+  "nameUpdate": {
+    "modalTitle": "Atualizar nomes",
+
+    "labelNames": "Nomes",
+    "labelData": "Dados",
+    "placeholderData": "Dados (opcional)",
+
+    "buttonSubmit": "Atualizar nomes",
+
+    "errorNameRequired": "Ao menos um nome é necessário.",
+
+    "errorWalletGone": "Essa carteira não existe mais.",
+    "errorWalletDecrypt": "A carteira \"{{address}}\" não pôde ser decifrada.",
+    "errorParameterNames": "Nomes inválidos.",
+    "errorParameterRecipient": "Destinatário inválido.",
+    "errorNameNotFound": "Um ou mais nomes não foram encontrados.",
+    "errorNotNameOwner": "Você não é o dono de um ou mais nomes.",
+    "errorUnknown": "Houve um erro desconhecido ao transferir os nomes. Veja o console para mais detalhes.",
+    "errorNotificationTitle": "Transferência de nomes falhou",
+
+    "successMessage": "Nome atualizado com sucesso",
+    "successMessage_plural": "Nomes atualizados com sucesso",
+    "successDescription": "Atualizado <1>{{count, number}}</1> nome.",
+    "successDescription_plural": "Atualizados <1>{{count, number}}</1> nomes.",
+
+    "progress": "Atualizando <1>{{count, number}}</1> nome...",
+    "progress_plural": "Atualizando <1>{{count, number}}</1> nomes..."
+  },
+
+  "noNamesResult": {
+    "title": "Sem nomes por enquanto",
+    "subTitle": "Você atualmente não tem nomes vinculados às suas carteiras salvas na KristWeb, então não tem nada para ver aqui. Gostaria de adquirir um nome?",
+    "button": "Adquirir nome"
+  },
+
+  "namePurchase": {
+    "modalTitle": "Comprar nome",
+
+    "nameCost": "Custo de compra: <1 />",
+
+    "labelWallet": "Carteira",
+    "labelName": "Nome",
+    "placeholderName": "Nome",
+
+    "buttonSubmit": "Comprar (<1 />)",
+
+    "errorNameRequired": "Um nome é necessário.",
+    "errorInvalidName": "Nome inválido.",
+    "errorNameTooLong": "Esse nome é muito longo.",
+    "errorNameTaken": "Esse nome já existe!",
+    "errorInsufficientFunds": "Sua carteira não possui saldo suficiente para a compra.",
+
+    "errorWalletGone": "Essa carteira não existe mais.",
+    "errorWalletDecrypt": "A carteira \"{{address}}\" não pôde ser decifrada.",
+    "errorUnknown": "Erro desconhecido durante a compra do nome. Veja o console para mais detalhes.",
+    "errorNotificationTitle": "Compra de nome falhou",
+
+    "successMessage": "Nome comprado com sucesso",
+    "successNotificationButton": "Ver nome",
+
+    "nameAvailable": "Nome disponível!"
+  },
+
+  "purchaseKrist": {
+    "modalTitle": "Comprar Krist",
+    "connection": "Uma conexão foi estabelecida à um servidor Krist terceirizado. Suas senhas e carteiras Krist estão em risco."
+  },
+
+  "syncWallets": {
+    "errorMessage": "Falha na sincronização",
+    "errorDescription": "Algo deu errado durante a sincronização das suas carteiras. Veja o console para mais detalhes."
+  },
+
+  "legacyMigration": {
+    "modalTitle": "Migração do KristWeb v1",
+    "description": "Boas-vindas ao KristWeb v2! Parece que você usou o KristWeb v1 nesse domínio antes.<br /><br /><strong>Por favor, digite sua senha mestra para migrar seus dados ao novo formato.</strong> Isso só precisa ser feito uma vez.",
+
+    "walletCount": "Detectada <1>{{count, number}}</1> carteira",
+    "walletCount_plural": "Detectadas <1>{{count, number}}</1> carteiras",
+    "contactCount": "Detectado <1>{{count, number}}</1> contato",
+    "contactCount_plural": "Detectados <1>{{count, number}}</1> contatos",
+
+    "masterPasswordLabel": "Senha mestra",
+    "masterPasswordPlaceholder": "Senha mestra",
+
+    "errorPasswordRequired": "A senha é necessária.",
+    "errorPasswordLength": "A senha precisa ter pelo menos um caractere.",
+    "errorPasswordIncorrect": "Senha incorreta.",
+    "errorUnknown": "Um erro desconhecido aconteceu. Consulte o console para saber mais.",
+
+    "buttonForgotPassword": "Esqueci minha senha",
+    "buttonSubmit": "Iniciar migração",
+
+    "forgotPassword": {
+      "modalTitle": "Pular migração",
+      "modalContent": "Se você esqueceu a sua senha mestra do KristWeb v1, então a migração não será possível. Você não será perguntado novamente. Tem certeza de que irá pular a migração?",
+      "buttonSkip": "Pular"
+    }
+  },
+
+  "sortModal": {
+    "title": "Ordenar resultados",
+
+    "sortBy": "Ordenar por",
+    "sortOrder": "Ordem",
+    "sortAscending": "Crescente",
+    "sortDescending": "Decrescente",
+
+    "buttonReset": "Redefinir",
+
+    "options": {
+      "transactionsFrom": "De",
+      "transactionsTo": "Para",
+      "transactionsValue": "Valor",
+      "transactionsName": "Nome",
+      "transactionsTime": "Data",
+
+      "namesName": "Nome",
+      "namesOwner": "Dono",
+      "namesOriginalOwner": "Dono Original",
+      "namesData": "Dados",
+      "namesUnpaid": "Blocos não pagos",
+      "namesRegistered": "Data de registro",
+      "namesTransferred": "Data de transferência",
+      "namesUpdated": "Data de atualização",
+
+      "blocksMiner": "Minerador",
+      "blocksHash": "Hash",
+      "blocksValue": "Valor",
+      "blocksDifficulty": "Dificuldade",
+      "blocksTime": "Data"
+    }
   }
 }
