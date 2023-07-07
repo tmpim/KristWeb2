@@ -2,7 +2,7 @@
 // This file is part of KristWeb 2 under AGPL-3.0.
 // Full details: https://github.com/tmpim/KristWeb2/blob/master/LICENSE.txt
 import { Layout, Menu, Grid } from "antd";
-import { SendOutlined, DownloadOutlined, MenuOutlined } from "@ant-design/icons";
+import { SendOutlined, DownloadOutlined } from "@ant-design/icons";
 
 import { useTranslation } from "react-i18next";
 
@@ -11,6 +11,7 @@ import { Search } from "./Search";
 import { ConnectionIndicator } from "./ConnectionIndicator";
 import { CymbalIndicator } from "./CymbalIndicator";
 import { TopMenu } from "./TopMenu";
+import { CheeseburgerIcon } from "@comp/CheeseburgerIcon";
 
 import { ConditionalLink } from "@comp/ConditionalLink";
 
@@ -32,7 +33,7 @@ export function AppHeader({ sidebarCollapsed, setSidebarCollapsed }: Props): JSX
     {!bps.md && (
       <Menu theme="dark" mode="horizontal" selectable={false} forceSubMenuRender={true} className="site-header-sidebar-toggle">
         <Menu.Item key="1" onClick={() => setSidebarCollapsed(!sidebarCollapsed)}>
-          <MenuOutlined />
+          <CheeseburgerIcon />
         </Menu.Item>
       </Menu>
     )}
