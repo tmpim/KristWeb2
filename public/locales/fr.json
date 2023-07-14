@@ -53,11 +53,14 @@
     "dashboard": "Tableau de bord",
     "myWallets": "Mes portefeuilles",
     "addressBook": "Carnet d'adresses",
-    "transactions": "Transactions",
-    "names": "Noms",
+    "myTransactions": "Mes Transactions",
+    "myNames": "Mes Noms",
+    "allTransactions": "Toutes Transactions",
+    "allNames": "Tous les Noms",
     "mining": "Minage",
-    "network": "Réseau",
     "blocks": "Blocs",
+    "personal": "Personnel",
+    "global": "Globale",
     "statistics": "Statistiques",
     "madeBy": "Fait par <1>{{authorName}}</1>",
     "hostedBy": "Hébergé par <1>{{host}}</1>",
@@ -105,6 +108,7 @@
 
   "contextualAddressUnknown": "Inconnue",
   "contextualAddressNonExistentTooltip": "Cette adresse n'a pas encore été initialisée sur le réseau Krist.",
+  "contextualAddressNonExistentTooltip2": "Cette adresse n'a pas encore d'historique de transactions.",
 
   "typeahead": {
     "emptyLabel": "Aucun résultat.",
@@ -185,6 +189,7 @@
     "actionsEditTooltip": "Éditer le portefeuille",
     "actionsSendTransaction": "Envoyer des Krist",
     "actionsWalletInfo": "Infos portefeuille",
+    "actionsWalletForceCreate": "Forcer la création",
     "actionsDelete": "Enlever le portefeuille",
     "actionsDeleteConfirm": "Voulez-vous vraiment enlever ce portefeuille?",
     "actionsDeleteConfirmDescription": "Si vous n'avez pas sauvegardé ou enregistré son mot de passe, il sera perdu à jamais!",
@@ -222,6 +227,12 @@
 
       "true": "Oui",
       "false": "Non"
+    },
+
+    "login": {
+      "appMasterPasswordRequired": "Vous devez être authentifié pour forcer la création de portefeuilles.",
+      "errorAuthFailed": "Impossible de forcer la création de l'adresse.",
+      "errorWalletDecrypt": "Votre portefeuille n'a pas pu être déchiffré."
     }
   },
 
@@ -342,6 +353,7 @@
     "siteTitle": "Tableau de bord",
 
     "inDevBanner": "Bienvenue dans la bêta privée de KristWeb v2! Ce site est encore en développement, donc la plupart des fonctionnalités sont actuellement manquantes. Veuillez signaler tous bogues sur <1>GitHub</1>. Merci!",
+    "inDevBanner2": "Bienvenue dans la bêta publique de KristWeb v2! Ce site est relativement nouveau, veuillez donc signaler tout bogue sur <1>GitHub</1>. Merci!",
 
     "walletOverviewCardTitle": "Portefeuilles",
     "walletOverviewTotalBalance": "Solde total",
@@ -562,6 +574,7 @@
     "resultInvalid": "Cela ne ressemble pas à une adresse Krist valide.",
     "resultNotFoundTitle": "Adresse introuvable",
     "resultNotFound": "Cette adresse n'a pas encore été initialisée sur le réseau Krist.",
+    "resultNotFound2": "Cette adresse n'a pas encore d'historique de transactions.",
 
     "verifiedCardTitle": "Adresse vérifiée",
     "verifiedInactive": "Ce service n'est pas actif actuellement.",
@@ -573,20 +586,20 @@
     "itemFrom": "<0>De:</0> <1 />",
     "itemTo": "<0>À:</0> <1 />",
     "itemName": "<0>Nom:</0> <1 />",
-    "itemARecord": "<0>Enregistrement A:</0> <1 />",
-    "itemARecordRemoved": "(supprimé)",
+    "itemData": "<0>Données:</0> <1 />",
+    "itemDataRemoved": "(supprimé)",
     "seeMore": "Voir tous les {{count, number}}..."
   },
 
   "transactions": {
-    "title": "Transactions réseau",
-    "myTransactionsTitle": "Mes transactions",
+    "myTransactionsTitle": "Mes Transactions",
+    "globalTransactionsTitle": "Transactions Globales",
     "nameHistoryTitle": "Historique du nom",
     "nameTransactionsTitle": "Transactions de nom",
     "searchTitle": "Recherche de transactions",
 
     "siteTitleWallets": "Mes transactions",
-    "siteTitleNetworkAll": "Transactions réseau",
+    "siteTitleNetworkGlobal": "Transactions Globales",
     "siteTitleNetworkAddress": "Transactions de {{address}}",
     "siteTitleNameHistory": "Historique du nom",
     "siteTitleNameSent": "Transactions de nom",
@@ -631,11 +644,10 @@
 
   "names": {
     "titleWallets": "Mes noms",
-    "titleNetworkAll": "Noms réseau",
-    "titleNetworkAddress": "Noms réseau",
+    "titleNetworkGlobal": "Noms globales",
 
     "siteTitleWallets": "Mes noms",
-    "siteTitleNetworkAll": "Noms réseau",
+    "siteTitleNetworkGlobal": "Noms globales",
     "siteTitleNetworkAddress": "Noms de {{address}}",
 
     "columnName": "Nom",
@@ -643,14 +655,17 @@
     "columnOriginalOwner": "Propriétaire d'origine",
     "columnRegistered": "Inscrit",
     "columnUpdated": "Mis à jour",
-    "columnARecord": "Enregistrement A",
+    "columnTransferred": "Transféré",
+    "columnData": "Donnés",
     "columnUnpaid": "Blocs impayés",
+
+    "rowNew": "Nouveau!",
 
     "mobileOwner": "<0>Propriétaire:</0> <1 />",
     "mobileOriginalOwner": "<0>Propriétaire d'origine:</0> <1 />",
     "mobileRegistered": "Inscrit: <1 />",
     "mobileUpdated": "Mis à jour: <1 />",
-    "mobileARecordTag": "A",
+    "mobileDataTag": "Donnés",
     "mobileUnpaidTag": "{{count, number}} bloc",
     "mobileUnpaidTag_plural": "{{count, number}} blocs",
 
@@ -660,7 +675,7 @@
     "actionsViewOriginalOwner": "Afficher l'adresse du propriétaire d'origine",
     "actionsSendKrist": "Envoyer Krist",
     "actionsTransferKrist": "Transférer Krist",
-    "actionsUpdateARecord": "Changer l'enregistrement A",
+    "actionsUpdateData": "Mettre à jour les données",
     "actionsTransferName": "Transférer le nom",
 
     "tableTotal": "{{count, number}} nom",
@@ -678,18 +693,19 @@
 
     "buttonSendKrist": "Envoyez des Krist à {{name}}",
     "buttonTransferKrist": "Transférer des Krist à {{name}}",
-    "buttonARecord": "Changer l'enregistrement A",
+    "buttonData": "Mettre à jour les données",
     "buttonTransferName": "Transférer le nom",
 
     "owner": "Appartient à",
     "originalOwner": "Acheté par",
     "registered": "Inscrit",
     "updated": "Dernière mise à jour",
+    "transferred": "Dernier transfert",
     "unpaid": "Blocs impayés",
     "unpaidCount": "{{count, number}} bloc",
     "unpaidCount_plural": "{{count, number}} blocs",
-    "aRecord": "Enregistrement A",
-    "aRecordEditTooltip": "Changer l'enregistrement A",
+    "data": "Donnés",
+    "dataEditTooltip": "Mettre à jour les données",
 
     "cardRecentTransactionsTitle": "Transactions récentes",
     "cardHistoryTitle": "Historique du nom",
@@ -764,7 +780,7 @@
     "name": "Nom",
     "value": "Valeur",
     "time": "Quand",
-    "aRecord": "Enregistrement A",
+    "data": "Donnés",
 
     "cardMetadataTitle": "Métadonnées",
     "tabCommonMeta": "CommonMeta",
@@ -1077,7 +1093,7 @@
     "buttonSubmit": "Transférer les noms",
 
     "errorNameRequired": "Au moins un nom est requis.",
-    
+
     "errorWalletGone": "Ce portefeuille n'existe plus.",
     "errorWalletDecrypt": "Le portefeuille \"{{address}}\" n'a pas pu être déchiffré.",
     "errorParameterNames": "Noms invalides.",
@@ -1105,8 +1121,8 @@
     "modalTitle": "Mettre à jour les noms",
 
     "labelNames": "Noms",
-    "labelARecord": "Enregistrement A",
-    "placeholderARecord": "Enregistrement A (optionnel)",
+    "labelData": "Donnés",
+    "placeholderData": "Données (facultatif)",
 
     "buttonSubmit": "Mettre à jour",
 
@@ -1115,7 +1131,7 @@
     "errorWalletGone": "Ce portefeuille n'existe plus.",
     "errorWalletDecrypt": "Le portefeuille \"{{address}}\" n'a pas pu être déchiffré.",
     "errorParameterNames": "Noms invalides.",
-    "errorParameterARecord": "Enregistrement A non valide.",
+    "errorParameterData": "Données invalides.",
     "errorNameNotFound": "Un ou plusieurs noms sont introuvables.",
     "errorNotNameOwner": "Vous n'êtes pas propriétaire d'un ou plusieurs noms.",
     "errorUnknown": "Erreur inconnue lors de la mise à jour des noms. Voir console pour plus de détails.",
@@ -1221,9 +1237,10 @@
       "namesName": "Nom",
       "namesOwner": "Propriétaire",
       "namesOriginalOwner": "Propriétaire d'origine",
-      "namesARecord": "Enregistrement A",
+      "namesData": "Donnés",
       "namesUnpaid": "Blocs impayés",
       "namesRegistered": "Date d'enregistrement",
+      "namesTransferred": "Temps transféré",
       "namesUpdated": "Date de mise à jour",
 
       "blocksMiner": "Mineur",
