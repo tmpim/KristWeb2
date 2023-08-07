@@ -27,6 +27,9 @@
   "kf4n3el1a5": { "label": "CodersNet Reimbursement", "isActive": false },
   "k5pzufkwup": { "label": "Pippigrump Core", "isActive": false },
   "kchocolate": { "label": "Tenebra ICO" },
-  "kqojv3i6eh": { "label": "PG231's Liquidity Pools" },
+  "kqojv3i6eh": {
+    "label": "PG231's LP",
+    "description": "Liquidity pools on SwitchCraft operated by PG231."
+  },
   "kxxxxxxxxk": { "label": "X" }
 }
