@@ -31,5 +31,9 @@
     "label": "PG231's LP",
     "description": "Liquidity pools on SwitchCraft operated by PG231."
   },
-  "kxxxxxxxxk": { "label": "X" }
+  "kxxxxxxxxk": { "label": "X" },
+  "ksnowflake": {
+    "label": "Snowflake",
+    "description": "Operator of colorful.kst and other shops on SwitchCraft."
+  }
 }
