@@ -28,6 +28,8 @@ import { AddressPicker } from "@comp/addresses/picker/AddressPicker";
 import { AmountInput } from "@comp/transactions/AmountInput";
 import { SendTransactionConfirmModalContents } from "./SendTransactionConfirmModal";
 
+import { v4 as uuidv4 } from "uuid";
+
 import awaitTo from "await-to-js";
 
 import Debug from "debug";
@@ -263,9 +265,12 @@ export function useTransactionForm({
     if (!masterPassword)
       throw new TranslatedError("sendTransaction.errorWalletDecrypt");
 
+    const requestId = uuidv4();
+
     // API errors will be bubbled up to the caller
     const tx = await makeTransaction(
       masterPassword,
+      requestId, // TODO: Properly retry transactions
       wallet,
       to,
       amount,

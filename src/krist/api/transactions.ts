@@ -7,6 +7,7 @@ import { KristTransaction } from "./types";
 import * as api from ".";
 
 import { Wallet, decryptWallet } from "@wallets";
+import { v4 as uuidv4 } from "uuid";
 
 interface MakeTransactionResponse {
   transaction: KristTransaction;
@@ -14,6 +15,7 @@ interface MakeTransactionResponse {
 
 export async function makeTransaction(
   masterPassword: string,
+  requestId: string,
   from: Wallet,
   to: string,
   amount: number,
@@ -25,11 +27,21 @@ export async function makeTransaction(
     throw new TranslatedError("sendTransaction.errorWalletDecrypt");
   const { privatekey } = decrypted;
 
+  let seed = localStorage.getItem("txSeed");
+  if (!seed) {
+    seed = uuidv4();
+    localStorage.setItem("txSeed", seed);
+  }
+
   const { transaction } = await api.post<MakeTransactionResponse>(
     "/transactions",
     {
-      privatekey, to, amount,
-      metadata: metadata || undefined // Clean up empty strings
+      privatekey,
+      to,
+      amount,
+      metadata: metadata || undefined, // Clean up empty strings
+      requestId,
+      requestIdSeed: seed
     }
   );
 
