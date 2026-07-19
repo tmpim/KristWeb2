@@ -6,7 +6,7 @@ RUN apk update && apk add git gzip
 WORKDIR /build
 
 COPY ["yarn.lock", "./"]
-RUN yarn global add rimraf @craco/craco@^6.1.1
+RUN yarn global add rimraf@^3.0.2 @craco/craco@^6.1.1
 
 COPY ["package.json", "./"]
 RUN yarn install
