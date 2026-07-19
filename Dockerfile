@@ -2,6 +2,7 @@
 FROM node:16-alpine AS build
 
 RUN apk update && apk add git gzip
+RUN git config --global core.autocrlf input
 
 WORKDIR /build
 
@@ -12,6 +13,9 @@ COPY ["package.json", "./"]
 RUN yarn install
 
 COPY . .
+
+# check source tree is dirty and error
+RUN git status --porcelain && test -z "$(git status --porcelain)"
 
 ENV NODE_ENV=production
 
